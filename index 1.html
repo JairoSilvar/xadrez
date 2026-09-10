@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v8.4</title>
+    <title>Xadrez Pro - v8.1</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -355,30 +355,10 @@
             cursor: pointer; flex-shrink: 0; white-space: nowrap;
             transition: background 0.15s ease, transform 0.12s ease;
         }
-        .xp-toggle-btn.standup-direct { display: none !important; }
-        .xp-toggle-btn.voice-toggle {
-            background: #0f766e; color: #fff; border-color: transparent;
-            font-size: 14px; min-width: 36px; padding: 0 8px;
-        }
-        .msg.local-voice audio { filter: saturate(1.05); }
-        .xp-toggle-btn.voice-toggle.recording {
-            background: #dc2626 !important;
-            animation: pulse-rec 1s ease infinite;
-        }
-        @keyframes pulse-rec {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.65; }
-        }
-        /* Desktop: só o botão de voz (frases já estão na barra horizontal) */
-        @media (min-width: 901px) {
-            .side-section .xp-toggle-btn.voice-toggle {
-                display: inline-flex !important;
-                height: 32px; font-size: 13px;
-            }
-            .side-section .xp-toggle-btn.taunts-toggle,
-            .side-section .xp-toggle-btn.reactions-toggle {
-                display: none !important;
-            }
+        .xp-toggle-btn.standup-direct {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #fff; border-color: transparent; font-size: 14px;
+            min-width: 36px; padding: 0 8px;
         }
         .xp-toggle-btn:active { transform: scale(0.96); background: var(--btn-hover); }
         .xp-toggle-btn.active {
@@ -406,7 +386,7 @@
             left: 0; right: 0; width: 100%;
             bottom: 100%; margin-bottom: 4px;
             padding: 0;
-            max-height: min(46vh, 300px);
+            max-height: min(38vh, 240px);
             overflow: hidden;
             gap: 0;
         }
@@ -437,13 +417,13 @@
         /* Chips compactos — cabem mais na tela */
         .xp-float-panel .taunt-chip {
             flex: 0 0 auto;
-            display: inline-flex; align-items: center; justify-content: center; gap: 3px;
-            min-height: 26px; padding: 3px 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+            min-height: 32px; padding: 4px 10px;
             border-radius: 999px;
             border: 1px solid var(--panel-border);
             background: var(--btn-bg);
             color: var(--text-main);
-            font-size: 10px; font-weight: 700;
+            font-size: 11px; font-weight: 700;
             cursor: pointer; white-space: nowrap;
             transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
         }
@@ -612,55 +592,24 @@
                 padding: 0 8px !important;
                 font-size: 11px !important;
             }
-            .xp-toggle-btn.standup-direct { display: none !important; }
-            .xp-toggle-btn.voice-toggle {
+            .xp-toggle-btn.standup-direct {
                 display: inline-flex !important;
                 height: 36px !important;
                 min-width: 36px !important;
                 font-size: 15px !important;
-                background: #0f766e;
-                color: #fff;
-                border-color: transparent;
             }
-            .msg.local-voice audio { filter: saturate(1.05); }
-        .xp-toggle-btn.voice-toggle.recording {
-                background: #dc2626 !important;
-                animation: pulse-rec 1s ease infinite;
-            }
-            @keyframes pulse-rec {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.65; }
-            }
-            /* Painel frases: maior + chips compactos + stand-up fixo */
+            /* Painel de frases: sobe com stand-up sempre no topo visível */
             .xp-float-panel.taunts {
-                max-height: min(52vh, 360px) !important;
+                max-height: min(40vh, 260px) !important;
                 overflow: hidden !important;
             }
             .xp-float-panel.taunts .taunt-standup-sticky {
                 display: flex !important;
                 flex-shrink: 0 !important;
-                padding: 5px 6px 3px !important;
-            }
-            .xp-float-panel.taunts .taunt-standup-sticky .taunt-chip.standup {
-                width: 100%;
-                min-height: 28px !important;
-                font-size: 10px !important;
-                justify-content: center;
-                padding: 4px 8px !important;
             }
             .xp-float-panel.taunts .taunt-chips-scroll {
                 min-height: 0 !important;
-                max-height: calc(52vh - 44px) !important;
-                gap: 4px !important;
-                padding: 4px 6px 8px !important;
-            }
-            .xp-float-panel .taunt-chip {
-                min-height: 24px !important;
-                padding: 2px 7px !important;
-                font-size: 9.5px !important;
-            }
-            .xp-float-panel .taunt-chip .chip-emoji {
-                font-size: 12px !important;
+                max-height: calc(40vh - 52px) !important;
             }
 
             body.menu-hidden .board-section {
@@ -675,21 +624,6 @@
             .xp-toggle-btn { display: none !important; }
             .xp-float-panel { display: none !important; }
             .xp-toggle-btn.standup-direct { display: none !important; }
-            .xp-toggle-btn.taunts-toggle { display: none !important; }
-            .xp-toggle-btn.reactions-toggle { display: none !important; }
-            /* Só voz no PC — frases e reações usam as barras normais */
-            .xp-toggle-btn.voice-toggle {
-                display: inline-flex !important;
-                height: 32px !important;
-                min-width: 34px !important;
-                font-size: 14px !important;
-                background: #0f766e;
-                color: #fff;
-                border-color: transparent;
-            }
-            .xp-toggle-btn.voice-toggle.recording {
-                background: #dc2626 !important;
-            }
         }
         @media (max-width: 900px) and (orientation: landscape) {
             #game-wrapper { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 6px !important; padding: 0px !important; height: 100vh !important; height: 100dvh !important; width: 100vw !important; }
@@ -1210,7 +1144,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v8.4</p>
+            <p>Estratégia P2P · IA offline · v8.1</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1431,24 +1365,24 @@
                     <button class="side-action-btn draw" onclick="offerDraw()" title="Propor Empate">🤝</button>
                 </div>
                 <div class="xp-float-panel reactions" id="reactionsFloatPanel" role="menu" aria-label="Reações">
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🔥');" title="Fogo">🔥</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😂');" title="Risada">😂</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👏');" title="Aplauso">👏</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('💀');" title="Caveira">💀</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👍');" title="Ok">👍</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😮');" title="Surpresa">😮</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('❤️');" title="Amor">❤️</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😎');" title="Cool">😎</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🤔');" title="Pensando">🤔</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('💪');" title="Força">💪</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👑');" title="Rei">👑</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😱');" title="Choque">😱</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡');" title="Respeito">🫡</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯');" title="Alvo">🎯</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️');" title="Peão">♟️</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄');" title="Mágica">🪄</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😴');" title="Sono">😴</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🫠');" title="Derretendo">🫠</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🔥'); closeFloatPanels();" title="Fogo">🔥</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😂'); closeFloatPanels();" title="Risada">😂</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👏'); closeFloatPanels();" title="Aplauso">👏</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💀'); closeFloatPanels();" title="Caveira">💀</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👍'); closeFloatPanels();" title="Ok">👍</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😮'); closeFloatPanels();" title="Surpresa">😮</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('❤️'); closeFloatPanels();" title="Amor">❤️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😎'); closeFloatPanels();" title="Cool">😎</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🤔'); closeFloatPanels();" title="Pensando">🤔</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💪'); closeFloatPanels();" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👑'); closeFloatPanels();" title="Rei">👑</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😱'); closeFloatPanels();" title="Choque">😱</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡'); closeFloatPanels();" title="Respeito">🫡</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯'); closeFloatPanels();" title="Alvo">🎯</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️'); closeFloatPanels();" title="Peão">♟️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄'); closeFloatPanels();" title="Mágica">🪄</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😴'); closeFloatPanels();" title="Sono">😴</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫠'); closeFloatPanels();" title="Derretendo">🫠</button>
                 </div>
             </div>
             <div class="move-list-container" id="moveListContainer" aria-label="Lista de lances"><span class="move-empty">Nenhum lance ainda.</span></div>
@@ -1468,7 +1402,7 @@
                 </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
-                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Segure para gravar áudio (máx. 10s)" aria-label="Mensagem de voz">🎙️</button>
+                    <button type="button" class="xp-toggle-btn standup-direct" id="btnStandUpDirect" onclick="sendStandUpJoke(); closeFloatPanels();" title="Stand-up">🎤</button>
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 48px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
@@ -2135,7 +2069,7 @@
             const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
             const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
             return {
-                ver: '8.2',
+                ver: '8.1',
                 mode: typeof gameMode !== 'undefined' ? gameMode : '-',
                 turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
                 ply: ply,
@@ -2148,7 +2082,7 @@
                 view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
             };
         } catch (e) {
-            return { ver: '8.2', err: String(e && e.message || e) };
+            return { ver: '8.1', err: String(e && e.message || e) };
         }
     }
 
@@ -2335,7 +2269,7 @@
     }
 
 
-    // === v8.4 — painéis flutuantes de reações e frases (mobile portrait) ===
+    // === v8.1 — painéis flutuantes de reações e frases (mobile portrait) ===
     function closeFloatPanels() {
         const r = document.getElementById('reactionsFloatPanel');
         const t = document.getElementById('tauntsFloatPanel');
@@ -2696,108 +2630,45 @@
     };
 
     const diverseStandUpList = [
-        /* Memes BR atuais e clássicos — tom leve */
-        "Calma, calabreso... respira que o Wi-Fi ainda carrega.",
-        "Que Xou da Xuxa é esse? Eu só pedi um gole de água.",
-        "Cheguei Brasil! Já sentei no sofá errado e ninguém avisou.",
-        "Ô Denise, sai da live — o grupo da família já basta.",
-        "É o Brasil do Brasil: sol de 40° e gente de moletom.",
-        "Tem que ir, é contrato. Inclusive acordar cedo.",
-        "Garçom, tem Pitú? Traz. E um plano B pro fim de semana.",
-        "Que casa é essa, engraçada? Parece meu quarto na segunda.",
-        "Me mimei: abri o app 'só pra ver' e perdi 2 horas.",
-        "Tá tranquilo, tá favorável... disse eu antes da prova.",
-        "É verdade esse bilete: eu ia estudar. Ia.",
-        "Alô alô graças a Deus: a bateria chegou em 1%.",
-        "Caneta azul, azul caneta — e a redação em branco.",
-        "EU SOU RICA! ...de abas abertas no navegador.",
-        "Casca de bala: amigo que responde 'kkkk' e some 3 dias.",
-        "Morango do amor: lindo no TikTok, caos na cozinha.",
-        "67! ...não sei o que significa, mas soa importante.",
-        "This is fine 🔥 — eu, com 47 notificações não lidas.",
-        "Press F to pay respects pro alarme que eu ignorei.",
-        "I can has cheezburger? Prefiro o lanche da madrugada.",
-        "All your base are belong to us. Inclusive a última fatia.",
-        "Deal with it 😎 — disse o gato em cima do teclado.",
-        /* Clássicos de tio / one-liners limpos */
-        "Por que o jacaré tirou o filho da escola? Porque réptil de ano.",
-        "O que o pato falou pra pata? Vem quá!",
-        "Como o elétron atende o telefone? Próton!",
-        "O zero disse pro oito: belo cinto.",
-        "Por que o livro de matemática foi ao psicólogo? Problemas demais.",
-        "O esqueleto não briga: não tem estômago pra isso.",
-        "Relógio foi preso: matou o tempo.",
-        "Cúmulo do azar: atropelado por carro de autoescola.",
-        "Por que a abelha é promovida? Sempre voando alto.",
-        "Qual o cúmulo da velocidade? Sopa no garfo e língua queimada.",
-        "Se a vida te der limões, faça limonada. Se der segunda, cafeína.",
-        "A inteligência artificial já ri de piada de tio. Educadamente.",
-        "Minha vida social está em modo avião: ligada, sem conexão.",
-        "O despertador e eu temos acordo: ele toca, eu nego a realidade.",
-        "Estudei a noite toda. A matéria dormiu; eu que fiquei acordado.",
+        /* Xadrez */
+        "O peão chega na 8ª fileira e vira dama. Eu chego no fim do mês e viro boleto.",
+        "Por que o cavalo só anda em L? Porque em linha reta o radar multa.",
+        "Xeque-mate: o rei sem saída. Segunda-feira: a mesma vibe, com café.",
+        "Stockfish calcula 40 lances. Eu calculo se ainda tem pão na geladeira.",
+        "Roquei o rei. Na vida real, só troco de problema de lugar.",
+        "A dama é a peça mais forte. No tabuleiro ela trabalha; o rei anda uma casinha.",
+        "Empate por afogamento: sem lances e sem xeque. Resumo da minha agenda às 18h.",
+        "Joguei 1.e4 com cara de GM. No lance 12 já pedia empate por cansaço ético.",
+        "O en passant é a jogada secreta. Tipo quando você 'esquece' o grupo da família.",
+        "Perdi a torre e fiquei 'só com a qualidade'. Na vida: perdi a paciência e sobrou o Wi-Fi.",
+        /* Escola / estudo */
+        "Por que o livro de matemática foi ao psicólogo? Tinha problemas demais.",
+        "Professor: 'quanto é 2+2?' Joãozinho: 'depende se é prova ou estimativa de obra'.",
+        "Estudei a noite inteira. A matéria também: ela dormiu e eu que fiquei acordado.",
+        "Minha nota em educação física: 'participou'. Tradução: sobreviveu à queimada.",
+        "O relógio da escola atrasa de propósito. É a única coisa mais lenta que a fila do intervalo.",
+        /* Tech / internet */
+        "Por que o computador foi ao médico? Estava com vírus… e sem antivírus pirata atualizado.",
+        "Minha vida social está em modo avião: ligada, mas sem conexão.",
         "Wi-Fi da escola: 2 barras de sinal e 0 de dignidade.",
-        "Atualizei o app. 14 permissões novas, a mesma lentidão.",
-        "Meu carregador e minha motivação: 5% e caindo.",
-        "Não sou preguiçoso. Estou em modo economia de energia.",
-        "A cama é mágica: deito e lembro de tudo que não fiz.",
-        "Autocorretor me conhece melhor que minha mãe — e julga mais.",
-        "Ctrl+Z na vida real seria o verdadeiro superpoder.",
-        "Fila do banco: o tempo joga melhor que qualquer campeão.",
-        "Segunda-feira é tipo começar o dia já em desvantagem.",
-        "Prometi dormir cedo. O YouTube disse 'só mais um'.",
-        "Meu plano era genial. A execução pediu empate por cansaço.",
-        "Não é bug, é feature. Disse eu pro erro que ninguém notou.",
-        "Meu plano B era o plano A com mais confiança.",
-        "Fui correr. O tênis desamarrou e me abandonou.",
-        "Li a bula. O efeito colateral era entender a letra do médico.",
-        /* Escola / tech / cotidiano adolescente */
-        "Professor: isso vai cair na prova. Eu: então deixa cair.",
-        "Trabalho em grupo: 1 faz, 3 assistem, 1 some no WhatsApp.",
-        "Nota 6 é o empate técnico da vida escolar.",
-        "Caderno organizado: existe só na imaginação da mãe.",
-        "Recreio: 15 minutos e um campeonato mundial de futebol.",
-        "Prova surpresa: a única surpresa é eu não ter estudado.",
-        "Biblioteca: o único lugar onde 'shhh' é lei federal.",
-        "Lancheira gourmet: pão com mortadela e sonho de pizza.",
-        "Sexta-feira: o final boss da semana finalmente cai.",
-        "Fim de semana: 48 horas que passam em 48 minutos.",
-        "Seguir dieta: fácil. Até abrir a geladeira 'só pra olhar'.",
-        "Academia: pago mensalidade pra sentir culpa em casa.",
-        "Selfie: 40 tentativas, 1 prestável, 0 postadas.",
-        "Modo escuro: salva a bateria e a alma depois da meia-noite.",
-        "Notificação do banco: o verdadeiro jump scare.",
-        "Senha forte: eu lembro de todas... menos da certa.",
-        "Captcha: prove que você é humano. Eu quase desisto.",
-        "Atualização obrigatória: 1% e trava no melhor momento.",
-        "Modo não perturbe: ligado. Família: grita do corredor.",
-        "Entrega chega: eu no banho. Eu saio: entregador sumiu.",
-        /* Leve toque de xadrez (minoria do deck) */
-        "O peão chega na 8ª e vira dama. Eu chego no mês e viro boleto.",
-        "Stockfish calcula 40 lances. Eu calculo se ainda tem pão.",
-        "Roquei o rei. Na vida, só troco de problema de lugar.",
-        "Joguei 1.e4 com cara de GM. No 12 já pedia empate ético.",
-        "Empate por afogamento: sem lances e sem xeque. Minha agenda às 18h.",
-        "O en passant é a jogada secreta. Tipo silenciar o grupo da família."
+        "Atualizei o app. Agora ele tem 14 permissões e a mesma lentidão de antes.",
+        "Captei 5G. Meu carregador captou 5% e desistiu.",
+        /* Cotidiano limpo */
+        "O que o zero disse pro oito? 'Belo cinto!'",
+        "Por que o relógio foi preso? Porque matou o tempo.",
+        "O tomate foi ao banco tirar extrato. Saiu vermelho de vergonha do saldo.",
+        "Qual o cúmulo do azar? Ser atropelado por um carro de autoescola.",
+        "O esqueleto não briga com ninguém: não tem estômago pra isso.",
+        "Li a bula do remédio. O efeito colateral mais perigoso era entender a letra do médico.",
+        "Fui correr. O tênis correu mais que eu — desamarrou e me abandonou.",
+        "Meu despertador e eu temos um acordo: ele toca, eu nego a existência.",
+        /* Meta / tabuleiro */
+        "No xadrez, tempo é material. Por isso meu relógio e minha conta empatam em zero.",
+        "Ganhei por tempo. Não por talento — o oponente foi fazer um café. Estratégia nível mestre.",
+        "Blunder: quando você joga genial… do ponto de vista do adversário.",
+        "Abertura italiana, defesa siciliana… Eu só abro a geladeira e defendo a sobremesa."
     ];
-
-    function shuffleStandUpDeck() {
-        // Fisher–Yates + evita repetir as últimas 8 usadas nesta sessão
-        for (let i = diverseStandUpList.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const t = diverseStandUpList[i];
-            diverseStandUpList[i] = diverseStandUpList[j];
-            diverseStandUpList[j] = t;
-        }
-        if (recentStandUpLines.length) {
-            const recent = new Set(recentStandUpLines.slice(-8));
-            diverseStandUpList.sort((a, b) => (recent.has(a) ? 1 : 0) - (recent.has(b) ? 1 : 0));
-        }
-        currentJokeIndex = 0;
-        addLog('Deck stand-up embaralhado (' + diverseStandUpList.length + ' linhas)', 'UI');
-    }
-
     let currentJokeIndex = 0;
-    let recentStandUpLines = [];
 
     function openLogModal() { document.getElementById("logTextarea").value = systemLogs.join('\n'); document.getElementById("log-modal").style.display = "flex"; }
     function closeLogModal() { document.getElementById("log-modal").style.display = "none"; }
@@ -2972,7 +2843,6 @@
         startClock();
         addLog(`Partida iniciada no modo: ${mode} (cor local: ${playerColor})`, "GAME");
         logSessionSnapshot("game-start:" + mode);
-        shuffleStandUpDeck();
     }
 
     function startBotVsBot() {
@@ -3178,161 +3048,12 @@
         input.value = ""; 
     }
     function handleChatPress(e) { if (e.key === 'Enter') sendCustomMessage(); }
-
-    // === Mensagens de voz (grava e envia, máx 10s, autoplay) ===
-    let voiceRecorder = null;
-    let voiceChunks = [];
-    let voiceStream = null;
-    let voiceStartTs = 0;
-    let voiceMaxTimer = null;
-    const VOICE_MAX_MS = 10000;
-
-    function setVoiceBtnRecording(on) {
-        const btn = document.getElementById('btnVoiceMsg');
-        if (!btn) return;
-        btn.classList.toggle('recording', !!on);
-        btn.textContent = on ? '⏹️' : '🎙️';
-        btn.title = on ? 'Solte para enviar' : 'Segure para gravar áudio (máx. 10s)';
-    }
-
-    async function startVoiceRecording() {
-        if (voiceRecorder && voiceRecorder.state === 'recording') return;
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            addChatMessage('Sistema', 'Microfone não disponível neste navegador.', true);
-            return;
-        }
-        try {
-            voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            voiceChunks = [];
-            const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-                ? 'audio/webm;codecs=opus'
-                : (MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '');
-            voiceRecorder = mime ? new MediaRecorder(voiceStream, { mimeType: mime }) : new MediaRecorder(voiceStream);
-            voiceRecorder.ondataavailable = (e) => { if (e.data && e.data.size) voiceChunks.push(e.data); };
-            voiceRecorder.onstop = onVoiceRecordingStop;
-            voiceRecorder.start(200);
-            voiceStartTs = Date.now();
-            setVoiceBtnRecording(true);
-            addLog('Gravação de voz iniciada', 'VOICE');
-            if (voiceMaxTimer) clearTimeout(voiceMaxTimer);
-            voiceMaxTimer = setTimeout(() => { stopVoiceRecording(true); }, VOICE_MAX_MS);
-        } catch (err) {
-            addChatMessage('Sistema', 'Permissão de microfone negada ou indisponível.', true);
-            addLog('Microfone erro: ' + (err && err.message), 'ERROR');
-            cleanupVoiceStream();
-        }
-    }
-
-    function stopVoiceRecording(auto) {
-        if (voiceMaxTimer) { clearTimeout(voiceMaxTimer); voiceMaxTimer = null; }
-        if (!voiceRecorder || voiceRecorder.state !== 'recording') {
-            setVoiceBtnRecording(false);
-            cleanupVoiceStream();
-            return;
-        }
-        try { voiceRecorder.stop(); } catch (e) {}
-        setVoiceBtnRecording(false);
-        addLog('Gravação de voz finalizada' + (auto ? ' (limite 10s)' : ''), 'VOICE');
-    }
-
-    function cleanupVoiceStream() {
-        if (voiceStream) {
-            try { voiceStream.getTracks().forEach(t => t.stop()); } catch (e) {}
-            voiceStream = null;
-        }
-        voiceRecorder = null;
-    }
-
-    function blobToBase64(blob) {
-        return new Promise((resolve, reject) => {
-            const r = new FileReader();
-            r.onloadend = () => resolve(r.result);
-            r.onerror = reject;
-            r.readAsDataURL(blob);
-        });
-    }
-
-    async function onVoiceRecordingStop() {
-        const durationMs = Math.max(0, Date.now() - voiceStartTs);
-        cleanupVoiceStream();
-        if (!voiceChunks.length || durationMs < 400) {
-            addChatMessage('Sistema', 'Áudio muito curto. Segure o 🎙️ por mais tempo.', true);
-            return;
-        }
-        const blob = new Blob(voiceChunks, { type: (voiceChunks[0] && voiceChunks[0].type) || 'audio/webm' });
-        voiceChunks = [];
-        if (blob.size > 280000) {
-            addChatMessage('Sistema', 'Áudio grande demais. Tente mais curto.', true);
-            return;
-        }
-        let dataUrl;
-        try { dataUrl = await blobToBase64(blob); } catch (e) {
-            addChatMessage('Sistema', 'Falha ao processar áudio.', true);
-            return;
-        }
-        const sec = Math.max(1, Math.round(durationMs / 1000));
-        displayVoiceMessage(playerName || 'Você', dataUrl, sec, true);
-        if (conn && conn.open) {
-            try {
-                conn.send({ type: 'voice', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), dataUrl: dataUrl, duration: sec });
-            } catch (e) {
-                addLog('Falha envio voz P2P: ' + e, 'ERROR');
-            }
-        }
-        addLog('Voz enviada ' + sec + 's size=' + blob.size, 'VOICE');
-    }
-
-    function displayVoiceMessage(sender, dataUrl, durationSec, isLocal) {
-        const box = document.getElementById('chat-box');
-        if (!box) return;
-        const row = document.createElement('div');
-        row.className = 'msg' + (isLocal ? ' local-voice' : '');
-        const who = document.createElement('div');
-        who.style.cssText = 'font-size:9px;font-weight:800;opacity:0.85;margin-bottom:2px;';
-        who.textContent = (sender || 'Jogador') + ' · 🎙️ ' + durationSec + 's';
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.preload = 'auto';
-        audio.src = dataUrl;
-        audio.style.cssText = 'width:100%;max-width:220px;height:32px;';
-        row.appendChild(who);
-        row.appendChild(audio);
-        box.appendChild(row);
-        box.scrollTop = box.scrollHeight;
-        const p = audio.play();
-        if (p && typeof p.catch === 'function') p.catch(function(){});
-    }
-
-    function bindVoiceButton() {
-        const btn = document.getElementById('btnVoiceMsg');
-        if (!btn || btn._voiceBound) return;
-        btn._voiceBound = true;
-        const start = function(e) { e.preventDefault(); startVoiceRecording(); };
-        const stop = function(e) { e.preventDefault(); stopVoiceRecording(false); };
-        btn.addEventListener('mousedown', start);
-        btn.addEventListener('mouseup', stop);
-        btn.addEventListener('mouseleave', function() {
-            if (voiceRecorder && voiceRecorder.state === 'recording') stopVoiceRecording(false);
-        });
-        btn.addEventListener('touchstart', start, { passive: false });
-        btn.addEventListener('touchend', stop, { passive: false });
-        btn.addEventListener('touchcancel', stop, { passive: false });
-    }
-
     function sendStandUpJoke() {
-        if (!diverseStandUpList.length) return;
-        if (currentJokeIndex >= diverseStandUpList.length) shuffleStandUpDeck();
-        const line = diverseStandUpList[currentJokeIndex];
+        const text = diverseStandUpList[currentJokeIndex];
         currentJokeIndex = (currentJokeIndex + 1) % diverseStandUpList.length;
-        if (currentJokeIndex === 0) shuffleStandUpDeck();
-        recentStandUpLines.push(line);
-        if (recentStandUpLines.length > 24) recentStandUpLines.shift();
-        const jokeHtml = '🎤 <b>MOMENTO CÔMICO:</b><br>"' + line + '"';
-        addChatMessage('Stand up', jokeHtml, true, false, true);
-        if (conn && conn.open) {
-            try { conn.send({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true }); } catch (e) {}
-        }
-        addLog('Stand-up: ' + line.slice(0, 80), 'UI');
+        let jokeHtml = `🎤 <b>MOMENTO CÔMICO:</b><br>"${text}"`;
+        addChatMessage("Stand up", jokeHtml, true, false, true);
+        if (conn && conn.open) { try { conn.send({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true }); } catch(e) {} }
     }
 
     function showCaptureInChat(move) {
@@ -4337,27 +4058,22 @@
         if (moves.length === 0) { if (onDone) onDone(); return; }
 
         let selectedMove;
-        if (aiDifficulty === 1 && gameMode !== 'bot-vs-bot') {
-            // Nível 1: busca rasa + 15% de lance "humano" aleatório entre os 3 melhores
-            // cai no worker abaixo com budget baixo
-        }
-        if (false) { // placeholder removido — todos 1–5 usam worker
-            selectedMove = moves[0];
+        if (aiDifficulty === 1) { 
+            selectedMove = moves[Math.floor(Math.random() * moves.length)];
+            applyAIMove(selectedMove, onDone);
+        } else if (aiDifficulty === 2) {
+            const captures = moves.filter(m => m.captured);
+            const checks = moves.filter(m => m.san && m.san.includes('+'));
+            const pool = captures.length ? captures : (checks.length ? checks : moves);
+            selectedMove = pool[Math.floor(Math.random() * pool.length)];
             applyAIMove(selectedMove, onDone);
         } else {
             // Orçamentos calibrados p/ mobile: prioriza COMPLETAR depth 2–3, não estourar tempo em depth 1.
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
-                depthBudget = [3, 500];
+                depthBudget = [3, 500]; // ~0.5s busca + pausa visual no loop
             } else {
-                // N1 já sério → N5 bem pesado (motor atual, sem Stockfish)
-                depthBudget = {
-                    1: [3, 400],
-                    2: [4, 800],
-                    3: [5, 1400],
-                    4: [6, 2400],
-                    5: [7, 3500]
-                }[aiDifficulty] || [5, 1400];
+                depthBudget = { 3: [3, 350], 4: [4, 700], 5: [5, 1400] }[aiDifficulty] || [4, 700];
             }
             const currentReqId = ++aiRequestId;
             const thinkStarted = performance.now();
@@ -4751,12 +4467,6 @@
             addChatMessage(data.sender || opponentName || "Oponente", String(data.text || '').slice(0, 300), !!data.isAI, !!data.isAlert, false); 
             return; 
         }
-        if (data.type === 'voice' && data.dataUrl) {
-            const sec = Math.max(1, Math.min(15, parseInt(data.duration, 10) || 5));
-            displayVoiceMessage(data.sender || opponentName || 'Oponente', data.dataUrl, sec, false);
-            addLog('Voz recebida de ' + (data.sender || '?') + ' ' + sec + 's', 'VOICE');
-            return;
-        }
         if (data.type === 'radio') {
             applyRemoteRadio(data);
             return;
@@ -4894,7 +4604,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v8.4.html',
+            start_url: './XadrezPro_v8.1.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -5145,10 +4855,8 @@
     }
 
 
-    addLog('Xadrez Pro v8.4 — frases compactas, voz 10s, IA rebalanceada, memes.', 'INIT');
+    addLog('Xadrez Pro v8.1 — stand-up fixo, rádio estável, bot ritmo, log analítico.', 'INIT');
     logSessionSnapshot('boot');
-    if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
-    if (typeof bindVoiceButton === 'function') bindVoiceButton();
 </script>
 </body>
 </html>
