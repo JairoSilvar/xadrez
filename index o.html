@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v8.1</title>
+    <title>Xadrez Pro - v8.0</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -355,11 +355,6 @@
             cursor: pointer; flex-shrink: 0; white-space: nowrap;
             transition: background 0.15s ease, transform 0.12s ease;
         }
-        .xp-toggle-btn.standup-direct {
-            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-            color: #fff; border-color: transparent; font-size: 14px;
-            min-width: 36px; padding: 0 8px;
-        }
         .xp-toggle-btn:active { transform: scale(0.96); background: var(--btn-hover); }
         .xp-toggle-btn.active {
             background: var(--board-border); color: #fff;
@@ -592,25 +587,6 @@
                 padding: 0 8px !important;
                 font-size: 11px !important;
             }
-            .xp-toggle-btn.standup-direct {
-                display: inline-flex !important;
-                height: 36px !important;
-                min-width: 36px !important;
-                font-size: 15px !important;
-            }
-            /* Painel de frases: sobe com stand-up sempre no topo visível */
-            .xp-float-panel.taunts {
-                max-height: min(40vh, 260px) !important;
-                overflow: hidden !important;
-            }
-            .xp-float-panel.taunts .taunt-standup-sticky {
-                display: flex !important;
-                flex-shrink: 0 !important;
-            }
-            .xp-float-panel.taunts .taunt-chips-scroll {
-                min-height: 0 !important;
-                max-height: calc(40vh - 52px) !important;
-            }
 
             body.menu-hidden .board-section {
                 width: min(98vw, 85vh) !important;
@@ -623,7 +599,6 @@
         @media (min-width: 901px), (orientation: landscape) {
             .xp-toggle-btn { display: none !important; }
             .xp-float-panel { display: none !important; }
-            .xp-toggle-btn.standup-direct { display: none !important; }
         }
         @media (max-width: 900px) and (orientation: landscape) {
             #game-wrapper { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 6px !important; padding: 0px !important; height: 100vh !important; height: 100dvh !important; width: 100vw !important; }
@@ -1144,7 +1119,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v8.1</p>
+            <p>Estratégia P2P · IA offline · v8.0</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1402,9 +1377,8 @@
                 </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
-                    <button type="button" class="xp-toggle-btn standup-direct" id="btnStandUpDirect" onclick="sendStandUpJoke(); closeFloatPanels();" title="Stand-up">🎤</button>
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
-                    <button class="action-btn" style="flex: 0 0 48px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
+                    <button class="action-btn" style="flex: 0 0 50px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
                         <div class="taunt-standup-sticky">
                             <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
@@ -1787,7 +1761,7 @@
             if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) return 0;
 
             if (depth <= 0) {
-                return quiescence(game, alpha, beta, deadline, 2);
+                return quiescence(game, alpha, beta, deadline, 3);
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
@@ -1816,49 +1790,32 @@
             let depthReached = 0;
             searchNodes = 0;
             const deadline = performance.now() + timeBudgetMs;
-            // Snapshot de FEN atual para penalizar ida-e-volta imediato
-            const rootFen = game.fen();
 
             for (let d = 1; d <= maxDepth; d++) {
                 if (performance.now() > deadline) break;
-                let alpha = -Infinity;
-                const beta = Infinity;
+                let alpha = -Infinity, beta = Infinity;
                 let timedOut = false;
-                // ranking dos melhores na raiz
-                let scored = [];
+                let bestScoreThisDepth = -Infinity;
+                let bestAtDepth = moves[0];
 
                 for (const m of moves) {
                     if (performance.now() > deadline) { timedOut = true; break; }
                     game.move(m);
                     let score = -negamax(game, d - 1, -beta, -alpha, deadline);
-                    // penalidades anti-loop
-                    if (game.in_threefold_repetition()) score -= 800;
-                    // desincentiva "desfazer" o último lance do oponente de forma vazia
-                    const hist = game.history({ verbose: true });
-                    if (hist.length >= 2) {
-                        const prev = hist[hist.length - 2];
-                        if (prev && prev.to === m.from && prev.from === m.to && !m.captured) score -= 120;
-                    }
+                    if (game.in_threefold_repetition()) score -= 50;
                     game.undo();
-                    scored.push({ m, score });
+
+                    if (score > bestScoreThisDepth) {
+                        bestScoreThisDepth = score;
+                        bestAtDepth = m;
+                    }
                     if (score > alpha) alpha = score;
                 }
-                if (!scored.length) break;
-                scored.sort((a, b) => b.score - a.score);
-                // se o #1 causa repetição tripla ao aplicar, pega o próximo
-                let chosen = scored[0];
-                for (const cand of scored.slice(0, Math.min(6, scored.length))) {
-                    game.move(cand.m);
-                    const repeats = game.in_threefold_repetition();
-                    game.undo();
-                    if (!repeats) { chosen = cand; break; }
-                }
                 if (timedOut && d > 1) break;
-                bestMove = chosen.m;
-                bestScore = chosen.score;
+                bestMove = bestAtDepth;
+                bestScore = bestScoreThisDepth;
                 depthReached = d;
-                // PV first
-                moves = [bestMove, ...moves.filter(x => x !== bestMove)];
+                moves = [bestMove, ...moves.filter(m => m !== bestMove)];
             }
             return { bestMove, depthReached, score: bestScore, nodes: searchNodes };
         }
@@ -2062,55 +2019,26 @@
     let systemLogs = [];
     let sfxAudioCtx = null;
 
-    function getLogContext() {
-        try {
-            const ua = (navigator.userAgent || '').slice(0, 90);
-            const net = (navigator.connection && navigator.connection.effectiveType) || '?';
-            const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
-            const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
-            return {
-                ver: '8.1',
-                mode: typeof gameMode !== 'undefined' ? gameMode : '-',
-                turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
-                ply: ply,
-                fen: fenShort,
-                color: typeof playerColor !== 'undefined' ? playerColor : '-',
-                ai: typeof aiDifficulty !== 'undefined' ? aiDifficulty : '-',
-                p2p: (typeof conn !== 'undefined' && conn && conn.open) ? 'up' : 'down',
-                radio: (typeof radioPlaying !== 'undefined' && radioPlaying) ? (currentRadioChannelId || 'on') : 'off',
-                net: net,
-                view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
-            };
-        } catch (e) {
-            return { ver: '8.1', err: String(e && e.message || e) };
-        }
-    }
-
     function addLog(msg, level = 'INFO', meta = null) {
         const now = new Date();
         const time = now.toISOString().split('T')[1].slice(0, 12) + '.' + String(now.getMilliseconds()).padStart(3, '0');
         let extra = '';
-        const needCtx = level === 'ERROR' || level === 'CRITICAL' || level === 'WARN'
-            || level === 'AI_PERF' || level === 'P2P_CONNECT' || level === 'P2P_INFO' || level === 'P2P_SUCCESS'
-            || level === 'RADIO' || level === 'GAME' || level === 'MOVE' || level === 'DIAG';
-        const ctx = needCtx ? getLogContext() : null;
-        const merged = Object.assign({}, ctx || {}, (meta && typeof meta === 'object') ? meta : {});
-        if (Object.keys(merged).length) {
+        if (meta && typeof meta === 'object') {
             try {
                 const parts = [];
-                for (const k of Object.keys(merged)) {
-                    let v = merged[k];
+                for (const k of Object.keys(meta)) {
+                    let v = meta[k];
                     if (v === undefined || v === null) continue;
                     if (typeof v === 'object') v = JSON.stringify(v);
-                    parts.push(k + '=' + v);
+                    parts.push(`${k}=${v}`);
                 }
                 if (parts.length) extra = ' | ' + parts.join(' ');
             } catch (e) {}
         }
-        const logMsg = '[' + time + '] [' + level + '] -> ' + msg + extra;
+        const logMsg = `[${time}] [${level}] -> ${msg}${extra}`;
         systemLogs.push(logMsg);
-        if (systemLogs.length > 2500) systemLogs.splice(0, systemLogs.length - 2500);
-        const textarea = document.getElementById('logTextarea');
+        if (systemLogs.length > 1500) systemLogs.shift();
+        const textarea = document.getElementById("logTextarea");
         if (textarea) {
             textarea.value = systemLogs.join('\n');
             if (textarea.scrollHeight - textarea.scrollTop - textarea.clientHeight < 80) {
@@ -2120,10 +2048,6 @@
         if (level === 'ERROR' || level === 'CRITICAL' || level === 'WARN') {
             try { console.warn(logMsg); } catch (e) {}
         }
-    }
-
-    function logSessionSnapshot(reason) {
-        addLog('SNAPSHOT: ' + (reason || 'manual'), 'DIAG');
     }
 
     window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -2269,7 +2193,7 @@
     }
 
 
-    // === v8.1 — painéis flutuantes de reações e frases (mobile portrait) ===
+    // === v8.0 — painéis flutuantes de reações e frases (mobile portrait) ===
     function closeFloatPanels() {
         const r = document.getElementById('reactionsFloatPanel');
         const t = document.getElementById('tauntsFloatPanel');
@@ -2842,14 +2766,13 @@
         resetClocks();
         startClock();
         addLog(`Partida iniciada no modo: ${mode} (cor local: ${playerColor})`, "GAME");
-        logSessionSnapshot("game-start:" + mode);
     }
 
     function startBotVsBot() {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         aiDifficulty = 4;
         startGame('bot-vs-bot', false);
-        addLog('Bot vs Bot: depth≤3 · busca~450ms + pausa 550ms · anti-repetição', 'AI_PERF');
+        addLog('Bot vs Bot: modo rápido (depth≤4, ~280ms por lance)', 'AI_PERF');
         loopBot();
     }
 
@@ -2859,16 +2782,15 @@
             if (chess.game_over() && !chess.in_checkmate()) handleGameOverEvents("Fim de Jogo (Empate)", null);
             return;
         }
-        // ~450ms de busca + 550ms de pausa visual ≈ ritmo assistível (~1s/lance)
         makeAIMove('w', () => {
             if (chess.game_over() || gameMode !== 'bot-vs-bot') return;
             botVsBotInterval = setTimeout(() => {
                 makeAIMove('b', () => {
                     if (!chess.game_over() && gameMode === 'bot-vs-bot') {
-                        botVsBotInterval = setTimeout(loopBot, 550);
+                        botVsBotInterval = setTimeout(loopBot, 100);
                     }
                 });
-            }, 550);
+            }, 100);
         });
     }
 
@@ -3290,23 +3212,12 @@
         };
     }
 
-    let radioSwitchTimer = null;
-    let radioBusy = false;
-
     function cleanupCurrentRadio(fromRemote = false) {
         const wasPlaying = radioPlaying;
-        const prevChannel = currentRadioChannelId;
         stopLatencyMonitor();
-        if (hlsInstance) {
-            try { hlsInstance.stopLoad(); } catch (e) {}
-            try { hlsInstance.detachMedia(); } catch (e) {}
-            try { hlsInstance.destroy(); } catch (e) {}
-            hlsInstance = null;
-        }
+        if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
         if (radioAudio) {
             try {
-                radioAudio.onerror = null;
-                radioAudio.onplaying = null;
                 radioAudio.pause();
                 radioAudio.removeAttribute('src');
                 radioAudio.load();
@@ -3315,14 +3226,7 @@
         }
         radioPlaying = false;
         currentStationLabel = '';
-        const playBtn = document.getElementById('radioPlayBtn');
-        if (playBtn) { playBtn.textContent = '🔊'; playBtn.classList.remove('active-radio-icon'); }
-        const sidebarBtn = document.getElementById('radioSidebarBtn');
-        if (sidebarBtn) sidebarBtn.classList.remove('radio-active');
-        if (wasPlaying && !fromRemote) {
-            broadcastRadioState('pause', prevChannel);
-            addLog('Rádio pausado localmente' + (prevChannel ? ' (' + prevChannel + ')' : ''), 'RADIO');
-        }
+        if (wasPlaying && !fromRemote) broadcastRadioState('pause', currentRadioChannelId);
     }
 
     function startLatencyMonitor(stationLabel = '') {
@@ -3407,7 +3311,6 @@
             syncRadioSelects(channelId);
             broadcastRadioState('play', channelId);
             startLatencyMonitor(channel.label);
-            addLog('Rádio tocando: ' + channel.label + ' [' + channelId + ']', 'RADIO');
         };
 
         if (channel.needsHls || urlNeedsHls(streamUrl)) {
@@ -3485,11 +3388,13 @@
     function applyRemoteRadio(data) {
         if (!data || data.type !== 'radio') return;
         radioSyncIgnore = true;
-        addLog('Rádio remoto: action=' + data.action + ' channel=' + (data.channelId || '-'), 'RADIO');
         try {
             if (data.action === 'pause') {
-                if (radioSwitchTimer) { clearTimeout(radioSwitchTimer); radioSwitchTimer = null; }
                 cleanupCurrentRadio(true);
+                const playBtn = document.getElementById('radioPlayBtn');
+                if (playBtn) { playBtn.textContent = '🔊'; playBtn.classList.remove('active-radio-icon'); }
+                const btn = document.getElementById('radioSidebarBtn');
+                if (btn) btn.classList.remove('radio-active');
                 updateAllRadioStatus('Pausada (oponente)');
                 addChatMessage('Sistema', '📻 Oponente pausou o rádio.', true);
             } else if (data.action === 'play' && data.channelId && RADIO_CHANNELS[data.channelId]) {
@@ -3499,17 +3404,12 @@
                     const volEl = document.getElementById('radioVolumeSettings');
                     if (volEl) volEl.value = Math.round(radioVolume * 100);
                 }
-                // evita reiniciar a mesma estação (travada no mobile)
-                if (radioPlaying && currentRadioChannelId === data.channelId) {
-                    addLog('Rádio remoto ignorado (já tocando mesma estação)', 'RADIO');
-                } else {
-                    const label = RADIO_CHANNELS[data.channelId].label || data.channelId;
-                    addChatMessage('Sistema', '📻 Oponente sintonizou: <b>' + label + '</b> — tocando aqui também.', true, false, true);
-                    requestRadioChannel(data.channelId, 'remote');
-                }
+                const label = RADIO_CHANNELS[data.channelId].label || data.channelId;
+                addChatMessage('Sistema', '📻 Oponente sintonizou: <b>' + label + '</b> — tocando aqui também.', true, false, true);
+                playRadioChannel(data.channelId, 0);
             }
         } finally {
-            setTimeout(() => { radioSyncIgnore = false; }, 1500);
+            setTimeout(() => { radioSyncIgnore = false; }, 1200);
         }
     }
 
@@ -3535,28 +3435,17 @@
         else updateAllRadioStatus('Selecione estação');
     }
 
-    function requestRadioChannel(channelId, source) {
-        if (!channelId) return;
-        if (radioSwitchTimer) clearTimeout(radioSwitchTimer);
-        updateAllRadioStatus('Trocando...');
-        addLog('Pedido de rádio: ' + channelId + ' via ' + (source || '?'), 'RADIO');
-        // debounce 350ms evita spam/travada no mobile ao rolar o select
-        radioSwitchTimer = setTimeout(() => {
-            radioSwitchTimer = null;
-            playRadioChannel(channelId, 0);
-        }, 350);
-    }
     function changeRadioStationMenu() {
         const select = document.getElementById('radioSelectCompact');
-        if (select && select.value) requestRadioChannel(select.value, 'menu');
+        if (select && select.value) playRadioChannel(select.value);
     }
     function changeRadioStationSettings() {
         const select = document.getElementById('radioSelectSettings');
-        if (select && select.value) requestRadioChannel(select.value, 'settings');
+        if (select && select.value) playRadioChannel(select.value);
     }
     function changeRadioStationPopup() {
         const select = document.getElementById('radioSelectCompactPopup');
-        if (select && select.value) requestRadioChannel(select.value, 'popup');
+        if (select && select.value) playRadioChannel(select.value);
     }
 
     function toggleRadioFromSettings() { toggleRadioMenuPlay(); }
@@ -4068,12 +3957,12 @@
             selectedMove = pool[Math.floor(Math.random() * pool.length)];
             applyAIMove(selectedMove, onDone);
         } else {
-            // Orçamentos calibrados p/ mobile: prioriza COMPLETAR depth 2–3, não estourar tempo em depth 1.
+            // bot-vs-bot: rápido. PvE: por nível (bem mais ágil que antes).
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
-                depthBudget = [3, 500]; // ~0.5s busca + pausa visual no loop
+                depthBudget = [4, 280];
             } else {
-                depthBudget = { 3: [3, 350], 4: [4, 700], 5: [5, 1400] }[aiDifficulty] || [4, 700];
+                depthBudget = { 3: [4, 250], 4: [5, 600], 5: [6, 1200] }[aiDifficulty] || [5, 600];
             }
             const currentReqId = ++aiRequestId;
             const thinkStarted = performance.now();
@@ -4604,7 +4493,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v8.1.html',
+            start_url: './XadrezPro_v8.0.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -4855,8 +4744,7 @@
     }
 
 
-    addLog('Xadrez Pro v8.1 — stand-up fixo, rádio estável, bot ritmo, log analítico.', 'INIT');
-    logSessionSnapshot('boot');
+    addLog('Xadrez Pro v8.0 — histórico PGN, IA ágil, painel mobile, rádio P2P.', 'INIT');
 </script>
 </body>
 </html>
