@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v7.3.2</title>
+    <title>Xadrez Pro - v8.0</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -375,26 +375,50 @@
             padding: 10px; gap: 8px;
         }
         .xp-float-panel.taunts {
-            flex-wrap: wrap; max-width: min(94vw, 340px);
-            left: auto; right: 0; bottom: 100%; margin-bottom: 6px;
-            justify-content: flex-start; align-items: stretch;
-            padding: 10px; gap: 8px;
-            max-height: min(42vh, 280px); overflow-y: auto;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            left: 0; right: 0; width: 100%;
+            bottom: 100%; margin-bottom: 4px;
+            padding: 0;
+            max-height: min(38vh, 240px);
+            overflow: hidden;
+            gap: 0;
+        }
+        .xp-float-panel.taunts .taunt-standup-sticky {
+            flex-shrink: 0;
+            padding: 8px 8px 4px;
+            background: var(--modal-bg);
+            border-bottom: 1px solid var(--panel-border);
+            position: sticky; top: 0; z-index: 2;
+        }
+        .xp-float-panel.taunts .taunt-chips-scroll {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding: 6px 8px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-content: flex-start;
+            scrollbar-width: thin;
+            scrollbar-color: var(--board-border) var(--chat-bg);
         }
         .xp-float-panel .reaction-btn {
             flex: 0 0 auto; min-width: 40px; max-width: 44px; height: 40px; font-size: 18px;
             border-radius: 12px;
         }
-        /* Chips de frases — mesmo visual dos emojis, com rótulo curto */
+        /* Chips compactos — cabem mais na tela */
         .xp-float-panel .taunt-chip {
             flex: 0 0 auto;
-            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-            min-height: 38px; padding: 6px 12px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+            min-height: 32px; padding: 4px 10px;
             border-radius: 999px;
             border: 1px solid var(--panel-border);
             background: var(--btn-bg);
             color: var(--text-main);
-            font-size: 12px; font-weight: 700;
+            font-size: 11px; font-weight: 700;
             cursor: pointer; white-space: nowrap;
             transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
         }
@@ -406,10 +430,26 @@
         .xp-float-panel .taunt-chip.standup {
             background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
             color: #fff; border-color: transparent;
-            width: 100%; justify-content: center; border-radius: 12px;
-            font-size: 13px; padding: 10px 12px;
+            width: 100%; justify-content: center; border-radius: 10px;
+            font-size: 12px; padding: 8px 10px; min-height: 36px;
         }
-        .xp-float-panel .taunt-chip .chip-emoji { font-size: 16px; line-height: 1; }
+        .xp-float-panel .taunt-chip .chip-emoji { font-size: 14px; line-height: 1; }
+
+        @media (max-width: 900px) and (orientation: portrait) {
+            .xp-float-panel.taunts {
+                max-height: min(34vh, 220px) !important;
+            }
+            .xp-float-panel .taunt-chip {
+                min-height: 30px !important;
+                padding: 3px 9px !important;
+                font-size: 10.5px !important;
+            }
+            .xp-float-panel .taunt-chip.standup {
+                min-height: 34px !important;
+                font-size: 11.5px !important;
+                padding: 7px 10px !important;
+            }
+        }
 
         @media (max-width: 900px) and (orientation: portrait) {
             #game-wrapper {
@@ -1079,7 +1119,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v7.3.1</p>
+            <p>Estratégia P2P · IA offline · v8.0</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1340,22 +1380,26 @@
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 50px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
-                        <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão sonhador</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                        <div class="taunt-standup-sticky">
+                            <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
+                        </div>
+                        <div class="taunt-chips-scroll">
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                        </div>
                     </div>
                 </div>
                 <div class="taunt-scroll-container" id="tauntScrollContainer">
@@ -1711,12 +1755,13 @@
         }
 
         function negamax(game, depth, alpha, beta, deadline) {
+            searchNodes++;
             if (performance.now() > deadline) return evaluateBoard(game);
-            if (game.in_checkmate()) return -20000 + (10 - depth); // prefer faster mate
+            if (game.in_checkmate()) return -20000 + (10 - depth);
             if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) return 0;
 
             if (depth <= 0) {
-                return quiescence(game, alpha, beta, deadline, 6);
+                return quiescence(game, alpha, beta, deadline, 3);
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
@@ -1735,10 +1780,15 @@
             return alpha;
         }
 
+        let searchNodes = 0;
+
         function iterativeDeepening(game, maxDepth, timeBudgetMs) {
             let moves = orderMoves(game.moves({ verbose: true }));
-            if (moves.length === 0) return null;
+            if (moves.length === 0) return { bestMove: null, depthReached: 0, score: 0, nodes: 0 };
             let bestMove = moves[0];
+            let bestScore = 0;
+            let depthReached = 0;
+            searchNodes = 0;
             const deadline = performance.now() + timeBudgetMs;
 
             for (let d = 1; d <= maxDepth; d++) {
@@ -1746,8 +1796,7 @@
                 let alpha = -Infinity, beta = Infinity;
                 let timedOut = false;
                 let bestScoreThisDepth = -Infinity;
-                let candidates = [];
-                const EPS = 8;
+                let bestAtDepth = moves[0];
 
                 for (const m of moves) {
                     if (performance.now() > deadline) { timedOut = true; break; }
@@ -1756,38 +1805,45 @@
                     if (game.in_threefold_repetition()) score -= 50;
                     game.undo();
 
-                    if (score > bestScoreThisDepth + EPS) {
+                    if (score > bestScoreThisDepth) {
                         bestScoreThisDepth = score;
-                        candidates = [m];
-                    } else if (score >= bestScoreThisDepth - EPS) {
-                        candidates.push(m);
+                        bestAtDepth = m;
                     }
                     if (score > alpha) alpha = score;
                 }
                 if (timedOut && d > 1) break;
-                bestMove = candidates[Math.floor(Math.random() * candidates.length)] || moves[0];
-                // PV move first next iteration
+                bestMove = bestAtDepth;
+                bestScore = bestScoreThisDepth;
+                depthReached = d;
                 moves = [bestMove, ...moves.filter(m => m !== bestMove)];
             }
-            return bestMove;
+            return { bestMove, depthReached, score: bestScore, nodes: searchNodes };
         }
 
         self.onmessage = function(e) {
             const { fen, depthBudget, requestId } = e.data;
+            const t0 = performance.now();
             const game = new Chess(fen);
-            const bestMove = iterativeDeepening(game, depthBudget[0], depthBudget[1]);
-            self.postMessage({ bestMove, requestId });
+            const result = iterativeDeepening(game, depthBudget[0], depthBudget[1]);
+            self.postMessage({
+                bestMove: result.bestMove,
+                depthReached: result.depthReached,
+                score: result.score,
+                nodes: result.nodes,
+                ms: Math.round(performance.now() - t0),
+                requestId
+            });
         };
     `;
     const aiWorkerBlob = new Blob([aiWorkerScript], { type: 'application/javascript' });
     const aiWorker = new Worker(URL.createObjectURL(aiWorkerBlob));
 
     aiWorker.onmessage = function(e) {
-        const { bestMove, requestId } = e.data;
-        if (requestId === aiRequestId && pendingAICallback && gameMode !== 'menu') {
+        const data = e.data || {};
+        if (data.requestId === aiRequestId && pendingAICallback && gameMode !== 'menu') {
             const cb = pendingAICallback;
             pendingAICallback = null;
-            cb(bestMove);
+            cb(data);
         }
     };
 
@@ -2137,7 +2193,7 @@
     }
 
 
-    // === v7.3.2 — painéis flutuantes de reações e frases (mobile portrait) ===
+    // === v8.0 — painéis flutuantes de reações e frases (mobile portrait) ===
     function closeFloatPanels() {
         const r = document.getElementById('reactionsFloatPanel');
         const t = document.getElementById('tauntsFloatPanel');
@@ -2219,16 +2275,24 @@
         }
         box.innerHTML = gameHistory.slice(0, 10).map((g, i) => {
             const d = (g.date || '').slice(0, 10);
-            return `<div class="history-item" onclick="showHistoryEntry(${i})">${d} · ${g.mode} · ${g.result}${g.opening ? ' · ' + g.opening : ''}</div>`;
+            const res = g.result === '1-0' ? '1-0 ★' : (g.result === '0-1' ? '0-1 ★' : '½-½');
+            const modeLabel = ({ 'pve': 'vs IA', 'pvp': 'Local', 'network': 'Online', 'bot-vs-bot': 'Bots', 'sandbox': 'Sandbox' })[g.mode] || g.mode;
+            return `<div class="history-item" onclick="showHistoryEntry(${i})" title="Toque para copiar PGN">${d} · ${modeLabel} · ${res}${g.opening ? ' · ' + g.opening : ''}</div>`;
         }).join('');
     }
 
     function showHistoryEntry(i) {
         const g = gameHistory[i];
         if (!g) return;
-        const text = (g.pgn || '').slice(0, 1500);
-        try { navigator.clipboard.writeText(g.pgn || ''); addChatMessage('Sistema', 'PGN do histórico copiado!', true); }
-        catch(e) { prompt('PGN:', g.pgn || ''); }
+        const resultLabel = g.result === '1-0' ? 'Vitória das Brancas' : (g.result === '0-1' ? 'Vitória das Pretas' : 'Empate');
+        const summary = `${(g.date || '').slice(0, 10)} · ${g.mode} · ${resultLabel}` + (g.reason ? ` (${g.reason})` : '');
+        try {
+            navigator.clipboard.writeText(g.pgn || '');
+            addChatMessage('Histórico', '📋 PGN copiado! ' + summary + ' — cole em Lichess/Chess.com para analisar.', true);
+            addLog('PGN histórico copiado: ' + summary, 'HISTORY');
+        } catch (e) {
+            prompt('PGN da partida (' + summary + '):', g.pgn || '');
+        }
     }
 
     function applyCustomBoardColors() {
@@ -2336,8 +2400,8 @@
         const badge = document.getElementById('turn-badge-local');
         if (badge) { badge.innerText = 'Analisando...'; badge.style.display = 'inline-block'; }
         const currentReqId = ++aiRequestId;
-        const depthBudget = [7, 1800];
-        pendingAICallback = (bestMove) => {
+        const depthBudget = [5, 800];
+        pendingAICallback = (payload) => {
             if (currentReqId !== aiRequestId) return;
             if (badge) badge.style.display = 'none';
             if (evalBtn) {
@@ -2345,9 +2409,13 @@
                 evalBtn.innerHTML = '🔎 Avaliar';
                 evalBtn.disabled = false;
             }
+            const bestMove = (payload && payload.bestMove) ? payload.bestMove : payload;
             if (!bestMove) {
                 addChatMessage('Oráculo', 'Não foi possível avaliar.', true);
                 return;
+            }
+            if (payload && payload.depthReached != null) {
+                addLog(`Sandbox eval depth=${payload.depthReached} nodes=${payload.nodes||'?'} eval=${payload.score}`, 'AI_PERF');
             }
             const san = bestMove.san || (bestMove.from + bestMove.to);
             addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b>', true, false, true);
@@ -2486,26 +2554,43 @@
     };
 
     const diverseStandUpList = [
-        "O peão chega na última fileira e vira dama. Eu chego no fim do mês e viro boleto.",
-        "Por que o cavalo só anda em L? Porque se andasse reto, o GPS gritava: 'recalcule a rota'.",
-        "Xeque-mate é quando o rei não tem saída. Segunda-feira é a mesma coisa, só que com café.",
-        "Meu bispo controla a diagonal inteira. Eu não controlo nem a fila do banco.",
-        "Roquei o rei e a torre. Na vida real, eu só troco de problema de lugar.",
-        "O en passant é a jogada secreta do xadrez. Tipo quando você 'esquece' o grupo da família.",
-        "A dama é a peça mais forte. Por isso no tabuleiro ela trabalha, e o rei só anda uma casa.",
-        "Empate por afogamento: sem lances legais e sem xeque. Resumo da minha agenda às 18h.",
-        "Stockfish calcula 40 jogadas à frente. Eu calculo se ainda tem pão na geladeira.",
-        "Perdi a torre e fiquei 'só com a qualidade'. Na vida: perdi a paciência e fiquei só com o Wi-Fi.",
-        "Abertura italiana, defesa siciliana... Eu só abro a geladeira e defendo a sobremesa.",
-        "No xadrez, tempo é material. Por isso meu relógio e minha conta bancária estão empatados em zero.",
-        "Fiz um sacrifício de dama genial. Mentira: foi blunder. Mas soou filosófico no chat.",
-        "O rei fica no centro e toma mate. Eu fico no sofá e tomo decisão errada no delivery.",
-        "Três peões passados valem uma peça. Três notificações do banco valem um ataque de ansiedade.",
-        "Joguei 1.e4 com confiança de GM. No lance 12 já estava pedindo empate por 'cansaço ético'.",
-        "O cavalo pula peças. Eu pulo compromisso. A diferença é que o cavalo ainda é útil.",
-        "Xeque descoberto é traiçoeiro. Tipo aquele 'oi sumido' depois de três meses.",
-        "No final de peões, cada tempo conta. Na fila do SUS, cada tempo conta... e some.",
-        "Ganhei por tempo. Não por talento — o oponente foi fazer café. Estratégia avançada."
+        /* Xadrez */
+        "O peão chega na 8ª fileira e vira dama. Eu chego no fim do mês e viro boleto.",
+        "Por que o cavalo só anda em L? Porque em linha reta o radar multa.",
+        "Xeque-mate: o rei sem saída. Segunda-feira: a mesma vibe, com café.",
+        "Stockfish calcula 40 lances. Eu calculo se ainda tem pão na geladeira.",
+        "Roquei o rei. Na vida real, só troco de problema de lugar.",
+        "A dama é a peça mais forte. No tabuleiro ela trabalha; o rei anda uma casinha.",
+        "Empate por afogamento: sem lances e sem xeque. Resumo da minha agenda às 18h.",
+        "Joguei 1.e4 com cara de GM. No lance 12 já pedia empate por cansaço ético.",
+        "O en passant é a jogada secreta. Tipo quando você 'esquece' o grupo da família.",
+        "Perdi a torre e fiquei 'só com a qualidade'. Na vida: perdi a paciência e sobrou o Wi-Fi.",
+        /* Escola / estudo */
+        "Por que o livro de matemática foi ao psicólogo? Tinha problemas demais.",
+        "Professor: 'quanto é 2+2?' Joãozinho: 'depende se é prova ou estimativa de obra'.",
+        "Estudei a noite inteira. A matéria também: ela dormiu e eu que fiquei acordado.",
+        "Minha nota em educação física: 'participou'. Tradução: sobreviveu à queimada.",
+        "O relógio da escola atrasa de propósito. É a única coisa mais lenta que a fila do intervalo.",
+        /* Tech / internet */
+        "Por que o computador foi ao médico? Estava com vírus… e sem antivírus pirata atualizado.",
+        "Minha vida social está em modo avião: ligada, mas sem conexão.",
+        "Wi-Fi da escola: 2 barras de sinal e 0 de dignidade.",
+        "Atualizei o app. Agora ele tem 14 permissões e a mesma lentidão de antes.",
+        "Captei 5G. Meu carregador captou 5% e desistiu.",
+        /* Cotidiano limpo */
+        "O que o zero disse pro oito? 'Belo cinto!'",
+        "Por que o relógio foi preso? Porque matou o tempo.",
+        "O tomate foi ao banco tirar extrato. Saiu vermelho de vergonha do saldo.",
+        "Qual o cúmulo do azar? Ser atropelado por um carro de autoescola.",
+        "O esqueleto não briga com ninguém: não tem estômago pra isso.",
+        "Li a bula do remédio. O efeito colateral mais perigoso era entender a letra do médico.",
+        "Fui correr. O tênis correu mais que eu — desamarrou e me abandonou.",
+        "Meu despertador e eu temos um acordo: ele toca, eu nego a existência.",
+        /* Meta / tabuleiro */
+        "No xadrez, tempo é material. Por isso meu relógio e minha conta empatam em zero.",
+        "Ganhei por tempo. Não por talento — o oponente foi fazer um café. Estratégia nível mestre.",
+        "Blunder: quando você joga genial… do ponto de vista do adversário.",
+        "Abertura italiana, defesa siciliana… Eu só abro a geladeira e defendo a sobremesa."
     ];
     let currentJokeIndex = 0;
 
@@ -2685,8 +2770,9 @@
 
     function startBotVsBot() {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
-        aiDifficulty = 5;
+        aiDifficulty = 4;
         startGame('bot-vs-bot', false);
+        addLog('Bot vs Bot: modo rápido (depth≤4, ~280ms por lance)', 'AI_PERF');
         loopBot();
     }
 
@@ -3871,17 +3957,36 @@
             selectedMove = pool[Math.floor(Math.random() * pool.length)];
             applyAIMove(selectedMove, onDone);
         } else {
-            const depthBudget = { 3: [5, 500], 4: [7, 1500], 5: [9, 3500] }[aiDifficulty] || [7, 1500];
+            // bot-vs-bot: rápido. PvE: por nível (bem mais ágil que antes).
+            let depthBudget;
+            if (gameMode === 'bot-vs-bot') {
+                depthBudget = [4, 280];
+            } else {
+                depthBudget = { 3: [4, 250], 4: [5, 600], 5: [6, 1200] }[aiDifficulty] || [5, 600];
+            }
             const currentReqId = ++aiRequestId;
+            const thinkStarted = performance.now();
 
             document.getElementById('turn-badge-local').innerText = "Pensando...";
             document.getElementById('turn-badge-opponent').innerText = "Pensando...";
             document.getElementById('turn-badge-local').style.display = 'inline-block';
             document.getElementById('turn-badge-opponent').style.display = 'inline-block';
 
-            pendingAICallback = (bestMove) => { 
+            pendingAICallback = (payload) => {
                 if (currentReqId !== aiRequestId) return;
-                applyAIMove(bestMove || moves[0], onDone); 
+                const bestMove = (payload && payload.bestMove) ? payload.bestMove : payload;
+                const ms = Math.round(performance.now() - thinkStarted);
+                const depth = payload && payload.depthReached != null ? payload.depthReached : '?';
+                const score = payload && payload.score != null ? payload.score : null;
+                const nodes = payload && payload.nodes != null ? payload.nodes : null;
+                addLog(
+                    `IA pensou ${ms}ms | depth=${depth}` +
+                    (score != null ? ` | eval=${score}` : '') +
+                    (nodes != null ? ` | nodes=${nodes}` : '') +
+                    ` | modo=${gameMode} niv=${aiDifficulty}`,
+                    'AI_PERF'
+                );
+                applyAIMove(bestMove || moves[0], onDone);
             };
             aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId });
         }
@@ -4388,7 +4493,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v7.3.2.html',
+            start_url: './XadrezPro_v8.0.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -4639,7 +4744,7 @@
     }
 
 
-    addLog('Xadrez Pro v7.3.2 — frases/emojis, rádio P2P, tutorial visual, IA reforçada.', 'INIT');
+    addLog('Xadrez Pro v8.0 — histórico PGN, IA ágil, painel mobile, rádio P2P.', 'INIT');
 </script>
 </body>
 </html>

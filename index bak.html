@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v7.3.1</title>
+    <title>Xadrez Pro - v7.3.2</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -345,12 +345,220 @@
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
         }
 
+        /* === Botões compactos + painéis flutuantes (reações / frases) === */
+        .xp-toggle-btn {
+            display: none;
+            align-items: center; justify-content: center; gap: 3px;
+            height: 28px; padding: 0 8px; border-radius: 8px;
+            border: 1px solid var(--panel-border); background: var(--btn-bg);
+            color: var(--text-main); font-size: 10px; font-weight: 800;
+            cursor: pointer; flex-shrink: 0; white-space: nowrap;
+            transition: background 0.15s ease, transform 0.12s ease;
+        }
+        .xp-toggle-btn:active { transform: scale(0.96); background: var(--btn-hover); }
+        .xp-toggle-btn.active {
+            background: var(--board-border); color: #fff;
+            border-color: var(--board-border);
+        }
+        .xp-float-panel {
+            display: none;
+            position: absolute; z-index: 1200;
+            background: var(--modal-bg); border: 1px solid var(--modal-border);
+            border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,0.28);
+            padding: 8px; gap: 6px;
+        }
+        .xp-float-panel.open { display: flex; }
+        .xp-float-panel.reactions {
+            flex-wrap: wrap; max-width: min(94vw, 340px);
+            left: 4px; right: auto; top: 100%; margin-top: 6px;
+            justify-content: flex-start; align-items: center;
+            padding: 10px; gap: 8px;
+        }
+        .xp-float-panel.taunts {
+            flex-wrap: wrap; max-width: min(94vw, 340px);
+            left: auto; right: 0; bottom: 100%; margin-bottom: 6px;
+            justify-content: flex-start; align-items: stretch;
+            padding: 10px; gap: 8px;
+            max-height: min(42vh, 280px); overflow-y: auto;
+        }
+        .xp-float-panel .reaction-btn {
+            flex: 0 0 auto; min-width: 40px; max-width: 44px; height: 40px; font-size: 18px;
+            border-radius: 12px;
+        }
+        /* Chips de frases — mesmo visual dos emojis, com rótulo curto */
+        .xp-float-panel .taunt-chip {
+            flex: 0 0 auto;
+            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            min-height: 38px; padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--panel-border);
+            background: var(--btn-bg);
+            color: var(--text-main);
+            font-size: 12px; font-weight: 700;
+            cursor: pointer; white-space: nowrap;
+            transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+        }
+        .xp-float-panel .taunt-chip:active {
+            transform: scale(1.06);
+            background: var(--btn-hover);
+            box-shadow: var(--neon-glow-btn);
+        }
+        .xp-float-panel .taunt-chip.standup {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #fff; border-color: transparent;
+            width: 100%; justify-content: center; border-radius: 12px;
+            font-size: 13px; padding: 10px 12px;
+        }
+        .xp-float-panel .taunt-chip .chip-emoji { font-size: 16px; line-height: 1; }
+
         @media (max-width: 900px) and (orientation: portrait) {
-            #game-wrapper { justify-content: flex-start !important; padding: 4px 0 !important; gap: 6px !important; }
-            .board-section { width: min(98vw, 62vh) !important; height: min(98vw, 62vh) !important; max-width: none !important; margin-top: 2px; border-width: 2px !important; }
-            .side-section { width: 98vw !important; flex: 1 !important; overflow-y: auto !important; padding: 8px 6px !important; margin-bottom: 2px; max-width: none !important; }
-            .chat-box { min-height: 50px !important; }
-            body.menu-hidden .board-section { width: min(98vw, 85vh) !important; height: min(98vw, 85vh) !important; margin: auto !important; }
+            #game-wrapper {
+                justify-content: flex-start !important;
+                padding: 2px 0 0 !important;
+                gap: 4px !important;
+            }
+            /* Board tamanho original preservado */
+            .board-section {
+                width: min(98vw, 62vh) !important;
+                height: min(98vw, 62vh) !important;
+                max-width: none !important;
+                margin-top: 2px;
+                border-width: 2px !important;
+            }
+            /* Painel lateral compacto e fluido */
+            .side-section {
+                width: 98vw !important;
+                flex: 1 1 auto !important;
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                padding: 4px 5px 6px !important;
+                margin-bottom: 0 !important;
+                max-width: none !important;
+                gap: 3px !important;
+                min-height: 0 !important;
+            }
+            /* Cabeçalho mais fino */
+            .brand-title {
+                padding: 3px 6px !important;
+                font-size: 8px !important;
+                gap: 4px !important;
+                border-radius: 6px !important;
+            }
+            .brand-title > span { font-size: 10px !important; max-width: 110px !important; }
+            .header-actions { gap: 3px !important; }
+            .icon-btn { width: 28px !important; height: 28px !important; font-size: 12px !important; border-radius: 6px !important; }
+            #btnSandboxEval { height: 28px !important; padding: 0 8px !important; font-size: 9px !important; }
+
+            /* Meta row / opening */
+            .panel-meta-row {
+                padding: 0 1px 2px !important;
+                gap: 2px !important;
+            }
+            .opening-chip { font-size: 8px !important; padding: 2px 8px !important; }
+
+            /* Reações: esconde barra fixa, usa botão + painel flutuante */
+            .panel-meta-row > .reaction-bar {
+                display: none !important;
+            }
+            .xp-toggle-btn.reactions-toggle {
+                display: inline-flex !important;
+            }
+            .compact-status-row {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 4px !important;
+                margin-bottom: 0 !important;
+                position: relative;
+            }
+            .candy-fight-bar-container {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                padding: 2px 4px !important;
+                gap: 0 !important;
+            }
+            .candy-bar-header { font-size: 6.5px !important; }
+            .candy-bar-track { height: 4px !important; }
+            .candy-icons-row { font-size: 6px !important; }
+            .game-actions-row { gap: 3px !important; }
+            .side-action-btn { width: 26px !important; height: 26px !important; font-size: 11px !important; }
+
+            /* Lista de lances mais baixa */
+            .move-list-container {
+                min-height: 26px !important;
+                max-height: 32px !important;
+                padding: 3px 6px !important;
+                font-size: 9px !important;
+                border-radius: 6px !important;
+            }
+            .move-list-container .move-san { font-size: 9px !important; }
+            .move-list-container .move-num { font-size: 8px !important; }
+
+            /* Cards de jogadores mais compactos */
+            .player-card {
+                padding: 3px 6px !important;
+                gap: 1px !important;
+                border-radius: 5px !important;
+            }
+            .player-info { font-size: 9px !important; gap: 3px !important; }
+            .clock-badge { font-size: 8px !important; padding: 1px 4px !important; }
+            .material-badge { font-size: 7.5px !important; }
+            .turn-badge { font-size: 7px !important; padding: 1px 4px !important; }
+            .captured-area { min-height: 6px !important; gap: 1px !important; }
+            .captured-icon { width: 11px !important; height: 11px !important; }
+
+            /* Chat ganha o espaço nobre */
+            .chat-container {
+                flex: 1 1 auto !important;
+                min-height: 110px !important;
+                gap: 3px !important;
+                position: relative;
+            }
+            .chat-box {
+                flex: 1 1 auto !important;
+                min-height: 90px !important;
+                max-height: none !important;
+                padding: 5px !important;
+                font-size: 10px !important;
+                border-radius: 6px !important;
+            }
+            .chat-input-row {
+                gap: 3px !important;
+                position: relative;
+            }
+            .chat-input {
+                min-height: 36px !important;
+                font-size: 13px !important;
+                padding: 7px 10px !important;
+            }
+            .chat-input-row > .action-btn {
+                flex: 0 0 48px !important;
+                min-height: 36px !important;
+                font-size: 9px !important;
+                padding: 0 4px !important;
+            }
+            /* Frases: esconde barra fixa, usa botão + painel flutuante */
+            .taunt-scroll-container {
+                display: none !important;
+            }
+            .xp-toggle-btn.taunts-toggle {
+                display: inline-flex !important;
+                height: 36px !important;
+                padding: 0 8px !important;
+                font-size: 11px !important;
+            }
+
+            body.menu-hidden .board-section {
+                width: min(98vw, 85vh) !important;
+                height: min(98vw, 85vh) !important;
+                margin: auto !important;
+            }
+        }
+
+        /* Desktop / landscape: botões de toggle ficam ocultos, barras normais */
+        @media (min-width: 901px), (orientation: landscape) {
+            .xp-toggle-btn { display: none !important; }
+            .xp-float-panel { display: none !important; }
         }
         @media (max-width: 900px) and (orientation: landscape) {
             #game-wrapper { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 6px !important; padding: 0px !important; height: 100vh !important; height: 100dvh !important; width: 100vw !important; }
@@ -609,6 +817,43 @@
         .tutorial-step h3 { font-size: 12px; margin-bottom: 4px; color: var(--board-border); }
         .tutorial-step p { font-size: 11px; line-height: 1.45; color: var(--text-main); }
         .tutorial-nav { display: flex; gap: 8px; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
+        .tutorial-hero {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin: 8px 0 12px; flex-wrap: wrap;
+        }
+        .tutorial-piece-card {
+            width: 56px; height: 56px; border-radius: 12px;
+            background: var(--chat-bg); border: 1px solid var(--panel-border);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .tutorial-piece-card img, .tutorial-piece-card .tp-img {
+            width: 42px; height: 42px; background-size: contain; background-repeat: no-repeat; background-position: center;
+        }
+        .tutorial-step h3 { font-size: 15px; margin: 0 0 8px; color: var(--modal-text); }
+        .tutorial-step p { font-size: 12px; line-height: 1.45; color: var(--modal-text); margin: 0 0 8px; text-align: left; }
+        .tutorial-tip {
+            background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
+            border-radius: 10px; padding: 8px 10px; font-size: 11px; text-align: left; margin-top: 8px;
+        }
+        .tutorial-practice-btn {
+            margin-top: 10px; width: 100%; padding: 10px; font-size: 11px; font-weight: 800;
+            border: none; border-radius: 10px; cursor: pointer; color: #fff;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        }
+        .tutorial-move-demo {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+            max-width: 160px; margin: 8px auto; border-radius: 8px; overflow: hidden;
+            border: 1px solid var(--panel-border);
+        }
+        .tutorial-move-demo span {
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 800;
+        }
+        .tutorial-move-demo .l { background: var(--light-square, #f1f5f9); }
+        .tutorial-move-demo .d { background: var(--dark-square, #64748b); color: #fff; }
+        .tutorial-move-demo .hl { box-shadow: inset 0 0 0 2px #22c55e; }
+
 
         /* Desktop / large tablet: two-column, less scroll */
         @media (min-width: 900px) {
@@ -1026,9 +1271,16 @@
                     <button type="button" class="reaction-btn" onclick="sendReaction('😎')" title="Cool">😎</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('🤔')" title="Pensando">🤔</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('💪')" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👑')" title="Rei">👑</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😱')" title="Choque">😱</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡')" title="Respeito">🫡</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯')" title="Alvo">🎯</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️')" title="Peão">♟️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄')" title="Mágica">🪄</button>
                 </div>
             </div>
             <div class="compact-status-row">
+                <button type="button" class="xp-toggle-btn reactions-toggle" id="btnToggleReactions" onclick="toggleReactionsPanel(event)" title="Reações">🔥</button>
                 <div class="candy-fight-bar-container">
                     <div class="candy-bar-header">
                         <span>🍫 Placar (Vitórias)</span>
@@ -1046,6 +1298,26 @@
                 <div class="game-actions-row">
                     <button class="side-action-btn resign" onclick="resignGame()" title="Desistir">🏳️</button>
                     <button class="side-action-btn draw" onclick="offerDraw()" title="Propor Empate">🤝</button>
+                </div>
+                <div class="xp-float-panel reactions" id="reactionsFloatPanel" role="menu" aria-label="Reações">
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🔥'); closeFloatPanels();" title="Fogo">🔥</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😂'); closeFloatPanels();" title="Risada">😂</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👏'); closeFloatPanels();" title="Aplauso">👏</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💀'); closeFloatPanels();" title="Caveira">💀</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👍'); closeFloatPanels();" title="Ok">👍</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😮'); closeFloatPanels();" title="Surpresa">😮</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('❤️'); closeFloatPanels();" title="Amor">❤️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😎'); closeFloatPanels();" title="Cool">😎</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🤔'); closeFloatPanels();" title="Pensando">🤔</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💪'); closeFloatPanels();" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👑'); closeFloatPanels();" title="Rei">👑</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😱'); closeFloatPanels();" title="Choque">😱</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡'); closeFloatPanels();" title="Respeito">🫡</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯'); closeFloatPanels();" title="Alvo">🎯</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️'); closeFloatPanels();" title="Peão">♟️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄'); closeFloatPanels();" title="Mágica">🪄</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😴'); closeFloatPanels();" title="Sono">😴</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫠'); closeFloatPanels();" title="Derretendo">🫠</button>
                 </div>
             </div>
             <div class="move-list-container" id="moveListContainer" aria-label="Lista de lances"><span class="move-empty">Nenhum lance ainda.</span></div>
@@ -1065,17 +1337,43 @@
                 </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
+                    <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 50px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
+                    <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
+                        <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão sonhador</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
+                        <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                    </div>
                 </div>
                 <div class="taunt-scroll-container" id="tauntScrollContainer">
-                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand up</button>
-                    <button class="taunt-btn" onclick="sendTaunt('O destino do rei foi selado!')">⚡ Profético</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Minha torre vai te buscar!')">🏰 Estratégia</button>
-                    <button class="taunt-btn" onclick="sendTaunt('O relógio está conspirando contra ti...')">⏳ Tensão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque à vista, prepare a defesa!')">🎯 Alerta</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Geometria pura no tabuleiro!')">📐 Mestre</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque-mate moral aplicado!')">👑 Supremo</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós!')">🏙️ Batalha</button>
+                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand-up</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Boa jogada! Respeito.')">👏 Respeito</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Hmm... interessante.')">🤔 Interessante</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Pressão no ar...')">😰 Pressão</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Xeque! Sente o clima.')">⚡ Xeque</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Esse peão tem sonhos grandes.')">♟️ Peão</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Cavalo em L... e eu em dúvida.')">♞ Em L</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Torre na coluna aberta = problema.')">♜ Torre</button>
+                    <button class="taunt-btn" onclick="sendTaunt('A dama chegou na festa.')">♛ Dama</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.')">🏰 Roque</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Tempo é material. Relógio manda.')">⏱️ Relógio</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Blunder detectado... ou foi genialidade?')">💥 Blunder?</button>
+                    <button class="taunt-btn" onclick="sendTaunt('GG. Partida limpa.')">🤝 GG</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.')">🏙️ Cidade</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.')">👑 Mate moral</button>
                 </div>
             </div>
             <div class="player-card" id="card-local">
@@ -1160,7 +1458,7 @@
     let rematchPending = false;
     let playerElo = parseInt(localStorage.getItem('xadrezpro_elo') || '1200', 10);
     const ELO_GM_UNLOCK = 1500;
-    const AI_ELO = { 1: 800, 2: 1000, 3: 1200, 4: 1400, 5: 1600 };
+    const AI_ELO = { 1: 800, 2: 1100, 3: 1400, 4: 1700, 5: 2000 };
     let playerAvatar = localStorage.getItem('xadrezpro_avatar') || '♟️';
     let opponentAvatar = '♟️';
     let voiceMovesEnabled = localStorage.getItem('xadrezpro_voice_moves') === '1';
@@ -1211,67 +1509,228 @@
         var Chess=function(r){var u="b",s="w",l=-1,_="p",A="n",S="b",m="r",y="q",p="k",t="pnbrqkPNBRQK",e="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",g=["1-0","0-1","1/2-1/2","*"],C={b:[16,32,17,15],w:[-16,-32,-17,-15]},T={n:[-18,-33,-31,-14,18,33,31,14],b:[-17,-15,17,15],r:[-16,1,16,-1],q:[-17,-16,-15,1,17,16,15,-1],k:[-17,-16,-15,1,17,16,15,-1]},c=[20,0,0,0,0,0,0,24,0,0,0,0,0,0,20,0,0,20,0,0,0,0,0,24,0,0,0,0,0,20,0,0,0,0,20,0,0,0,0,24,0,0,0,0,20,0,0,0,0,0,0,20,0,0,0,24,0,0,0,20,0,0,0,0,0,0,0,0,20,0,0,24,0,0,20,0,0,0,0,0,0,0,0,0,0,20,2,24,2,20,0,0,0,0,0,0,0,0,0,0,0,2,53,56,53,2,0,0,0,0,0,0,24,24,24,24,24,24,56,0,56,24,24,24,24,24,24,0,0,0,0,0,0,2,53,56,53,2,0,0,0,0,0,0,0,0,0,0,0,20,2,24,2,20,0,0,0,0,0,0,0,0,0,0,20,0,0,24,0,0,20,0,0,0,0,0,0,0,0,20,0,0,0,24,0,0,0,20,0,0,0,0,0,0,20,0,0,0,0,24,0,0,0,0,20,0,0,0,0,20,0,0,0,0,0,24,0,0,0,0,0,20,0,0,20,0,0,0,0,0,0,24,0,0,0,0,0,0,20],v=[17,0,0,0,0,0,0,16,0,0,0,0,0,0,15,0,0,17,0,0,0,0,0,16,0,0,0,0,0,15,0,0,0,0,17,0,0,0,0,16,0,0,0,0,15,0,0,0,0,0,0,17,0,0,0,16,0,0,0,15,0,0,0,0,0,0,0,0,17,0,0,16,0,0,15,0,0,0,0,0,0,0,0,0,0,17,0,16,0,15,0,0,0,0,0,0,0,0,0,0,0,0,17,16,15,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,-15,-16,-17,0,0,0,0,0,0,0,0,0,0,0,0,-15,0,-16,0,-17,0,0,0,0,0,0,0,0,0,0,-15,0,0,-16,0,0,-17,0,0,0,0,0,0,0,0,-15,0,0,0,-16,0,0,0,-17,0,0,0,0,0,0,-15,0,0,0,0,-16,0,0,0,0,-17,0,0,0,0,-15,0,0,0,0,0,-16,0,0,0,0,0,-17,0,0,-15,0,0,0,0,0,0,-16,0,0,0,0,0,0,-17],h={p:0,n:1,b:2,r:3,q:4,k:5},o={NORMAL:"n",CAPTURE:"c",BIG_PAWN:"b",EP_CAPTURE:"e",PROMOTION:"p",KSIDE_CASTLE:"k",QSIDE_CASTLE:"q"},I={NORMAL:1,CAPTURE:2,BIG_PAWN:4,EP_CAPTURE:8,PROMOTION:16,KSIDE_CASTLE:32,QSIDE_CASTLE:64},P=7,w=6,L=1,R=0,N={a8:0,b8:1,c8:2,d8:3,e8:4,f8:5,g8:6,h8:7,a7:16,b7:17,c7:18,d7:19,e7:20,f7:21,g7:22,h7:23,a6:32,b6:33,c6:34,d6:35,e6:36,f6:37,g6:38,h6:39,a5:48,b5:49,c5:50,d5:51,e5:52,f5:53,g5:54,h5:55,a4:64,b4:65,c4:66,d4:67,e4:68,f4:69,g4:70,h4:71,a3:80,b3:81,c3:82,d3:83,e3:84,f3:85,g3:86,h3:87,a2:96,b2:97,c2:98,d2:99,e2:100,f2:101,g2:102,h2:103,a1:112,b1:113,c1:114,d1:115,e1:116,f1:117,g1:118,h1:119},E={w:[{square:N.a1,flag:I.QSIDE_CASTLE},{square:N.h1,flag:I.KSIDE_CASTLE}],b:[{square:N.a8,flag:I.QSIDE_CASTLE},{square:N.h8,flag:I.KSIDE_CASTLE}]},O=new Array(128),k={w:l,b:l},q=s,D={w:0,b:0},K=l,d=0,b=1,Q=[],U={};function x(r){void 0===r&&(r=!1),O=new Array(128),k={w:l,b:l},q=s,D={w:0,b:0},K=l,d=0,b=1,Q=[],r||(U={}),F(M())}function j(){B(e)}function B(r,e){void 0===e&&(e=!1);var n=r.split(/\\s+/),t=n[0],o=0;if(!$(r).valid)return!1;x(e);for(var i=0;i<t.length;i++){var f=t.charAt(i);if("/"===f)o+=8;else if(-1!=="0123456789".indexOf(f))o+=parseInt(f,10);else{var a=f<"a"?s:u;W({type:f.toLowerCase(),color:a},fr(o)),o++}}return q=n[1],-1<n[2].indexOf("K")&&(D.w|=I.KSIDE_CASTLE),-1<n[2].indexOf("Q")&&(D.w|=I.QSIDE_CASTLE),-1<n[2].indexOf("k")&&(D.b|=I.KSIDE_CASTLE),-1<n[2].indexOf("q")&&(D.b|=I.QSIDE_CASTLE),K="-"===n[3]?l:N[n[3]],d=parseInt(n[4],10),b=parseInt(n[5],10),F(M()),!0}function $(r){var e="No errors.",n="FEN string must contain six space-delimited fields.",t="6th field (move number) must be a positive integer.",o="5th field (half move counter) must be a non-negative integer.",i="4th field (en-passant square) is invalid.",f="3rd field (castling availability) is invalid.",a="2nd field (side to move) is invalid.",l="1st field (piece positions) does not contain 8 '/'-delimited rows.",u="1st field (piece positions) is invalid [consecutive numbers].",s="1st field (piece positions) is invalid [invalid piece].",p="1st field (piece positions) is invalid [row too large].",c="Illegal en-passant square",v=r.split(/\\s+/);if(6!==v.length)return{valid:!1,error_number:1,error:n};if(isNaN(v[5])||parseInt(v[5],10)<=0)return{valid:!1,error_number:2,error:t};if(isNaN(v[4])||parseInt(v[4],10)<0)return{valid:!1,error_number:3,error:o};if(!/^(-|[abcdefgh][36])$/.test(v[3]))return{valid:!1,error_number:4,error:i};if(!/^(KQ?k?q?|Qk?q?|kq?|q|-)$/.test(v[2]))return{valid:!1,error_number:5,error:f};if(!/^(w|b)$/.test(v[1]))return{valid:!1,error_number:6,error:a};var g=v[0].split("/");if(8!==g.length)return{valid:!1,error_number:7,error:l};for(var h=0;h<g.length;h++){for(var E=0,d=!1,b=0;b<g[h].length;b++)if(isNaN(g[h][b])){if(!/^[prnbqkPRNBQK]$/.test(g[h][b]))return{valid:!1,error_number:9,error:s};E+=1,d=!1}else{if(d)return{valid:!1,error_number:8,error:u};E+=parseInt(g[h][b],10),d=!0}if(8!==E)return{valid:!1,error_number:10,error:p}}return"3"==v[3][1]&&"w"==v[1]||"6"==v[3][1]&&"b"==v[1]?{valid:!1,error_number:11,error:c}:{valid:!0,error_number:0,error:e}}function M(){for(var r=0,e="",n=N.a8;n<=N.h1;n++){if(null==O[n])r++;else{0<r&&(e+=r,r=0);var t=O[n].color,o=O[n].type;e+=t===s?o.toUpperCase():o.toLowerCase()}n+1&136&&(0<r&&(e+=r),n!==N.h1&&(e+="/"),r=0,n+=8)}var i="";D[s]&I.KSIDE_CASTLE&&(i+="K"),D[s]&I.QSIDE_CASTLE&&(i+="Q"),D[u]&I.KSIDE_CASTLE&&(i+="k"),D[u]&I.QSIDE_CASTLE&&(i+="q"),i=i||"-";var f=K===l?"-":fr(K);return[e,q,i,f,d,b].join(" ")}function G(r){for(var e=0;e<r.length;e+=2)"string"==typeof r[e]&&"string"==typeof r[e+1]&&(U[r[e]]=r[e+1]);return U}function F(r){0<Q.length||(r!==e?(U.SetUp="1",U.FEN=r):(delete U.SetUp,delete U.FEN))}function i(r){var e=O[N[r]];return e?{type:e.type,color:e.color}:null}function W(r,e){if(!("type"in r&&"color"in r))return!1;if(-1===t.indexOf(r.type.toLowerCase()))return!1;if(!(e in N))return!1;var n=N[e];return(r.type!=p||k[r.color]==l||k[r.color]==n)&&(O[n]={type:r.type,color:r.color},r.type===p&&(k[r.color]=n),F(M()),!0)}function H(r,e,n,t,o){var i={color:q,from:e,to:n,flags:t,piece:r[e].type};return o&&(i.flags|=I.PROMOTION,i.promotion=o),r[n]?i.captured=r[n].type:t&I.EP_CAPTURE&&(i.captured=_),i}function Z(r){function e(r,e,n,t,o){if(r[n].type!==_||or(t)!==R&&or(t)!==P)e.push(H(r,n,t,o));else for(var i=[y,m,S,A],f=0,a=i.length;f<a;f++)e.push(H(r,n,t,o,i[f]))}var n=[],t=q,o=ar(t),i={b:L,w:w},f=N.a8,a=N.h1,l=!1,u=!(void 0!==r&&"legal"in r)||r.legal;if(void 0!==r&&"square"in r){if(!(r.square in N))return[];f=a=N[r.square],l=!0}for(var s=f;s<=a;s++)if(136&s)s+=7;else{var p=O[s];if(null!=p&&p.color===t)if(p.type===_){var c=s+C[t][0];if(null==O[c]){e(O,n,s,c,I.NORMAL);c=s+C[t][1];i[t]===or(s)&&null==O[c]&&e(O,n,s,c,I.BIG_PAWN)}for(v=2;v<4;v++){136&(c=s+C[t][v])||(null!=O[c]&&O[c].color===o?e(O,n,s,c,I.CAPTURE):c===K&&e(O,n,s,K,I.EP_CAPTURE))}}else for(var v=0,g=T[p.type].length;v<g;v++){var h=T[p.type][v];for(c=s;!(136&(c+=h));){if(null!=O[c]){if(O[c].color===t)break;e(O,n,s,c,I.CAPTURE);break}if(e(O,n,s,c,I.NORMAL),"n"===p.type||"k"===p.type)break}}}if(!l||a===k[t]){if(D[t]&I.KSIDE_CASTLE){var E=(d=k[t])+2;null!=O[d+1]||null!=O[E]||V(o,k[t])||V(o,d+1)||V(o,E)||e(O,n,k[t],E,I.KSIDE_CASTLE)}if(D[t]&I.QSIDE_CASTLE){var d;E=(d=k[t])-2;null!=O[d-1]||null!=O[d-2]||null!=O[d-3]||V(o,k[t])||V(o,d-1)||V(o,E)||e(O,n,k[t],E,I.QSIDE_CASTLE)}}if(!u)return n;var b=[];for(s=0,g=n.length;s<g;s++)er(n[s]),X(t)||b.push(n[s]),nr();return b}function z(r,e){var n="";if(r.flags&I.KSIDE_CASTLE)n="O-O";else if(r.flags&I.QSIDE_CASTLE)n="O-O-O";else{var t=function(r,e){for(var n=Z({legal:!e}),t=r.from,o=r.to,i=r.piece,f=0,a=0,l=0,u=0,s=n.length;u<s;u++){var p=n[u].from,c=n[u].to,v=n[u].piece;i===v&&t!==p&&o===c&&(f++,or(t)===or(p)&&a++,ir(t)===ir(p)&&l++)}if(0<f)return 0<a&&0<l?fr(t):0<l?fr(t).charAt(1):fr(t).charAt(0);return""}(r,e);r.piece!==_&&(n+=r.piece.toUpperCase()+t),r.flags&(I.CAPTURE|I.EP_CAPTURE)&&(r.piece===_&&(n+=fr(r.from)[0]),n+="x"),n+=fr(r.to),r.flags&I.PROMOTION&&(n+="="+r.promotion.toUpperCase())}return er(r),f()&&(a()?n+="#":n+="+"),nr(),n}function J(r){return r.replace(/=/,"").replace(/[+#]?[?!]*$/,"")}function V(r,e){for(var n=N.a8;n<=N.h1;n++)if(136&n)n+=7;else if(null!=O[n]&&O[n].color===r){var t=O[n],o=n-e,i=119+o;if(c[i]&1<<h[t.type]){if(t.type===_){if(0<o){if(t.color===s)return!0}else if(t.color===u)return!0;continue}if("n"===t.type||"k"===t.type)return!0;for(var f=v[i],a=n+f,l=!1;a!==e;){if(null!=O[a]){l=!0;break}a+=f}if(!l)return!0}}return!1}function X(r){return V(ar(r),k[r])}function f(){return X(q)}function a(){return f()&&0===Z().length}function n(){return!f()&&0===Z().length}function Y(){for(var r={},e=[],n=0,t=0,o=N.a8;o<=N.h1;o++)if(t=(t+1)%2,136&o)o+=7;else{var i=O[o];i&&(r[i.type]=i.type in r?r[i.type]+1:1,i.type===S&&e.push(t),n++)}if(2===n)return!0;if(3===n&&(1===r[S]||1===r[A]))return!0;if(n===r[S]+2){var f=0,a=e.length;for(o=0;o<a;o++)f+=e[o];if(0===f||f===a)return!0}return!1}function rr(){for(var r=[],e={},n=!1;;){var t=nr();if(!t)break;r.push(t)}for(;;){var o=M().split(" ").slice(0,4).join(" ");if(e[o]=o in e?e[o]+1:1,3<=e[o]&&(n=!0),!r.length)break;er(r.pop())}return n}function er(r){var e,n=q,t=ar(n);if(e=r,Q.push({move:e,kings:{b:k.b,w:k.w},turn:q,castling:{b:D.b,w:D.w},ep_square:K,half_moves:d,move_number:b}),O[r.to]=O[r.from],O[r.from]=null,r.flags&I.EP_CAPTURE&&(q===u?O[r.to-16]=null:O[r.to+16]=null),r.flags&I.PROMOTION&&(O[r.to]={type:r.promotion,color:n}),O[r.to].type===p){if(k[O[r.to].color]=r.to,r.flags&I.KSIDE_CASTLE){var o=r.to-1,i=r.to+1;O[o]=O[i],O[i]=null}else if(r.flags&I.QSIDE_CASTLE){o=r.to+1,i=r.to-2;O[o]=O[i],O[i]=null}D[n]=""}if(D[n])for(var f=0,a=E[n].length;f<a;f++)if(r.from===E[n][f].square&&D[n]&E[n][f].flag){D[n]^=E[n][f].flag;break}if(D[t])for(f=0,a=E[t].length;f<a;f++)if(r.to===E[t][f].square&&D[t]&E[t][f].flag){D[t]^=E[t][f].flag;break}K=r.flags&I.BIG_PAWN?"b"===q?r.to-16:r.to+16:l,r.piece===_||r.flags&(I.CAPTURE|I.EP_CAPTURE)?d=0:d++,q===u&&b++,q=ar(q)}function nr(){var r=Q.pop();if(null==r)return null;var e=r.move;k=r.kings,q=r.turn,D=r.castling,K=r.ep_square,d=r.half_moves,b=r.move_number;var n,t,o=q,i=ar(q);if(O[e.from]=O[e.to],O[e.from].type=e.piece,O[e.to]=null,e.flags&I.CAPTURE)O[e.to]={type:e.captured,color:i};else if(e.flags&I.EP_CAPTURE){var f;f=o===u?e.to-16:e.to+16,O[f]={type:_,color:i}}e.flags&(I.KSIDE_CASTLE|I.QSIDE_CASTLE)&&(e.flags&I.KSIDE_CASTLE?(n=e.to+1,t=e.to-1):e.flags&I.QSIDE_CASTLE&&(n=e.to-2,t=e.to+1),O[n]=O[t],O[t]=null);return e}function tr(r,e){var n=J(r);if(e){var t=n.match(/([pnbrqkPNBRQK])?([a-h][1-8])x?-?([a-h][1-8])([qrbnQRBN])?/);if(t)var o=t[1],i=t[2],f=t[3],a=t[4]}for(var l=Z(),u=0,s=l.length;u<s;u++){if(n===J(z(l[u]))||e&&n===J(z(l[u],!0)))return l[u];if(t&&(!o||o.toLowerCase()==l[u].piece)&&N[i]==l[u].from&&N[f]==l[u].to&&(!a||a.toLowerCase()==l[u].promotion))return l[u]}return null}function or(r){return r>>4}function ir(r){return 15&r}function fr(r){var e=ir(r),n=or(r);return"abcdefgh".substring(e,e+1)+"87654321".substring(n,n+1)}function ar(r){return r===s?u:s}function lr(r){var e=function r(e){var n=e instanceof Array?[]:{};for(var t in e)n[t]="object"==typeof t?r(e[t]):e[t];return n}(r);e.san=z(e,!1),e.to=fr(e.to),e.from=fr(e.from);var n="";for(var t in I)I[t]&e.flags&&(n+=o[t]);return e.flags=n,e}function ur(r){return r.replace(/^\\s+|\\s+$/g,"")}return B(void 0===r?e:r),{WHITE:s,BLACK:u,PAWN:_,KNIGHT:A,BISHOP:S,ROOK:m,QUEEN:y,KING:p,SQUARES:function(){for(var r=[],e=N.a8;e<=N.h1;e++)136&e?e+=7:r.push(fr(e));return r}(),FLAGS:o,load:function(r){return B(r)},reset:function(){return j()},moves:function(r){for(var e=Z(r),n=[],t=0,o=e.length;t<o;t++)void 0!==r&&"verbose"in r&&r.verbose?n.push(lr(e[t])):n.push(z(e[t],!1));return n},in_check:function(){return f()},in_checkmate:function(){return a()},in_stalemate:function(){return n()},in_draw:function(){return 100<=d||n()||Y()||rr()},insufficient_material:function(){return Y()},in_threefold_repetition:function(){return rr()},game_over:function(){return 100<=d||a()||n()||Y()||rr()},validate_fen:function(r){return $(r)},fen:function(){return M()},board:function(){for(var r=[],e=[],n=N.a8;n<=N.h1;n++)null==O[n]?e.push(null):e.push({type:O[n].type,color:O[n].color}),n+1&136&&(r.push(e),e=[],n+=8);return r},pgn:function(r){var e="object"==typeof r&&"string"==typeof r.newline_char?r.newline_char:"\\n",n="object"==typeof r&&"number"==typeof r.max_width?r.max_width:0,t=[],o=!1;for(var i in U)t.push("["+i+' "'+U[i]+'"]'+e),o=!0;o&&Q.length&&t.push(e);for(var f=[];0<Q.length;)f.push(nr());for(var a=[],l="";0<f.length;){var u=f.pop();Q.length||"b"!==u.color?"w"===u.color&&(l.length&&a.push(l),l=b+"."):l=b+". ...",l=l+" "+z(u,!1),er(u)}if(l.length&&a.push(l),void 0!==U.Result&&a.push(U.Result),0===n)return t.join("")+a.join(" ");var s=0;for(i=0;i<a.length;i++)s+a[i].length>n&&0!==i?(" "===t[t.length-1]&&t.pop(),t.push(e),s=0):0!==i&&(t.push(" "),s++),t.push(a[i]),s+=a[i].length;return t.join("")},load_pgn:function(r,e){var n=void 0!==e&&"sloppy"in e&&e.sloppy;function l(r){return r.replace(/\\\\/g,"\\\\")}var t="object"==typeof e&&"string"==typeof e.newline_char?e.newline_char:"\\r?\\n",o=new RegExp("^(\\\\[((?:"+l(t)+")|.)*\\\\])(?:"+l(t)+"){2}"),i=o.test(r)?o.exec(r)[1]:"";j();var f=function(r,e){for(var n="object"==typeof e&&"string"==typeof e.newline_char?e.newline_char:"\\r?\\n",t={},o=r.split(new RegExp(l(n))),i="",f="",a=0;a<o.length;a++)i=o[a].replace(/^\\[([A-Z][A-Za-z]*)\\s.*\\]$/,"$1"),f=o[a].replace(/^\\[[A-Za-z]+\\s"(.*)"\\]$/,"$1"),0<ur(i).length&&(t[i]=f);return t}(i,e);for(var a in f)G([a,f[a]]);if("1"===f.SetUp&&!("FEN"in f&&B(f.FEN,!0)))return!1;var u=r.replace(i,"").replace(new RegExp(l(t),"g")," ");u=u.replace(/(\\{[^}]+\\})+?/g,"");for(var s=/(\\([^\\(\\)]+\\))+?/g;s.test(u);)u=u.replace(s,"");var p=ur(u=(u=(u=u.replace(/\\d+\\.(\\.\\.)?/g,"")).replace(/\\.\\.\\./g,"")).replace(/\\$\\d+/g,"")).split(new RegExp(/\\s+/));p=p.join(",").replace(/,,+/g,",").split(",");for(var c="",v=0;v<p.length-1;v++){if(null==(c=tr(p[v],n)))return!1;er(c)}if(c=p[p.length-1],-1<g.indexOf(c))!function(r){for(var e in r)return 1}(U)||void 0!==U.Result||G(["Result",c]);else{if(null==(c=tr(c,n)))return!1;er(c)}return!0},header:function(){return G(arguments)},ascii:function(){return function(){for(var r="   +------------------------+\\n",e=N.a8;e<=N.h1;e++){if(0===ir(e)&&(r+=" "+"87654321"[or(e)]+" |"),null==O[e])r+=" . ";else{var n=O[e].type;r+=" "+(O[e].color===s?n.toUpperCase():n.toLowerCase())+" "}e+1&136&&(r+="|\\n",e+=8)}return r+="   +------------------------+\\n",r+="     a  b  c  d  e  f  g  h\\n"}()},turn:function(){return q},move:function(r,e){var n=void 0!==e&&"sloppy"in e&&e.sloppy,t=null;if("string"==typeof r)t=tr(r,n);else if("object"==typeof r)for(var o=Z(),i=0,f=o.length;i<f;i++)if(!(r.from!==fr(o[i].from)||r.to!==fr(o[i].to)||"promotion"in o[i]&&r.promotion!==o[i].promotion)){t=o[i];break}if(!t)return null;var a=lr(t);return er(t),a},undo:function(){var r=nr();return r?lr(r):null},clear:function(){return x()},put:function(r,e){return W(r,e)},get:function(r){return i(r)},remove:function(r){return n=i(e=r),O[N[e]]=null,n&&n.type===p&&(k[n.color]=l),F(M()),n;var e,n},perft:function(r){return function r(e){for(var n=Z({legal:!1}),t=0,o=q,i=0,f=n.length;i<f;i++)er(n[i]),X(o)||(0<e-1?t+=r(e-1):t++),nr();return t}(r)},square_color:function(r){if(r in N){var e=N[r];return(or(e)+ir(e))%2==0?"light":"dark"}return null},history:function(r){for(var e=[],n=[],t=(void 0!==r&&"verbose"in r&&r.verbose);0<Q.length;)e.push(nr());for(;0<e.length;){var o=e.pop();t?n.push(lr(o)):n.push(z(o)),er(o)}return n}}};"undefined"!=typeof exports&&(exports.Chess=Chess),"undefined"!=typeof define&&define(function(){return Chess});
         /* === fim chess.js === */
         const PIECE_VALUES = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
-        const PST_P = [0,0,0,0,0,0,0,0, 50,50,50,50,50,50,50,50, 10,10,20,30,30,20,10,10, 5,5,10,25,25,10,5,5, 0,0,0,20,20,0,0,0, 5,-5,-10,0,0,-10,-5,5, 5,10,10,-20,-20,10,10,5, 0,0,0,0,0,0,0,0];
-        const PST_N = [-50,-40,-30,-30,-30,-30,-40,-50, -40,-20,0,0,0,0,-20,-40, -30,0,10,15,15,10,0,-30, -30,5,15,20,20,15,5,-30, -30,0,15,20,20,15,0,-30, -30,5,10,15,15,10,5,-30, -40,-20,0,5,5,0,-20,-40, -50,-40,-30,-30,-30,-30,-40,-50];
-        const PST_B = [-20,-10,-10,-10,-10,-10,-10,-20, -10,0,0,0,0,0,0,-10, -10,0,5,10,10,5,0,-10, -10,5,5,10,10,5,5,-10, -10,0,10,10,10,10,0,-10, -10,10,10,10,10,10,10,-10, -10,5,0,0,0,0,5,-10, -20,-10,-10,-10,-10,-10,-10,-20];
-        const PST_R = [0,0,0,0,0,0,0,0, 5,10,10,10,10,10,10,5, -5,0,0,0,0,0,0,-5, -5,0,0,0,0,0,0,-5, -5,0,0,0,0,0,0,-5, -5,0,0,0,0,0,0,-5, -5,0,0,0,0,0,0,-5, 0,0,0,5,5,0,0,0];
-        const PST_Q = [-20,-10,-10,-5,-5,-10,-10,-20, -10,0,0,0,0,0,0,-10, -10,0,5,5,5,5,0,-10, -5,0,5,5,5,5,0,-5, 0,0,5,5,5,5,0,-5, -10,5,5,5,5,5,0,-10, -10,0,5,0,0,0,0,-10, -20,-10,-10,-5,-5,-10,-10,-20];
-        const PST_K_MID = [-30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -20,-30,-30,-40,-40,-30,-30,-20, -10,-20,-20,-20,-20,-20,-20,-10, 20,20,0,0,0,0,20,20, 20,30,10,0,0,10,30,20];
-        const PST_K_END = [-50,-40,-30,-20,-20,-30,-40,-50, -30,-20,-10,0,0,-10,-20,-30, -30,-10,20,30,30,20,-10,-30, -30,-10,30,40,40,30,-10,-30, -30,-10,30,40,40,30,-10,-30, -30,-10,20,30,30,20,-10,-30, -30,-30,0,0,0,0,-30,-30, -50,-30,-30,-30,-30,-30,-30,-50];
+        // Piece-square tables (from white's perspective; black mirrored)
+        const PST_P = [
+            0,0,0,0,0,0,0,0,
+            80,80,80,80,80,80,80,80,
+            20,20,30,45,45,30,20,20,
+            10,10,18,32,32,18,10,10,
+            5,5,10,26,26,10,5,5,
+            5,-5,-8,5,5,-8,-5,5,
+            5,10,10,-18,-18,10,10,5,
+            0,0,0,0,0,0,0,0
+        ];
+        const PST_N = [
+            -50,-40,-30,-30,-30,-30,-40,-50,
+            -40,-20,0,5,5,0,-20,-40,
+            -30,5,15,20,20,15,5,-30,
+            -30,0,18,25,25,18,0,-30,
+            -30,5,18,25,25,18,5,-30,
+            -30,0,12,18,18,12,0,-30,
+            -40,-20,0,5,5,0,-20,-40,
+            -50,-40,-30,-30,-30,-30,-40,-50
+        ];
+        const PST_B = [
+            -20,-10,-10,-10,-10,-10,-10,-20,
+            -10,5,0,0,0,0,5,-10,
+            -10,10,10,12,12,10,10,-10,
+            -10,0,12,16,16,12,0,-10,
+            -10,5,10,16,16,10,5,-10,
+            -10,0,10,12,12,10,0,-10,
+            -10,5,0,0,0,0,5,-10,
+            -20,-10,-10,-10,-10,-10,-10,-20
+        ];
+        const PST_R = [
+            0,0,5,8,8,5,0,0,
+            8,12,12,14,14,12,12,8,
+            -4,0,0,4,4,0,0,-4,
+            -4,0,0,4,4,0,0,-4,
+            -4,0,0,4,4,0,0,-4,
+            -4,0,0,4,4,0,0,-4,
+            -4,0,0,4,4,0,0,-4,
+            0,0,5,8,8,5,0,0
+        ];
+        const PST_Q = [
+            -20,-10,-10,-5,-5,-10,-10,-20,
+            -10,0,5,0,0,0,0,-10,
+            -10,5,5,5,5,5,0,-10,
+            0,0,5,5,5,5,0,-5,
+            -5,0,5,5,5,5,0,-5,
+            -10,0,5,5,5,5,0,-10,
+            -10,0,0,0,0,0,0,-10,
+            -20,-10,-10,-5,-5,-10,-10,-20
+        ];
+        const PST_K_MID = [
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -30,-40,-40,-50,-50,-40,-40,-30,
+            -20,-30,-30,-40,-40,-30,-30,-20,
+            -10,-20,-20,-20,-20,-20,-20,-10,
+            20,20,0,0,0,0,20,20,
+            20,30,10,0,0,10,30,20
+        ];
+        const PST_K_END = [
+            -50,-40,-30,-20,-20,-30,-40,-50,
+            -30,-20,-10,0,0,-10,-20,-30,
+            -30,-10,20,30,30,20,-10,-30,
+            -30,-10,30,40,40,30,-10,-30,
+            -30,-10,30,40,40,30,-10,-30,
+            -30,-10,20,30,30,20,-10,-30,
+            -30,-30,0,0,0,0,-30,-30,
+            -50,-30,-30,-30,-30,-30,-30,-50
+        ];
 
         function isEndgamePosition(board) {
-            let nonPawnPiecesCount = 0;
+            let nonPawn = 0;
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
-                    let p = board[r][c];
-                    if (p && p.type !== 'p' && p.type !== 'k') nonPawnPiecesCount++;
+                    const p = board[r][c];
+                    if (p && p.type !== 'p' && p.type !== 'k') nonPawn++;
                 }
             }
-            return nonPawnPiecesCount <= 6;
+            return nonPawn <= 6;
         }
 
         function evaluateBoard(game) {
-            let score = 0, board = game.board();
-            let isEndgame = isEndgamePosition(board);
+            const board = game.board();
+            const endgame = isEndgamePosition(board);
+            let score = 0;
+            let whiteBishops = 0, blackBishops = 0;
+            let whiteMob = 0, blackMob = 0;
+
+            // Material + PST
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
-                    let piece = board[r][c];
+                    const piece = board[r][c];
                     if (!piece) continue;
-                    let materialVal = piece.color === 'w' ? PIECE_VALUES[piece.type] : -PIECE_VALUES[piece.type];
-                    let pstVal = 0;
-                    let index = r * 8 + c;
-                    if (piece.color === 'b') index = (7 - r) * 8 + c;
-                    let table = piece.type === 'p' ? PST_P : (piece.type === 'n' ? PST_N : (piece.type === 'b' ? PST_B : (piece.type === 'r' ? PST_R : (piece.type === 'q' ? PST_Q : (isEndgame ? PST_K_END : PST_K_MID)))));
-                    pstVal = piece.color === 'w' ? table[index] : -table[index];
-                    score += materialVal + pstVal;
+                    const mat = PIECE_VALUES[piece.type];
+                    let idx = r * 8 + c;
+                    if (piece.color === 'b') idx = (7 - r) * 8 + c;
+                    let table;
+                    if (piece.type === 'p') table = PST_P;
+                    else if (piece.type === 'n') table = PST_N;
+                    else if (piece.type === 'b') table = PST_B;
+                    else if (piece.type === 'r') table = PST_R;
+                    else if (piece.type === 'q') table = PST_Q;
+                    else table = endgame ? PST_K_END : PST_K_MID;
+                    const pst = table[idx] || 0;
+                    if (piece.color === 'w') {
+                        score += mat + pst;
+                        if (piece.type === 'b') whiteBishops++;
+                    } else {
+                        score -= mat + pst;
+                        if (piece.type === 'b') blackBishops++;
+                    }
                 }
             }
+
+            // Bishop pair
+            if (whiteBishops >= 2) score += 35;
+            if (blackBishops >= 2) score -= 35;
+
+            // Simple mobility (legal moves count) — expensive but strong; sample only at shallow
+            // Applied as a small bonus based on turn side expansion is handled in search
+            // Pawn structure: doubled / isolated (file scan)
+            for (let file = 0; file < 8; file++) {
+                let wp = 0, bp = 0;
+                for (let rank = 0; rank < 8; rank++) {
+                    const p = board[rank][file];
+                    if (!p || p.type !== 'p') continue;
+                    if (p.color === 'w') wp++; else bp++;
+                }
+                if (wp > 1) score -= 18 * (wp - 1);
+                if (bp > 1) score += 18 * (bp - 1);
+                // isolated-ish: no friendly pawn on adjacent files
+                if (wp === 1) {
+                    let support = false;
+                    for (let adj of [file - 1, file + 1]) {
+                        if (adj < 0 || adj > 7) continue;
+                        for (let rank = 0; rank < 8; rank++) {
+                            const p = board[rank][adj];
+                            if (p && p.type === 'p' && p.color === 'w') { support = true; break; }
+                        }
+                        if (support) break;
+                    }
+                    if (!support) score -= 12;
+                }
+                if (bp === 1) {
+                    let support = false;
+                    for (let adj of [file - 1, file + 1]) {
+                        if (adj < 0 || adj > 7) continue;
+                        for (let rank = 0; rank < 8; rank++) {
+                            const p = board[rank][adj];
+                            if (p && p.type === 'p' && p.color === 'b') { support = true; break; }
+                        }
+                        if (support) break;
+                    }
+                    if (!support) score += 12;
+                }
+            }
+
+            // Tempo / side to move small bonus is implicit via negamax perspective
             return game.turn() === 'w' ? score : -score;
         }
 
         function orderMoves(moves) {
             return moves.sort((a, b) => {
-                const av = a.captured ? PIECE_VALUES[a.captured] + (a.promotion ? 800 : 0) : (a.san.includes('+') ? 50 : 0);
-                const bv = b.captured ? PIECE_VALUES[b.captured] + (b.promotion ? 800 : 0) : (b.san.includes('+') ? 50 : 0);
-                return bv - av;
+                const scoreMove = (m) => {
+                    let s = 0;
+                    if (m.captured) s += 10 * PIECE_VALUES[m.captured] - (PIECE_VALUES[m.piece] || 100);
+                    if (m.promotion) s += 850;
+                    if (m.san && m.san.includes('#')) s += 100000;
+                    else if (m.san && m.san.includes('+')) s += 60;
+                    if (m.flags && (m.flags.includes('k') || m.flags.includes('q'))) s += 40; // castling
+                    return s;
+                };
+                return scoreMove(b) - scoreMove(a);
             });
+        }
+
+        function quiescence(game, alpha, beta, deadline, qDepth) {
+            if (performance.now() > deadline) return evaluateBoard(game);
+            if (qDepth <= 0) return evaluateBoard(game);
+
+            const standPat = evaluateBoard(game);
+            if (standPat >= beta) return beta;
+            if (standPat > alpha) alpha = standPat;
+
+            // Only captures + promotions (and checks lightly via + in SAN if available)
+            let moves = game.moves({ verbose: true }).filter(m => m.captured || m.promotion);
+            moves = orderMoves(moves);
+
+            for (const m of moves) {
+                if (performance.now() > deadline) break;
+                game.move(m);
+                const score = -quiescence(game, -beta, -alpha, deadline, qDepth - 1);
+                game.undo();
+                if (score >= beta) return beta;
+                if (score > alpha) alpha = score;
+            }
+            return alpha;
         }
 
         function negamax(game, depth, alpha, beta, deadline) {
             if (performance.now() > deadline) return evaluateBoard(game);
-            if (depth <= 0) return evaluateBoard(game);
+            if (game.in_checkmate()) return -20000 + (10 - depth); // prefer faster mate
+            if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) return 0;
+
+            if (depth <= 0) {
+                return quiescence(game, alpha, beta, deadline, 6);
+            }
+
             let moves = orderMoves(game.moves({ verbose: true }));
-            if (moves.length === 0) return game.in_check() ? -100000 : 0;
-            for (let m of moves) {
+            if (moves.length === 0) return evaluateBoard(game);
+
+            for (const m of moves) {
+                if (performance.now() > deadline) break;
                 game.move(m);
                 let score = -negamax(game, depth - 1, -beta, -alpha, deadline);
-                if (game.in_threefold_repetition()) {
-                    score -= 400;
-                }
+                // Discourage threefold loops slightly for the side that causes it
+                if (game.in_threefold_repetition()) score -= 50;
                 game.undo();
                 if (score >= beta) return beta;
                 if (score > alpha) alpha = score;
-                if (performance.now() > deadline) break;
             }
             return alpha;
         }
@@ -1281,28 +1740,33 @@
             if (moves.length === 0) return null;
             let bestMove = moves[0];
             const deadline = performance.now() + timeBudgetMs;
+
             for (let d = 1; d <= maxDepth; d++) {
                 if (performance.now() > deadline) break;
-                let alpha = -Infinity, beta = Infinity, timedOut = false;
-                let candidatesThisDepth = [];
+                let alpha = -Infinity, beta = Infinity;
+                let timedOut = false;
                 let bestScoreThisDepth = -Infinity;
-                const EPS = 6;
-                for (let m of moves) {
+                let candidates = [];
+                const EPS = 8;
+
+                for (const m of moves) {
                     if (performance.now() > deadline) { timedOut = true; break; }
                     game.move(m);
                     let score = -negamax(game, d - 1, -beta, -alpha, deadline);
-                    if (game.in_threefold_repetition()) score -= 400;
+                    if (game.in_threefold_repetition()) score -= 50;
                     game.undo();
+
                     if (score > bestScoreThisDepth + EPS) {
                         bestScoreThisDepth = score;
-                        candidatesThisDepth = [m];
-                    } else if (score > bestScoreThisDepth - EPS) {
-                        candidatesThisDepth.push(m);
+                        candidates = [m];
+                    } else if (score >= bestScoreThisDepth - EPS) {
+                        candidates.push(m);
                     }
                     if (score > alpha) alpha = score;
                 }
-                if (timedOut) break;
-                bestMove = candidatesThisDepth[Math.floor(Math.random() * candidatesThisDepth.length)] || moves[0];
+                if (timedOut && d > 1) break;
+                bestMove = candidates[Math.floor(Math.random() * candidates.length)] || moves[0];
+                // PV move first next iteration
                 moves = [bestMove, ...moves.filter(m => m !== bestMove)];
             }
             return bestMove;
@@ -1492,6 +1956,8 @@
     let radioRequestId = 0;
     let hlsInstance = null;
     let currentStationLabel = '';
+    let currentRadioChannelId = '';
+    let radioSyncIgnore = false; // evita eco ao receber sync
     let hlsJsLoadPromise = null;
     let latencyMonitorInterval = null;
     let systemLogs = [];
@@ -1670,6 +2136,55 @@
         if (fromSelf) addLog('Reação enviada: ' + emoji, 'UI');
     }
 
+
+    // === v7.3.2 — painéis flutuantes de reações e frases (mobile portrait) ===
+    function closeFloatPanels() {
+        const r = document.getElementById('reactionsFloatPanel');
+        const t = document.getElementById('tauntsFloatPanel');
+        const br = document.getElementById('btnToggleReactions');
+        const bt = document.getElementById('btnToggleTaunts');
+        if (r) r.classList.remove('open');
+        if (t) t.classList.remove('open');
+        if (br) br.classList.remove('active');
+        if (bt) bt.classList.remove('active');
+    }
+    function toggleReactionsPanel(ev) {
+        if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+        const panel = document.getElementById('reactionsFloatPanel');
+        const btn = document.getElementById('btnToggleReactions');
+        const taunts = document.getElementById('tauntsFloatPanel');
+        const btnT = document.getElementById('btnToggleTaunts');
+        if (taunts) taunts.classList.remove('open');
+        if (btnT) btnT.classList.remove('active');
+        if (!panel) return;
+        const willOpen = !panel.classList.contains('open');
+        panel.classList.toggle('open', willOpen);
+        if (btn) btn.classList.toggle('active', willOpen);
+    }
+    function toggleTauntsPanel(ev) {
+        if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+        const panel = document.getElementById('tauntsFloatPanel');
+        const btn = document.getElementById('btnToggleTaunts');
+        const reacts = document.getElementById('reactionsFloatPanel');
+        const btnR = document.getElementById('btnToggleReactions');
+        if (reacts) reacts.classList.remove('open');
+        if (btnR) btnR.classList.remove('active');
+        if (!panel) return;
+        const willOpen = !panel.classList.contains('open');
+        panel.classList.toggle('open', willOpen);
+        if (btn) btn.classList.toggle('active', willOpen);
+    }
+    // Fecha painéis ao tocar fora
+    document.addEventListener('click', (e) => {
+        const r = document.getElementById('reactionsFloatPanel');
+        const t = document.getElementById('tauntsFloatPanel');
+        const br = document.getElementById('btnToggleReactions');
+        const bt = document.getElementById('btnToggleTaunts');
+        const insideR = r && (r.contains(e.target) || (br && br.contains(e.target)));
+        const insideT = t && (t.contains(e.target) || (bt && bt.contains(e.target)));
+        if (!insideR && !insideT) closeFloatPanels();
+    }, true);
+
     function sendReaction(emoji) {
         showFloatingReaction(emoji, true);
         if (conn && conn.open && gameMode === 'network') {
@@ -1821,7 +2336,7 @@
         const badge = document.getElementById('turn-badge-local');
         if (badge) { badge.innerText = 'Analisando...'; badge.style.display = 'inline-block'; }
         const currentReqId = ++aiRequestId;
-        const depthBudget = [4, 400];
+        const depthBudget = [7, 1800];
         pendingAICallback = (bestMove) => {
             if (currentReqId !== aiRequestId) return;
             if (badge) badge.style.display = 'none';
@@ -1971,11 +2486,26 @@
     };
 
     const diverseStandUpList = [
-        "Por que os programadores odeiam a natureza? Porque tem muitos bugs e zero documentação.",
-        "No xadrez moderno, o peão sonha em virar rainha, mas acaba pagando boleto no fim do mês.",
-        "Se a vida te der limões, faça uma limonada gourmet e venda por 30 reais na praça.",
-        "O passado, o presente e o futuro entram num bar... Era uma tensão gramatical terrível.",
-        "Por que o cavalo do xadrez só anda em L? Porque em linha reta ele toma multa de radar."
+        "O peão chega na última fileira e vira dama. Eu chego no fim do mês e viro boleto.",
+        "Por que o cavalo só anda em L? Porque se andasse reto, o GPS gritava: 'recalcule a rota'.",
+        "Xeque-mate é quando o rei não tem saída. Segunda-feira é a mesma coisa, só que com café.",
+        "Meu bispo controla a diagonal inteira. Eu não controlo nem a fila do banco.",
+        "Roquei o rei e a torre. Na vida real, eu só troco de problema de lugar.",
+        "O en passant é a jogada secreta do xadrez. Tipo quando você 'esquece' o grupo da família.",
+        "A dama é a peça mais forte. Por isso no tabuleiro ela trabalha, e o rei só anda uma casa.",
+        "Empate por afogamento: sem lances legais e sem xeque. Resumo da minha agenda às 18h.",
+        "Stockfish calcula 40 jogadas à frente. Eu calculo se ainda tem pão na geladeira.",
+        "Perdi a torre e fiquei 'só com a qualidade'. Na vida: perdi a paciência e fiquei só com o Wi-Fi.",
+        "Abertura italiana, defesa siciliana... Eu só abro a geladeira e defendo a sobremesa.",
+        "No xadrez, tempo é material. Por isso meu relógio e minha conta bancária estão empatados em zero.",
+        "Fiz um sacrifício de dama genial. Mentira: foi blunder. Mas soou filosófico no chat.",
+        "O rei fica no centro e toma mate. Eu fico no sofá e tomo decisão errada no delivery.",
+        "Três peões passados valem uma peça. Três notificações do banco valem um ataque de ansiedade.",
+        "Joguei 1.e4 com confiança de GM. No lance 12 já estava pedindo empate por 'cansaço ético'.",
+        "O cavalo pula peças. Eu pulo compromisso. A diferença é que o cavalo ainda é útil.",
+        "Xeque descoberto é traiçoeiro. Tipo aquele 'oi sumido' depois de três meses.",
+        "No final de peões, cada tempo conta. Na fila do SUS, cada tempo conta... e some.",
+        "Ganhei por tempo. Não por talento — o oponente foi fazer café. Estratégia avançada."
     ];
     let currentJokeIndex = 0;
 
@@ -2596,7 +3126,8 @@
         };
     }
 
-    function cleanupCurrentRadio() {
+    function cleanupCurrentRadio(fromRemote = false) {
+        const wasPlaying = radioPlaying;
         stopLatencyMonitor();
         if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
         if (radioAudio) {
@@ -2609,6 +3140,7 @@
         }
         radioPlaying = false;
         currentStationLabel = '';
+        if (wasPlaying && !fromRemote) broadcastRadioState('pause', currentRadioChannelId);
     }
 
     function startLatencyMonitor(stationLabel = '') {
@@ -2647,6 +3179,7 @@
     }
 
     async function playRadioChannel(channelId, urlIndex = 0) {
+        currentRadioChannelId = channelId;
         const channel = RADIO_CHANNELS[channelId];
         if (!channel || !channel.urls || channel.urls.length === 0) {
             updateAllRadioStatus('Estação inválida');
@@ -2690,6 +3223,7 @@
             const sidebarBtn = document.getElementById('radioSidebarBtn');
             if (sidebarBtn) sidebarBtn.classList.add('radio-active');
             syncRadioSelects(channelId);
+            broadcastRadioState('play', channelId);
             startLatencyMonitor(channel.label);
         };
 
@@ -2750,6 +3284,47 @@
             const el = document.getElementById(id);
             if (el) el.textContent = text;
         });
+    }
+
+    function broadcastRadioState(action, channelId) {
+        if (radioSyncIgnore) return;
+        if (!(conn && conn.open && gameMode === 'network')) return;
+        try {
+            conn.send({
+                type: 'radio',
+                action: action, // 'play' | 'pause'
+                channelId: channelId || currentRadioChannelId || '',
+                volume: radioVolume
+            });
+        } catch (e) {}
+    }
+
+    function applyRemoteRadio(data) {
+        if (!data || data.type !== 'radio') return;
+        radioSyncIgnore = true;
+        try {
+            if (data.action === 'pause') {
+                cleanupCurrentRadio(true);
+                const playBtn = document.getElementById('radioPlayBtn');
+                if (playBtn) { playBtn.textContent = '🔊'; playBtn.classList.remove('active-radio-icon'); }
+                const btn = document.getElementById('radioSidebarBtn');
+                if (btn) btn.classList.remove('radio-active');
+                updateAllRadioStatus('Pausada (oponente)');
+                addChatMessage('Sistema', '📻 Oponente pausou o rádio.', true);
+            } else if (data.action === 'play' && data.channelId && RADIO_CHANNELS[data.channelId]) {
+                if (typeof data.volume === 'number') {
+                    radioVolume = Math.max(0, Math.min(1, data.volume));
+                    if (radioAudio) radioAudio.volume = radioVolume;
+                    const volEl = document.getElementById('radioVolumeSettings');
+                    if (volEl) volEl.value = Math.round(radioVolume * 100);
+                }
+                const label = RADIO_CHANNELS[data.channelId].label || data.channelId;
+                addChatMessage('Sistema', '📻 Oponente sintonizou: <b>' + label + '</b> — tocando aqui também.', true, false, true);
+                playRadioChannel(data.channelId, 0);
+            }
+        } finally {
+            setTimeout(() => { radioSyncIgnore = false; }, 1200);
+        }
     }
 
     function syncRadioSelects(channelId) {
@@ -3289,12 +3864,14 @@
         if (aiDifficulty === 1) { 
             selectedMove = moves[Math.floor(Math.random() * moves.length)];
             applyAIMove(selectedMove, onDone);
-        } else if (aiDifficulty === 2) { 
-            const captures = moves.filter(m => m.captured); 
-            selectedMove = captures.length > 0 ? captures[Math.floor(Math.random() * captures.length)] : moves[Math.floor(Math.random() * moves.length)];
+        } else if (aiDifficulty === 2) {
+            const captures = moves.filter(m => m.captured);
+            const checks = moves.filter(m => m.san && m.san.includes('+'));
+            const pool = captures.length ? captures : (checks.length ? checks : moves);
+            selectedMove = pool[Math.floor(Math.random() * pool.length)];
             applyAIMove(selectedMove, onDone);
         } else {
-            const depthBudget = { 3: [4, 150], 4: [5, 300], 5: [6, 700] }[aiDifficulty] || [5, 300];
+            const depthBudget = { 3: [5, 500], 4: [7, 1500], 5: [9, 3500] }[aiDifficulty] || [7, 1500];
             const currentReqId = ++aiRequestId;
 
             document.getElementById('turn-badge-local').innerText = "Pensando...";
@@ -3674,6 +4251,10 @@
             addChatMessage(data.sender || opponentName || "Oponente", String(data.text || '').slice(0, 300), !!data.isAI, !!data.isAlert, false); 
             return; 
         }
+        if (data.type === 'radio') {
+            applyRemoteRadio(data);
+            return;
+        }
     }
 
     function setupHostListeners(cityName) {
@@ -3807,7 +4388,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v7.3.html',
+            start_url: './XadrezPro_v7.3.2.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -3950,40 +4531,64 @@
 
     const TUTORIAL_PAGES = [
         {
-            title: '1. Objetivo do jogo',
-            html: '<p>O xadrez é jogado em um tabuleiro 8×8. O objetivo é dar <b>xeque-mate</b> no rei adversário: ameaçá-lo de captura de forma que ele não tenha como escapar.</p><p>As <b>brancas</b> começam. Jogadores alternam um lance por vez.</p>'
+            title: '1. O que é o xadrez?',
+            pieces: ['K', 'k'],
+            html: '<p>Jogo de estratégia em tabuleiro 8×8. As <b>brancas</b> começam. O objetivo é dar <b>xeque-mate</b> no rei adversário — ameaçá-lo sem que ele tenha escape.</p><div class="tutorial-tip">💡 Dica: pense no rei como o “chefe”. Se ele cair, a partida acaba.</div>',
+            practice: true
         },
         {
-            title: '2. Rei 👑',
-            html: '<p>Move <b>uma casa</b> em qualquer direção (horizontal, vertical ou diagonal).</p><p>Não pode se colocar em casa atacada. O rei é a peça mais importante — se estiver em xeque, você deve resolver isso no lance.</p>'
+            title: '2. Rei 👑 — o mais importante',
+            pieces: ['K', 'k'],
+            html: '<p>Anda <b>uma casa</b> em qualquer direção. Nunca pode entrar em casa atacada.</p><p>Se estiver em <b>xeque</b>, você é obrigado a resolver: fugir, capturar a ameaça ou bloquear.</p><div class="tutorial-tip">🛡️ Proteja o rei cedo (geralmente com roque).</div>',
+            practice: true
         },
         {
-            title: '3. Dama ♛',
-            html: '<p>A peça mais poderosa. Combina torre + bispo: move qualquer número de casas em linha reta ou diagonal, sem pular peças.</p>'
+            title: '3. Dama ♛ — a mais poderosa',
+            pieces: ['Q', 'q'],
+            html: '<p>Combina torre + bispo: qualquer número de casas em linha ou diagonal, sem pular.</p><div class="tutorial-tip">⚠️ Não coloque a dama em jogo cedo demais — ela vira alvo fácil.</div>',
+            practice: true
         },
         {
-            title: '4. Torre ♜',
-            html: '<p>Move qualquer número de casas <b>na horizontal ou vertical</b>. Não pula peças. Excelente em finais e colunas abertas.</p>'
+            title: '4. Torre ♜ — colunas e fileiras',
+            pieces: ['R', 'r'],
+            html: '<p>Move em <b>horizontal ou vertical</b>. Brilha em colunas abertas e no final do jogo.</p><div class="tutorial-tip">🏰 Duas torres na 7ª fileira costumam ser devastadoras.</div>',
+            practice: true
         },
         {
-            title: '5. Bispo ♝',
-            html: '<p>Move qualquer número de casas na <b>diagonal</b>. Cada bispo fica sempre na mesma cor de casa. O par de bispos é muito forte em posições abertas.</p>'
+            title: '5. Bispo ♝ — diagonais',
+            pieces: ['B', 'b'],
+            html: '<p>Só anda na <b>diagonal</b>. Cada bispo fica para sempre na mesma cor de casa.</p><div class="tutorial-tip">✨ O par de bispos é uma vantagem clássica em posições abertas.</div>',
+            practice: true
         },
         {
-            title: '6. Cavalo ♘',
-            html: '<p>Move em “L”: 2 casas em uma direção e 1 perpendicular. É a única peça que <b>pula</b> outras. Útil no centro e em ataques surpresa.</p>'
+            title: '6. Cavalo ♘ — o salto em L',
+            pieces: ['N', 'n'],
+            html: '<p>Move em “L” (2+1). É a <b>única peça que pula</b> outras.</p><div class="tutorial-move-demo"><span class="l"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span><span class="l"></span><span class="d">♞</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span></div><div class="tutorial-tip">🎯 Cavalos no centro controlam até 8 casas.</div>',
+            practice: true
         },
         {
-            title: '7. Peão ♙',
-            html: '<p>Avança <b>1 casa</b> para frente (2 no primeiro movimento daquela peça). Captura <b>na diagonal</b> à frente.</p><p>Ao chegar na última fileira, <b>promove</b> (geralmente a dama). Existe o <i>en passant</i> em situações especiais.</p>'
+            title: '7. Peão ♙ — pequeno, mas decisivo',
+            pieces: ['P', 'p'],
+            html: '<p>Avança 1 casa (2 no primeiro lance daquela peça). Captura na <b>diagonal</b>.</p><p>Na última fileira <b>promove</b> (quase sempre a dama). Existe o <i>en passant</i>.</p><div class="tutorial-tip">🚀 Peões passados (sem peão inimigo na frente) decidem finais.</div>',
+            practice: true
         },
         {
-            title: '8. Roque e regras especiais',
-            html: '<p><b>Roque</b>: rei anda 2 casas em direção à torre e a torre “pula” para o outro lado — só se rei e torre não tiverem se movido e o caminho estiver livre e sem xeque.</p><p><b>Xeque</b>: rei atacado. <b>Mate</b>: xeque sem escape. <b>Afogamento</b>: sem lances legais e sem xeque → empate.</p>'
+            title: '8. Roque, xeque e empates',
+            pieces: ['K', 'R'],
+            html: '<p><b>Roque</b>: rei anda 2 casas até a torre; a torre “pula” para o outro lado. Só se rei e torre não se moveram e o caminho está livre e sem xeque.</p><p><b>Mate</b> = xeque sem escape. <b>Afogamento</b> = sem lances e sem xeque → empate.</p><div class="tutorial-tip">⏱️ Também empatam: repetição tripla, material insuficiente, 50 lances sem captura/peão.</div>',
+            practice: true
         },
         {
-            title: '9. Dicas para começar',
-            html: '<p>1) Controle o centro (e4, d4, e5, d5).<br>2) Desenvolva cavalos e bispos cedo.<br>3) Faça o roque para proteger o rei.<br>4) Não mova a mesma peça várias vezes na abertura.<br>5) Use o <b>Sandbox</b> para experimentar lances sem pressão.</p>'
+            title: '9. Plano de abertura (e Sandbox)',
+            pieces: ['N', 'B', 'K'],
+            html: '<p>1) Centro (e4/d4).<br>2) Desenvolva cavalos e bispos.<br>3) Roque cedo.<br>4) Não mova a mesma peça várias vezes na abertura.</p><div class="tutorial-tip">🧪 No <b>Sandbox</b> você joga os dois lados, desfaz lances e usa “Avaliar” com a IA — o melhor laboratório.</div>',
+            practice: true
+        },
+        {
+            title: '10. Recursos do Xadrez Pro',
+            pieces: ['Q', 'K'],
+            html: '<p><b>IA</b> (5 níveis), <b>P2P</b> nas salas-cidade, <b>rádio sincronizado</b> com o oponente, temas, reações, frases e stand-up.</p><p>No celular, use os botões 🔥 e 💬 para reações e frases sem ocupar a tela.</p><div class="tutorial-tip">📻 Nas salas online, a rádio que você ligar toca também no aparelho do oponente (ele pode trocar ou pausar).</div>',
+            practice: true
         }
     ];
     let tutorialIndex = 0;
@@ -4006,7 +4611,17 @@
         const page = TUTORIAL_PAGES[tutorialIndex];
         const body = document.getElementById('tutorialBody');
         if (body && page) {
-            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${page.html}</div>`;
+            let hero = '';
+            if (page.pieces && page.pieces.length && typeof pieceSvgs !== 'undefined') {
+                hero = '<div class="tutorial-hero">' + page.pieces.map(k => {
+                    const url = pieceSvgs[k] || '';
+                    return `<div class="tutorial-piece-card"><div class="tp-img" style="background-image:url('${url}')"></div></div>`;
+                }).join('') + '</div>';
+            }
+            const practiceBtn = page.practice
+                ? `<button type="button" class="tutorial-practice-btn" onclick="closeTutorial();startSandboxMode();">🧪 Praticar isso no Sandbox</button>`
+                : '';
+            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${hero}${page.html}${practiceBtn}</div>`;
         }
         const pager = document.getElementById('tutorialPager');
         if (pager) pager.textContent = `${tutorialIndex + 1} / ${TUTORIAL_PAGES.length}`;
@@ -4024,7 +4639,7 @@
     }
 
 
-    addLog('Xadrez Pro v7.3.1 — menu UX, lances horizontais, scrollbars unificadas.', 'INIT');
+    addLog('Xadrez Pro v7.3.2 — frases/emojis, rádio P2P, tutorial visual, IA reforçada.', 'INIT');
 </script>
 </body>
 </html>
