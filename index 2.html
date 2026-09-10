@@ -369,47 +369,20 @@
         }
         .xp-float-panel.open { display: flex; }
         .xp-float-panel.reactions {
-            flex-wrap: wrap; max-width: min(94vw, 340px);
-            left: 4px; right: auto; top: 100%; margin-top: 6px;
-            justify-content: flex-start; align-items: center;
-            padding: 10px; gap: 8px;
+            flex-wrap: wrap; max-width: min(92vw, 320px);
+            left: 6px; right: 6px; top: 100%; margin-top: 4px;
         }
         .xp-float-panel.taunts {
-            flex-wrap: wrap; max-width: min(94vw, 340px);
-            left: auto; right: 0; bottom: 100%; margin-bottom: 6px;
-            justify-content: flex-start; align-items: stretch;
-            padding: 10px; gap: 8px;
-            max-height: min(42vh, 280px); overflow-y: auto;
+            flex-direction: column; max-height: 180px; overflow-y: auto;
+            left: 0; right: 0; bottom: 100%; margin-bottom: 4px;
+            width: 100%;
         }
         .xp-float-panel .reaction-btn {
-            flex: 0 0 auto; min-width: 40px; max-width: 44px; height: 40px; font-size: 18px;
-            border-radius: 12px;
+            flex: 0 0 auto; min-width: 36px; max-width: 40px; height: 36px; font-size: 16px;
         }
-        /* Chips de frases — mesmo visual dos emojis, com rótulo curto */
-        .xp-float-panel .taunt-chip {
-            flex: 0 0 auto;
-            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-            min-height: 38px; padding: 6px 12px;
-            border-radius: 999px;
-            border: 1px solid var(--panel-border);
-            background: var(--btn-bg);
-            color: var(--text-main);
-            font-size: 12px; font-weight: 700;
-            cursor: pointer; white-space: nowrap;
-            transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+        .xp-float-panel .taunt-btn {
+            width: 100%; text-align: left; white-space: normal; padding: 8px 10px; font-size: 11px;
         }
-        .xp-float-panel .taunt-chip:active {
-            transform: scale(1.06);
-            background: var(--btn-hover);
-            box-shadow: var(--neon-glow-btn);
-        }
-        .xp-float-panel .taunt-chip.standup {
-            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-            color: #fff; border-color: transparent;
-            width: 100%; justify-content: center; border-radius: 12px;
-            font-size: 13px; padding: 10px 12px;
-        }
-        .xp-float-panel .taunt-chip .chip-emoji { font-size: 16px; line-height: 1; }
 
         @media (max-width: 900px) and (orientation: portrait) {
             #game-wrapper {
@@ -817,43 +790,6 @@
         .tutorial-step h3 { font-size: 12px; margin-bottom: 4px; color: var(--board-border); }
         .tutorial-step p { font-size: 11px; line-height: 1.45; color: var(--text-main); }
         .tutorial-nav { display: flex; gap: 8px; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
-        .tutorial-hero {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            margin: 8px 0 12px; flex-wrap: wrap;
-        }
-        .tutorial-piece-card {
-            width: 56px; height: 56px; border-radius: 12px;
-            background: var(--chat-bg); border: 1px solid var(--panel-border);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .tutorial-piece-card img, .tutorial-piece-card .tp-img {
-            width: 42px; height: 42px; background-size: contain; background-repeat: no-repeat; background-position: center;
-        }
-        .tutorial-step h3 { font-size: 15px; margin: 0 0 8px; color: var(--modal-text); }
-        .tutorial-step p { font-size: 12px; line-height: 1.45; color: var(--modal-text); margin: 0 0 8px; text-align: left; }
-        .tutorial-tip {
-            background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
-            border-radius: 10px; padding: 8px 10px; font-size: 11px; text-align: left; margin-top: 8px;
-        }
-        .tutorial-practice-btn {
-            margin-top: 10px; width: 100%; padding: 10px; font-size: 11px; font-weight: 800;
-            border: none; border-radius: 10px; cursor: pointer; color: #fff;
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        }
-        .tutorial-move-demo {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
-            max-width: 160px; margin: 8px auto; border-radius: 8px; overflow: hidden;
-            border: 1px solid var(--panel-border);
-        }
-        .tutorial-move-demo span {
-            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 800;
-        }
-        .tutorial-move-demo .l { background: var(--light-square, #f1f5f9); }
-        .tutorial-move-demo .d { background: var(--dark-square, #64748b); color: #fff; }
-        .tutorial-move-demo .hl { box-shadow: inset 0 0 0 2px #22c55e; }
-
 
         /* Desktop / large tablet: two-column, less scroll */
         @media (min-width: 900px) {
@@ -1271,12 +1207,6 @@
                     <button type="button" class="reaction-btn" onclick="sendReaction('😎')" title="Cool">😎</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('🤔')" title="Pensando">🤔</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('💪')" title="Força">💪</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👑')" title="Rei">👑</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😱')" title="Choque">😱</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡')" title="Respeito">🫡</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯')" title="Alvo">🎯</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️')" title="Peão">♟️</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄')" title="Mágica">🪄</button>
                 </div>
             </div>
             <div class="compact-status-row">
@@ -1310,14 +1240,6 @@
                     <button type="button" class="reaction-btn" onclick="sendReaction('😎'); closeFloatPanels();" title="Cool">😎</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('🤔'); closeFloatPanels();" title="Pensando">🤔</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('💪'); closeFloatPanels();" title="Força">💪</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👑'); closeFloatPanels();" title="Rei">👑</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😱'); closeFloatPanels();" title="Choque">😱</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡'); closeFloatPanels();" title="Respeito">🫡</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯'); closeFloatPanels();" title="Alvo">🎯</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️'); closeFloatPanels();" title="Peão">♟️</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄'); closeFloatPanels();" title="Mágica">🪄</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😴'); closeFloatPanels();" title="Sono">😴</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🫠'); closeFloatPanels();" title="Derretendo">🫠</button>
                 </div>
             </div>
             <div class="move-list-container" id="moveListContainer" aria-label="Lista de lances"><span class="move-empty">Nenhum lance ainda.</span></div>
@@ -1340,40 +1262,25 @@
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 50px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
-                        <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão sonhador</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
-                        <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                        <button class="taunt-btn" onclick="sendStandUpJoke(); closeFloatPanels();">🎤 Stand up</button>
+                        <button class="taunt-btn" onclick="sendTaunt('O destino do rei foi selado!'); closeFloatPanels();">⚡ Profético</button>
+                        <button class="taunt-btn" onclick="sendTaunt('Minha torre vai te buscar!'); closeFloatPanels();">🏰 Estratégia</button>
+                        <button class="taunt-btn" onclick="sendTaunt('O relógio está conspirando contra ti...'); closeFloatPanels();">⏳ Tensão</button>
+                        <button class="taunt-btn" onclick="sendTaunt('Xeque à vista, prepare a defesa!'); closeFloatPanels();">🎯 Alerta</button>
+                        <button class="taunt-btn" onclick="sendTaunt('Geometria pura no tabuleiro!'); closeFloatPanels();">📐 Mestre</button>
+                        <button class="taunt-btn" onclick="sendTaunt('Xeque-mate moral aplicado!'); closeFloatPanels();">👑 Supremo</button>
+                        <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós!'); closeFloatPanels();">🏙️ Batalha</button>
                     </div>
                 </div>
                 <div class="taunt-scroll-container" id="tauntScrollContainer">
-                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand-up</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Boa jogada! Respeito.')">👏 Respeito</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Hmm... interessante.')">🤔 Interessante</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Pressão no ar...')">😰 Pressão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque! Sente o clima.')">⚡ Xeque</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Esse peão tem sonhos grandes.')">♟️ Peão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Cavalo em L... e eu em dúvida.')">♞ Em L</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Torre na coluna aberta = problema.')">♜ Torre</button>
-                    <button class="taunt-btn" onclick="sendTaunt('A dama chegou na festa.')">♛ Dama</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.')">🏰 Roque</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Tempo é material. Relógio manda.')">⏱️ Relógio</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Blunder detectado... ou foi genialidade?')">💥 Blunder?</button>
-                    <button class="taunt-btn" onclick="sendTaunt('GG. Partida limpa.')">🤝 GG</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.')">🏙️ Cidade</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.')">👑 Mate moral</button>
+                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand up</button>
+                    <button class="taunt-btn" onclick="sendTaunt('O destino do rei foi selado!')">⚡ Profético</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Minha torre vai te buscar!')">🏰 Estratégia</button>
+                    <button class="taunt-btn" onclick="sendTaunt('O relógio está conspirando contra ti...')">⏳ Tensão</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Xeque à vista, prepare a defesa!')">🎯 Alerta</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Geometria pura no tabuleiro!')">📐 Mestre</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Xeque-mate moral aplicado!')">👑 Supremo</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós!')">🏙️ Batalha</button>
                 </div>
             </div>
             <div class="player-card" id="card-local">
@@ -1956,8 +1863,6 @@
     let radioRequestId = 0;
     let hlsInstance = null;
     let currentStationLabel = '';
-    let currentRadioChannelId = '';
-    let radioSyncIgnore = false; // evita eco ao receber sync
     let hlsJsLoadPromise = null;
     let latencyMonitorInterval = null;
     let systemLogs = [];
@@ -2486,26 +2391,11 @@
     };
 
     const diverseStandUpList = [
-        "O peão chega na última fileira e vira dama. Eu chego no fim do mês e viro boleto.",
-        "Por que o cavalo só anda em L? Porque se andasse reto, o GPS gritava: 'recalcule a rota'.",
-        "Xeque-mate é quando o rei não tem saída. Segunda-feira é a mesma coisa, só que com café.",
-        "Meu bispo controla a diagonal inteira. Eu não controlo nem a fila do banco.",
-        "Roquei o rei e a torre. Na vida real, eu só troco de problema de lugar.",
-        "O en passant é a jogada secreta do xadrez. Tipo quando você 'esquece' o grupo da família.",
-        "A dama é a peça mais forte. Por isso no tabuleiro ela trabalha, e o rei só anda uma casa.",
-        "Empate por afogamento: sem lances legais e sem xeque. Resumo da minha agenda às 18h.",
-        "Stockfish calcula 40 jogadas à frente. Eu calculo se ainda tem pão na geladeira.",
-        "Perdi a torre e fiquei 'só com a qualidade'. Na vida: perdi a paciência e fiquei só com o Wi-Fi.",
-        "Abertura italiana, defesa siciliana... Eu só abro a geladeira e defendo a sobremesa.",
-        "No xadrez, tempo é material. Por isso meu relógio e minha conta bancária estão empatados em zero.",
-        "Fiz um sacrifício de dama genial. Mentira: foi blunder. Mas soou filosófico no chat.",
-        "O rei fica no centro e toma mate. Eu fico no sofá e tomo decisão errada no delivery.",
-        "Três peões passados valem uma peça. Três notificações do banco valem um ataque de ansiedade.",
-        "Joguei 1.e4 com confiança de GM. No lance 12 já estava pedindo empate por 'cansaço ético'.",
-        "O cavalo pula peças. Eu pulo compromisso. A diferença é que o cavalo ainda é útil.",
-        "Xeque descoberto é traiçoeiro. Tipo aquele 'oi sumido' depois de três meses.",
-        "No final de peões, cada tempo conta. Na fila do SUS, cada tempo conta... e some.",
-        "Ganhei por tempo. Não por talento — o oponente foi fazer café. Estratégia avançada."
+        "Por que os programadores odeiam a natureza? Porque tem muitos bugs e zero documentação.",
+        "No xadrez moderno, o peão sonha em virar rainha, mas acaba pagando boleto no fim do mês.",
+        "Se a vida te der limões, faça uma limonada gourmet e venda por 30 reais na praça.",
+        "O passado, o presente e o futuro entram num bar... Era uma tensão gramatical terrível.",
+        "Por que o cavalo do xadrez só anda em L? Porque em linha reta ele toma multa de radar."
     ];
     let currentJokeIndex = 0;
 
@@ -3126,8 +3016,7 @@
         };
     }
 
-    function cleanupCurrentRadio(fromRemote = false) {
-        const wasPlaying = radioPlaying;
+    function cleanupCurrentRadio() {
         stopLatencyMonitor();
         if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
         if (radioAudio) {
@@ -3140,7 +3029,6 @@
         }
         radioPlaying = false;
         currentStationLabel = '';
-        if (wasPlaying && !fromRemote) broadcastRadioState('pause', currentRadioChannelId);
     }
 
     function startLatencyMonitor(stationLabel = '') {
@@ -3179,7 +3067,6 @@
     }
 
     async function playRadioChannel(channelId, urlIndex = 0) {
-        currentRadioChannelId = channelId;
         const channel = RADIO_CHANNELS[channelId];
         if (!channel || !channel.urls || channel.urls.length === 0) {
             updateAllRadioStatus('Estação inválida');
@@ -3223,7 +3110,6 @@
             const sidebarBtn = document.getElementById('radioSidebarBtn');
             if (sidebarBtn) sidebarBtn.classList.add('radio-active');
             syncRadioSelects(channelId);
-            broadcastRadioState('play', channelId);
             startLatencyMonitor(channel.label);
         };
 
@@ -3284,47 +3170,6 @@
             const el = document.getElementById(id);
             if (el) el.textContent = text;
         });
-    }
-
-    function broadcastRadioState(action, channelId) {
-        if (radioSyncIgnore) return;
-        if (!(conn && conn.open && gameMode === 'network')) return;
-        try {
-            conn.send({
-                type: 'radio',
-                action: action, // 'play' | 'pause'
-                channelId: channelId || currentRadioChannelId || '',
-                volume: radioVolume
-            });
-        } catch (e) {}
-    }
-
-    function applyRemoteRadio(data) {
-        if (!data || data.type !== 'radio') return;
-        radioSyncIgnore = true;
-        try {
-            if (data.action === 'pause') {
-                cleanupCurrentRadio(true);
-                const playBtn = document.getElementById('radioPlayBtn');
-                if (playBtn) { playBtn.textContent = '🔊'; playBtn.classList.remove('active-radio-icon'); }
-                const btn = document.getElementById('radioSidebarBtn');
-                if (btn) btn.classList.remove('radio-active');
-                updateAllRadioStatus('Pausada (oponente)');
-                addChatMessage('Sistema', '📻 Oponente pausou o rádio.', true);
-            } else if (data.action === 'play' && data.channelId && RADIO_CHANNELS[data.channelId]) {
-                if (typeof data.volume === 'number') {
-                    radioVolume = Math.max(0, Math.min(1, data.volume));
-                    if (radioAudio) radioAudio.volume = radioVolume;
-                    const volEl = document.getElementById('radioVolumeSettings');
-                    if (volEl) volEl.value = Math.round(radioVolume * 100);
-                }
-                const label = RADIO_CHANNELS[data.channelId].label || data.channelId;
-                addChatMessage('Sistema', '📻 Oponente sintonizou: <b>' + label + '</b> — tocando aqui também.', true, false, true);
-                playRadioChannel(data.channelId, 0);
-            }
-        } finally {
-            setTimeout(() => { radioSyncIgnore = false; }, 1200);
-        }
     }
 
     function syncRadioSelects(channelId) {
@@ -4251,10 +4096,6 @@
             addChatMessage(data.sender || opponentName || "Oponente", String(data.text || '').slice(0, 300), !!data.isAI, !!data.isAlert, false); 
             return; 
         }
-        if (data.type === 'radio') {
-            applyRemoteRadio(data);
-            return;
-        }
     }
 
     function setupHostListeners(cityName) {
@@ -4531,64 +4372,40 @@
 
     const TUTORIAL_PAGES = [
         {
-            title: '1. O que é o xadrez?',
-            pieces: ['K', 'k'],
-            html: '<p>Jogo de estratégia em tabuleiro 8×8. As <b>brancas</b> começam. O objetivo é dar <b>xeque-mate</b> no rei adversário — ameaçá-lo sem que ele tenha escape.</p><div class="tutorial-tip">💡 Dica: pense no rei como o “chefe”. Se ele cair, a partida acaba.</div>',
-            practice: true
+            title: '1. Objetivo do jogo',
+            html: '<p>O xadrez é jogado em um tabuleiro 8×8. O objetivo é dar <b>xeque-mate</b> no rei adversário: ameaçá-lo de captura de forma que ele não tenha como escapar.</p><p>As <b>brancas</b> começam. Jogadores alternam um lance por vez.</p>'
         },
         {
-            title: '2. Rei 👑 — o mais importante',
-            pieces: ['K', 'k'],
-            html: '<p>Anda <b>uma casa</b> em qualquer direção. Nunca pode entrar em casa atacada.</p><p>Se estiver em <b>xeque</b>, você é obrigado a resolver: fugir, capturar a ameaça ou bloquear.</p><div class="tutorial-tip">🛡️ Proteja o rei cedo (geralmente com roque).</div>',
-            practice: true
+            title: '2. Rei 👑',
+            html: '<p>Move <b>uma casa</b> em qualquer direção (horizontal, vertical ou diagonal).</p><p>Não pode se colocar em casa atacada. O rei é a peça mais importante — se estiver em xeque, você deve resolver isso no lance.</p>'
         },
         {
-            title: '3. Dama ♛ — a mais poderosa',
-            pieces: ['Q', 'q'],
-            html: '<p>Combina torre + bispo: qualquer número de casas em linha ou diagonal, sem pular.</p><div class="tutorial-tip">⚠️ Não coloque a dama em jogo cedo demais — ela vira alvo fácil.</div>',
-            practice: true
+            title: '3. Dama ♛',
+            html: '<p>A peça mais poderosa. Combina torre + bispo: move qualquer número de casas em linha reta ou diagonal, sem pular peças.</p>'
         },
         {
-            title: '4. Torre ♜ — colunas e fileiras',
-            pieces: ['R', 'r'],
-            html: '<p>Move em <b>horizontal ou vertical</b>. Brilha em colunas abertas e no final do jogo.</p><div class="tutorial-tip">🏰 Duas torres na 7ª fileira costumam ser devastadoras.</div>',
-            practice: true
+            title: '4. Torre ♜',
+            html: '<p>Move qualquer número de casas <b>na horizontal ou vertical</b>. Não pula peças. Excelente em finais e colunas abertas.</p>'
         },
         {
-            title: '5. Bispo ♝ — diagonais',
-            pieces: ['B', 'b'],
-            html: '<p>Só anda na <b>diagonal</b>. Cada bispo fica para sempre na mesma cor de casa.</p><div class="tutorial-tip">✨ O par de bispos é uma vantagem clássica em posições abertas.</div>',
-            practice: true
+            title: '5. Bispo ♝',
+            html: '<p>Move qualquer número de casas na <b>diagonal</b>. Cada bispo fica sempre na mesma cor de casa. O par de bispos é muito forte em posições abertas.</p>'
         },
         {
-            title: '6. Cavalo ♘ — o salto em L',
-            pieces: ['N', 'n'],
-            html: '<p>Move em “L” (2+1). É a <b>única peça que pula</b> outras.</p><div class="tutorial-move-demo"><span class="l"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span><span class="l"></span><span class="d">♞</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span></div><div class="tutorial-tip">🎯 Cavalos no centro controlam até 8 casas.</div>',
-            practice: true
+            title: '6. Cavalo ♘',
+            html: '<p>Move em “L”: 2 casas em uma direção e 1 perpendicular. É a única peça que <b>pula</b> outras. Útil no centro e em ataques surpresa.</p>'
         },
         {
-            title: '7. Peão ♙ — pequeno, mas decisivo',
-            pieces: ['P', 'p'],
-            html: '<p>Avança 1 casa (2 no primeiro lance daquela peça). Captura na <b>diagonal</b>.</p><p>Na última fileira <b>promove</b> (quase sempre a dama). Existe o <i>en passant</i>.</p><div class="tutorial-tip">🚀 Peões passados (sem peão inimigo na frente) decidem finais.</div>',
-            practice: true
+            title: '7. Peão ♙',
+            html: '<p>Avança <b>1 casa</b> para frente (2 no primeiro movimento daquela peça). Captura <b>na diagonal</b> à frente.</p><p>Ao chegar na última fileira, <b>promove</b> (geralmente a dama). Existe o <i>en passant</i> em situações especiais.</p>'
         },
         {
-            title: '8. Roque, xeque e empates',
-            pieces: ['K', 'R'],
-            html: '<p><b>Roque</b>: rei anda 2 casas até a torre; a torre “pula” para o outro lado. Só se rei e torre não se moveram e o caminho está livre e sem xeque.</p><p><b>Mate</b> = xeque sem escape. <b>Afogamento</b> = sem lances e sem xeque → empate.</p><div class="tutorial-tip">⏱️ Também empatam: repetição tripla, material insuficiente, 50 lances sem captura/peão.</div>',
-            practice: true
+            title: '8. Roque e regras especiais',
+            html: '<p><b>Roque</b>: rei anda 2 casas em direção à torre e a torre “pula” para o outro lado — só se rei e torre não tiverem se movido e o caminho estiver livre e sem xeque.</p><p><b>Xeque</b>: rei atacado. <b>Mate</b>: xeque sem escape. <b>Afogamento</b>: sem lances legais e sem xeque → empate.</p>'
         },
         {
-            title: '9. Plano de abertura (e Sandbox)',
-            pieces: ['N', 'B', 'K'],
-            html: '<p>1) Centro (e4/d4).<br>2) Desenvolva cavalos e bispos.<br>3) Roque cedo.<br>4) Não mova a mesma peça várias vezes na abertura.</p><div class="tutorial-tip">🧪 No <b>Sandbox</b> você joga os dois lados, desfaz lances e usa “Avaliar” com a IA — o melhor laboratório.</div>',
-            practice: true
-        },
-        {
-            title: '10. Recursos do Xadrez Pro',
-            pieces: ['Q', 'K'],
-            html: '<p><b>IA</b> (5 níveis), <b>P2P</b> nas salas-cidade, <b>rádio sincronizado</b> com o oponente, temas, reações, frases e stand-up.</p><p>No celular, use os botões 🔥 e 💬 para reações e frases sem ocupar a tela.</p><div class="tutorial-tip">📻 Nas salas online, a rádio que você ligar toca também no aparelho do oponente (ele pode trocar ou pausar).</div>',
-            practice: true
+            title: '9. Dicas para começar',
+            html: '<p>1) Controle o centro (e4, d4, e5, d5).<br>2) Desenvolva cavalos e bispos cedo.<br>3) Faça o roque para proteger o rei.<br>4) Não mova a mesma peça várias vezes na abertura.<br>5) Use o <b>Sandbox</b> para experimentar lances sem pressão.</p>'
         }
     ];
     let tutorialIndex = 0;
@@ -4611,17 +4428,7 @@
         const page = TUTORIAL_PAGES[tutorialIndex];
         const body = document.getElementById('tutorialBody');
         if (body && page) {
-            let hero = '';
-            if (page.pieces && page.pieces.length && typeof pieceSvgs !== 'undefined') {
-                hero = '<div class="tutorial-hero">' + page.pieces.map(k => {
-                    const url = pieceSvgs[k] || '';
-                    return `<div class="tutorial-piece-card"><div class="tp-img" style="background-image:url('${url}')"></div></div>`;
-                }).join('') + '</div>';
-            }
-            const practiceBtn = page.practice
-                ? `<button type="button" class="tutorial-practice-btn" onclick="closeTutorial();startSandboxMode();">🧪 Praticar isso no Sandbox</button>`
-                : '';
-            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${hero}${page.html}${practiceBtn}</div>`;
+            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${page.html}</div>`;
         }
         const pager = document.getElementById('tutorialPager');
         if (pager) pager.textContent = `${tutorialIndex + 1} / ${TUTORIAL_PAGES.length}`;
@@ -4639,7 +4446,7 @@
     }
 
 
-    addLog('Xadrez Pro v7.3.2 — frases/emojis, rádio P2P, tutorial visual, IA reforçada.', 'INIT');
+    addLog('Xadrez Pro v7.3.2 — painel compacto + IA reforçada (quiescence, eval e profundidade).', 'INIT');
 </script>
 </body>
 </html>
