@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v7.3.2</title>
+    <title>Xadrez Pro - v8.4</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -355,6 +355,31 @@
             cursor: pointer; flex-shrink: 0; white-space: nowrap;
             transition: background 0.15s ease, transform 0.12s ease;
         }
+        .xp-toggle-btn.standup-direct { display: none !important; }
+        .xp-toggle-btn.voice-toggle {
+            background: #0f766e; color: #fff; border-color: transparent;
+            font-size: 14px; min-width: 36px; padding: 0 8px;
+        }
+        .msg.local-voice audio { filter: saturate(1.05); }
+        .xp-toggle-btn.voice-toggle.recording {
+            background: #dc2626 !important;
+            animation: pulse-rec 1s ease infinite;
+        }
+        @keyframes pulse-rec {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.65; }
+        }
+        /* Desktop: só o botão de voz (frases já estão na barra horizontal) */
+        @media (min-width: 901px) {
+            .side-section .xp-toggle-btn.voice-toggle {
+                display: inline-flex !important;
+                height: 32px; font-size: 13px;
+            }
+            .side-section .xp-toggle-btn.taunts-toggle,
+            .side-section .xp-toggle-btn.reactions-toggle {
+                display: none !important;
+            }
+        }
         .xp-toggle-btn:active { transform: scale(0.96); background: var(--btn-hover); }
         .xp-toggle-btn.active {
             background: var(--board-border); color: #fff;
@@ -369,19 +394,86 @@
         }
         .xp-float-panel.open { display: flex; }
         .xp-float-panel.reactions {
-            flex-wrap: wrap; max-width: min(92vw, 320px);
-            left: 6px; right: 6px; top: 100%; margin-top: 4px;
+            flex-wrap: wrap; max-width: min(94vw, 340px);
+            left: 4px; right: auto; top: 100%; margin-top: 6px;
+            justify-content: flex-start; align-items: center;
+            padding: 10px; gap: 8px;
         }
         .xp-float-panel.taunts {
-            flex-direction: column; max-height: 180px; overflow-y: auto;
-            left: 0; right: 0; bottom: 100%; margin-bottom: 4px;
-            width: 100%;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            left: 0; right: 0; width: 100%;
+            bottom: 100%; margin-bottom: 4px;
+            padding: 0;
+            max-height: min(46vh, 300px);
+            overflow: hidden;
+            gap: 0;
+        }
+        .xp-float-panel.taunts .taunt-standup-sticky {
+            flex-shrink: 0;
+            padding: 8px 8px 4px;
+            background: var(--modal-bg);
+            border-bottom: 1px solid var(--panel-border);
+            position: sticky; top: 0; z-index: 2;
+        }
+        .xp-float-panel.taunts .taunt-chips-scroll {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding: 6px 8px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-content: flex-start;
+            scrollbar-width: thin;
+            scrollbar-color: var(--board-border) var(--chat-bg);
         }
         .xp-float-panel .reaction-btn {
-            flex: 0 0 auto; min-width: 36px; max-width: 40px; height: 36px; font-size: 16px;
+            flex: 0 0 auto; min-width: 40px; max-width: 44px; height: 40px; font-size: 18px;
+            border-radius: 12px;
         }
-        .xp-float-panel .taunt-btn {
-            width: 100%; text-align: left; white-space: normal; padding: 8px 10px; font-size: 11px;
+        /* Chips compactos — cabem mais na tela */
+        .xp-float-panel .taunt-chip {
+            flex: 0 0 auto;
+            display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+            min-height: 26px; padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--panel-border);
+            background: var(--btn-bg);
+            color: var(--text-main);
+            font-size: 10px; font-weight: 700;
+            cursor: pointer; white-space: nowrap;
+            transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+        }
+        .xp-float-panel .taunt-chip:active {
+            transform: scale(1.06);
+            background: var(--btn-hover);
+            box-shadow: var(--neon-glow-btn);
+        }
+        .xp-float-panel .taunt-chip.standup {
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #fff; border-color: transparent;
+            width: 100%; justify-content: center; border-radius: 10px;
+            font-size: 12px; padding: 8px 10px; min-height: 36px;
+        }
+        .xp-float-panel .taunt-chip .chip-emoji { font-size: 14px; line-height: 1; }
+
+        @media (max-width: 900px) and (orientation: portrait) {
+            .xp-float-panel.taunts {
+                max-height: min(34vh, 220px) !important;
+            }
+            .xp-float-panel .taunt-chip {
+                min-height: 30px !important;
+                padding: 3px 9px !important;
+                font-size: 10.5px !important;
+            }
+            .xp-float-panel .taunt-chip.standup {
+                min-height: 34px !important;
+                font-size: 11.5px !important;
+                padding: 7px 10px !important;
+            }
         }
 
         @media (max-width: 900px) and (orientation: portrait) {
@@ -520,6 +612,56 @@
                 padding: 0 8px !important;
                 font-size: 11px !important;
             }
+            .xp-toggle-btn.standup-direct { display: none !important; }
+            .xp-toggle-btn.voice-toggle {
+                display: inline-flex !important;
+                height: 36px !important;
+                min-width: 36px !important;
+                font-size: 15px !important;
+                background: #0f766e;
+                color: #fff;
+                border-color: transparent;
+            }
+            .msg.local-voice audio { filter: saturate(1.05); }
+        .xp-toggle-btn.voice-toggle.recording {
+                background: #dc2626 !important;
+                animation: pulse-rec 1s ease infinite;
+            }
+            @keyframes pulse-rec {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.65; }
+            }
+            /* Painel frases: maior + chips compactos + stand-up fixo */
+            .xp-float-panel.taunts {
+                max-height: min(52vh, 360px) !important;
+                overflow: hidden !important;
+            }
+            .xp-float-panel.taunts .taunt-standup-sticky {
+                display: flex !important;
+                flex-shrink: 0 !important;
+                padding: 5px 6px 3px !important;
+            }
+            .xp-float-panel.taunts .taunt-standup-sticky .taunt-chip.standup {
+                width: 100%;
+                min-height: 28px !important;
+                font-size: 10px !important;
+                justify-content: center;
+                padding: 4px 8px !important;
+            }
+            .xp-float-panel.taunts .taunt-chips-scroll {
+                min-height: 0 !important;
+                max-height: calc(52vh - 44px) !important;
+                gap: 4px !important;
+                padding: 4px 6px 8px !important;
+            }
+            .xp-float-panel .taunt-chip {
+                min-height: 24px !important;
+                padding: 2px 7px !important;
+                font-size: 9.5px !important;
+            }
+            .xp-float-panel .taunt-chip .chip-emoji {
+                font-size: 12px !important;
+            }
 
             body.menu-hidden .board-section {
                 width: min(98vw, 85vh) !important;
@@ -532,6 +674,22 @@
         @media (min-width: 901px), (orientation: landscape) {
             .xp-toggle-btn { display: none !important; }
             .xp-float-panel { display: none !important; }
+            .xp-toggle-btn.standup-direct { display: none !important; }
+            .xp-toggle-btn.taunts-toggle { display: none !important; }
+            .xp-toggle-btn.reactions-toggle { display: none !important; }
+            /* Só voz no PC — frases e reações usam as barras normais */
+            .xp-toggle-btn.voice-toggle {
+                display: inline-flex !important;
+                height: 32px !important;
+                min-width: 34px !important;
+                font-size: 14px !important;
+                background: #0f766e;
+                color: #fff;
+                border-color: transparent;
+            }
+            .xp-toggle-btn.voice-toggle.recording {
+                background: #dc2626 !important;
+            }
         }
         @media (max-width: 900px) and (orientation: landscape) {
             #game-wrapper { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 6px !important; padding: 0px !important; height: 100vh !important; height: 100dvh !important; width: 100vw !important; }
@@ -790,6 +948,43 @@
         .tutorial-step h3 { font-size: 12px; margin-bottom: 4px; color: var(--board-border); }
         .tutorial-step p { font-size: 11px; line-height: 1.45; color: var(--text-main); }
         .tutorial-nav { display: flex; gap: 8px; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
+        .tutorial-hero {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin: 8px 0 12px; flex-wrap: wrap;
+        }
+        .tutorial-piece-card {
+            width: 56px; height: 56px; border-radius: 12px;
+            background: var(--chat-bg); border: 1px solid var(--panel-border);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .tutorial-piece-card img, .tutorial-piece-card .tp-img {
+            width: 42px; height: 42px; background-size: contain; background-repeat: no-repeat; background-position: center;
+        }
+        .tutorial-step h3 { font-size: 15px; margin: 0 0 8px; color: var(--modal-text); }
+        .tutorial-step p { font-size: 12px; line-height: 1.45; color: var(--modal-text); margin: 0 0 8px; text-align: left; }
+        .tutorial-tip {
+            background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
+            border-radius: 10px; padding: 8px 10px; font-size: 11px; text-align: left; margin-top: 8px;
+        }
+        .tutorial-practice-btn {
+            margin-top: 10px; width: 100%; padding: 10px; font-size: 11px; font-weight: 800;
+            border: none; border-radius: 10px; cursor: pointer; color: #fff;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        }
+        .tutorial-move-demo {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+            max-width: 160px; margin: 8px auto; border-radius: 8px; overflow: hidden;
+            border: 1px solid var(--panel-border);
+        }
+        .tutorial-move-demo span {
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 800;
+        }
+        .tutorial-move-demo .l { background: var(--light-square, #f1f5f9); }
+        .tutorial-move-demo .d { background: var(--dark-square, #64748b); color: #fff; }
+        .tutorial-move-demo .hl { box-shadow: inset 0 0 0 2px #22c55e; }
+
 
         /* Desktop / large tablet: two-column, less scroll */
         @media (min-width: 900px) {
@@ -1015,7 +1210,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v7.3.1</p>
+            <p>Estratégia P2P · IA offline · v8.4</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1207,6 +1402,12 @@
                     <button type="button" class="reaction-btn" onclick="sendReaction('😎')" title="Cool">😎</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('🤔')" title="Pensando">🤔</button>
                     <button type="button" class="reaction-btn" onclick="sendReaction('💪')" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👑')" title="Rei">👑</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😱')" title="Choque">😱</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡')" title="Respeito">🫡</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯')" title="Alvo">🎯</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️')" title="Peão">♟️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄')" title="Mágica">🪄</button>
                 </div>
             </div>
             <div class="compact-status-row">
@@ -1230,16 +1431,24 @@
                     <button class="side-action-btn draw" onclick="offerDraw()" title="Propor Empate">🤝</button>
                 </div>
                 <div class="xp-float-panel reactions" id="reactionsFloatPanel" role="menu" aria-label="Reações">
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🔥'); closeFloatPanels();" title="Fogo">🔥</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😂'); closeFloatPanels();" title="Risada">😂</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👏'); closeFloatPanels();" title="Aplauso">👏</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('💀'); closeFloatPanels();" title="Caveira">💀</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('👍'); closeFloatPanels();" title="Ok">👍</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😮'); closeFloatPanels();" title="Surpresa">😮</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('❤️'); closeFloatPanels();" title="Amor">❤️</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('😎'); closeFloatPanels();" title="Cool">😎</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('🤔'); closeFloatPanels();" title="Pensando">🤔</button>
-                    <button type="button" class="reaction-btn" onclick="sendReaction('💪'); closeFloatPanels();" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🔥');" title="Fogo">🔥</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😂');" title="Risada">😂</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👏');" title="Aplauso">👏</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💀');" title="Caveira">💀</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👍');" title="Ok">👍</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😮');" title="Surpresa">😮</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('❤️');" title="Amor">❤️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😎');" title="Cool">😎</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🤔');" title="Pensando">🤔</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('💪');" title="Força">💪</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('👑');" title="Rei">👑</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😱');" title="Choque">😱</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫡');" title="Respeito">🫡</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🎯');" title="Alvo">🎯</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('♟️');" title="Peão">♟️</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🪄');" title="Mágica">🪄</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('😴');" title="Sono">😴</button>
+                    <button type="button" class="reaction-btn" onclick="sendReaction('🫠');" title="Derretendo">🫠</button>
                 </div>
             </div>
             <div class="move-list-container" id="moveListContainer" aria-label="Lista de lances"><span class="move-empty">Nenhum lance ainda.</span></div>
@@ -1259,28 +1468,48 @@
                 </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
+                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Segure para gravar áudio (máx. 10s)" aria-label="Mensagem de voz">🎙️</button>
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
-                    <button class="action-btn" style="flex: 0 0 50px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
+                    <button class="action-btn" style="flex: 0 0 48px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
-                        <button class="taunt-btn" onclick="sendStandUpJoke(); closeFloatPanels();">🎤 Stand up</button>
-                        <button class="taunt-btn" onclick="sendTaunt('O destino do rei foi selado!'); closeFloatPanels();">⚡ Profético</button>
-                        <button class="taunt-btn" onclick="sendTaunt('Minha torre vai te buscar!'); closeFloatPanels();">🏰 Estratégia</button>
-                        <button class="taunt-btn" onclick="sendTaunt('O relógio está conspirando contra ti...'); closeFloatPanels();">⏳ Tensão</button>
-                        <button class="taunt-btn" onclick="sendTaunt('Xeque à vista, prepare a defesa!'); closeFloatPanels();">🎯 Alerta</button>
-                        <button class="taunt-btn" onclick="sendTaunt('Geometria pura no tabuleiro!'); closeFloatPanels();">📐 Mestre</button>
-                        <button class="taunt-btn" onclick="sendTaunt('Xeque-mate moral aplicado!'); closeFloatPanels();">👑 Supremo</button>
-                        <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós!'); closeFloatPanels();">🏙️ Batalha</button>
+                        <div class="taunt-standup-sticky">
+                            <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
+                        </div>
+                        <div class="taunt-chips-scroll">
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                        </div>
                     </div>
                 </div>
                 <div class="taunt-scroll-container" id="tauntScrollContainer">
-                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand up</button>
-                    <button class="taunt-btn" onclick="sendTaunt('O destino do rei foi selado!')">⚡ Profético</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Minha torre vai te buscar!')">🏰 Estratégia</button>
-                    <button class="taunt-btn" onclick="sendTaunt('O relógio está conspirando contra ti...')">⏳ Tensão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque à vista, prepare a defesa!')">🎯 Alerta</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Geometria pura no tabuleiro!')">📐 Mestre</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque-mate moral aplicado!')">👑 Supremo</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós!')">🏙️ Batalha</button>
+                    <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand-up</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Boa jogada! Respeito.')">👏 Respeito</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Hmm... interessante.')">🤔 Interessante</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Pressão no ar...')">😰 Pressão</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Xeque! Sente o clima.')">⚡ Xeque</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Esse peão tem sonhos grandes.')">♟️ Peão</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Cavalo em L... e eu em dúvida.')">♞ Em L</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Torre na coluna aberta = problema.')">♜ Torre</button>
+                    <button class="taunt-btn" onclick="sendTaunt('A dama chegou na festa.')">♛ Dama</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.')">🏰 Roque</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Tempo é material. Relógio manda.')">⏱️ Relógio</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Blunder detectado... ou foi genialidade?')">💥 Blunder?</button>
+                    <button class="taunt-btn" onclick="sendTaunt('GG. Partida limpa.')">🤝 GG</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.')">🏙️ Cidade</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.')">👑 Mate moral</button>
                 </div>
             </div>
             <div class="player-card" id="card-local">
@@ -1618,12 +1847,13 @@
         }
 
         function negamax(game, depth, alpha, beta, deadline) {
+            searchNodes++;
             if (performance.now() > deadline) return evaluateBoard(game);
-            if (game.in_checkmate()) return -20000 + (10 - depth); // prefer faster mate
+            if (game.in_checkmate()) return -20000 + (10 - depth);
             if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) return 0;
 
             if (depth <= 0) {
-                return quiescence(game, alpha, beta, deadline, 6);
+                return quiescence(game, alpha, beta, deadline, 2);
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
@@ -1642,59 +1872,87 @@
             return alpha;
         }
 
+        let searchNodes = 0;
+
         function iterativeDeepening(game, maxDepth, timeBudgetMs) {
             let moves = orderMoves(game.moves({ verbose: true }));
-            if (moves.length === 0) return null;
+            if (moves.length === 0) return { bestMove: null, depthReached: 0, score: 0, nodes: 0 };
             let bestMove = moves[0];
+            let bestScore = 0;
+            let depthReached = 0;
+            searchNodes = 0;
             const deadline = performance.now() + timeBudgetMs;
+            // Snapshot de FEN atual para penalizar ida-e-volta imediato
+            const rootFen = game.fen();
 
             for (let d = 1; d <= maxDepth; d++) {
                 if (performance.now() > deadline) break;
-                let alpha = -Infinity, beta = Infinity;
+                let alpha = -Infinity;
+                const beta = Infinity;
                 let timedOut = false;
-                let bestScoreThisDepth = -Infinity;
-                let candidates = [];
-                const EPS = 8;
+                // ranking dos melhores na raiz
+                let scored = [];
 
                 for (const m of moves) {
                     if (performance.now() > deadline) { timedOut = true; break; }
                     game.move(m);
                     let score = -negamax(game, d - 1, -beta, -alpha, deadline);
-                    if (game.in_threefold_repetition()) score -= 50;
-                    game.undo();
-
-                    if (score > bestScoreThisDepth + EPS) {
-                        bestScoreThisDepth = score;
-                        candidates = [m];
-                    } else if (score >= bestScoreThisDepth - EPS) {
-                        candidates.push(m);
+                    // penalidades anti-loop
+                    if (game.in_threefold_repetition()) score -= 800;
+                    // desincentiva "desfazer" o último lance do oponente de forma vazia
+                    const hist = game.history({ verbose: true });
+                    if (hist.length >= 2) {
+                        const prev = hist[hist.length - 2];
+                        if (prev && prev.to === m.from && prev.from === m.to && !m.captured) score -= 120;
                     }
+                    game.undo();
+                    scored.push({ m, score });
                     if (score > alpha) alpha = score;
                 }
+                if (!scored.length) break;
+                scored.sort((a, b) => b.score - a.score);
+                // se o #1 causa repetição tripla ao aplicar, pega o próximo
+                let chosen = scored[0];
+                for (const cand of scored.slice(0, Math.min(6, scored.length))) {
+                    game.move(cand.m);
+                    const repeats = game.in_threefold_repetition();
+                    game.undo();
+                    if (!repeats) { chosen = cand; break; }
+                }
                 if (timedOut && d > 1) break;
-                bestMove = candidates[Math.floor(Math.random() * candidates.length)] || moves[0];
-                // PV move first next iteration
-                moves = [bestMove, ...moves.filter(m => m !== bestMove)];
+                bestMove = chosen.m;
+                bestScore = chosen.score;
+                depthReached = d;
+                // PV first
+                moves = [bestMove, ...moves.filter(x => x !== bestMove)];
             }
-            return bestMove;
+            return { bestMove, depthReached, score: bestScore, nodes: searchNodes };
         }
 
         self.onmessage = function(e) {
             const { fen, depthBudget, requestId } = e.data;
+            const t0 = performance.now();
             const game = new Chess(fen);
-            const bestMove = iterativeDeepening(game, depthBudget[0], depthBudget[1]);
-            self.postMessage({ bestMove, requestId });
+            const result = iterativeDeepening(game, depthBudget[0], depthBudget[1]);
+            self.postMessage({
+                bestMove: result.bestMove,
+                depthReached: result.depthReached,
+                score: result.score,
+                nodes: result.nodes,
+                ms: Math.round(performance.now() - t0),
+                requestId
+            });
         };
     `;
     const aiWorkerBlob = new Blob([aiWorkerScript], { type: 'application/javascript' });
     const aiWorker = new Worker(URL.createObjectURL(aiWorkerBlob));
 
     aiWorker.onmessage = function(e) {
-        const { bestMove, requestId } = e.data;
-        if (requestId === aiRequestId && pendingAICallback && gameMode !== 'menu') {
+        const data = e.data || {};
+        if (data.requestId === aiRequestId && pendingAICallback && gameMode !== 'menu') {
             const cb = pendingAICallback;
             pendingAICallback = null;
-            cb(bestMove);
+            cb(data);
         }
     };
 
@@ -1863,31 +2121,62 @@
     let radioRequestId = 0;
     let hlsInstance = null;
     let currentStationLabel = '';
+    let currentRadioChannelId = '';
+    let radioSyncIgnore = false; // evita eco ao receber sync
     let hlsJsLoadPromise = null;
     let latencyMonitorInterval = null;
     let systemLogs = [];
     let sfxAudioCtx = null;
 
+    function getLogContext() {
+        try {
+            const ua = (navigator.userAgent || '').slice(0, 90);
+            const net = (navigator.connection && navigator.connection.effectiveType) || '?';
+            const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
+            const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
+            return {
+                ver: '8.2',
+                mode: typeof gameMode !== 'undefined' ? gameMode : '-',
+                turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
+                ply: ply,
+                fen: fenShort,
+                color: typeof playerColor !== 'undefined' ? playerColor : '-',
+                ai: typeof aiDifficulty !== 'undefined' ? aiDifficulty : '-',
+                p2p: (typeof conn !== 'undefined' && conn && conn.open) ? 'up' : 'down',
+                radio: (typeof radioPlaying !== 'undefined' && radioPlaying) ? (currentRadioChannelId || 'on') : 'off',
+                net: net,
+                view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
+            };
+        } catch (e) {
+            return { ver: '8.2', err: String(e && e.message || e) };
+        }
+    }
+
     function addLog(msg, level = 'INFO', meta = null) {
         const now = new Date();
         const time = now.toISOString().split('T')[1].slice(0, 12) + '.' + String(now.getMilliseconds()).padStart(3, '0');
         let extra = '';
-        if (meta && typeof meta === 'object') {
+        const needCtx = level === 'ERROR' || level === 'CRITICAL' || level === 'WARN'
+            || level === 'AI_PERF' || level === 'P2P_CONNECT' || level === 'P2P_INFO' || level === 'P2P_SUCCESS'
+            || level === 'RADIO' || level === 'GAME' || level === 'MOVE' || level === 'DIAG';
+        const ctx = needCtx ? getLogContext() : null;
+        const merged = Object.assign({}, ctx || {}, (meta && typeof meta === 'object') ? meta : {});
+        if (Object.keys(merged).length) {
             try {
                 const parts = [];
-                for (const k of Object.keys(meta)) {
-                    let v = meta[k];
+                for (const k of Object.keys(merged)) {
+                    let v = merged[k];
                     if (v === undefined || v === null) continue;
                     if (typeof v === 'object') v = JSON.stringify(v);
-                    parts.push(`${k}=${v}`);
+                    parts.push(k + '=' + v);
                 }
                 if (parts.length) extra = ' | ' + parts.join(' ');
             } catch (e) {}
         }
-        const logMsg = `[${time}] [${level}] -> ${msg}${extra}`;
+        const logMsg = '[' + time + '] [' + level + '] -> ' + msg + extra;
         systemLogs.push(logMsg);
-        if (systemLogs.length > 1500) systemLogs.shift();
-        const textarea = document.getElementById("logTextarea");
+        if (systemLogs.length > 2500) systemLogs.splice(0, systemLogs.length - 2500);
+        const textarea = document.getElementById('logTextarea');
         if (textarea) {
             textarea.value = systemLogs.join('\n');
             if (textarea.scrollHeight - textarea.scrollTop - textarea.clientHeight < 80) {
@@ -1897,6 +2186,10 @@
         if (level === 'ERROR' || level === 'CRITICAL' || level === 'WARN') {
             try { console.warn(logMsg); } catch (e) {}
         }
+    }
+
+    function logSessionSnapshot(reason) {
+        addLog('SNAPSHOT: ' + (reason || 'manual'), 'DIAG');
     }
 
     window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -2042,7 +2335,7 @@
     }
 
 
-    // === v7.3.2 — painéis flutuantes de reações e frases (mobile portrait) ===
+    // === v8.4 — painéis flutuantes de reações e frases (mobile portrait) ===
     function closeFloatPanels() {
         const r = document.getElementById('reactionsFloatPanel');
         const t = document.getElementById('tauntsFloatPanel');
@@ -2124,16 +2417,24 @@
         }
         box.innerHTML = gameHistory.slice(0, 10).map((g, i) => {
             const d = (g.date || '').slice(0, 10);
-            return `<div class="history-item" onclick="showHistoryEntry(${i})">${d} · ${g.mode} · ${g.result}${g.opening ? ' · ' + g.opening : ''}</div>`;
+            const res = g.result === '1-0' ? '1-0 ★' : (g.result === '0-1' ? '0-1 ★' : '½-½');
+            const modeLabel = ({ 'pve': 'vs IA', 'pvp': 'Local', 'network': 'Online', 'bot-vs-bot': 'Bots', 'sandbox': 'Sandbox' })[g.mode] || g.mode;
+            return `<div class="history-item" onclick="showHistoryEntry(${i})" title="Toque para copiar PGN">${d} · ${modeLabel} · ${res}${g.opening ? ' · ' + g.opening : ''}</div>`;
         }).join('');
     }
 
     function showHistoryEntry(i) {
         const g = gameHistory[i];
         if (!g) return;
-        const text = (g.pgn || '').slice(0, 1500);
-        try { navigator.clipboard.writeText(g.pgn || ''); addChatMessage('Sistema', 'PGN do histórico copiado!', true); }
-        catch(e) { prompt('PGN:', g.pgn || ''); }
+        const resultLabel = g.result === '1-0' ? 'Vitória das Brancas' : (g.result === '0-1' ? 'Vitória das Pretas' : 'Empate');
+        const summary = `${(g.date || '').slice(0, 10)} · ${g.mode} · ${resultLabel}` + (g.reason ? ` (${g.reason})` : '');
+        try {
+            navigator.clipboard.writeText(g.pgn || '');
+            addChatMessage('Histórico', '📋 PGN copiado! ' + summary + ' — cole em Lichess/Chess.com para analisar.', true);
+            addLog('PGN histórico copiado: ' + summary, 'HISTORY');
+        } catch (e) {
+            prompt('PGN da partida (' + summary + '):', g.pgn || '');
+        }
     }
 
     function applyCustomBoardColors() {
@@ -2241,8 +2542,8 @@
         const badge = document.getElementById('turn-badge-local');
         if (badge) { badge.innerText = 'Analisando...'; badge.style.display = 'inline-block'; }
         const currentReqId = ++aiRequestId;
-        const depthBudget = [7, 1800];
-        pendingAICallback = (bestMove) => {
+        const depthBudget = [5, 800];
+        pendingAICallback = (payload) => {
             if (currentReqId !== aiRequestId) return;
             if (badge) badge.style.display = 'none';
             if (evalBtn) {
@@ -2250,9 +2551,13 @@
                 evalBtn.innerHTML = '🔎 Avaliar';
                 evalBtn.disabled = false;
             }
+            const bestMove = (payload && payload.bestMove) ? payload.bestMove : payload;
             if (!bestMove) {
                 addChatMessage('Oráculo', 'Não foi possível avaliar.', true);
                 return;
+            }
+            if (payload && payload.depthReached != null) {
+                addLog(`Sandbox eval depth=${payload.depthReached} nodes=${payload.nodes||'?'} eval=${payload.score}`, 'AI_PERF');
             }
             const san = bestMove.san || (bestMove.from + bestMove.to);
             addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b>', true, false, true);
@@ -2391,13 +2696,108 @@
     };
 
     const diverseStandUpList = [
-        "Por que os programadores odeiam a natureza? Porque tem muitos bugs e zero documentação.",
-        "No xadrez moderno, o peão sonha em virar rainha, mas acaba pagando boleto no fim do mês.",
-        "Se a vida te der limões, faça uma limonada gourmet e venda por 30 reais na praça.",
-        "O passado, o presente e o futuro entram num bar... Era uma tensão gramatical terrível.",
-        "Por que o cavalo do xadrez só anda em L? Porque em linha reta ele toma multa de radar."
+        /* Memes BR atuais e clássicos — tom leve */
+        "Calma, calabreso... respira que o Wi-Fi ainda carrega.",
+        "Que Xou da Xuxa é esse? Eu só pedi um gole de água.",
+        "Cheguei Brasil! Já sentei no sofá errado e ninguém avisou.",
+        "Ô Denise, sai da live — o grupo da família já basta.",
+        "É o Brasil do Brasil: sol de 40° e gente de moletom.",
+        "Tem que ir, é contrato. Inclusive acordar cedo.",
+        "Garçom, tem Pitú? Traz. E um plano B pro fim de semana.",
+        "Que casa é essa, engraçada? Parece meu quarto na segunda.",
+        "Me mimei: abri o app 'só pra ver' e perdi 2 horas.",
+        "Tá tranquilo, tá favorável... disse eu antes da prova.",
+        "É verdade esse bilete: eu ia estudar. Ia.",
+        "Alô alô graças a Deus: a bateria chegou em 1%.",
+        "Caneta azul, azul caneta — e a redação em branco.",
+        "EU SOU RICA! ...de abas abertas no navegador.",
+        "Casca de bala: amigo que responde 'kkkk' e some 3 dias.",
+        "Morango do amor: lindo no TikTok, caos na cozinha.",
+        "67! ...não sei o que significa, mas soa importante.",
+        "This is fine 🔥 — eu, com 47 notificações não lidas.",
+        "Press F to pay respects pro alarme que eu ignorei.",
+        "I can has cheezburger? Prefiro o lanche da madrugada.",
+        "All your base are belong to us. Inclusive a última fatia.",
+        "Deal with it 😎 — disse o gato em cima do teclado.",
+        /* Clássicos de tio / one-liners limpos */
+        "Por que o jacaré tirou o filho da escola? Porque réptil de ano.",
+        "O que o pato falou pra pata? Vem quá!",
+        "Como o elétron atende o telefone? Próton!",
+        "O zero disse pro oito: belo cinto.",
+        "Por que o livro de matemática foi ao psicólogo? Problemas demais.",
+        "O esqueleto não briga: não tem estômago pra isso.",
+        "Relógio foi preso: matou o tempo.",
+        "Cúmulo do azar: atropelado por carro de autoescola.",
+        "Por que a abelha é promovida? Sempre voando alto.",
+        "Qual o cúmulo da velocidade? Sopa no garfo e língua queimada.",
+        "Se a vida te der limões, faça limonada. Se der segunda, cafeína.",
+        "A inteligência artificial já ri de piada de tio. Educadamente.",
+        "Minha vida social está em modo avião: ligada, sem conexão.",
+        "O despertador e eu temos acordo: ele toca, eu nego a realidade.",
+        "Estudei a noite toda. A matéria dormiu; eu que fiquei acordado.",
+        "Wi-Fi da escola: 2 barras de sinal e 0 de dignidade.",
+        "Atualizei o app. 14 permissões novas, a mesma lentidão.",
+        "Meu carregador e minha motivação: 5% e caindo.",
+        "Não sou preguiçoso. Estou em modo economia de energia.",
+        "A cama é mágica: deito e lembro de tudo que não fiz.",
+        "Autocorretor me conhece melhor que minha mãe — e julga mais.",
+        "Ctrl+Z na vida real seria o verdadeiro superpoder.",
+        "Fila do banco: o tempo joga melhor que qualquer campeão.",
+        "Segunda-feira é tipo começar o dia já em desvantagem.",
+        "Prometi dormir cedo. O YouTube disse 'só mais um'.",
+        "Meu plano era genial. A execução pediu empate por cansaço.",
+        "Não é bug, é feature. Disse eu pro erro que ninguém notou.",
+        "Meu plano B era o plano A com mais confiança.",
+        "Fui correr. O tênis desamarrou e me abandonou.",
+        "Li a bula. O efeito colateral era entender a letra do médico.",
+        /* Escola / tech / cotidiano adolescente */
+        "Professor: isso vai cair na prova. Eu: então deixa cair.",
+        "Trabalho em grupo: 1 faz, 3 assistem, 1 some no WhatsApp.",
+        "Nota 6 é o empate técnico da vida escolar.",
+        "Caderno organizado: existe só na imaginação da mãe.",
+        "Recreio: 15 minutos e um campeonato mundial de futebol.",
+        "Prova surpresa: a única surpresa é eu não ter estudado.",
+        "Biblioteca: o único lugar onde 'shhh' é lei federal.",
+        "Lancheira gourmet: pão com mortadela e sonho de pizza.",
+        "Sexta-feira: o final boss da semana finalmente cai.",
+        "Fim de semana: 48 horas que passam em 48 minutos.",
+        "Seguir dieta: fácil. Até abrir a geladeira 'só pra olhar'.",
+        "Academia: pago mensalidade pra sentir culpa em casa.",
+        "Selfie: 40 tentativas, 1 prestável, 0 postadas.",
+        "Modo escuro: salva a bateria e a alma depois da meia-noite.",
+        "Notificação do banco: o verdadeiro jump scare.",
+        "Senha forte: eu lembro de todas... menos da certa.",
+        "Captcha: prove que você é humano. Eu quase desisto.",
+        "Atualização obrigatória: 1% e trava no melhor momento.",
+        "Modo não perturbe: ligado. Família: grita do corredor.",
+        "Entrega chega: eu no banho. Eu saio: entregador sumiu.",
+        /* Leve toque de xadrez (minoria do deck) */
+        "O peão chega na 8ª e vira dama. Eu chego no mês e viro boleto.",
+        "Stockfish calcula 40 lances. Eu calculo se ainda tem pão.",
+        "Roquei o rei. Na vida, só troco de problema de lugar.",
+        "Joguei 1.e4 com cara de GM. No 12 já pedia empate ético.",
+        "Empate por afogamento: sem lances e sem xeque. Minha agenda às 18h.",
+        "O en passant é a jogada secreta. Tipo silenciar o grupo da família."
     ];
+
+    function shuffleStandUpDeck() {
+        // Fisher–Yates + evita repetir as últimas 8 usadas nesta sessão
+        for (let i = diverseStandUpList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const t = diverseStandUpList[i];
+            diverseStandUpList[i] = diverseStandUpList[j];
+            diverseStandUpList[j] = t;
+        }
+        if (recentStandUpLines.length) {
+            const recent = new Set(recentStandUpLines.slice(-8));
+            diverseStandUpList.sort((a, b) => (recent.has(a) ? 1 : 0) - (recent.has(b) ? 1 : 0));
+        }
+        currentJokeIndex = 0;
+        addLog('Deck stand-up embaralhado (' + diverseStandUpList.length + ' linhas)', 'UI');
+    }
+
     let currentJokeIndex = 0;
+    let recentStandUpLines = [];
 
     function openLogModal() { document.getElementById("logTextarea").value = systemLogs.join('\n'); document.getElementById("log-modal").style.display = "flex"; }
     function closeLogModal() { document.getElementById("log-modal").style.display = "none"; }
@@ -2571,12 +2971,15 @@
         resetClocks();
         startClock();
         addLog(`Partida iniciada no modo: ${mode} (cor local: ${playerColor})`, "GAME");
+        logSessionSnapshot("game-start:" + mode);
+        shuffleStandUpDeck();
     }
 
     function startBotVsBot() {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
-        aiDifficulty = 5;
+        aiDifficulty = 4;
         startGame('bot-vs-bot', false);
+        addLog('Bot vs Bot: depth≤3 · busca~450ms + pausa 550ms · anti-repetição', 'AI_PERF');
         loopBot();
     }
 
@@ -2586,15 +2989,16 @@
             if (chess.game_over() && !chess.in_checkmate()) handleGameOverEvents("Fim de Jogo (Empate)", null);
             return;
         }
+        // ~450ms de busca + 550ms de pausa visual ≈ ritmo assistível (~1s/lance)
         makeAIMove('w', () => {
             if (chess.game_over() || gameMode !== 'bot-vs-bot') return;
             botVsBotInterval = setTimeout(() => {
                 makeAIMove('b', () => {
                     if (!chess.game_over() && gameMode === 'bot-vs-bot') {
-                        botVsBotInterval = setTimeout(loopBot, 100);
+                        botVsBotInterval = setTimeout(loopBot, 550);
                     }
                 });
-            }, 100);
+            }, 550);
         });
     }
 
@@ -2774,12 +3178,161 @@
         input.value = ""; 
     }
     function handleChatPress(e) { if (e.key === 'Enter') sendCustomMessage(); }
+
+    // === Mensagens de voz (grava e envia, máx 10s, autoplay) ===
+    let voiceRecorder = null;
+    let voiceChunks = [];
+    let voiceStream = null;
+    let voiceStartTs = 0;
+    let voiceMaxTimer = null;
+    const VOICE_MAX_MS = 10000;
+
+    function setVoiceBtnRecording(on) {
+        const btn = document.getElementById('btnVoiceMsg');
+        if (!btn) return;
+        btn.classList.toggle('recording', !!on);
+        btn.textContent = on ? '⏹️' : '🎙️';
+        btn.title = on ? 'Solte para enviar' : 'Segure para gravar áudio (máx. 10s)';
+    }
+
+    async function startVoiceRecording() {
+        if (voiceRecorder && voiceRecorder.state === 'recording') return;
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            addChatMessage('Sistema', 'Microfone não disponível neste navegador.', true);
+            return;
+        }
+        try {
+            voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            voiceChunks = [];
+            const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+                ? 'audio/webm;codecs=opus'
+                : (MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '');
+            voiceRecorder = mime ? new MediaRecorder(voiceStream, { mimeType: mime }) : new MediaRecorder(voiceStream);
+            voiceRecorder.ondataavailable = (e) => { if (e.data && e.data.size) voiceChunks.push(e.data); };
+            voiceRecorder.onstop = onVoiceRecordingStop;
+            voiceRecorder.start(200);
+            voiceStartTs = Date.now();
+            setVoiceBtnRecording(true);
+            addLog('Gravação de voz iniciada', 'VOICE');
+            if (voiceMaxTimer) clearTimeout(voiceMaxTimer);
+            voiceMaxTimer = setTimeout(() => { stopVoiceRecording(true); }, VOICE_MAX_MS);
+        } catch (err) {
+            addChatMessage('Sistema', 'Permissão de microfone negada ou indisponível.', true);
+            addLog('Microfone erro: ' + (err && err.message), 'ERROR');
+            cleanupVoiceStream();
+        }
+    }
+
+    function stopVoiceRecording(auto) {
+        if (voiceMaxTimer) { clearTimeout(voiceMaxTimer); voiceMaxTimer = null; }
+        if (!voiceRecorder || voiceRecorder.state !== 'recording') {
+            setVoiceBtnRecording(false);
+            cleanupVoiceStream();
+            return;
+        }
+        try { voiceRecorder.stop(); } catch (e) {}
+        setVoiceBtnRecording(false);
+        addLog('Gravação de voz finalizada' + (auto ? ' (limite 10s)' : ''), 'VOICE');
+    }
+
+    function cleanupVoiceStream() {
+        if (voiceStream) {
+            try { voiceStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+            voiceStream = null;
+        }
+        voiceRecorder = null;
+    }
+
+    function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const r = new FileReader();
+            r.onloadend = () => resolve(r.result);
+            r.onerror = reject;
+            r.readAsDataURL(blob);
+        });
+    }
+
+    async function onVoiceRecordingStop() {
+        const durationMs = Math.max(0, Date.now() - voiceStartTs);
+        cleanupVoiceStream();
+        if (!voiceChunks.length || durationMs < 400) {
+            addChatMessage('Sistema', 'Áudio muito curto. Segure o 🎙️ por mais tempo.', true);
+            return;
+        }
+        const blob = new Blob(voiceChunks, { type: (voiceChunks[0] && voiceChunks[0].type) || 'audio/webm' });
+        voiceChunks = [];
+        if (blob.size > 280000) {
+            addChatMessage('Sistema', 'Áudio grande demais. Tente mais curto.', true);
+            return;
+        }
+        let dataUrl;
+        try { dataUrl = await blobToBase64(blob); } catch (e) {
+            addChatMessage('Sistema', 'Falha ao processar áudio.', true);
+            return;
+        }
+        const sec = Math.max(1, Math.round(durationMs / 1000));
+        displayVoiceMessage(playerName || 'Você', dataUrl, sec, true);
+        if (conn && conn.open) {
+            try {
+                conn.send({ type: 'voice', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), dataUrl: dataUrl, duration: sec });
+            } catch (e) {
+                addLog('Falha envio voz P2P: ' + e, 'ERROR');
+            }
+        }
+        addLog('Voz enviada ' + sec + 's size=' + blob.size, 'VOICE');
+    }
+
+    function displayVoiceMessage(sender, dataUrl, durationSec, isLocal) {
+        const box = document.getElementById('chat-box');
+        if (!box) return;
+        const row = document.createElement('div');
+        row.className = 'msg' + (isLocal ? ' local-voice' : '');
+        const who = document.createElement('div');
+        who.style.cssText = 'font-size:9px;font-weight:800;opacity:0.85;margin-bottom:2px;';
+        who.textContent = (sender || 'Jogador') + ' · 🎙️ ' + durationSec + 's';
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.preload = 'auto';
+        audio.src = dataUrl;
+        audio.style.cssText = 'width:100%;max-width:220px;height:32px;';
+        row.appendChild(who);
+        row.appendChild(audio);
+        box.appendChild(row);
+        box.scrollTop = box.scrollHeight;
+        const p = audio.play();
+        if (p && typeof p.catch === 'function') p.catch(function(){});
+    }
+
+    function bindVoiceButton() {
+        const btn = document.getElementById('btnVoiceMsg');
+        if (!btn || btn._voiceBound) return;
+        btn._voiceBound = true;
+        const start = function(e) { e.preventDefault(); startVoiceRecording(); };
+        const stop = function(e) { e.preventDefault(); stopVoiceRecording(false); };
+        btn.addEventListener('mousedown', start);
+        btn.addEventListener('mouseup', stop);
+        btn.addEventListener('mouseleave', function() {
+            if (voiceRecorder && voiceRecorder.state === 'recording') stopVoiceRecording(false);
+        });
+        btn.addEventListener('touchstart', start, { passive: false });
+        btn.addEventListener('touchend', stop, { passive: false });
+        btn.addEventListener('touchcancel', stop, { passive: false });
+    }
+
     function sendStandUpJoke() {
-        const text = diverseStandUpList[currentJokeIndex];
+        if (!diverseStandUpList.length) return;
+        if (currentJokeIndex >= diverseStandUpList.length) shuffleStandUpDeck();
+        const line = diverseStandUpList[currentJokeIndex];
         currentJokeIndex = (currentJokeIndex + 1) % diverseStandUpList.length;
-        let jokeHtml = `🎤 <b>MOMENTO CÔMICO:</b><br>"${text}"`;
-        addChatMessage("Stand up", jokeHtml, true, false, true);
-        if (conn && conn.open) { try { conn.send({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true }); } catch(e) {} }
+        if (currentJokeIndex === 0) shuffleStandUpDeck();
+        recentStandUpLines.push(line);
+        if (recentStandUpLines.length > 24) recentStandUpLines.shift();
+        const jokeHtml = '🎤 <b>MOMENTO CÔMICO:</b><br>"' + line + '"';
+        addChatMessage('Stand up', jokeHtml, true, false, true);
+        if (conn && conn.open) {
+            try { conn.send({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true }); } catch (e) {}
+        }
+        addLog('Stand-up: ' + line.slice(0, 80), 'UI');
     }
 
     function showCaptureInChat(move) {
@@ -3016,11 +3569,23 @@
         };
     }
 
-    function cleanupCurrentRadio() {
+    let radioSwitchTimer = null;
+    let radioBusy = false;
+
+    function cleanupCurrentRadio(fromRemote = false) {
+        const wasPlaying = radioPlaying;
+        const prevChannel = currentRadioChannelId;
         stopLatencyMonitor();
-        if (hlsInstance) { try { hlsInstance.destroy(); } catch (e) {} hlsInstance = null; }
+        if (hlsInstance) {
+            try { hlsInstance.stopLoad(); } catch (e) {}
+            try { hlsInstance.detachMedia(); } catch (e) {}
+            try { hlsInstance.destroy(); } catch (e) {}
+            hlsInstance = null;
+        }
         if (radioAudio) {
             try {
+                radioAudio.onerror = null;
+                radioAudio.onplaying = null;
                 radioAudio.pause();
                 radioAudio.removeAttribute('src');
                 radioAudio.load();
@@ -3029,6 +3594,14 @@
         }
         radioPlaying = false;
         currentStationLabel = '';
+        const playBtn = document.getElementById('radioPlayBtn');
+        if (playBtn) { playBtn.textContent = '🔊'; playBtn.classList.remove('active-radio-icon'); }
+        const sidebarBtn = document.getElementById('radioSidebarBtn');
+        if (sidebarBtn) sidebarBtn.classList.remove('radio-active');
+        if (wasPlaying && !fromRemote) {
+            broadcastRadioState('pause', prevChannel);
+            addLog('Rádio pausado localmente' + (prevChannel ? ' (' + prevChannel + ')' : ''), 'RADIO');
+        }
     }
 
     function startLatencyMonitor(stationLabel = '') {
@@ -3067,6 +3640,7 @@
     }
 
     async function playRadioChannel(channelId, urlIndex = 0) {
+        currentRadioChannelId = channelId;
         const channel = RADIO_CHANNELS[channelId];
         if (!channel || !channel.urls || channel.urls.length === 0) {
             updateAllRadioStatus('Estação inválida');
@@ -3110,7 +3684,9 @@
             const sidebarBtn = document.getElementById('radioSidebarBtn');
             if (sidebarBtn) sidebarBtn.classList.add('radio-active');
             syncRadioSelects(channelId);
+            broadcastRadioState('play', channelId);
             startLatencyMonitor(channel.label);
+            addLog('Rádio tocando: ' + channel.label + ' [' + channelId + ']', 'RADIO');
         };
 
         if (channel.needsHls || urlNeedsHls(streamUrl)) {
@@ -3172,6 +3748,50 @@
         });
     }
 
+    function broadcastRadioState(action, channelId) {
+        if (radioSyncIgnore) return;
+        if (!(conn && conn.open && gameMode === 'network')) return;
+        try {
+            conn.send({
+                type: 'radio',
+                action: action, // 'play' | 'pause'
+                channelId: channelId || currentRadioChannelId || '',
+                volume: radioVolume
+            });
+        } catch (e) {}
+    }
+
+    function applyRemoteRadio(data) {
+        if (!data || data.type !== 'radio') return;
+        radioSyncIgnore = true;
+        addLog('Rádio remoto: action=' + data.action + ' channel=' + (data.channelId || '-'), 'RADIO');
+        try {
+            if (data.action === 'pause') {
+                if (radioSwitchTimer) { clearTimeout(radioSwitchTimer); radioSwitchTimer = null; }
+                cleanupCurrentRadio(true);
+                updateAllRadioStatus('Pausada (oponente)');
+                addChatMessage('Sistema', '📻 Oponente pausou o rádio.', true);
+            } else if (data.action === 'play' && data.channelId && RADIO_CHANNELS[data.channelId]) {
+                if (typeof data.volume === 'number') {
+                    radioVolume = Math.max(0, Math.min(1, data.volume));
+                    if (radioAudio) radioAudio.volume = radioVolume;
+                    const volEl = document.getElementById('radioVolumeSettings');
+                    if (volEl) volEl.value = Math.round(radioVolume * 100);
+                }
+                // evita reiniciar a mesma estação (travada no mobile)
+                if (radioPlaying && currentRadioChannelId === data.channelId) {
+                    addLog('Rádio remoto ignorado (já tocando mesma estação)', 'RADIO');
+                } else {
+                    const label = RADIO_CHANNELS[data.channelId].label || data.channelId;
+                    addChatMessage('Sistema', '📻 Oponente sintonizou: <b>' + label + '</b> — tocando aqui também.', true, false, true);
+                    requestRadioChannel(data.channelId, 'remote');
+                }
+            }
+        } finally {
+            setTimeout(() => { radioSyncIgnore = false; }, 1500);
+        }
+    }
+
     function syncRadioSelects(channelId) {
         ['radioSelectCompact', 'radioSelectSettings', 'radioSelectCompactPopup'].forEach(id => {
             const el = document.getElementById(id);
@@ -3194,17 +3814,28 @@
         else updateAllRadioStatus('Selecione estação');
     }
 
+    function requestRadioChannel(channelId, source) {
+        if (!channelId) return;
+        if (radioSwitchTimer) clearTimeout(radioSwitchTimer);
+        updateAllRadioStatus('Trocando...');
+        addLog('Pedido de rádio: ' + channelId + ' via ' + (source || '?'), 'RADIO');
+        // debounce 350ms evita spam/travada no mobile ao rolar o select
+        radioSwitchTimer = setTimeout(() => {
+            radioSwitchTimer = null;
+            playRadioChannel(channelId, 0);
+        }, 350);
+    }
     function changeRadioStationMenu() {
         const select = document.getElementById('radioSelectCompact');
-        if (select && select.value) playRadioChannel(select.value);
+        if (select && select.value) requestRadioChannel(select.value, 'menu');
     }
     function changeRadioStationSettings() {
         const select = document.getElementById('radioSelectSettings');
-        if (select && select.value) playRadioChannel(select.value);
+        if (select && select.value) requestRadioChannel(select.value, 'settings');
     }
     function changeRadioStationPopup() {
         const select = document.getElementById('radioSelectCompactPopup');
-        if (select && select.value) playRadioChannel(select.value);
+        if (select && select.value) requestRadioChannel(select.value, 'popup');
     }
 
     function toggleRadioFromSettings() { toggleRadioMenuPlay(); }
@@ -3706,27 +4337,51 @@
         if (moves.length === 0) { if (onDone) onDone(); return; }
 
         let selectedMove;
-        if (aiDifficulty === 1) { 
-            selectedMove = moves[Math.floor(Math.random() * moves.length)];
-            applyAIMove(selectedMove, onDone);
-        } else if (aiDifficulty === 2) {
-            const captures = moves.filter(m => m.captured);
-            const checks = moves.filter(m => m.san && m.san.includes('+'));
-            const pool = captures.length ? captures : (checks.length ? checks : moves);
-            selectedMove = pool[Math.floor(Math.random() * pool.length)];
+        if (aiDifficulty === 1 && gameMode !== 'bot-vs-bot') {
+            // Nível 1: busca rasa + 15% de lance "humano" aleatório entre os 3 melhores
+            // cai no worker abaixo com budget baixo
+        }
+        if (false) { // placeholder removido — todos 1–5 usam worker
+            selectedMove = moves[0];
             applyAIMove(selectedMove, onDone);
         } else {
-            const depthBudget = { 3: [5, 500], 4: [7, 1500], 5: [9, 3500] }[aiDifficulty] || [7, 1500];
+            // Orçamentos calibrados p/ mobile: prioriza COMPLETAR depth 2–3, não estourar tempo em depth 1.
+            let depthBudget;
+            if (gameMode === 'bot-vs-bot') {
+                depthBudget = [3, 500];
+            } else {
+                // N1 já sério → N5 bem pesado (motor atual, sem Stockfish)
+                depthBudget = {
+                    1: [3, 400],
+                    2: [4, 800],
+                    3: [5, 1400],
+                    4: [6, 2400],
+                    5: [7, 3500]
+                }[aiDifficulty] || [5, 1400];
+            }
             const currentReqId = ++aiRequestId;
+            const thinkStarted = performance.now();
 
             document.getElementById('turn-badge-local').innerText = "Pensando...";
             document.getElementById('turn-badge-opponent').innerText = "Pensando...";
             document.getElementById('turn-badge-local').style.display = 'inline-block';
             document.getElementById('turn-badge-opponent').style.display = 'inline-block';
 
-            pendingAICallback = (bestMove) => { 
+            pendingAICallback = (payload) => {
                 if (currentReqId !== aiRequestId) return;
-                applyAIMove(bestMove || moves[0], onDone); 
+                const bestMove = (payload && payload.bestMove) ? payload.bestMove : payload;
+                const ms = Math.round(performance.now() - thinkStarted);
+                const depth = payload && payload.depthReached != null ? payload.depthReached : '?';
+                const score = payload && payload.score != null ? payload.score : null;
+                const nodes = payload && payload.nodes != null ? payload.nodes : null;
+                addLog(
+                    `IA pensou ${ms}ms | depth=${depth}` +
+                    (score != null ? ` | eval=${score}` : '') +
+                    (nodes != null ? ` | nodes=${nodes}` : '') +
+                    ` | modo=${gameMode} niv=${aiDifficulty}`,
+                    'AI_PERF'
+                );
+                applyAIMove(bestMove || moves[0], onDone);
             };
             aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId });
         }
@@ -4096,6 +4751,16 @@
             addChatMessage(data.sender || opponentName || "Oponente", String(data.text || '').slice(0, 300), !!data.isAI, !!data.isAlert, false); 
             return; 
         }
+        if (data.type === 'voice' && data.dataUrl) {
+            const sec = Math.max(1, Math.min(15, parseInt(data.duration, 10) || 5));
+            displayVoiceMessage(data.sender || opponentName || 'Oponente', data.dataUrl, sec, false);
+            addLog('Voz recebida de ' + (data.sender || '?') + ' ' + sec + 's', 'VOICE');
+            return;
+        }
+        if (data.type === 'radio') {
+            applyRemoteRadio(data);
+            return;
+        }
     }
 
     function setupHostListeners(cityName) {
@@ -4229,7 +4894,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v7.3.2.html',
+            start_url: './XadrezPro_v8.4.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -4372,40 +5037,64 @@
 
     const TUTORIAL_PAGES = [
         {
-            title: '1. Objetivo do jogo',
-            html: '<p>O xadrez é jogado em um tabuleiro 8×8. O objetivo é dar <b>xeque-mate</b> no rei adversário: ameaçá-lo de captura de forma que ele não tenha como escapar.</p><p>As <b>brancas</b> começam. Jogadores alternam um lance por vez.</p>'
+            title: '1. O que é o xadrez?',
+            pieces: ['K', 'k'],
+            html: '<p>Jogo de estratégia em tabuleiro 8×8. As <b>brancas</b> começam. O objetivo é dar <b>xeque-mate</b> no rei adversário — ameaçá-lo sem que ele tenha escape.</p><div class="tutorial-tip">💡 Dica: pense no rei como o “chefe”. Se ele cair, a partida acaba.</div>',
+            practice: true
         },
         {
-            title: '2. Rei 👑',
-            html: '<p>Move <b>uma casa</b> em qualquer direção (horizontal, vertical ou diagonal).</p><p>Não pode se colocar em casa atacada. O rei é a peça mais importante — se estiver em xeque, você deve resolver isso no lance.</p>'
+            title: '2. Rei 👑 — o mais importante',
+            pieces: ['K', 'k'],
+            html: '<p>Anda <b>uma casa</b> em qualquer direção. Nunca pode entrar em casa atacada.</p><p>Se estiver em <b>xeque</b>, você é obrigado a resolver: fugir, capturar a ameaça ou bloquear.</p><div class="tutorial-tip">🛡️ Proteja o rei cedo (geralmente com roque).</div>',
+            practice: true
         },
         {
-            title: '3. Dama ♛',
-            html: '<p>A peça mais poderosa. Combina torre + bispo: move qualquer número de casas em linha reta ou diagonal, sem pular peças.</p>'
+            title: '3. Dama ♛ — a mais poderosa',
+            pieces: ['Q', 'q'],
+            html: '<p>Combina torre + bispo: qualquer número de casas em linha ou diagonal, sem pular.</p><div class="tutorial-tip">⚠️ Não coloque a dama em jogo cedo demais — ela vira alvo fácil.</div>',
+            practice: true
         },
         {
-            title: '4. Torre ♜',
-            html: '<p>Move qualquer número de casas <b>na horizontal ou vertical</b>. Não pula peças. Excelente em finais e colunas abertas.</p>'
+            title: '4. Torre ♜ — colunas e fileiras',
+            pieces: ['R', 'r'],
+            html: '<p>Move em <b>horizontal ou vertical</b>. Brilha em colunas abertas e no final do jogo.</p><div class="tutorial-tip">🏰 Duas torres na 7ª fileira costumam ser devastadoras.</div>',
+            practice: true
         },
         {
-            title: '5. Bispo ♝',
-            html: '<p>Move qualquer número de casas na <b>diagonal</b>. Cada bispo fica sempre na mesma cor de casa. O par de bispos é muito forte em posições abertas.</p>'
+            title: '5. Bispo ♝ — diagonais',
+            pieces: ['B', 'b'],
+            html: '<p>Só anda na <b>diagonal</b>. Cada bispo fica para sempre na mesma cor de casa.</p><div class="tutorial-tip">✨ O par de bispos é uma vantagem clássica em posições abertas.</div>',
+            practice: true
         },
         {
-            title: '6. Cavalo ♘',
-            html: '<p>Move em “L”: 2 casas em uma direção e 1 perpendicular. É a única peça que <b>pula</b> outras. Útil no centro e em ataques surpresa.</p>'
+            title: '6. Cavalo ♘ — o salto em L',
+            pieces: ['N', 'n'],
+            html: '<p>Move em “L” (2+1). É a <b>única peça que pula</b> outras.</p><div class="tutorial-move-demo"><span class="l"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span><span class="l"></span><span class="d">♞</span><span class="l"></span><span class="d"></span><span class="d hl">×</span><span class="l"></span><span class="d"></span><span class="l hl">×</span></div><div class="tutorial-tip">🎯 Cavalos no centro controlam até 8 casas.</div>',
+            practice: true
         },
         {
-            title: '7. Peão ♙',
-            html: '<p>Avança <b>1 casa</b> para frente (2 no primeiro movimento daquela peça). Captura <b>na diagonal</b> à frente.</p><p>Ao chegar na última fileira, <b>promove</b> (geralmente a dama). Existe o <i>en passant</i> em situações especiais.</p>'
+            title: '7. Peão ♙ — pequeno, mas decisivo',
+            pieces: ['P', 'p'],
+            html: '<p>Avança 1 casa (2 no primeiro lance daquela peça). Captura na <b>diagonal</b>.</p><p>Na última fileira <b>promove</b> (quase sempre a dama). Existe o <i>en passant</i>.</p><div class="tutorial-tip">🚀 Peões passados (sem peão inimigo na frente) decidem finais.</div>',
+            practice: true
         },
         {
-            title: '8. Roque e regras especiais',
-            html: '<p><b>Roque</b>: rei anda 2 casas em direção à torre e a torre “pula” para o outro lado — só se rei e torre não tiverem se movido e o caminho estiver livre e sem xeque.</p><p><b>Xeque</b>: rei atacado. <b>Mate</b>: xeque sem escape. <b>Afogamento</b>: sem lances legais e sem xeque → empate.</p>'
+            title: '8. Roque, xeque e empates',
+            pieces: ['K', 'R'],
+            html: '<p><b>Roque</b>: rei anda 2 casas até a torre; a torre “pula” para o outro lado. Só se rei e torre não se moveram e o caminho está livre e sem xeque.</p><p><b>Mate</b> = xeque sem escape. <b>Afogamento</b> = sem lances e sem xeque → empate.</p><div class="tutorial-tip">⏱️ Também empatam: repetição tripla, material insuficiente, 50 lances sem captura/peão.</div>',
+            practice: true
         },
         {
-            title: '9. Dicas para começar',
-            html: '<p>1) Controle o centro (e4, d4, e5, d5).<br>2) Desenvolva cavalos e bispos cedo.<br>3) Faça o roque para proteger o rei.<br>4) Não mova a mesma peça várias vezes na abertura.<br>5) Use o <b>Sandbox</b> para experimentar lances sem pressão.</p>'
+            title: '9. Plano de abertura (e Sandbox)',
+            pieces: ['N', 'B', 'K'],
+            html: '<p>1) Centro (e4/d4).<br>2) Desenvolva cavalos e bispos.<br>3) Roque cedo.<br>4) Não mova a mesma peça várias vezes na abertura.</p><div class="tutorial-tip">🧪 No <b>Sandbox</b> você joga os dois lados, desfaz lances e usa “Avaliar” com a IA — o melhor laboratório.</div>',
+            practice: true
+        },
+        {
+            title: '10. Recursos do Xadrez Pro',
+            pieces: ['Q', 'K'],
+            html: '<p><b>IA</b> (5 níveis), <b>P2P</b> nas salas-cidade, <b>rádio sincronizado</b> com o oponente, temas, reações, frases e stand-up.</p><p>No celular, use os botões 🔥 e 💬 para reações e frases sem ocupar a tela.</p><div class="tutorial-tip">📻 Nas salas online, a rádio que você ligar toca também no aparelho do oponente (ele pode trocar ou pausar).</div>',
+            practice: true
         }
     ];
     let tutorialIndex = 0;
@@ -4428,7 +5117,17 @@
         const page = TUTORIAL_PAGES[tutorialIndex];
         const body = document.getElementById('tutorialBody');
         if (body && page) {
-            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${page.html}</div>`;
+            let hero = '';
+            if (page.pieces && page.pieces.length && typeof pieceSvgs !== 'undefined') {
+                hero = '<div class="tutorial-hero">' + page.pieces.map(k => {
+                    const url = pieceSvgs[k] || '';
+                    return `<div class="tutorial-piece-card"><div class="tp-img" style="background-image:url('${url}')"></div></div>`;
+                }).join('') + '</div>';
+            }
+            const practiceBtn = page.practice
+                ? `<button type="button" class="tutorial-practice-btn" onclick="closeTutorial();startSandboxMode();">🧪 Praticar isso no Sandbox</button>`
+                : '';
+            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${hero}${page.html}${practiceBtn}</div>`;
         }
         const pager = document.getElementById('tutorialPager');
         if (pager) pager.textContent = `${tutorialIndex + 1} / ${TUTORIAL_PAGES.length}`;
@@ -4446,7 +5145,10 @@
     }
 
 
-    addLog('Xadrez Pro v7.3.2 — painel compacto + IA reforçada (quiescence, eval e profundidade).', 'INIT');
+    addLog('Xadrez Pro v8.4 — frases compactas, voz 10s, IA rebalanceada, memes.', 'INIT');
+    logSessionSnapshot('boot');
+    if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
+    if (typeof bindVoiceButton === 'function') bindVoiceButton();
 </script>
 </body>
 </html>

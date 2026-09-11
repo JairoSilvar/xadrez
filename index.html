@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v8.4</title>
+    <title>Xadrez Pro - v8.9</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -361,6 +361,113 @@
             font-size: 14px; min-width: 36px; padding: 0 8px;
         }
         .msg.local-voice audio { filter: saturate(1.05); }
+        
+        /* Prévia de voz — compacta, estilo chat moderno */
+        .voice-preview-bar {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            margin: 0 0 6px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            flex-shrink: 0;
+        }
+        .voice-preview-bar.show { display: flex; }
+        .voice-preview-bar audio {
+            flex: 1;
+            min-width: 0;
+            height: 34px;
+            max-width: 160px;
+            border-radius: 8px;
+        }
+        .voice-preview-bar .vp-btn {
+            flex-shrink: 0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            transition: transform 0.12s ease, filter 0.12s ease;
+        }
+        .voice-preview-bar .vp-btn:active { transform: scale(0.92); }
+        .voice-preview-bar .vp-send {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(37, 211, 102, 0.35);
+        }
+        .voice-preview-bar .vp-del {
+            background: var(--btn-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--panel-border);
+        }
+        .voice-preview-bar .vp-del:hover { color: #dc2626; border-color: #fca5a5; }
+        .voice-preview-bar .vp-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        /* Bolha de áudio no chat */
+        .chat-msg.voice-msg {
+            position: relative;
+            max-width: 95%;
+        }
+        .chat-msg.voice-msg .voice-msg-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            background: var(--chat-msg-bg);
+            border-radius: 12px;
+            padding: 6px 8px 6px 10px;
+            border: 1px solid var(--panel-border);
+        }
+        .chat-msg.voice-msg .voice-msg-row audio {
+            flex: 1;
+            min-width: 0;
+            max-width: 170px;
+            height: 32px;
+        }
+        .chat-msg.voice-msg .voice-del-btn {
+            flex-shrink: 0;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 15px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            opacity: 0.75;
+            transition: background 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+        }
+        .chat-msg.voice-msg .voice-del-btn:hover,
+        .chat-msg.voice-msg .voice-del-btn:focus {
+            background: rgba(220, 38, 38, 0.12);
+            color: #dc2626;
+            opacity: 1;
+        }
+        .chat-msg.voice-msg .voice-del-btn:active {
+            background: rgba(220, 38, 38, 0.2);
+            transform: scale(0.94);
+        }
+
         .xp-toggle-btn.voice-toggle.recording {
             background: #dc2626 !important;
             animation: pulse-rec 1s ease infinite;
@@ -1210,7 +1317,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v8.4</p>
+            <p>Estratégia P2P · IA offline · v8.9</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1411,7 +1518,7 @@
                 </div>
             </div>
             <div class="compact-status-row">
-                <button type="button" class="xp-toggle-btn reactions-toggle" id="btnToggleReactions" onclick="toggleReactionsPanel(event)" title="Reações">🔥</button>
+                <button type="button" class="xp-toggle-btn reactions-toggle" id="btnToggleReactions" onclick="toggleReactionsPanel(event)" title="Abrir reações">😊</button>
                 <div class="candy-fight-bar-container">
                     <div class="candy-bar-header">
                         <span>🍫 Placar (Vitórias)</span>
@@ -1466,9 +1573,15 @@
                 <div class="chat-box" id="chat-box">
                     <div class="chat-msg ai"><span>🤖 Sistema:</span> Tabuleiro pronto. Boa sorte!</div>
                 </div>
+                <div class="voice-preview-bar" id="voicePreviewBar" aria-live="polite">
+                    <span class="vp-label">Prévia</span>
+                    <audio id="voicePreviewAudio" controls preload="auto"></audio>
+                    <button type="button" class="vp-btn vp-del" onclick="discardVoicePreview()" title="Descartar" aria-label="Descartar áudio">🗑️</button>
+                    <button type="button" class="vp-btn vp-send" onclick="confirmSendVoice()" title="Enviar" aria-label="Enviar áudio">➤</button>
+                </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
-                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Segure para gravar áudio (máx. 10s)" aria-label="Mensagem de voz">🎙️</button>
+                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Toque para gravar (máx. 10s). Solte e ouça antes de enviar." aria-label="Mensagem de voz">🎙️</button>
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 48px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
@@ -1728,115 +1841,103 @@
             return nonPawn <= 6;
         }
 
+        const PIECE_VAL = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
+
         function evaluateBoard(game) {
             const board = game.board();
-            const endgame = isEndgamePosition(board);
+            const end = isEndgamePosition(board);
             let score = 0;
-            let whiteBishops = 0, blackBishops = 0;
-            let whiteMob = 0, blackMob = 0;
+            let wB = 0, bB = 0, wN = 0, bN = 0;
+            let wPfile = [0,0,0,0,0,0,0,0], bPfile = [0,0,0,0,0,0,0,0];
 
-            // Material + PST
             for (let r = 0; r < 8; r++) {
                 for (let c = 0; c < 8; c++) {
                     const piece = board[r][c];
                     if (!piece) continue;
-                    const mat = PIECE_VALUES[piece.type];
-                    let idx = r * 8 + c;
-                    if (piece.color === 'b') idx = (7 - r) * 8 + c;
-                    let table;
+                    const side = piece.color === 'w' ? 1 : -1;
+                    const sq = r * 8 + c;
+                    let v = PIECE_VAL[piece.type] || 0;
+                    let table = null;
                     if (piece.type === 'p') table = PST_P;
                     else if (piece.type === 'n') table = PST_N;
                     else if (piece.type === 'b') table = PST_B;
                     else if (piece.type === 'r') table = PST_R;
                     else if (piece.type === 'q') table = PST_Q;
-                    else table = endgame ? PST_K_END : PST_K_MID;
-                    const pst = table[idx] || 0;
-                    if (piece.color === 'w') {
-                        score += mat + pst;
-                        if (piece.type === 'b') whiteBishops++;
-                    } else {
-                        score -= mat + pst;
-                        if (piece.type === 'b') blackBishops++;
+                    else if (piece.type === 'k') table = end ? PST_K_END : PST_K_MID;
+                    if (table) {
+                        const idx = piece.color === 'w' ? sq : (63 - sq);
+                        v += table[idx] || 0;
+                    }
+                    score += side * v;
+                    if (piece.type === 'b') { if (piece.color === 'w') wB++; else bB++; }
+                    if (piece.type === 'n') { if (piece.color === 'w') wN++; else bN++; }
+                    if (piece.type === 'p') {
+                        if (piece.color === 'w') wPfile[c]++; else bPfile[c]++;
                     }
                 }
             }
-
-            // Bishop pair
-            if (whiteBishops >= 2) score += 35;
-            if (blackBishops >= 2) score -= 35;
-
-            // Simple mobility (legal moves count) — expensive but strong; sample only at shallow
-            // Applied as a small bonus based on turn side expansion is handled in search
-            // Pawn structure: doubled / isolated (file scan)
-            for (let file = 0; file < 8; file++) {
-                let wp = 0, bp = 0;
-                for (let rank = 0; rank < 8; rank++) {
-                    const p = board[rank][file];
-                    if (!p || p.type !== 'p') continue;
-                    if (p.color === 'w') wp++; else bp++;
-                }
-                if (wp > 1) score -= 18 * (wp - 1);
-                if (bp > 1) score += 18 * (bp - 1);
-                // isolated-ish: no friendly pawn on adjacent files
-                if (wp === 1) {
-                    let support = false;
-                    for (let adj of [file - 1, file + 1]) {
-                        if (adj < 0 || adj > 7) continue;
-                        for (let rank = 0; rank < 8; rank++) {
-                            const p = board[rank][adj];
-                            if (p && p.type === 'p' && p.color === 'w') { support = true; break; }
-                        }
-                        if (support) break;
-                    }
-                    if (!support) score -= 12;
-                }
-                if (bp === 1) {
-                    let support = false;
-                    for (let adj of [file - 1, file + 1]) {
-                        if (adj < 0 || adj > 7) continue;
-                        for (let rank = 0; rank < 8; rank++) {
-                            const p = board[rank][adj];
-                            if (p && p.type === 'p' && p.color === 'b') { support = true; break; }
-                        }
-                        if (support) break;
-                    }
-                    if (!support) score += 12;
-                }
+            // pair of bishops
+            if (wB >= 2) score += 35;
+            if (bB >= 2) score -= 35;
+            // doubled / isolated pawns
+            for (let f = 0; f < 8; f++) {
+                if (wPfile[f] > 1) score -= 18 * (wPfile[f] - 1);
+                if (bPfile[f] > 1) score += 18 * (bPfile[f] - 1);
+                const wIso = wPfile[f] && (!f || !wPfile[f-1]) && (f === 7 || !wPfile[f+1]);
+                const bIso = bPfile[f] && (!f || !bPfile[f-1]) && (f === 7 || !bPfile[f+1]);
+                if (wIso) score -= 12;
+                if (bIso) score += 12;
             }
-
-            // Tempo / side to move small bonus is implicit via negamax perspective
+            // mobility (expensive but strong) — sample legal moves count
+            try {
+                const mob = game.moves().length;
+                // side to move mobility relative: approximate by using current turn
+                score += game.turn() === 'w' ? Math.min(40, mob) : -Math.min(40, mob);
+            } catch (e) {}
+            // check pressure
+            if (game.in_check()) {
+                score += game.turn() === 'w' ? -45 : 45;
+            }
             return game.turn() === 'w' ? score : -score;
         }
 
         function orderMoves(moves) {
             return moves.sort((a, b) => {
-                const scoreMove = (m) => {
+                const sc = (m) => {
                     let s = 0;
-                    if (m.captured) s += 10 * PIECE_VALUES[m.captured] - (PIECE_VALUES[m.piece] || 100);
-                    if (m.promotion) s += 850;
-                    if (m.san && m.san.includes('#')) s += 100000;
-                    else if (m.san && m.san.includes('+')) s += 60;
-                    if (m.flags && (m.flags.includes('k') || m.flags.includes('q'))) s += 40; // castling
+                    if (m.captured) s += 10 * (PIECE_VAL[m.captured] || 100) - (PIECE_VAL[m.piece] || 100);
+                    if (m.promotion) s += 900;
+                    if (m.san && m.san.indexOf('#') >= 0) s += 100000;
+                    else if (m.san && m.san.indexOf('+') >= 0) s += 80;
+                    if (m.flags && (m.flags.indexOf('k') >= 0 || m.flags.indexOf('q') >= 0)) s += 50;
+                    // center development
+                    const toFile = m.to.charCodeAt(0) - 97;
+                    const toRank = m.to.charCodeAt(1) - 49;
+                    if (toFile >= 2 && toFile <= 5 && toRank >= 2 && toRank <= 5) s += 8;
                     return s;
                 };
-                return scoreMove(b) - scoreMove(a);
+                return sc(b) - sc(a);
             });
+        }
+
+        // Transposition table
+        const TT = new Map();
+        const TT_MAX = 80000;
+        function ttKey(game, depth) {
+            return game.fen() + '|' + depth;
         }
 
         function quiescence(game, alpha, beta, deadline, qDepth) {
             if (performance.now() > deadline) return evaluateBoard(game);
             if (qDepth <= 0) return evaluateBoard(game);
-
             const standPat = evaluateBoard(game);
             if (standPat >= beta) return beta;
             if (standPat > alpha) alpha = standPat;
-
-            // Only captures + promotions (and checks lightly via + in SAN if available)
             let moves = game.moves({ verbose: true }).filter(m => m.captured || m.promotion);
             moves = orderMoves(moves);
-
-            for (const m of moves) {
+            for (let i = 0; i < moves.length; i++) {
                 if (performance.now() > deadline) break;
+                const m = moves[i];
                 game.move(m);
                 const score = -quiescence(game, -beta, -alpha, deadline, qDepth - 1);
                 game.undo();
@@ -1846,101 +1947,166 @@
             return alpha;
         }
 
-        function negamax(game, depth, alpha, beta, deadline) {
+        function negamax(game, depth, alpha, beta, deadline, ply) {
             searchNodes++;
             if (performance.now() > deadline) return evaluateBoard(game);
-            if (game.in_checkmate()) return -20000 + (10 - depth);
+            if (game.in_checkmate()) return -20000 + ply;
             if (game.in_draw() || game.in_stalemate() || game.in_threefold_repetition()) return 0;
 
+            const key = ttKey(game, depth);
+            if (TT.has(key)) {
+                const e = TT.get(key);
+                if (e.depth >= depth) return e.score;
+            }
+
             if (depth <= 0) {
-                return quiescence(game, alpha, beta, deadline, 2);
+                return quiescence(game, alpha, beta, deadline, 4);
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
-            if (moves.length === 0) return evaluateBoard(game);
+            if (!moves.length) return 0;
 
-            for (const m of moves) {
+            let best = -Infinity;
+            for (let i = 0; i < moves.length; i++) {
                 if (performance.now() > deadline) break;
+                const m = moves[i];
                 game.move(m);
-                let score = -negamax(game, depth - 1, -beta, -alpha, deadline);
-                // Discourage threefold loops slightly for the side that causes it
-                if (game.in_threefold_repetition()) score -= 50;
+                let score = -negamax(game, depth - 1, -beta, -alpha, deadline, ply + 1);
                 game.undo();
-                if (score >= beta) return beta;
+                if (score > best) best = score;
                 if (score > alpha) alpha = score;
+                if (alpha >= beta) break;
             }
-            return alpha;
+            if (TT.size > TT_MAX) TT.clear();
+            TT.set(key, { depth: depth, score: best });
+            return best;
+        }
+
+        // Opening book: FEN (pieces + turn + castling) -> preferred UCIs
+        const BOOK = {
+            'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq': ['e2e4','d2d4','c2c4','g1f3'],
+            'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq': ['e7e5','c7c5','e7e6','c7c6','g8f6'],
+            'rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq': ['g8f6','d7d5','e7e6'],
+            'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq': ['g1f3','b1c3','f1c4','f1b5'],
+            'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq': ['g1f3','b1c3','d2d4','c2c3'],
+            'rnbqkb1r/pppppppp/5n2/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq': ['e4e5','b1c3','d2d3'],
+            'rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq': ['b8c6','g8f6','d7d6'],
+            'r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq': ['f1b5','d2d4','f1c4','b1c3'],
+            'rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq': ['b1c3','e4e5','e4d5'],
+            'rnbqkb1r/pppppp1p/5np1/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq': ['b1c3','g1f3','g2g3']
+        };
+
+        function bookMove(game) {
+            const parts = game.fen().split(' ');
+            const key = parts[0] + ' ' + parts[1] + ' ' + parts[2];
+            const options = BOOK[key];
+            if (!options || !options.length) return null;
+            const legal = game.moves({ verbose: true });
+            const hits = [];
+            for (let i = 0; i < options.length; i++) {
+                const u = options[i];
+                for (let j = 0; j < legal.length; j++) {
+                    const m = legal[j];
+                    if (m.from + m.to + (m.promotion || '') === u || m.from + m.to === u) hits.push(m);
+                }
+            }
+            if (!hits.length) return null;
+            return hits[Math.floor(Math.random() * hits.length)];
         }
 
         let searchNodes = 0;
 
-        function iterativeDeepening(game, maxDepth, timeBudgetMs) {
+        function iterativeDeepening(game, maxDepth, timeBudgetMs, skill) {
+            // skill 1-5: 1=weakest intentional, 5=best always
+            searchNodes = 0;
+            TT.clear();
+            const bm = bookMove(game);
+            // book only for stronger levels (3+) or always for 2+ with random among book
+            if (bm && skill >= 2) {
+                return { bestMove: bm, depthReached: 0, score: 0, nodes: 0, book: true };
+            }
+
             let moves = orderMoves(game.moves({ verbose: true }));
-            if (moves.length === 0) return { bestMove: null, depthReached: 0, score: 0, nodes: 0 };
+            if (!moves.length) return { bestMove: null, depthReached: 0, score: 0, nodes: 0 };
             let bestMove = moves[0];
             let bestScore = 0;
             let depthReached = 0;
-            searchNodes = 0;
             const deadline = performance.now() + timeBudgetMs;
-            // Snapshot de FEN atual para penalizar ida-e-volta imediato
-            const rootFen = game.fen();
+            let lastScored = [];
 
             for (let d = 1; d <= maxDepth; d++) {
                 if (performance.now() > deadline) break;
                 let alpha = -Infinity;
                 const beta = Infinity;
                 let timedOut = false;
-                // ranking dos melhores na raiz
-                let scored = [];
-
-                for (const m of moves) {
+                const scored = [];
+                for (let i = 0; i < moves.length; i++) {
                     if (performance.now() > deadline) { timedOut = true; break; }
+                    const m = moves[i];
                     game.move(m);
-                    let score = -negamax(game, d - 1, -beta, -alpha, deadline);
-                    // penalidades anti-loop
-                    if (game.in_threefold_repetition()) score -= 800;
-                    // desincentiva "desfazer" o último lance do oponente de forma vazia
+                    let score = -negamax(game, d - 1, -beta, -alpha, deadline, 1);
+                    if (game.in_threefold_repetition()) score -= 900;
                     const hist = game.history({ verbose: true });
                     if (hist.length >= 2) {
                         const prev = hist[hist.length - 2];
-                        if (prev && prev.to === m.from && prev.from === m.to && !m.captured) score -= 120;
+                        if (prev && prev.to === m.from && prev.from === m.to && !m.captured) score -= 150;
                     }
                     game.undo();
-                    scored.push({ m, score });
+                    scored.push({ m: m, score: score });
                     if (score > alpha) alpha = score;
                 }
                 if (!scored.length) break;
                 scored.sort((a, b) => b.score - a.score);
-                // se o #1 causa repetição tripla ao aplicar, pega o próximo
+                lastScored = scored;
                 let chosen = scored[0];
-                for (const cand of scored.slice(0, Math.min(6, scored.length))) {
-                    game.move(cand.m);
-                    const repeats = game.in_threefold_repetition();
+                for (let i = 0; i < Math.min(8, scored.length); i++) {
+                    game.move(scored[i].m);
+                    const rep = game.in_threefold_repetition();
                     game.undo();
-                    if (!repeats) { chosen = cand; break; }
+                    if (!rep) { chosen = scored[i]; break; }
                 }
                 if (timedOut && d > 1) break;
                 bestMove = chosen.m;
                 bestScore = chosen.score;
                 depthReached = d;
-                // PV first
-                moves = [bestMove, ...moves.filter(x => x !== bestMove)];
+                moves = [bestMove].concat(moves.filter(function(x) { return x !== bestMove; }));
             }
-            return { bestMove, depthReached, score: bestScore, nodes: searchNodes };
+
+            // Intentional weakness for lower skill
+            if (lastScored.length > 1 && skill <= 2) {
+                const bestS = lastScored[0].score;
+                const window = skill === 1 ? 120 : 50;
+                const pool = lastScored.filter(function(x) { return x.score >= bestS - window; });
+                // prefer not always the best on skill 1
+                if (skill === 1 && pool.length > 1) {
+                    const pick = pool[Math.floor(Math.random() * Math.min(pool.length, 4))];
+                    bestMove = pick.m;
+                    bestScore = pick.score;
+                } else if (skill === 2 && pool.length > 1 && Math.random() < 0.35) {
+                    const pick = pool[Math.floor(Math.random() * Math.min(pool.length, 3))];
+                    bestMove = pick.m;
+                    bestScore = pick.score;
+                }
+            }
+            return { bestMove: bestMove, depthReached: depthReached, score: bestScore, nodes: searchNodes };
         }
 
         self.onmessage = function(e) {
-            const { fen, depthBudget, requestId } = e.data;
+            const fen = e.data.fen;
+            const depthBudget = e.data.depthBudget;
+            const requestId = e.data.requestId;
+            const skill = e.data.skill || 5;
             const t0 = performance.now();
             const game = new Chess(fen);
-            const result = iterativeDeepening(game, depthBudget[0], depthBudget[1]);
+            const result = iterativeDeepening(game, depthBudget[0], depthBudget[1], skill);
             self.postMessage({
                 bestMove: result.bestMove,
                 depthReached: result.depthReached,
                 score: result.score,
                 nodes: result.nodes,
+                book: !!result.book,
                 ms: Math.round(performance.now() - t0),
-                requestId
+                requestId: requestId
             });
         };
     `;
@@ -2335,7 +2501,7 @@
     }
 
 
-    // === v8.4 — painéis flutuantes de reações e frases (mobile portrait) ===
+    // === v8.9 — painéis flutuantes de reações e frases (mobile portrait) ===
     function closeFloatPanels() {
         const r = document.getElementById('reactionsFloatPanel');
         const t = document.getElementById('tauntsFloatPanel');
@@ -2564,7 +2730,7 @@
             speak('Melhor lance: ' + san);
         };
         if (typeof aiWorker !== 'undefined' && aiWorker) {
-            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId });
+            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
         } else {
             // fallback: pick capture or random
             const caps = moves.filter(m => m.captured);
@@ -3179,12 +3345,15 @@
     }
     function handleChatPress(e) { if (e.key === 'Enter') sendCustomMessage(); }
 
-    // === Mensagens de voz (grava e envia, máx 10s, autoplay) ===
+    // === Mensagens de voz estilo WhatsApp: gravar → ouvir → enviar/apagar ===
     let voiceRecorder = null;
     let voiceChunks = [];
-    let voiceStream = null;
+    let voiceStream = null; // mantido vivo p/ não pedir permissão toda hora
     let voiceStartTs = 0;
     let voiceMaxTimer = null;
+    let voicePending = null; // { dataUrl, duration, blobSize }
+    let voiceMsgSeq = 0;
+    let micPermissionOk = false;
     const VOICE_MAX_MS = 10000;
 
     function setVoiceBtnRecording(on) {
@@ -3192,34 +3361,71 @@
         if (!btn) return;
         btn.classList.toggle('recording', !!on);
         btn.textContent = on ? '⏹️' : '🎙️';
-        btn.title = on ? 'Solte para enviar' : 'Segure para gravar áudio (máx. 10s)';
+        btn.title = on
+            ? 'Toque para parar e ouvir a prévia'
+            : 'Toque para gravar (máx. 10s). Depois ouça e escolha enviar ou apagar.';
+    }
+
+    async function ensureMicStream() {
+        if (voiceStream && voiceStream.getTracks().some(function(t) { return t.readyState === 'live'; })) {
+            micPermissionOk = true;
+            return voiceStream;
+        }
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error('Microfone não disponível neste navegador');
+        }
+        // Preferência: permissão persistente no site (HTTPS). file:// re-pede com frequência.
+        voiceStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                channelCount: 1
+            }
+        });
+        micPermissionOk = true;
+        addLog('Microfone autorizado (stream mantido)', 'VOICE');
+        return voiceStream;
+    }
+
+    function releaseMicStream() {
+        if (voiceStream) {
+            try { voiceStream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+            voiceStream = null;
+        }
+        micPermissionOk = false;
     }
 
     async function startVoiceRecording() {
         if (voiceRecorder && voiceRecorder.state === 'recording') return;
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            addChatMessage('Sistema', 'Microfone não disponível neste navegador.', true);
+        if (voicePending) {
+            addChatMessage('Sistema', 'Envie ou apague a prévia de áudio antes de gravar outra.', true);
             return;
         }
         try {
-            voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const stream = await ensureMicStream();
             voiceChunks = [];
             const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
                 ? 'audio/webm;codecs=opus'
                 : (MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '');
-            voiceRecorder = mime ? new MediaRecorder(voiceStream, { mimeType: mime }) : new MediaRecorder(voiceStream);
-            voiceRecorder.ondataavailable = (e) => { if (e.data && e.data.size) voiceChunks.push(e.data); };
+            voiceRecorder = mime
+                ? new MediaRecorder(stream, { mimeType: mime })
+                : new MediaRecorder(stream);
+            voiceRecorder.ondataavailable = function(e) {
+                if (e.data && e.data.size) voiceChunks.push(e.data);
+            };
             voiceRecorder.onstop = onVoiceRecordingStop;
             voiceRecorder.start(200);
             voiceStartTs = Date.now();
             setVoiceBtnRecording(true);
             addLog('Gravação de voz iniciada', 'VOICE');
             if (voiceMaxTimer) clearTimeout(voiceMaxTimer);
-            voiceMaxTimer = setTimeout(() => { stopVoiceRecording(true); }, VOICE_MAX_MS);
+            voiceMaxTimer = setTimeout(function() { stopVoiceRecording(true); }, VOICE_MAX_MS);
         } catch (err) {
-            addChatMessage('Sistema', 'Permissão de microfone negada ou indisponível.', true);
+            const msg = (err && err.name === 'NotAllowedError')
+                ? 'Permissão de microfone negada. No navegador, escolha "Permitir ao acessar o site".'
+                : ('Microfone: ' + (err && err.message ? err.message : 'indisponível'));
+            addChatMessage('Sistema', msg, true);
             addLog('Microfone erro: ' + (err && err.message), 'ERROR');
-            cleanupVoiceStream();
         }
     }
 
@@ -3227,36 +3433,29 @@
         if (voiceMaxTimer) { clearTimeout(voiceMaxTimer); voiceMaxTimer = null; }
         if (!voiceRecorder || voiceRecorder.state !== 'recording') {
             setVoiceBtnRecording(false);
-            cleanupVoiceStream();
             return;
         }
         try { voiceRecorder.stop(); } catch (e) {}
         setVoiceBtnRecording(false);
-        addLog('Gravação de voz finalizada' + (auto ? ' (limite 10s)' : ''), 'VOICE');
-    }
-
-    function cleanupVoiceStream() {
-        if (voiceStream) {
-            try { voiceStream.getTracks().forEach(t => t.stop()); } catch (e) {}
-            voiceStream = null;
-        }
-        voiceRecorder = null;
+        addLog('Gravação finalizada' + (auto ? ' (limite 10s)' : '') + ' — aguardando prévia', 'VOICE');
+        // NÃO mata o stream: evita novo pedido de permissão na próxima gravação
     }
 
     function blobToBase64(blob) {
-        return new Promise((resolve, reject) => {
+        return new Promise(function(resolve, reject) {
             const r = new FileReader();
-            r.onloadend = () => resolve(r.result);
+            r.onloadend = function() { resolve(r.result); };
             r.onerror = reject;
             r.readAsDataURL(blob);
         });
     }
 
     async function onVoiceRecordingStop() {
+        voiceRecorder = null;
         const durationMs = Math.max(0, Date.now() - voiceStartTs);
-        cleanupVoiceStream();
         if (!voiceChunks.length || durationMs < 400) {
-            addChatMessage('Sistema', 'Áudio muito curto. Segure o 🎙️ por mais tempo.', true);
+            voiceChunks = [];
+            addChatMessage('Sistema', 'Áudio muito curto. Segure/grave um pouco mais.', true);
             return;
         }
         const blob = new Blob(voiceChunks, { type: (voiceChunks[0] && voiceChunks[0].type) || 'audio/webm' });
@@ -3271,52 +3470,127 @@
             return;
         }
         const sec = Math.max(1, Math.round(durationMs / 1000));
-        displayVoiceMessage(playerName || 'Você', dataUrl, sec, true);
+        voicePending = { dataUrl: dataUrl, duration: sec, blobSize: blob.size };
+        showVoicePreview(dataUrl, sec);
+    }
+
+    function showVoicePreview(dataUrl, sec) {
+        const bar = document.getElementById('voicePreviewBar');
+        const audio = document.getElementById('voicePreviewAudio');
+        if (!bar || !audio) return;
+        audio.src = dataUrl;
+        bar.classList.add('show');
+        const label = bar.querySelector('.vp-label');
+        if (label) label.textContent = '🎙️ Prévia (' + sec + 's)';
+        // autoplay prévia (gesto do usuário já ocorreu ao gravar)
+        const p = audio.play();
+        if (p && p.catch) p.catch(function() {});
+    }
+
+    function hideVoicePreview() {
+        const bar = document.getElementById('voicePreviewBar');
+        const audio = document.getElementById('voicePreviewAudio');
+        if (audio) {
+            try { audio.pause(); audio.removeAttribute('src'); audio.load(); } catch (e) {}
+        }
+        if (bar) bar.classList.remove('show');
+        voicePending = null;
+    }
+
+    function discardVoicePreview() {
+        hideVoicePreview();
+        addLog('Prévia de voz apagada', 'VOICE');
+    }
+
+    function confirmSendVoice() {
+        if (!voicePending) return;
+        const pending = voicePending;
+        hideVoicePreview();
+        const id = 'v-' + Date.now() + '-' + (++voiceMsgSeq);
+        displayVoiceMessage(playerName || 'Você', pending.dataUrl, pending.duration, true, id);
         if (conn && conn.open) {
             try {
-                conn.send({ type: 'voice', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), dataUrl: dataUrl, duration: sec });
+                conn.send({
+                    type: 'voice',
+                    id: id,
+                    sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'),
+                    dataUrl: pending.dataUrl,
+                    duration: pending.duration
+                });
             } catch (e) {
                 addLog('Falha envio voz P2P: ' + e, 'ERROR');
             }
         }
-        addLog('Voz enviada ' + sec + 's size=' + blob.size, 'VOICE');
+        addLog('Voz enviada ' + pending.duration + 's size=' + pending.blobSize, 'VOICE');
     }
 
-    function displayVoiceMessage(sender, dataUrl, durationSec, isLocal) {
+    function displayVoiceMessage(sender, dataUrl, durationSec, isLocal, msgId) {
         const box = document.getElementById('chat-box');
         if (!box) return;
+        const id = msgId || ('v-' + Date.now() + '-' + (++voiceMsgSeq));
         const row = document.createElement('div');
-        row.className = 'msg' + (isLocal ? ' local-voice' : '');
+        row.className = 'chat-msg voice-msg' + (isLocal ? ' local-voice' : '');
+        row.dataset.voiceId = id;
         const who = document.createElement('div');
-        who.style.cssText = 'font-size:9px;font-weight:800;opacity:0.85;margin-bottom:2px;';
+        who.style.cssText = 'font-size:9px;font-weight:800;opacity:0.85;margin-bottom:4px;';
         who.textContent = (sender || 'Jogador') + ' · 🎙️ ' + durationSec + 's';
+        const inner = document.createElement('div');
+        inner.className = 'voice-msg-row';
         const audio = document.createElement('audio');
         audio.controls = true;
         audio.preload = 'auto';
         audio.src = dataUrl;
-        audio.style.cssText = 'width:100%;max-width:220px;height:32px;';
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'voice-del-btn';
+        del.title = 'Apagar áudio';
+        del.setAttribute('aria-label', 'Apagar áudio');
+        del.textContent = '🗑️';
+        del.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteVoiceMessage(id, true);
+        };
+        inner.appendChild(audio);
+        inner.appendChild(del);
         row.appendChild(who);
-        row.appendChild(audio);
+        row.appendChild(inner);
         box.appendChild(row);
         box.scrollTop = box.scrollHeight;
-        const p = audio.play();
-        if (p && typeof p.catch === 'function') p.catch(function(){});
+        if (!isLocal) {
+            const p = audio.play();
+            if (p && p.catch) p.catch(function() {});
+        }
+    }
+
+    function deleteVoiceMessage(id, broadcast) {
+        const box = document.getElementById('chat-box');
+        if (!box) return;
+        const el = box.querySelector('[data-voice-id="' + id + '"]');
+        if (el) el.remove();
+        if (broadcast && conn && conn.open) {
+            try { conn.send({ type: 'voice-delete', id: id }); } catch (e) {}
+        }
+        addLog('Áudio removido do chat id=' + id, 'VOICE');
+    }
+
+    function toggleVoiceRecording(e) {
+        if (e) e.preventDefault();
+        if (voiceRecorder && voiceRecorder.state === 'recording') {
+            stopVoiceRecording(false);
+        } else {
+            startVoiceRecording();
+        }
     }
 
     function bindVoiceButton() {
         const btn = document.getElementById('btnVoiceMsg');
         if (!btn || btn._voiceBound) return;
         btn._voiceBound = true;
-        const start = function(e) { e.preventDefault(); startVoiceRecording(); };
-        const stop = function(e) { e.preventDefault(); stopVoiceRecording(false); };
-        btn.addEventListener('mousedown', start);
-        btn.addEventListener('mouseup', stop);
-        btn.addEventListener('mouseleave', function() {
-            if (voiceRecorder && voiceRecorder.state === 'recording') stopVoiceRecording(false);
-        });
-        btn.addEventListener('touchstart', start, { passive: false });
-        btn.addEventListener('touchend', stop, { passive: false });
-        btn.addEventListener('touchcancel', stop, { passive: false });
+        // Toque para gravar / toque para parar (mais estável que hold no mobile)
+        btn.addEventListener('click', toggleVoiceRecording);
+        // Evita menu de contexto no longo toque
+        btn.addEventListener('contextmenu', function(e) { e.preventDefault(); });
     }
 
     function sendStandUpJoke() {
@@ -4348,16 +4622,16 @@
             // Orçamentos calibrados p/ mobile: prioriza COMPLETAR depth 2–3, não estourar tempo em depth 1.
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
-                depthBudget = [3, 500];
+                depthBudget = [4, 700];
             } else {
-                // N1 já sério → N5 bem pesado (motor atual, sem Stockfish)
+                // Progressão real: 1 jogável → 5 extremamente difícil no motor JS
                 depthBudget = {
-                    1: [3, 400],
-                    2: [4, 800],
-                    3: [5, 1400],
-                    4: [6, 2400],
-                    5: [7, 3500]
-                }[aiDifficulty] || [5, 1400];
+                    1: [3, 500],
+                    2: [4, 1000],
+                    3: [5, 2000],
+                    4: [7, 4500],
+                    5: [9, 7000]
+                }[aiDifficulty] || [5, 2000];
             }
             const currentReqId = ++aiRequestId;
             const thinkStarted = performance.now();
@@ -4378,12 +4652,13 @@
                     `IA pensou ${ms}ms | depth=${depth}` +
                     (score != null ? ` | eval=${score}` : '') +
                     (nodes != null ? ` | nodes=${nodes}` : '') +
+                    (payload && payload.book ? ' | book' : '') +
                     ` | modo=${gameMode} niv=${aiDifficulty}`,
                     'AI_PERF'
                 );
                 applyAIMove(bestMove || moves[0], onDone);
             };
-            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId });
+            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
         }
     }
 
@@ -4753,8 +5028,13 @@
         }
         if (data.type === 'voice' && data.dataUrl) {
             const sec = Math.max(1, Math.min(15, parseInt(data.duration, 10) || 5));
-            displayVoiceMessage(data.sender || opponentName || 'Oponente', data.dataUrl, sec, false);
+            const vid = data.id || ('v-remote-' + Date.now());
+            displayVoiceMessage(data.sender || opponentName || 'Oponente', data.dataUrl, sec, false, vid);
             addLog('Voz recebida de ' + (data.sender || '?') + ' ' + sec + 's', 'VOICE');
+            return;
+        }
+        if (data.type === 'voice-delete' && data.id) {
+            deleteVoiceMessage(data.id, false);
             return;
         }
         if (data.type === 'radio') {
@@ -4894,7 +5174,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './XadrezPro_v8.4.html',
+            start_url: './XadrezPro_v8.9.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -5145,7 +5425,7 @@
     }
 
 
-    addLog('Xadrez Pro v8.4 — frases compactas, voz 10s, IA rebalanceada, memes.', 'INIT');
+    addLog('Xadrez Pro v8.9 — UI de áudio refinada (bolha + ícones).', 'INIT');
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
     if (typeof bindVoiceButton === 'function') bindVoiceButton();
