@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v10.1</title>
+    <title>Xadrez Pro - v10.9</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -243,8 +244,21 @@
             .reaction-btn { min-width: 36px; height: 36px; font-size: 16px; }
         }
         @media (min-width: 901px) {
-            .reaction-bar { justify-content: stretch; gap: 6px; }
-            .reaction-btn { max-width: none; height: 34px; }
+            .reaction-bar {
+                justify-content: flex-start;
+                gap: 5px;
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+                overflow-y: hidden;
+                max-height: 38px;
+            }
+            .reaction-btn {
+                flex: 0 0 auto !important;
+                max-width: 36px !important;
+                min-width: 32px !important;
+                width: 34px !important;
+                height: 34px !important;
+            }
         }
         body.a11y-patterns .piece.white-piece { outline: 2px dashed rgba(255,255,255,0.75); outline-offset: -4px; }
         body.a11y-patterns .piece.black-piece { outline: 2px dotted rgba(0,0,0,0.65); outline-offset: -4px; }
@@ -326,19 +340,83 @@
         }
 
         body, html { width: 100vw; height: 100vh; height: 100dvh; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        /* Evita zoom automático no iOS em inputs e garante alvos de toque */
-        input, select, textarea, button { font-size: 16px; }
-        .action-btn, .menu-grid-btn, .room-btn, .side-action-btn, .taunt-btn, .reaction-btn {
-            min-height: 44px;
-            min-width: 44px;
-        }
-        @media (max-width: 480px) {
-            .action-btn { font-size: 11px !important; padding: 8px 10px !important; }
-            #settings-modal .tab-btn { font-size: 9px; padding: 6px 8px; min-height: 40px; }
-            #cert-name-modal input { font-size: 16px !important; }
+        /* iOS: só inputs de texto a 16px (evita zoom) — NÃO força em todos os botões */
+        input[type="text"], input[type="url"], input[type="search"], input[type="password"],
+        input[type="email"], input[type="number"], input:not([type]), textarea, select {
+            font-size: 16px;
         }
         @media (prefers-reduced-motion: reduce) {
             .floating-reaction, .confetti-piece, .ghost-piece-slide { animation: none !important; }
+        }
+        /* Desktop: barra de frases compacta e legível */
+        @media (min-width: 901px) {
+            .taunt-scroll-container {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                gap: 5px;
+                height: 38px;
+                max-height: 38px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 4px 2px;
+                scrollbar-width: thin;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .taunt-btn {
+                min-height: 28px !important;
+                min-width: 0 !important;
+                height: auto !important;
+                font-size: 10px !important;
+                padding: 5px 10px !important;
+                line-height: 1.2;
+                white-space: nowrap;
+                flex: 0 0 auto;
+            }
+            .taunt-btn:first-child {
+                background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+                color: #fff !important;
+                border-color: transparent !important;
+                font-weight: 800;
+            }
+            .reaction-bar {
+                display: flex;
+                flex-wrap: nowrap !important;
+                gap: 4px;
+                height: 38px;
+                max-height: 38px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 2px 0;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .reaction-btn {
+                min-height: 32px !important;
+                min-width: 32px !important;
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 16px !important;
+                padding: 0 !important;
+            }
+            .side-action-btn {
+                min-height: 32px !important;
+                min-width: 32px !important;
+            }
+        }
+        /* Mobile/tablet portrait: alvos de toque maiores só onde precisa */
+        @media (max-width: 900px) {
+            .action-btn, .menu-grid-btn, .room-btn, .side-action-btn {
+                min-height: 40px;
+            }
+            #settings-modal .tab-btn { font-size: 9px; padding: 6px 8px; min-height: 40px; }
+            #cert-name-modal input { font-size: 16px !important; }
+            #confirm-modal .action-btn, #cert-name-modal .action-btn {
+                min-height: 44px;
+            }
+        }
+        @media (max-width: 480px) {
+            .action-btn { font-size: 11px !important; padding: 8px 10px !important; }
         }
         #game-wrapper { position: relative; width: 100vw; height: 100vh; height: 100dvh; background: var(--bg-gradient); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0px; gap: 8px; box-sizing: border-box; overflow: hidden; }
         .board-section { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--panel-bg); border: 2px solid var(--board-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); padding: 2px; position: relative; flex-shrink: 0; backdrop-filter: blur(10px); width: min(96vw, 48vh); height: min(96vw, 48vh); aspect-ratio: 1 / 1; transition: all 0.25s ease; }
@@ -592,10 +670,20 @@
         }
         .xp-float-panel.taunts .taunt-standup-sticky {
             flex-shrink: 0;
-            padding: 8px 8px 4px;
+            flex-grow: 0;
+            padding: 8px 8px 6px;
             background: var(--modal-bg);
             border-bottom: 1px solid var(--panel-border);
-            position: sticky; top: 0; z-index: 2;
+            position: relative;
+            z-index: 2;
+        }
+        .xp-float-panel.taunts .taunt-standup-sticky .taunt-chip.standup {
+            width: 100%;
+            min-height: 36px;
+            font-size: 12px;
+            font-weight: 800;
+            justify-content: center;
+            padding: 8px 10px;
         }
         .xp-float-panel.taunts .taunt-chips-scroll {
             flex: 1 1 auto;
@@ -811,36 +899,55 @@
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.65; }
             }
-            /* Painel frases: maior + chips compactos + stand-up fixo */
+            /* Painel frases no mobile: fixed na tela (não corta o Stand-up) */
             .xp-float-panel.taunts {
-                max-height: min(52vh, 360px) !important;
+                position: fixed !important;
+                left: 8px !important;
+                right: 8px !important;
+                bottom: max(72px, calc(env(safe-area-inset-bottom, 0px) + 64px)) !important;
+                top: auto !important;
+                width: auto !important;
+                max-height: min(48vh, 340px) !important;
                 overflow: hidden !important;
+                z-index: 2500 !important;
+                border-radius: 14px !important;
+                box-shadow: 0 12px 32px rgba(0,0,0,0.35) !important;
             }
             .xp-float-panel.taunts .taunt-standup-sticky {
                 display: flex !important;
                 flex-shrink: 0 !important;
-                padding: 5px 6px 3px !important;
+                padding: 8px 8px 6px !important;
+                background: var(--modal-bg) !important;
+                border-bottom: 1px solid var(--panel-border) !important;
+                position: relative !important;
+                z-index: 3 !important;
             }
             .xp-float-panel.taunts .taunt-standup-sticky .taunt-chip.standup {
-                width: 100%;
-                min-height: 28px !important;
-                font-size: 10px !important;
-                justify-content: center;
-                padding: 4px 8px !important;
+                width: 100% !important;
+                min-height: 40px !important;
+                font-size: 13px !important;
+                font-weight: 800 !important;
+                justify-content: center !important;
+                padding: 8px 12px !important;
+                border-radius: 10px !important;
+                background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%) !important;
+                color: #fff !important;
+                border: none !important;
             }
             .xp-float-panel.taunts .taunt-chips-scroll {
                 min-height: 0 !important;
-                max-height: calc(52vh - 44px) !important;
-                gap: 4px !important;
-                padding: 4px 6px 8px !important;
+                max-height: calc(48vh - 56px) !important;
+                gap: 6px !important;
+                padding: 8px !important;
+                overflow-y: auto !important;
             }
             .xp-float-panel .taunt-chip {
-                min-height: 24px !important;
-                padding: 2px 7px !important;
-                font-size: 9.5px !important;
+                min-height: 28px !important;
+                padding: 4px 9px !important;
+                font-size: 11px !important;
             }
             .xp-float-panel .taunt-chip .chip-emoji {
-                font-size: 12px !important;
+                font-size: 13px !important;
             }
 
             body.menu-hidden .board-section {
@@ -848,6 +955,19 @@
                 height: min(98vw, 85vh) !important;
                 margin: auto !important;
             }
+        }
+
+
+        /* v10.5 polish — barras sociais mais baixas e proporcionais */
+        @media (min-width: 901px) {
+            .reaction-bar { height: 32px !important; max-height: 32px !important; padding: 1px 0 !important; gap: 4px !important; }
+            .reaction-btn { width: 28px !important; min-width: 28px !important; max-width: 28px !important; height: 28px !important; min-height: 28px !important; font-size: 14px !important; border-radius: 8px !important; }
+            .taunt-scroll-container { height: 32px !important; max-height: 32px !important; padding: 2px 2px !important; gap: 4px !important; }
+            .taunt-btn { min-height: 24px !important; height: 24px !important; font-size: 9px !important; padding: 3px 8px !important; border-radius: 5px !important; line-height: 1.1 !important; }
+        }
+        @media (max-width: 900px) and (orientation: portrait) {
+            .xp-toggle-btn.taunts-toggle, .xp-toggle-btn.reactions-toggle { height: 32px !important; min-height: 32px !important; font-size: 10px !important; padding: 0 8px !important; }
+            .xp-toggle-btn.voice-toggle { height: 32px !important; min-height: 32px !important; }
         }
 
         /* Desktop / landscape: botões de toggle ficam ocultos, barras normais */
@@ -1448,7 +1568,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v10.1</p>
+            <p>Estratégia P2P · IA offline · v10.9</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1456,7 +1576,7 @@
                 <div class="menu-profile-card">
                     <div class="profile-name-row">
                         <span id="avatarPreview" style="font-size:22px; line-height:1;">♟️</span>
-                        <input type="text" id="playerNameInput" maxlength="18" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()">
+                        <input type="text" id="playerNameInput" maxlength="18" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()" title="Código secreto: 81=Nome alterna o Modo GOD">
                     </div>
                     <div class="profile-elo">⭐ Elo <span id="eloDisplay">1200</span></div>
                     <div class="profile-gm" id="eloUnlockHint">👑 GM em 1500</div>
@@ -1617,7 +1737,6 @@
                 <span id="tutorialPager" style="font-size:11px;color:var(--text-muted);align-self:center;"></span>
                 <button class="action-btn" id="tutorialNext" onclick="tutorialStep(1)" style="padding:8px 12px;font-size:11px;background:var(--modal-border);color:#fff;">Próximo →</button>
             </div>
-            <button class="action-btn" onclick="closeTutorial();startSandboxMode();" style="margin-top:10px;width:100%;padding:10px;font-size:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-weight:800;">🧪 Praticar no Sandbox</button>
         </div>
     </div>
 
@@ -1739,40 +1858,41 @@
                             <button type="button" class="taunt-chip standup" onclick="sendStandUpJoke(); closeFloatPanels();"><span class="chip-emoji">🎤</span> Stand-up agora</button>
                         </div>
                         <div class="taunt-chips-scroll">
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Boa jogada! Respeito.'); closeFloatPanels();"><span class="chip-emoji">👏</span> Respeito</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Hmm... interessante.'); closeFloatPanels();"><span class="chip-emoji">🤔</span> Interessante</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Pressão no ar...'); closeFloatPanels();"><span class="chip-emoji">😰</span> Pressão</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Xeque! Sente o clima.'); closeFloatPanels();"><span class="chip-emoji">⚡</span> Xeque</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Esse peão tem sonhos grandes.'); closeFloatPanels();"><span class="chip-emoji">♟️</span> Peão</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Cavalo em L... e eu em dúvida.'); closeFloatPanels();"><span class="chip-emoji">♞</span> Em L</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Torre na coluna aberta = problema.'); closeFloatPanels();"><span class="chip-emoji">♜</span> Torre</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Bispo longo alcance ativado.'); closeFloatPanels();"><span class="chip-emoji">♝</span> Bispo</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('A dama chegou na festa.'); closeFloatPanels();"><span class="chip-emoji">♛</span> Dama</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.'); closeFloatPanels();"><span class="chip-emoji">🏰</span> Roque</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Tempo é material. Relógio manda.'); closeFloatPanels();"><span class="chip-emoji">⏱️</span> Relógio</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Blunder detectado... ou foi genialidade?'); closeFloatPanels();"><span class="chip-emoji">💥</span> Blunder?</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('GG. Partida limpa.'); closeFloatPanels();"><span class="chip-emoji">🤝</span> GG</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.'); closeFloatPanels();"><span class="chip-emoji">🏙️</span> Cidade</button>
-                            <button type="button" class="taunt-chip" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.'); closeFloatPanels();"><span class="chip-emoji">👑</span> Mate moral</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Quero cafééé! Sem café eu nem sei mover o peão.'); closeFloatPanels();"><span class="chip-emoji">☕</span> Café</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Não entendi foi nada. Explica de novo… ou não.'); closeFloatPanels();"><span class="chip-emoji">🤷</span> Não entendi</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Fui tapeado! Alguém chama o VAR desse lance.'); closeFloatPanels();"><span class="chip-emoji">🤡</span> Tapeado</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Calmo, calabreso! Ainda tem partida pela frente.'); closeFloatPanels();"><span class="chip-emoji">😌</span> Calabreso</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Receba! Essa você não esperava.'); closeFloatPanels();"><span class="chip-emoji">🙌</span> Receba</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Lá ele! Eu nunca cairia nessa… eu acho.'); closeFloatPanels();"><span class="chip-emoji">👉</span> Lá ele</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Sabe de nada, inocente. Olha essa posição.'); closeFloatPanels();"><span class="chip-emoji">😇</span> Inocente</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Isso a Globo não mostra. Só quem tá no tabuleiro vê.'); closeFloatPanels();"><span class="chip-emoji">📺</span> Globo</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('E o Pix, nada? Pode ser em peças também.'); closeFloatPanels();"><span class="chip-emoji">💸</span> Pix</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Chorastes? Pode chorar no chat.'); closeFloatPanels();"><span class="chip-emoji">😭</span> Chorastes</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Cabô, cabô! Essa peça já era.'); closeFloatPanels();"><span class="chip-emoji">🛑</span> Cabô</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Vem tranquilo! Eu só tô de boa… por enquanto.'); closeFloatPanels();"><span class="chip-emoji">😎</span> Tranquilo</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('A paz nunca foi uma opção. Só xeque e pressão.'); closeFloatPanels();"><span class="chip-emoji">💥</span> Sem paz</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Já acabou, Jéssica?'); closeFloatPanels();"><span class="chip-emoji">😂</span> Jéssica</button>
+                            <button type="button" class="taunt-chip" onclick="sendTaunt('Ata. E aí? Continua.'); closeFloatPanels();"><span class="chip-emoji">😐</span> Ata</button>
                         </div>
                     </div>
                 </div>
                 <div class="taunt-scroll-container" id="tauntScrollContainer">
                     <button class="taunt-btn" onclick="sendStandUpJoke()">🎤 Stand-up</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Boa jogada! Respeito.')">👏 Respeito</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Hmm... interessante.')">🤔 Interessante</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Pressão no ar...')">😰 Pressão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Xeque! Sente o clima.')">⚡ Xeque</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Esse peão tem sonhos grandes.')">♟️ Peão</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Cavalo em L... e eu em dúvida.')">♞ Em L</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Torre na coluna aberta = problema.')">♜ Torre</button>
-                    <button class="taunt-btn" onclick="sendTaunt('A dama chegou na festa.')">♛ Dama</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Roque feito. Rei dormindo tranquilo.')">🏰 Roque</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Tempo é material. Relógio manda.')">⏱️ Relógio</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Blunder detectado... ou foi genialidade?')">💥 Blunder?</button>
-                    <button class="taunt-btn" onclick="sendTaunt('GG. Partida limpa.')">🤝 GG</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Essa cidade é pequena demais pra nós dois.')">🏙️ Cidade</button>
-                    <button class="taunt-btn" onclick="sendTaunt('Mate moral aplicado. Assinado: a posição.')">👑 Mate moral</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Quero cafééé! Sem café eu nem sei mover o peão.')">☕ Café</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Não entendi foi nada. Explica de novo… ou não.')">🤷 Não entendi</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Fui tapeado! Alguém chama o VAR desse lance.')">🤡 Tapeado</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Calmo, calabreso! Ainda tem partida pela frente.')">😌 Calabreso</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Receba! Essa você não esperava.')">🙌 Receba</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Lá ele! Eu nunca cairia nessa… eu acho.')">👉 Lá ele</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Sabe de nada, inocente. Olha essa posição.')">😇 Inocente</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Isso a Globo não mostra. Só quem tá no tabuleiro vê.')">📺 Globo</button>
+                    <button class="taunt-btn" onclick="sendTaunt('E o Pix, nada? Pode ser em peças também.')">💸 Pix</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Chorastes? Pode chorar no chat.')">😭 Chorastes</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Cabô, cabô! Essa peça já era.')">🛑 Cabô</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Vem tranquilo! Eu só tô de boa… por enquanto.')">😎 Tranquilo</button>
+                    <button class="taunt-btn" onclick="sendTaunt('A paz nunca foi uma opção. Só xeque e pressão.')">💥 Sem paz</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Já acabou, Jéssica?')">😂 Jéssica</button>
+                    <button class="taunt-btn" onclick="sendTaunt('Ata. E aí? Continua.')">😐 Ata</button>
                 </div>
             </div>
             <div class="player-card" id="card-local">
@@ -1822,6 +1942,24 @@
             <div id="radioStatusPopup" style="font-size: 9px; color: var(--text-muted); margin-top: 6px; text-align: center;">Rádio desligada.</div>
         </div>
     </div>
+<div id="godModeOverlay" class="god-mode-overlay" aria-live="assertive" aria-hidden="true">
+    <div class="god-mode-card">
+        <div class="god-mode-icon">⚡♛⚡</div>
+        <div id="godModeOverlayTitle">MODO GOD ATIVADO</div>
+        <div id="godModeOverlayText">Todos os recursos desbloqueados neste dispositivo.</div>
+    </div>
+</div>
+<style>
+/* === MODO GOD: estado local e discreto para a sessão deste navegador === */
+.god-mode-overlay{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,10,20,.72);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.god-mode-overlay.show{display:flex;animation:godFadeIn .18s ease-out}
+.god-mode-card{width:min(560px,92vw);padding:28px 24px;border:2px solid rgba(250,204,21,.75);border-radius:24px;text-align:center;background:linear-gradient(145deg,#17111f,#241535);box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 45px rgba(250,204,21,.18);color:#fff;font-weight:900}
+.god-mode-icon{font-size:42px;line-height:1;margin-bottom:12px}.god-mode-card>div:nth-child(2){font-size:clamp(24px,5vw,42px);letter-spacing:.04em;color:#fde68a}.god-mode-card>div:nth-child(3){margin-top:10px;font-size:14px;color:#e5e7eb;font-weight:700}
+@keyframes godFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@media(max-width:900px){.god-mode-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,10,20,.88)}.god-mode-card{padding:24px 18px}}
+.god-assist-from,.god-assist-to{box-shadow:inset 0 0 0 4px rgba(250,204,21,.95),0 0 16px rgba(250,204,21,.55)!important;position:relative;z-index:2}
+.god-assist-to::after{content:"⚡";position:absolute;right:4px;top:3px;font-size:14px;line-height:1;filter:drop-shadow(0 1px 2px #000)}
+</style>
 <script>
     let chess = new Chess();
     let selectedSquare = null;
@@ -1857,11 +1995,20 @@
     let clockBlack = 0;
     let clockInterval = null;
     let heartbeatInterval = null;
+    let menuTransitionTimer = null;
+    let roomStatusBusy = false;
+    let roomStatusRefreshTimer = null;
+    let menuTransitionToken = 0;
+    // Token de sessão P2P: invalida callbacks/timeouts de salas antigas ao sair ou trocar de sala.
+    let p2pSessionToken = 0;
     let aiRequestId = 0;
     let pendingAICallback = null;
     let pvePlayerColor = 'w';
     let lastSyncedFen = null;
     let playerName = localStorage.getItem('xadrezpro_player_name') || '';
+    let godMode = localStorage.getItem('xadrezpro_god_mode') === '1';
+    let godAssistBestMove = null;
+    let godAssistRequestId = 0;
     let opponentName = '';
     let rematchPending = false;
     let playerElo = parseInt(localStorage.getItem('xadrezpro_elo') || '1200', 10);
@@ -1901,7 +2048,13 @@
     try { seenUnlockIds = JSON.parse(localStorage.getItem('xadrezpro_seen_unlocks') || '[]'); } catch (e) { seenUnlockIds = []; }
 
     function isUnlockOwned(item) {
-        return playerElo >= (item.elo || 9999);
+        return !!godMode || playerElo >= (item.elo || 9999);
+    }
+
+    // Modo GOD é a chave mestra local: qualquer recurso condicionado por Elo
+    // deve considerar GOD antes de aplicar a regra normal de progressão.
+    function hasGodOrElo(requiredElo) {
+        return !!godMode || playerElo >= Number(requiredElo || 0);
     }
 
     function clearBoardCssOverrides() {
@@ -2054,7 +2207,7 @@
         if (gallery) {
             gallery.innerHTML = UNLOCK_CATALOG.map(function(item) {
                 const owned = isUnlockOwned(item);
-                const lockLabel = owned ? '✅ Desbloqueado' : ('🔒 Elo ' + item.elo + '+');
+                const lockLabel = owned ? (godMode ? '⚡ Desbloqueado pelo Modo GOD' : '✅ Desbloqueado') : ('🔒 Elo ' + item.elo + '+');
                 const btnLabel = item.type === 'cert' ? '📜 Baixar' : 'Aplicar';
                 const btn = owned
                     ? '<button type="button" class="action-btn" onclick="tryApplyUnlock(\'' + item.id + '\')">' + btnLabel + '</button>'
@@ -2067,7 +2220,7 @@
         }
         const certRow = document.getElementById('certDownloadRow');
         const certHint = document.getElementById('unlocksCertHint');
-        const certOk = playerElo >= ELO_GM_UNLOCK;
+        const certOk = godMode || playerElo >= ELO_GM_UNLOCK;
         if (certRow) certRow.style.display = certOk ? 'flex' : 'none';
         if (certHint) {
             certHint.textContent = certOk
@@ -2077,10 +2230,10 @@
         // GM theme button (já existia)
         const btn = document.getElementById('btnThemeGrandmaster');
         if (btn) {
-            if (playerElo >= ELO_GM_UNLOCK) {
+            if (hasGodOrElo(ELO_GM_UNLOCK)) {
                 btn.style.opacity = '1';
-                btn.innerText = '👑 Grandmaster';
-                btn.title = 'Tema exclusivo desbloqueado';
+                btn.innerText = godMode ? '⚡ Grandmaster · GOD' : '👑 Grandmaster';
+                btn.title = godMode ? 'Desbloqueado pelo Modo GOD' : 'Tema exclusivo desbloqueado';
             } else {
                 btn.style.opacity = '0.5';
                 btn.innerText = '👑 Grandmaster (bloqueado)';
@@ -2486,7 +2639,7 @@
         ctx.fillStyle = '#c9a227';
         ctx.font = '13px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v10.1', w / 2, 935);
+        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v10.9', w / 2, 935);
 
         return { canvas: canvas, name: name, serial: serial };
     }
@@ -2663,7 +2816,7 @@
     }
 
     async function downloadCertificatePNG() {
-        if (playerElo < ELO_GM_UNLOCK) {
+        if (!hasGodOrElo(ELO_GM_UNLOCK)) {
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
@@ -2682,7 +2835,7 @@
     }
 
     async function downloadCertificatePDF() {
-        if (playerElo < ELO_GM_UNLOCK) {
+        if (!hasGodOrElo(ELO_GM_UNLOCK)) {
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
@@ -3142,6 +3295,7 @@
             const fen = e.data.fen;
             const depthBudget = e.data.depthBudget;
             const requestId = e.data.requestId;
+            const channel = e.data.channel || 'game';
             const skill = e.data.skill || 5;
             const t0 = performance.now();
             const game = new Chess(fen);
@@ -3153,15 +3307,32 @@
                 nodes: result.nodes,
                 book: !!result.book,
                 ms: Math.round(performance.now() - t0),
-                requestId: requestId
+                requestId: requestId,
+                channel: channel
             });
         };
     `;
     const aiWorkerBlob = new Blob([aiWorkerScript], { type: 'application/javascript' });
     const aiWorker = new Worker(URL.createObjectURL(aiWorkerBlob));
 
+    aiWorker.onerror = function(e) {
+        addLog('AI Worker erro: ' + String((e && (e.message || e.error)) || 'erro desconhecido'), 'ERROR');
+        pendingAICallback = null;
+        godAssistRequestId++;
+        godAssistBestMove = null;
+        try { renderBoard(); } catch (err) {}
+    };
+
     aiWorker.onmessage = function(e) {
         const data = e.data || {};
+        if (data.channel === 'god' && data.requestId === godAssistRequestId) {
+            if ((gameMode === 'pve' || gameMode === 'sandbox') && data.bestMove) {
+                godAssistBestMove = data.bestMove;
+                renderBoard();
+                addLog('GOD assistência recalculada: ' + (data.bestMove.san || (data.bestMove.from + data.bestMove.to)), 'GOD');
+            }
+            return;
+        }
         if (data.requestId === aiRequestId && pendingAICallback && gameMode !== 'menu') {
             const cb = pendingAICallback;
             pendingAICallback = null;
@@ -3365,20 +3536,20 @@
             const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
             const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
             return {
-                ver: '8.2',
+                ver: '10.8',
                 mode: typeof gameMode !== 'undefined' ? gameMode : '-',
                 turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
                 ply: ply,
                 fen: fenShort,
                 color: typeof playerColor !== 'undefined' ? playerColor : '-',
                 ai: typeof aiDifficulty !== 'undefined' ? aiDifficulty : '-',
-                p2p: (typeof conn !== 'undefined' && conn && conn.open) ? 'up' : 'down',
+                p2p: ((typeof conn !== 'undefined' && conn && conn.open) ? 'up' : ((typeof isRoomHost !== 'undefined' && isRoomHost && typeof peer !== 'undefined' && peer && !peer.destroyed) ? 'up-host' : 'down')),
                 radio: (typeof radioPlaying !== 'undefined' && radioPlaying) ? (currentRadioChannelId || 'on') : 'off',
                 net: net,
                 view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
             };
         } catch (e) {
-            return { ver: '8.2', err: String(e && e.message || e) };
+            return { ver: '10.8', err: String(e && e.message || e) };
         }
     }
 
@@ -3503,9 +3674,52 @@
     }
     setTimeout(() => { try { setPveColor(pvePlayerColor); } catch(e){} }, 150);
 
+    function showGodModeMessage(active) {
+        const overlay = document.getElementById('godModeOverlay');
+        const title = document.getElementById('godModeOverlayTitle');
+        const text = document.getElementById('godModeOverlayText');
+        if (!overlay) return;
+        if (title) title.textContent = active ? 'MODO GOD ATIVADO' : 'MODO GOD DESATIVADO';
+        if (text) text.textContent = active ? 'Todos os recursos estão desbloqueados neste dispositivo.' : 'As regras normais de desbloqueio voltaram.';
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden','false');
+        window.clearTimeout(window.__godOverlayTimer);
+        window.__godOverlayTimer = window.setTimeout(function(){
+            overlay.classList.remove('show');
+            overlay.setAttribute('aria-hidden','true');
+        }, 2600);
+    }
+
+    function setGodMode(active, announce) {
+        godMode = !!active;
+        try { localStorage.setItem('xadrezpro_god_mode', godMode ? '1' : '0'); } catch(e) {}
+        try { refreshUnlocksUI(); refreshEloUI(); } catch(e) {}
+        if (godMode) {
+            if (gameMode === 'pve' || gameMode === 'sandbox') {
+                setTimeout(requestGodAssistance, 25);
+            }
+        } else {
+            clearGodAssistance();
+        }
+        addLog('Modo GOD ' + (godMode ? 'ativado' : 'desativado') + ' localmente.', 'GOD');
+        if (announce !== false) showGodModeMessage(godMode);
+    }
+
+    function processGodNameInput(rawValue) {
+        const raw = String(rawValue || '').trim();
+        const match = raw.match(/^81=(.*)$/i);
+        if (!match) return null;
+        let cleanName = String(match[1] || '').trim().slice(0, 18);
+        const nextState = !godMode;
+        setGodMode(nextState, true);
+        return cleanName;
+    }
+
     function savePlayerName() {
         const el = document.getElementById('playerNameInput');
         if (!el) return;
+        const godResult = processGodNameInput(el.value);
+        if (godResult !== null) el.value = godResult;
         playerName = (el.value || '').trim().slice(0, 18);
         try { localStorage.setItem('xadrezpro_player_name', playerName); } catch(e) {}
         addLog(`Nome do jogador: ${playerName || '(vazio)'}`, 'UI');
@@ -3514,6 +3728,7 @@
         const el = document.getElementById('playerNameInput');
         if (el && playerName) el.value = playerName;
     }, 100);
+    setTimeout(() => { try { refreshUnlocksUI(); } catch(e) {} }, 120);
 
     function getDisplayName(isLocal) {
         if (isLocal) return (playerAvatar ? playerAvatar + ' ' : '') + (playerName || 'Você');
@@ -3797,7 +4012,9 @@
         const badge = document.getElementById('turn-badge-local');
         if (badge) { badge.innerText = 'Analisando...'; badge.style.display = 'inline-block'; }
         const currentReqId = ++aiRequestId;
-        const depthBudget = [5, 800];
+        // Modo GOD: avaliação rápida + sinalização visual imediata.
+        // Fora do GOD mantemos a análise normal do Sandbox.
+        const depthBudget = godMode ? [4, 380] : [5, 800];
         pendingAICallback = (payload) => {
             if (currentReqId !== aiRequestId) return;
             if (badge) badge.style.display = 'none';
@@ -3815,11 +4032,19 @@
                 addLog(`Sandbox eval depth=${payload.depthReached} nodes=${payload.nodes||'?'} eval=${payload.score}`, 'AI_PERF');
             }
             const san = bestMove.san || (bestMove.from + bestMove.to);
-            addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b>', true, false, true);
+            if (godMode) {
+                // Reaproveita o mesmo destaque do assistente GOD: origem + destino.
+                godAssistRequestId++;
+                godAssistBestMove = bestMove;
+                renderBoard();
+                addChatMessage('⚡ GOD', 'Sugestão rápida: <b>' + san + '</b> — lance destacado no tabuleiro.', true, false, true);
+            } else {
+                addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b>', true, false, true);
+            }
             speak('Melhor lance: ' + san);
         };
         if (typeof aiWorker !== 'undefined' && aiWorker) {
-            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
+            aiWorker.postMessage({ channel: 'game', fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
         } else {
             // fallback: pick capture or random
             const caps = moves.filter(m => m.captured);
@@ -3862,7 +4087,7 @@
     }
 
     function trySetGrandmasterTheme() {
-        if (playerElo >= ELO_GM_UNLOCK) {
+        if (hasGodOrElo(ELO_GM_UNLOCK)) {
             applyThemePreset('grandmaster');
             addLog('Preset Grandmaster ativado', 'UI');
         } else {
@@ -3939,89 +4164,112 @@
     };
 
     const diverseStandUpList = [
-        /* Memes BR atuais e clássicos — tom leve */
-        "Calma, calabreso... respira que o Wi-Fi ainda carrega.",
-        "Que Xou da Xuxa é esse? Eu só pedi um gole de água.",
+        /* Virais e clássicos BR (o que não ficou nos botões rápidos) */
+        "Não sou capaz de opinar.",
+        "Senhora? Senhora???",
+        "Eita, Giovana! O forninho caiu!",
+        "Que deselegante.",
+        "É sobre isso, e tá tudo bem.",
+        "Bota um cropped e reage!",
+        "Eu sou ricaaaaa!",
+        "Taca-le pau nesse carrinho, Marcos!",
+        "Irineu, você não sabe e nem eu.",
+        "Cala a boca, Galvão.",
+        "Ah, pronto.",
+        "Attenzione, pickpocket!",
+        "O golpe tá aí, cai quem quer.",
+        "Eu não tenho um dia de paz.",
+        "Tá na Disney?",
+        "Fale por você, eu sou uma princesa.",
+        "Aulas, cria!",
+        "Eu fico muito triste com uma notícia dessas.",
+        "Eita como fala.",
+        "Manda áudio.",
+        "Se tem foto, tem vídeo.",
+        "Gente, como eu sou ridícula!",
+        "Reage, mulher!",
+        "Forma áurea... six, seven...",
+        "Eu gosto é assim, amostradinho!",
+        "Bora, Bill!",
+        "Amada?",
+        "Hoje é dia de maldade.",
+        "Errado não tá.",
+        "O auge!",
+        "A base vem forte.",
+        "Me solta, que eu quero dar um show.",
+        "Bom dia, grupo!",
+        "Se organizar direitinho, todo mundo chora.",
+        "Que show da Xuxa é esse?",
+        "Senta lá, Cláudia.",
+        "Valeu, Natalina!",
+        "Hoje é dia de rock, bebê!",
+        "Senhora, os limites...",
+        "Isso é uma vergonha para a profissão.",
+        "Eu vou expor ela(e) na internet!",
+        "Com sabor de desodorante Avanço!",
+        "Eu tô é morta com farofa!",
+        "Surto, desespero, gritaria e confusão.",
+        "Eu não sou obrigada a nada!",
+        "Me bota no paredão!",
+        "O jovem no Brasil nunca é levado a sério.",
+        "Acorda, menina!",
+        "Dossiê completo, com prints e áudios.",
+        "Trabalhar para manter meu luxo (comprar lanche).",
+        /* Antigas frases de xadrez viraram stand-up */
+        "Boa jogada! Respeito. (mas eu ainda vou tentar te zoar)",
+        "Xeque! Sente o clima.",
+        "Esse peão tem sonhos grandes.",
+        "Cavalo em L... e eu em dúvida.",
+        "Torre na coluna aberta = problema.",
+        "Bispo de longo alcance ativado.",
+        "A dama chegou na festa.",
+        "Roque feito. Rei dormindo tranquilo.",
+        "Tempo é material. Relógio manda.",
+        "Blunder detectado... ou foi genialidade?",
+        "GG. Partida limpa.",
+        "Essa cidade é pequena demais pra nós dois.",
+        "Mate moral aplicado. Assinado: a posição.",
+        /* Deck clássico / cotidiano (mantido) */
         "Cheguei Brasil! Já sentei no sofá errado e ninguém avisou.",
-        "Ô Denise, sai da live — o grupo da família já basta.",
         "É o Brasil do Brasil: sol de 40° e gente de moletom.",
-        "Tem que ir, é contrato. Inclusive acordar cedo.",
-        "Garçom, tem Pitú? Traz. E um plano B pro fim de semana.",
-        "Que casa é essa, engraçada? Parece meu quarto na segunda.",
         "Me mimei: abri o app 'só pra ver' e perdi 2 horas.",
-        "Tá tranquilo, tá favorável... disse eu antes da prova.",
-        "É verdade esse bilete: eu ia estudar. Ia.",
-        "Alô alô graças a Deus: a bateria chegou em 1%.",
-        "Caneta azul, azul caneta — e a redação em branco.",
         "EU SOU RICA! ...de abas abertas no navegador.",
-        "Casca de bala: amigo que responde 'kkkk' e some 3 dias.",
-        "Morango do amor: lindo no TikTok, caos na cozinha.",
-        "67! ...não sei o que significa, mas soa importante.",
         "This is fine 🔥 — eu, com 47 notificações não lidas.",
-        "Press F to pay respects pro alarme que eu ignorei.",
-        "I can has cheezburger? Prefiro o lanche da madrugada.",
-        "All your base are belong to us. Inclusive a última fatia.",
-        "Deal with it 😎 — disse o gato em cima do teclado.",
-        /* Clássicos de tio / one-liners limpos */
-        "Por que o jacaré tirou o filho da escola? Porque réptil de ano.",
-        "O que o pato falou pra pata? Vem quá!",
-        "Como o elétron atende o telefone? Próton!",
-        "O zero disse pro oito: belo cinto.",
-        "Por que o livro de matemática foi ao psicólogo? Problemas demais.",
-        "O esqueleto não briga: não tem estômago pra isso.",
-        "Relógio foi preso: matou o tempo.",
-        "Cúmulo do azar: atropelado por carro de autoescola.",
-        "Por que a abelha é promovida? Sempre voando alto.",
-        "Qual o cúmulo da velocidade? Sopa no garfo e língua queimada.",
-        "Se a vida te der limões, faça limonada. Se der segunda, cafeína.",
-        "A inteligência artificial já ri de piada de tio. Educadamente.",
         "Minha vida social está em modo avião: ligada, sem conexão.",
         "O despertador e eu temos acordo: ele toca, eu nego a realidade.",
-        "Estudei a noite toda. A matéria dormiu; eu que fiquei acordado.",
-        "Wi-Fi da escola: 2 barras de sinal e 0 de dignidade.",
-        "Atualizei o app. 14 permissões novas, a mesma lentidão.",
-        "Meu carregador e minha motivação: 5% e caindo.",
         "Não sou preguiçoso. Estou em modo economia de energia.",
         "A cama é mágica: deito e lembro de tudo que não fiz.",
-        "Autocorretor me conhece melhor que minha mãe — e julga mais.",
         "Ctrl+Z na vida real seria o verdadeiro superpoder.",
-        "Fila do banco: o tempo joga melhor que qualquer campeão.",
         "Segunda-feira é tipo começar o dia já em desvantagem.",
         "Prometi dormir cedo. O YouTube disse 'só mais um'.",
-        "Meu plano era genial. A execução pediu empate por cansaço.",
-        "Não é bug, é feature. Disse eu pro erro que ninguém notou.",
-        "Meu plano B era o plano A com mais confiança.",
-        "Fui correr. O tênis desamarrou e me abandonou.",
-        "Li a bula. O efeito colateral era entender a letra do médico.",
-        /* Escola / tech / cotidiano adolescente */
-        "Professor: isso vai cair na prova. Eu: então deixa cair.",
-        "Trabalho em grupo: 1 faz, 3 assistem, 1 some no WhatsApp.",
-        "Nota 6 é o empate técnico da vida escolar.",
-        "Caderno organizado: existe só na imaginação da mãe.",
-        "Recreio: 15 minutos e um campeonato mundial de futebol.",
-        "Prova surpresa: a única surpresa é eu não ter estudado.",
-        "Biblioteca: o único lugar onde 'shhh' é lei federal.",
-        "Lancheira gourmet: pão com mortadela e sonho de pizza.",
-        "Sexta-feira: o final boss da semana finalmente cai.",
-        "Fim de semana: 48 horas que passam em 48 minutos.",
-        "Seguir dieta: fácil. Até abrir a geladeira 'só pra olhar'.",
-        "Academia: pago mensalidade pra sentir culpa em casa.",
-        "Selfie: 40 tentativas, 1 prestável, 0 postadas.",
-        "Modo escuro: salva a bateria e a alma depois da meia-noite.",
         "Notificação do banco: o verdadeiro jump scare.",
-        "Senha forte: eu lembro de todas... menos da certa.",
         "Captcha: prove que você é humano. Eu quase desisto.",
-        "Atualização obrigatória: 1% e trava no melhor momento.",
-        "Modo não perturbe: ligado. Família: grita do corredor.",
-        "Entrega chega: eu no banho. Eu saio: entregador sumiu.",
-        /* Leve toque de xadrez (minoria do deck) */
         "O peão chega na 8ª e vira dama. Eu chego no mês e viro boleto.",
         "Stockfish calcula 40 lances. Eu calculo se ainda tem pão.",
-        "Roquei o rei. Na vida, só troco de problema de lugar.",
         "Joguei 1.e4 com cara de GM. No 12 já pedia empate ético.",
-        "Empate por afogamento: sem lances e sem xeque. Minha agenda às 18h.",
         "O en passant é a jogada secreta. Tipo silenciar o grupo da família."
     ];
+
+    // Stand-up é um deck próprio: sem referências religiosas e sem repetir as frases rápidas.
+    const STANDUP_EXCLUDED = new Set([
+        'Quero cafééé! Sem café eu nem sei mover o peão.',
+        'Não entendi foi nada. Explica de novo… ou não.',
+        'Fui tapeado! Alguém chama o VAR desse lance.',
+        'Calmo, calabreso! Ainda tem partida pela frente.',
+        'Receba! Esse lance foi no talo.',
+        'Lá ele! Eu nunca cairia nessa… eu acho.',
+        'Sabe de nada, inocente. Olha essa posição.',
+        'Isso a Globo não mostra. Só quem tá no tabuleiro vê.',
+        'E o Pix, nada? Pode ser em peças também.',
+        'Chorastes? Pode chorar no chat, sem vergonha.',
+        'Cabô, cabô! Essa peça já era.',
+        'Vem tranquilo! Eu só tô de boa… por enquanto.',
+        'A paz nunca foi uma opção. Só xeque e pressão.',
+        'Ata. E aí? Continua.'
+    ]);
+    for (let i = diverseStandUpList.length - 1; i >= 0; i--) {
+        if (STANDUP_EXCLUDED.has(diverseStandUpList[i])) diverseStandUpList.splice(i, 1);
+    }
 
     function shuffleStandUpDeck() {
         // Fisher–Yates + evita repetir as últimas 8 usadas nesta sessão
@@ -4193,6 +4441,40 @@
         }
     }
 
+    function clearGodAssistance() {
+        godAssistRequestId++;
+        godAssistBestMove = null;
+        try { renderBoard(); } catch(e) {}
+    }
+
+    function requestGodAssistance() {
+        // A avaliação rápida é um recurso próprio do Sandbox e não depende do Modo GOD.
+        // No PvE ela continua sendo uma assistência exclusiva do GOD.
+        const isSandbox = gameMode === 'sandbox';
+        const isGodPvE = godMode && gameMode === 'pve';
+        if ((!isSandbox && !isGodPvE) || isSpectator || chess.game_over()) {
+            clearGodAssistance();
+            return;
+        }
+        if (gameMode === 'pve' && chess.turn() !== playerColor) {
+            clearGodAssistance();
+            return;
+        }
+        const moves = chess.moves({ verbose: true });
+        if (!moves.length) { clearGodAssistance(); return; }
+        const req = ++godAssistRequestId;
+        godAssistBestMove = null;
+        renderBoard();
+        try {
+            // Sandbox: análise curta e rápida. GOD/PvE mantém a análise mais profunda.
+            const budget = isSandbox ? [4, 420] : [5, 1600];
+            aiWorker.postMessage({ channel: 'god', fen: chess.fen(), depthBudget: budget, requestId: req, skill: isSandbox ? 4 : 5 });
+        } catch(e) {
+            godAssistBestMove = moves[0];
+            renderBoard();
+        }
+    }
+
     function startGame(mode, isRematch = false) {
         forceFullBoardRebuild();
         if (mode !== 'sandbox') setSandboxEvalVisible(false);
@@ -4234,13 +4516,18 @@
         addLog(`Partida iniciada no modo: ${mode} (cor local: ${playerColor})`, "GAME");
         logSessionSnapshot("game-start:" + mode);
         shuffleStandUpDeck();
+        if (mode === 'pve' || mode === 'sandbox') {
+            setTimeout(requestGodAssistance, mode === 'sandbox' ? 20 : 80);
+        } else {
+            clearGodAssistance();
+        }
     }
 
     function startBotVsBot() {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         aiDifficulty = 4;
         startGame('bot-vs-bot', false);
-        addLog('Bot vs Bot: depth≤3 · busca~450ms + pausa 550ms · anti-repetição', 'AI_PERF');
+        addLog('Bot vs Bot: depth≤3 · busca~420ms + pausa 450ms · anti-repetição', 'AI_PERF');
         loopBot();
     }
 
@@ -4250,13 +4537,13 @@
             if (chess.game_over() && !chess.in_checkmate()) handleGameOverEvents("Fim de Jogo (Empate)", null);
             return;
         }
-        // ~450ms de busca + 550ms de pausa visual ≈ ritmo assistível (~1s/lance)
+        // Ritmo contínuo: busca curta + pausa visual pequena, sem bloquear o próximo ciclo.
         makeAIMove('w', () => {
             if (chess.game_over() || gameMode !== 'bot-vs-bot') return;
             botVsBotInterval = setTimeout(() => {
                 makeAIMove('b', () => {
                     if (!chess.game_over() && gameMode === 'bot-vs-bot') {
-                        botVsBotInterval = setTimeout(loopBot, 550);
+                        botVsBotInterval = setTimeout(loopBot, 450);
                     }
                 });
             }, 550);
@@ -4276,8 +4563,28 @@
 
     function closeMenuTransition() {
         const menu = document.getElementById("menu-screen");
+        if (!menu) return;
+        if (menuTransitionTimer) {
+            clearTimeout(menuTransitionTimer);
+            menuTransitionTimer = null;
+        }
+        const token = ++menuTransitionToken;
+        menu.style.display = "flex";
         menu.style.opacity = "0";
-        setTimeout(() => { menu.style.display = "none"; menu.style.opacity = "1"; }, 300);
+        menu.style.pointerEvents = 'none';
+        menuTransitionTimer = setTimeout(() => {
+            menuTransitionTimer = null;
+            if (token !== menuTransitionToken) return;
+            if (gameMode !== 'menu') {
+                menu.style.display = "none";
+                menu.style.opacity = "1";
+                menu.style.pointerEvents = '';
+            } else {
+                menu.style.display = "flex";
+                menu.style.opacity = "1";
+                menu.style.pointerEvents = '';
+            }
+        }, 220);
     }
 
     function resetGame(isRematch = true) {
@@ -4304,8 +4611,16 @@
         const ok = await customConfirm("Deseja sair da partida e retornar ao menu?", "Sair da Partida");
         if (!ok) return;
         
-        aiRequestId++; 
+        // Invalida imediatamente qualquer callback/time-out P2P da sessão que está sendo encerrada.
+        p2pSessionToken++;
+        aiRequestId++;
+        pendingAICallback = null;
+        clearGodAssistance();
+        if (menuTransitionTimer) { clearTimeout(menuTransitionTimer); menuTransitionTimer = null; }
+        menuTransitionToken++;
+        if (roomStatusRefreshTimer) { clearTimeout(roomStatusRefreshTimer); roomStatusRefreshTimer = null; }
         gameMode = 'menu';
+        sandboxMode = false;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
@@ -4331,11 +4646,21 @@
         setTimeout(updateRoomStatuses, 600);
 
         currentCityKey = null;
+        currentPrivateVisual = null;
         Array.from(document.body.classList).forEach(c => {
             if (c.startsWith('room-')) document.body.classList.remove(c);
         });
+        // Ao voltar ao menu, o visual de sala NÃO pode vazar para o menu.
+        clearBoardSkinClasses();
+        clearBoardCssOverrides();
+        try {
+            localStorage.removeItem('xadrezpro_board_skin');
+            localStorage.removeItem('xadrezpro_custom_board');
+        } catch(e) {}
         setTheme('claro');
         setPieceColors('pieces-blue-pink');
+        setPieceStyle('style-classic');
+        try { refreshSettingsPreview(); } catch(e) {}
 
         const menu = document.getElementById("menu-screen");
         if (menu) {
@@ -5883,6 +6208,8 @@
                 squareEl.classList.toggle('selected', selectedSquare === squareCoord);
                 squareEl.classList.toggle('highlight', moveSet.has(squareCoord) && !chess.get(squareCoord));
                 squareEl.classList.toggle('capture-highlight', moveSet.has(squareCoord) && !!chess.get(squareCoord));
+                squareEl.classList.toggle('god-assist-from', !!(godMode && godAssistBestMove && godAssistBestMove.from === squareCoord));
+                squareEl.classList.toggle('god-assist-to', !!(godMode && godAssistBestMove && godAssistBestMove.to === squareCoord));
                 squareEl.classList.remove('drag-over-target');
 
                 const piece = board[r][c];
@@ -5961,6 +6288,7 @@
         if (move.captured) { showCaptureInChat(move); playSFX('capture'); } else playSFX('move');
         if (voiceMovesEnabled && move.san) speak(move.san);
         addLog(`Lance efetuado: ${move.san}`, "MOVE");
+        if (godMode) clearGodAssistance();
         const over = checkGameStateEvents(true);
         if (gameMode === 'network' && !isSpectator) {
             networkBroadcast({
@@ -6075,15 +6403,15 @@
             // Orçamentos v9.0: níveis 1–3 acessíveis; 4 e 5 mantêm força alta
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
-                depthBudget = [4, 700];
+                depthBudget = [3, 420];
             } else {
                 // 1 = iniciante (erros frequentes) → 3 = intermediário → 4/5 = forte/mestre
                 depthBudget = {
-                    1: [2, 220],
-                    2: [3, 400],
-                    3: [4, 850],
-                    4: [7, 4500],
-                    5: [9, 7000]
+                    1: [2, 180],
+                    2: [3, 320],
+                    3: [4, 700],
+                    4: [5, 1500],
+                    5: [6, 2800]
                 }[aiDifficulty] || [5, 2000];
             }
             const currentReqId = ++aiRequestId;
@@ -6111,7 +6439,7 @@
                 );
                 applyAIMove(bestMove || moves[0], onDone);
             };
-            aiWorker.postMessage({ fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
+            aiWorker.postMessage({ channel: 'game', fen: chess.fen(), depthBudget, requestId: currentReqId, skill: gameMode === 'bot-vs-bot' ? 4 : aiDifficulty });
         }
     }
 
@@ -6143,6 +6471,9 @@
         detectOpening();
         if (voiceMovesEnabled && testMove.san) speak('IA joga ' + testMove.san);
         checkGameStateEvents(true);
+        if (gameMode === 'pve' || gameMode === 'sandbox') {
+            setTimeout(requestGodAssistance, godMode ? 35 : 60);
+        }
         if (conn && conn.open && gameMode === 'network') { 
             try { 
                 conn.send({ 
@@ -6200,8 +6531,13 @@
     }
 
     async function updateRoomStatuses() {
-        const cities = ['paris', 'toquio', 'novayork', 'londres'];
-        for (let c of cities) {
+        if (roomStatusBusy) return;
+        if (gameMode !== 'menu') return;
+        roomStatusBusy = true;
+        try {
+            const cities = ['paris', 'toquio', 'novayork', 'londres'];
+            for (let c of cities) {
+                if (gameMode !== 'menu') break;
             const statusEl = document.getElementById(`status-${c}`);
             if (statusEl) {
                 statusEl.innerText = '…';
@@ -6215,15 +6551,19 @@
                     statusEl.style.background = '#b91c1c';
                 }
             }
+            }
+        } finally {
+            roomStatusBusy = false;
         }
     }
-    window.addEventListener('load', () => { setTimeout(updateRoomStatuses, 500); });
-    // Atualiza status periodicamente enquanto o menu estiver aberto
+    window.addEventListener('load', () => {
+        if (roomStatusRefreshTimer) clearTimeout(roomStatusRefreshTimer);
+        roomStatusRefreshTimer = setTimeout(() => { roomStatusRefreshTimer = null; updateRoomStatuses(); }, 900);
+    });
+    // Atualiza status periodicamente, sem permitir ciclos concorrentes que sobrecarreguem o menu.
     setInterval(() => {
-        if (gameMode === 'menu' || document.getElementById('menu-screen')?.style.display !== 'none') {
-            updateRoomStatuses();
-        }
-    }, 20000);
+        if (gameMode === 'menu') updateRoomStatuses();
+    }, 30000);
 
     /** Retransmite para todos os espectadores (host) */
     function relayToSpectators(payload) {
@@ -6243,6 +6583,7 @@
     }
 
     function joinCityRoom(cityName) {
+        const sessionToken = ++p2pSessionToken;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
@@ -6257,15 +6598,17 @@
         if (conn) { try { conn.close(); } catch(e) {} conn = null; }
 
         let connectionTimeout = setTimeout(() => {
+            if (sessionToken !== p2pSessionToken) return;
             if (gameMode === 'network' && !conn) {
                 addLog(`Timeout crítico: Falha ao estabelecer conexão P2P na sala ${cityName}. Tentando instância dinâmica alternativa...`, "WARN");
-                joinCityRoomAlternative(cityName);
+                joinCityRoomAlternative(cityName, sessionToken);
             }
         }, 6000);
 
         peer = new Peer(baseRoomId);
 
         peer.on('open', (id) => {
+            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
             clearTimeout(connectionTimeout);
             playerColor = 'w'; 
             isSpectator = false;
@@ -6278,6 +6621,7 @@
         });
 
         peer.on('error', (err) => {
+            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
             if (err.type === 'unavailable-id') {
                 clearTimeout(connectionTimeout);
                 addLog(`ID ${baseRoomId} está reservado/ocupado no broker público. Tentando entrar como cliente...`, "P2P_INFO");
@@ -6285,18 +6629,21 @@
                 
                 peer = new Peer();
                 peer.on('open', (clientId) => {
+                    if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
                     let connAttempt = peer.connect(baseRoomId, { reliable: true, serialization: 'json' });
                     
                     let clientHandshakeTimeout = setTimeout(() => {
+                        if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
                         if (!conn || !conn.open) {
                             addLog(`Conexão fantasma detectada. Abrindo canal dinâmico alternativo para ${cityName}...`, "WARN");
                             try { connAttempt.close(); } catch(e) {}
                             if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
-                            joinCityRoomAlternative(cityName);
+                            joinCityRoomAlternative(cityName, sessionToken);
                         }
                     }, 3000);
 
                     connAttempt.on('open', () => {
+                        if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
                         clearTimeout(clientHandshakeTimeout);
                         clearTimeout(connectionTimeout);
                         conn = connAttempt;
@@ -6305,20 +6652,23 @@
                     });
 
                     connAttempt.on('error', () => {
+                        if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
                         clearTimeout(clientHandshakeTimeout);
                         clearTimeout(connectionTimeout);
-                        joinCityRoomAlternative(cityName);
+                        joinCityRoomAlternative(cityName, sessionToken);
                     });
                 });
             } else {
                 clearTimeout(connectionTimeout);
                 addLog(`Erro crítico de rede na sala ${cityName}: ${err.message}`, "ERROR");
-                joinCityRoomAlternative(cityName);
+                joinCityRoomAlternative(cityName, sessionToken);
             }
         });
     }
 
-    function joinCityRoomAlternative(cityName) {
+    function joinCityRoomAlternative(cityName, sessionToken) {
+        sessionToken = sessionToken || p2pSessionToken;
+        if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
         if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
         let suffix = Math.random().toString(36).substring(2, 6);
         let dynamicRoomId = `xadrezpro-cities-v73-${cityName}-${suffix}`;
@@ -6326,6 +6676,7 @@
 
         peer = new Peer(dynamicRoomId);
         peer.on('open', (id) => {
+            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
             playerColor = 'w';
             isSpectator = false;
             applyCityVisualTheme(cityName);
@@ -6336,6 +6687,7 @@
             addLog(`Instância alternativa de ${cityName} criada com sucesso (ID: ${id}).`, "P2P_SUCCESS");
         });
         peer.on('error', (err) => {
+            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
             addLog(`Falha ao abrir instância dinâmica: ${err.message}`, "ERROR");
             alert("Erro ao conectar à sala. Retornando ao menu principal.");
             safeLeaveRoom();
@@ -7226,7 +7578,18 @@
     }
 
 
-    addLog('Xadrez Pro v10.1 — v10.0 — modal certificado, análise pós-partida, polish mobile/tablet.', 'INIT');
+    // Diagnóstico global: captura erros que antes podiam deixar a interface em estado inconsistente.
+    if (!window.__xadrezProGlobalDiagnosticsBound) {
+        window.__xadrezProGlobalDiagnosticsBound = true;
+        window.addEventListener('error', function(ev) {
+            try { addLog('JS ERROR: ' + String(ev.message || 'erro desconhecido') + (ev.filename ? ' @ ' + ev.filename.split('/').pop() : ''), 'ERROR'); } catch(e) {}
+        });
+        window.addEventListener('unhandledrejection', function(ev) {
+            try { addLog('PROMISE ERROR: ' + String((ev.reason && (ev.reason.message || ev.reason)) || 'rejeição desconhecida'), 'ERROR'); } catch(e) {}
+        });
+    }
+
+    addLog('Xadrez Pro v10.9 — GOD assistivo, IA responsiva, menu/P2P estáveis e retorno ao menu protegido.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
