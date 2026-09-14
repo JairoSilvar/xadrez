@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v9.6</title>
+    <title>Xadrez Pro - v8.9</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,65 +50,6 @@
         body.theme-toquio, body.room-toquio { --bg-main: #050508; --bg-gradient: radial-gradient(circle at center, #120a2a 0%, #050508 100%); --panel-bg: rgba(18, 14, 38, 0.98); --panel-border: #f43f5e; --text-main: #00f0ff; --text-muted: #a855f7; --board-border: #00f0ff; --light-square: #2a1b4e; --dark-square: #120a2a; --chat-bg: rgba(11, 7, 26, 0.6); --chat-input-bg: #0b071a; --chat-msg-bg: #1a103c; --btn-bg: #2d1b4e; --btn-hover: #3b2363; --modal-bg: #120e26; --modal-border: #00f0ff; --modal-text: #00f0ff; --hint-dot-color: #a3e635; --candy-w-bg: #00f0ff; --candy-b-bg: #f43f5e; --neon-glow-btn: 0 0 8px rgba(163, 230, 53, 0.4); }
         body.theme-londres, body.room-londres { --bg-main: #062314; --bg-gradient: radial-gradient(circle at center, #0c3b22 0%, #062314 100%); --panel-bg: rgba(12, 59, 34, 0.98); --panel-border: #22c55e; --text-main: #d1fae5; --text-muted: #6ee7b7; --board-border: #10b981; --light-square: #166534; --dark-square: #064e3b; --chat-bg: rgba(5, 35, 20, 0.6); --chat-input-bg: #052314; --chat-msg-bg: #0f4c28; --btn-bg: #14532d; --btn-hover: #166534; --modal-bg: #0c3b22; --modal-border: #22c55e; --modal-text: #d1fae5; --hint-dot-color: #a3e635; --candy-w-bg: #22c55e; --candy-b-bg: #10b981; --neon-glow-btn: 0 0 8px rgba(163, 230, 53, 0.4); }
         body.theme-grandmaster { --bg-main: #1a1025; --bg-gradient: radial-gradient(circle at center, #2d1b4e 0%, #0f0a1a 100%); --panel-bg: rgba(30, 20, 50, 0.98); --panel-border: #eab308; --text-main: #fef3c7; --text-muted: #fbbf24; --board-border: #f59e0b; --light-square: #3b2760; --dark-square: #1e1035; --chat-bg: rgba(15, 10, 30, 0.7); --chat-input-bg: #120a22; --chat-msg-bg: #2a1848; --btn-bg: #3b2760; --btn-hover: #4c1d95; --modal-bg: #1e1035; --modal-border: #eab308; --modal-text: #fef3c7; --hint-dot-color: #fbbf24; --candy-w-bg: #eab308; --candy-b-bg: #a855f7; --neon-glow-btn: 0 0 12px rgba(234, 179, 8, 0.5); --turn-active-color: #eab308; }
-        /* v9.4 — preset Arena (torneio clássico) */
-        body.theme-arena {
-            --bg-main: #1c1917;
-            --bg-gradient: radial-gradient(circle at center, #292524 0%, #0c0a09 100%);
-            --panel-bg: rgba(28, 25, 23, 0.98);
-            --panel-border: #a8a29e;
-            --text-main: #fafaf9;
-            --text-muted: #a8a29e;
-            --board-border: #78716c;
-            --light-square: #eed7b0;
-            --dark-square: #b58863;
-            --chat-bg: rgba(12, 10, 9, 0.7);
-            --chat-input-bg: #1c1917;
-            --chat-msg-bg: #292524;
-            --btn-bg: #44403c;
-            --btn-hover: #57534e;
-            --modal-bg: #1c1917;
-            --modal-border: #a8a29e;
-            --modal-text: #fafaf9;
-            --hint-dot-color: #22c55e;
-            --candy-w-bg: #d6d3d1;
-            --candy-b-bg: #78716c;
-            --neon-glow-btn: 0 0 8px rgba(168, 162, 158, 0.35);
-            --turn-active-color: #eab308;
-        }
-
-        /* === v9.1 Tabuleiros desbloqueáveis (skins) === */
-        body.board-wood {
-            --light-square: #e8c992;
-            --dark-square: #b58863;
-            --board-border: #8b5a2b;
-        }
-        body.board-marble {
-            --light-square: #e8eef5;
-            --dark-square: #5c6b7a;
-            --board-border: #94a3b8;
-        }
-        body.board-emerald {
-            --light-square: #d1fae5;
-            --dark-square: #047857;
-            --board-border: #10b981;
-        }
-        body.board-royal {
-            --light-square: #fef3c7;
-            --dark-square: #7c3aed;
-            --board-border: #eab308;
-        }
-        .unlock-card {
-            display: flex; flex-direction: column; gap: 4px;
-            padding: 8px; border-radius: 10px;
-            border: 1px solid var(--panel-border);
-            background: var(--chat-bg);
-            text-align: left;
-        }
-        .unlock-card.locked { opacity: 0.55; }
-        .unlock-card .u-title { font-size: 11px; font-weight: 800; color: var(--text-main); }
-        .unlock-card .u-req { font-size: 9px; color: var(--text-muted); }
-        .unlock-card .u-actions { display: flex; gap: 4px; flex-wrap: wrap; }
-        .unlock-card .u-actions .action-btn { flex: 1; min-width: 70px; padding: 6px; font-size: 9px; }
 
         /* Cores de peças via CSS variables (combinam com estilos) */
         body.pieces-blue-pink { --pw: drop-shadow(0 0 8px #38bdf8) brightness(1.25); --pb: drop-shadow(0 0 8px #ec4899) brightness(1.20); }
@@ -1212,57 +1153,23 @@
                 <span>⚙️ Configurações & Temas</span>
                 <button class="close-modal-btn" onclick="closeSettingsModal()" title="Fechar">✕</button>
             </div>
-            <div class="settings-tabs" style="flex-wrap:wrap;">
-                <button class="tab-btn active" onclick="switchSettingsTab(event, 'tab-themes')">🎨 Temas</button>
-                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-board')">🏁 Tabuleiro</button>
-                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-piece-colors')">🧩 Cores peças</button>
-                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-piece-styles')">✨ Estilos</button>
-                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-unlocks')">🏆 Conquistas</button>
-                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-sfx')">🔊 Áudio</button>
+            <div class="settings-tabs">
+                <button class="tab-btn active" onclick="switchSettingsTab(event, 'tab-board')">🏁 Tabuleiro</button>
+                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-pieces')">🧩 Peças</button>
+                <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-sfx')">🔊 Áudio & FX</button>
                 <button class="tab-btn" onclick="switchSettingsTab(event, 'tab-radio')">📻 Rádio</button>
             </div>
-            <!-- TEMAS = presets completos (UI + tabuleiro padrão do tema + peças da cidade) -->
-            <div id="tab-themes" class="tab-content active" style="grid-template-columns: 1fr 1fr;">
-                <div style="grid-column:1/-1; font-size:9px; color:var(--text-muted); line-height:1.35; margin-bottom:2px;">
-                    <b>Presets prontos.</b> Ao clicar, aplica o visual completo (interface + casas + peças), como nas salas-cidade. Depois você pode ajustar Tabuleiro, Cores e Estilos nas outras abas.
-                </div>
-                <div id="settingsPreview" style="grid-column:1/-1; display:flex; align-items:center; gap:10px; padding:8px; border-radius:10px; border:1px solid var(--panel-border); background:var(--chat-bg);">
-                    <div id="settingsPreviewBoard" style="width:72px; height:72px; display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(4,1fr); border-radius:6px; overflow:hidden; border:2px solid var(--board-border); flex-shrink:0;"></div>
-                    <div style="font-size:9px; color:var(--text-muted); line-height:1.4;">
-                        <b style="color:var(--text-main);">Prévia ao vivo</b><br>
-                        Atualiza ao mudar tema, tabuleiro, cores ou estilo.
-                    </div>
-                </div>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('claro')">☀️ Claro (Padrão)</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('menta')">🌿 Menta Suave</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('gelo')">❄️ Azul Gelo</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('ouro')">👑 Ouro (Real)</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('paris')">🌸 Paris (Rosa)</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('novayork')">🌙 Nova York</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('toquio')">⚡ Tóquio (Cyber)</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('londres')">🌲 Londres</button>
-                <button class="action-btn" style="padding: 6px; font-size: 9px; grid-column:1/-1; background:linear-gradient(135deg,#44403c,#78716c); color:#fafaf9;" onclick="applyThemePreset('arena')">🏟️ Arena (Torneio clássico)</button>
-                <button class="action-btn" id="btnThemeGrandmaster" style="padding: 6px; font-size: 9px; opacity: 0.5; grid-column:1/-1;" onclick="trySetGrandmasterTheme()" title="Desbloqueie com Elo ≥ 1500">👑 Grandmaster (bloqueado)</button>
-                <label style="grid-column:1/-1; font-size:9.5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; background:var(--chat-bg); padding:5px; border-radius:6px; border:1px solid var(--panel-border);">
-                    <span>♿ Padrões (daltonismo)</span>
-                    <input type="checkbox" id="a11yPatternsToggle" onchange="toggleA11yPatterns(this)">
-                </label>
-                <label style="grid-column:1/-1; font-size:9.5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; background:var(--chat-bg); padding:5px; border-radius:6px; border:1px solid var(--panel-border);">
-                    <span>🔊 Anunciar cada lance</span>
-                    <input type="checkbox" id="voiceMovesToggle" onchange="toggleVoiceMoves(this)">
-                </label>
-            </div>
-            <!-- TABULEIRO = só casas (independente do tema de UI) -->
-            <div id="tab-board" class="tab-content" style="grid-template-columns: 1fr 1fr;">
-                <div style="grid-column:1/-1; font-size:9px; color:var(--text-muted); line-height:1.35;">
-                    Só as <b>cores das casas</b>. Não muda a interface nem as peças. Temas de cidade usam o tabuleiro padrão do preset; aqui você sobrescreve.
-                </div>
-                <button class="action-btn" style="padding:6px; font-size:9px;" onclick="setBoardSkin('')">♟️ Padrão do tema</button>
-                <button class="action-btn" style="padding:6px; font-size:9px;" onclick="setBoardSkin('board-wood')">🪵 Madeira</button>
-                <button class="action-btn" style="padding:6px; font-size:9px;" onclick="setBoardSkin('board-marble')">🪨 Mármore</button>
-                <button class="action-btn" style="padding:6px; font-size:9px;" onclick="setBoardSkin('board-emerald')">💚 Esmeralda</button>
-                <button class="action-btn" style="padding:6px; font-size:9px;" onclick="setBoardSkin('board-royal')">👑 Real</button>
-                <div style="grid-column:1/-1; margin-top:4px; font-size:9px; font-weight:bold; color:var(--text-muted);">🎨 Cores manuais</div>
+            <div id="tab-board" class="tab-content active" style="grid-template-columns: 1fr 1fr;">
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('claro')">☀️ Claro (Padrão)</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('menta')">🌿 Menta Suave</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('gelo')">❄️ Azul Gelo</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('paris')">🌸 Paris (Rosa Barbie)</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('ouro')">👑 Ouro (Real)</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('novayork')">🌙 Nova York (Escuro)</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('toquio')">⚡ Tóquio (Cyber)</button>
+                <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setTheme('londres')">🌲 Londres (Floresta)</button>
+                <button class="action-btn" id="btnThemeGrandmaster" style="padding: 6px; font-size: 9px; opacity: 0.5;" onclick="trySetGrandmasterTheme()" title="Desbloqueie com Elo ≥ 1500">👑 Grandmaster (bloqueado)</button>
+                <div style="grid-column: 1 / -1; margin-top: 6px; font-size: 9px; font-weight: bold; color: var(--text-muted);">🎨 Cores personalizadas</div>
                 <label style="font-size:8px; display:flex; flex-direction:column; gap:2px;">Clara
                     <input type="color" id="customLightSq" value="#f1f5f9" onchange="applyCustomBoardColors()">
                 </label>
@@ -1272,24 +1179,18 @@
                 <label style="font-size:8px; display:flex; flex-direction:column; gap:2px;">Borda
                     <input type="color" id="customBorder" value="#0284c7" onchange="applyCustomBoardColors()">
                 </label>
-                <button class="action-btn" style="padding:5px; font-size:8px;" onclick="resetCustomBoardColors()">Reset cores manuais</button>
+                <button class="action-btn" style="padding:5px; font-size:8px;" onclick="resetCustomBoardColors()">Reset cores</button>
+                <label style="grid-column:1/-1; font-size:9.5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; background:var(--chat-bg); padding:5px; border-radius:6px; border:1px solid var(--panel-border);">
+                    <span>♿ Padrões (daltonismo)</span>
+                    <input type="checkbox" id="a11yPatternsToggle" onchange="toggleA11yPatterns(this)">
+                </label>
+                <label style="grid-column:1/-1; font-size:9.5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; background:var(--chat-bg); padding:5px; border-radius:6px; border:1px solid var(--panel-border);">
+                    <span>🔊 Anunciar cada lance</span>
+                    <input type="checkbox" id="voiceMovesToggle" onchange="toggleVoiceMoves(this)">
+                </label>
             </div>
-            <div id="tab-unlocks" class="tab-content" style="grid-template-columns: 1fr; max-height: 280px; overflow-y: auto; gap: 8px; text-align: left; padding: 4px;">
-                <div style="font-size: 10px; font-weight: 800; color: var(--board-border);">🏆 Progresso e recompensas</div>
-                <div style="font-size: 9px; color: var(--text-muted); line-height: 1.35;">Seu Elo libera tabuleiros, conjuntos de peças, temas e o <b>Certificado de Grande Campeão</b>. Nada é removido — só se adiciona.</div>
-                <div id="unlocksGallery" style="display:flex; flex-direction:column; gap:8px;"></div>
-                <div id="certDownloadRow" style="display:none; flex-direction:column; gap:6px;">
-                    <div style="font-size:10px; font-weight:800; color:var(--board-border); text-align:center;">📜 Certificado de Grande Campeão</div>
-                    <div style="display:flex; gap:6px;">
-                        <button type="button" class="action-btn" id="btnDownloadCertPng" style="flex:1; padding:10px; font-size:10px; font-weight:800; background:linear-gradient(135deg,#7c3aed,#6d28d9); color:#fff;" onclick="downloadCertificatePNG()">🖼️ Baixar PNG</button>
-                        <button type="button" class="action-btn" id="btnDownloadCertPdf" style="flex:1; padding:10px; font-size:10px; font-weight:800; background:linear-gradient(135deg,#b45309,#eab308); color:#1a1025;" onclick="downloadCertificatePDF()">📄 Baixar PDF</button>
-                    </div>
-                </div>
-                <div id="unlocksCertHint" style="font-size:8px; color:var(--text-muted); text-align:center;"></div>
-            </div>
-            <!-- CORES DAS PEÇAS (só glow/cores) -->
-            <div id="tab-piece-colors" class="tab-content" style="grid-template-columns: 1fr; max-height: 280px; overflow-y: auto;">
-                <div style="font-size:9px; color:var(--text-muted); margin-bottom:4px;">Só a <b>cor/brilho</b> das peças. Independente do tema e do estilo.</div>
+            <div id="tab-pieces" class="tab-content" style="grid-template-columns: 1fr; max-height: 260px; overflow-y: auto;">
+                <div style="font-size: 9px; font-weight: bold; color: var(--text-muted); margin-bottom: 4px;">🎨 Cores das Peças</div>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-blue-pink')">🔵 Azul Elétrico vs 🔴 Rosa Choque</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-green-cyan')">🟢 Verde Esmeralda vs 🔵 Ciano</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-gold-purple')">🟡 Dourado Real vs 🟣 Roxo Profundo</button>
@@ -1300,10 +1201,8 @@
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-toxic')">☣️ Tóxico (Verde Ácido vs Roxo)</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-monochrome')">☯️ Monocromático (Branco vs Preto)</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-cyberpunk')">🏙️ Cyberpunk (Ciano vs Amarelo)</button>
-            </div>
-            <!-- ESTILOS DAS PEÇAS (só forma/filtro) -->
-            <div id="tab-piece-styles" class="tab-content" style="grid-template-columns: 1fr; max-height: 280px; overflow-y: auto;">
-                <div style="font-size:9px; color:var(--text-muted); margin-bottom:4px;">Só o <b>estilo visual</b> (escala, neon, 3D…). Independente da cor das peças.</div>
+                
+                <div style="font-size: 9px; font-weight: bold; color: var(--text-muted); margin: 10px 0 4px;">♟️ Estilo das Peças</div>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceStyle('style-classic')">♟️ Clássico (Padrão)</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceStyle('style-minimal')">⬜ Minimalista</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceStyle('style-neon')">💜 Neon Forte</button>
@@ -1334,7 +1233,6 @@
                     <option value="atlantida_poa">⚡ Atlântida FM 94.3 (Porto Alegre)</option>
                     <option value="antena1_poa">🎶 Antena 1 Nacional</option>
                     <option value="continental_poa">🎷 Continental FM 98.3 (Porto Alegre)</option>
-                    <option value="fm1023_poa">🎵 102.3 FM (Porto Alegre)</option>
                     <option value="salamanca_quarai">📻 Salamanca FM 101.3 (Quaraí/RS)</option>
                     <option value="cbn">📰 CBN Rio (Notícias)</option>
                     <option value="bandnews">📡 BandNews FM SP</option>
@@ -1410,7 +1308,6 @@
                 <button class="action-btn" id="btnRematch" onclick="requestRematch()" style="display:none; padding: 8px; font-size: 10px; width: 100%; background: linear-gradient(135deg,#16a34a,#15803d); color: #fff; font-weight: bold;">🔄 Solicitar Revanche</button>
                 <div style="display: flex; gap: 6px;">
                     <button class="action-btn" onclick="exportPGN()" style="padding: 7px; font-size: 9px; flex: 1;">📄 Copiar PGN</button>
-                    <button class="action-btn" onclick="downloadPGNFile()" style="padding: 7px; font-size: 9px; flex: 1;">⬇️ Baixar PGN</button>
                     <button class="action-btn" onclick="copyFEN()" style="padding: 7px; font-size: 9px; flex: 1;">📋 Copiar FEN</button>
                 </div>
                 <button class="action-btn" onclick="closeVictoryScreen()" style="padding: 8px; font-size: 10px; width: 100%; background: var(--modal-border); color: #fff; font-weight: bold;">✔️ Ok</button>
@@ -1420,7 +1317,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v9.6</p>
+            <p>Estratégia P2P · IA offline · v8.9</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1448,7 +1345,6 @@
                     <summary>📜 Histórico <span style="font-weight:600;color:var(--text-muted);font-size:9px;">toque p/ PGN</span></summary>
                     <div class="details-body">
                         <div id="history-list">Nenhuma partida salva ainda.</div>
-                        <button type="button" class="action-btn" style="margin-top:6px;width:100%;padding:8px;font-size:10px;font-weight:800;" onclick="downloadAllHistoryPGN()">⬇️ Baixar histórico (PGN)</button>
                     </div>
                 </details>
 
@@ -1459,7 +1355,6 @@
                     <option value="atlantida_poa">⚡ Atlântida POA</option>
                     <option value="antena1_poa">🎶 Antena 1</option>
                     <option value="continental_poa">🎷 Continental</option>
-                    <option value="fm1023_poa">🎵 102.3 FM</option>
                     <option value="salamanca_quarai">📻 Salamanca</option>
                     <option value="cbn">📰 CBN</option>
                     <option value="bandnews">📡 BandNews</option>
@@ -1535,19 +1430,12 @@
                             <button class="menu-grid-btn" id="pveColorBlack" style="flex:1; background: linear-gradient(135deg, #334155, #0f172a);" onclick="setPveColor('b')">⬛ Pretas</button>
                         </div>
                         <div class="menu-grid-5">
-                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #15803d, #16a34a);" onclick="selectAndStartPvE(1)" title="Elo ~600">🌱 1<span>Iniciante<br>~600</span></button>
-                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #0e7490, #0284c7);" onclick="selectAndStartPvE(2)" title="Elo ~900">⚔️ 2<span>Casual<br>~900</span></button>
-                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #1d4ed8, #4f46e5);" onclick="selectAndStartPvE(3)" title="Elo ~1200">🛡️ 3<span>Intermed.<br>~1200</span></button>
-                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="selectAndStartPvE(4)" title="Elo ~1700">⚡ 4<span>Avançado<br>~1700</span></button>
-                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #c026d3, #db2777);" onclick="selectAndStartPvE(5)" title="Elo ~2000">👑 5<span>Mestre<br>~2000</span></button>
+                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #15803d, #16a34a);" onclick="selectAndStartPvE(1)">🌱 1<span>Iniciante</span></button>
+                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #0e7490, #0284c7);" onclick="selectAndStartPvE(2)">⚔️ 2<span>Casual</span></button>
+                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #1d4ed8, #4f46e5);" onclick="selectAndStartPvE(3)">🛡️ 3<span>Médio</span></button>
+                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #7c3aed, #9333ea);" onclick="selectAndStartPvE(4)">⚡ 4<span>Avançado</span></button>
+                            <button class="menu-grid-btn" style="background: linear-gradient(135deg, #c026d3, #db2777);" onclick="selectAndStartPvE(5)">👑 5<span>Mestre</span></button>
                         </div>
-                    </div>
-                </details>
-
-                <details class="menu-details" id="detailsMissions">
-                    <summary>🎯 Missões da semana</summary>
-                    <div class="details-body">
-                        <div id="missionsList" style="display:flex;flex-direction:column;gap:6px;font-size:10px;"></div>
                     </div>
                 </details>
 
@@ -1559,15 +1447,6 @@
                             <button class="room-btn" style="background: linear-gradient(135deg, #4c1d95, #3b0764);" onclick="joinCityRoom('toquio')">⚡ Tóquio (Cyber) <span id="status-toquio" class="room-status">Livre</span></button>
                             <button class="room-btn" style="background: linear-gradient(135deg, #334155, #0f172a);" onclick="joinCityRoom('novayork')">🌙 N. York (Escuro) <span id="status-novayork" class="room-status">Livre</span></button>
                             <button class="room-btn" style="background: linear-gradient(135deg, #059669, #022c22);" onclick="joinCityRoom('londres')">🌲 Londres (Floresta) <span id="status-londres" class="room-status">Livre</span></button>
-                        </div>
-                        <div style="margin-top:8px; padding:8px; border-radius:10px; border:1px solid var(--panel-border); background:var(--chat-bg); display:flex; flex-direction:column; gap:6px;">
-                            <div style="font-size:10px; font-weight:800; color:var(--board-border);">🔐 Sala privada (código)</div>
-                            <div style="display:flex; gap:4px;">
-                                <input type="text" id="privateRoomCode" maxlength="6" placeholder="ABC123" style="flex:1; text-transform:uppercase; letter-spacing:2px; font-weight:800; font-size:12px; padding:8px; border-radius:8px; border:1px solid var(--panel-border); background:var(--chat-input-bg); color:var(--text-main); text-align:center;" />
-                                <button type="button" class="action-btn" style="padding:8px 10px; font-size:10px; font-weight:800;" onclick="createPrivateRoom()">Criar</button>
-                                <button type="button" class="action-btn" style="padding:8px 10px; font-size:10px; font-weight:800; background:var(--board-border); color:#fff;" onclick="joinPrivateRoom()">Entrar</button>
-                            </div>
-                            <div style="font-size:8px; color:var(--text-muted);">Gere um código e envie ao amigo. Mesmo protocolo P2P das cidades.</div>
                         </div>
                     </div>
                 </details>
@@ -1702,7 +1581,7 @@
                 </div>
                 <div class="chat-input-row">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem..." onkeypress="handleChatPress(event)">
-                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Toque para gravar (máx. 8s). Depois ouça e escolha enviar ou apagar." aria-label="Mensagem de voz">🎙️</button>
+                    <button type="button" class="xp-toggle-btn voice-toggle" id="btnVoiceMsg" title="Toque para gravar (máx. 10s). Solte e ouça antes de enviar." aria-label="Mensagem de voz">🎙️</button>
                     <button type="button" class="xp-toggle-btn taunts-toggle" id="btnToggleTaunts" onclick="toggleTauntsPanel(event)" title="Frases rápidas">💬</button>
                     <button class="action-btn" style="flex: 0 0 48px; padding: 2px; font-size: 8.5px; background: var(--board-border); color: #ffffff; font-weight: bold;" onclick="sendCustomMessage()">ENVIAR</button>
                     <div class="xp-float-panel taunts" id="tauntsFloatPanel" role="menu" aria-label="Frases rápidas">
@@ -1769,7 +1648,6 @@
                     <option value="atlantida_poa">⚡ Atlântida POA</option>
                     <option value="antena1_poa">🎶 Antena 1 Nacional</option>
                     <option value="continental_poa">🎷 Continental FM</option>
-                    <option value="fm1023_poa">🎵 102.3 FM (POA)</option>
                     <option value="salamanca_quarai">📻 Salamanca FM</option>
                     <option value="cbn">📰 CBN</option>
                     <option value="bandnews">📡 BandNews</option>
@@ -1811,13 +1689,6 @@
     let playerColor = 'w';
     let isSpectator = false;
     let lastPathCoords = [];
-    /** Conexões de espectadores (host mantém abertas e retransmite lances/chat) */
-    let spectatorConns = [];
-    /** true enquanto este peer é o host da sala-cidade */
-    let isRoomHost = false;
-    /** Nomes exibidos no modo espectador */
-    let spectatorWhiteName = '';
-    let spectatorBlackName = '';
 
     let boardFlipped = false;
     let flyingToSquare = null;
@@ -1836,619 +1707,7 @@
     let rematchPending = false;
     let playerElo = parseInt(localStorage.getItem('xadrezpro_elo') || '1200', 10);
     const ELO_GM_UNLOCK = 1500;
-    const AI_ELO = { 1: 600, 2: 900, 3: 1200, 4: 1700, 5: 2000 };
-    const AI_LEVEL_LABELS = {
-        1: 'Iniciante',
-        2: 'Casual',
-        3: 'Intermediário',
-        4: 'Avançado',
-        5: 'Mestre'
-    };
-    function aiDisplayName(level) {
-        const lv = level || aiDifficulty || 3;
-        const name = AI_LEVEL_LABELS[lv] || ('Nível ' + lv);
-        const elo = AI_ELO[lv] || 1200;
-        return 'IA ' + name + ' (~' + elo + ')';
-    }
-
-    /** Catálogo de conquistas v9.1 — desbloqueio por Elo (só adiciona opções) */
-    const UNLOCK_CATALOG = [
-        { id: 'board_wood', elo: 800, type: 'board', apply: 'board-wood', icon: '🪵', title: 'Tabuleiro Madeira', desc: 'Casas em tons de carvalho clássico.' },
-        { id: 'pieces_sunset', elo: 900, type: 'pieces', apply: 'pieces-sunset', icon: '🌅', title: 'Peças Pôr do Sol', desc: 'Laranja vs magenta vibrante.' },
-        { id: 'board_marble', elo: 1000, type: 'board', apply: 'board-marble', icon: '🪨', title: 'Tabuleiro Mármore', desc: 'Visual frio e elegante.' },
-        { id: 'pieces_toxic', elo: 1100, type: 'pieces', apply: 'pieces-toxic', icon: '☣️', title: 'Peças Tóxicas', desc: 'Verde ácido vs roxo neon.' },
-        { id: 'board_emerald', elo: 1200, type: 'board', apply: 'board-emerald', icon: 'Emerald', title: 'Tabuleiro Esmeralda', desc: 'Verde profundo de torneio.' },
-        { id: 'pieces_cyber', elo: 1300, type: 'pieces', apply: 'pieces-cyberpunk', icon: '🏙️', title: 'Peças Cyberpunk', desc: 'Ciano vs amarelo futurista.' },
-        { id: 'theme_gm', elo: 1500, type: 'theme', apply: 'grandmaster', icon: '👑', title: 'Tema Grandmaster', desc: 'UI dourada + estilo neon.' },
-        { id: 'board_royal', elo: 1500, type: 'board', apply: 'board-royal', icon: '👑', title: 'Tabuleiro Real', desc: 'Dourado e violeta de campeão.' },
-        { id: 'cert_champion', elo: 1500, type: 'cert', apply: null, icon: '📜', title: 'Certificado Grande Campeão', desc: 'Baixe seu diploma personalizado.' },
-        { id: 'pieces_gold', elo: 1600, type: 'pieces', apply: 'pieces-gold-purple', icon: '🟡', title: 'Peças Ouro Real', desc: 'Dourado vs roxo profundo.' }
-    ];
-    // Corrigir ícone esmeralda (texto acidental)
-    UNLOCK_CATALOG.forEach(function(u) { if (u.id === 'board_emerald') u.icon = '💚'; });
-
-    let seenUnlockIds = [];
-    try { seenUnlockIds = JSON.parse(localStorage.getItem('xadrezpro_seen_unlocks') || '[]'); } catch (e) { seenUnlockIds = []; }
-
-    function isUnlockOwned(item) {
-        return playerElo >= (item.elo || 9999);
-    }
-
-    function clearBoardCssOverrides() {
-        // Remove overrides manuais para o tema/skin poder pintar as casas de novo
-        try {
-            document.documentElement.style.removeProperty('--light-square');
-            document.documentElement.style.removeProperty('--dark-square');
-            document.documentElement.style.removeProperty('--board-border');
-        } catch (e) {}
-    }
-
-    function clearBoardSkinClasses() {
-        Array.from(document.body.classList).forEach(function(c) {
-            if (c.indexOf('board-') === 0 && c !== 'board-section') document.body.classList.remove(c);
-        });
-    }
-
-    function setBoardSkin(skinClass) {
-        // Só casas do tabuleiro — não mexe em tema de UI nem peças
-        clearBoardSkinClasses();
-        clearBoardCssOverrides();
-        try { localStorage.removeItem('xadrezpro_custom_board'); } catch (e) {}
-        if (skinClass) {
-            document.body.classList.add(skinClass);
-            try { localStorage.setItem('xadrezpro_board_skin', skinClass); } catch (e) {}
-        } else {
-            try { localStorage.removeItem('xadrezpro_board_skin'); } catch (e) {}
-        }
-        addLog('Tabuleiro: ' + (skinClass || 'padrão do tema ativo'), 'UI');
-        try { refreshSettingsPreview(); } catch (e) {}
-    }
-
-    /** Presets completos (como entrar na sala-cidade). Depois o jogador pode personalizar por aba. */
-    const THEME_PRESETS = {
-        claro:    { theme: 'claro',    pieces: 'pieces-blue-pink',   style: 'style-classic' },
-        menta:    { theme: 'menta',    pieces: 'pieces-green-cyan',  style: 'style-classic' },
-        gelo:     { theme: 'gelo',     pieces: 'pieces-blue-pink',   style: 'style-soft3d' },
-        ouro:     { theme: 'ouro',     pieces: 'pieces-gold-purple', style: 'style-classic' },
-        paris:    { theme: 'paris',    pieces: 'pieces-blue-pink',   style: 'style-classic' },
-        novayork: { theme: 'novayork', pieces: 'pieces-silver-fire', style: 'style-soft3d' },
-        toquio:   { theme: 'toquio',   pieces: 'pieces-cyberpunk',   style: 'style-neon' },
-        londres:  { theme: 'londres',  pieces: 'pieces-green-cyan',  style: 'style-classic' },
-        arena:    { theme: 'arena',    pieces: 'pieces-monochrome',  style: 'style-classic' },
-        grandmaster: { theme: 'grandmaster', pieces: 'pieces-gold-purple', style: 'style-neon' }
-    };
-
-    function applyThemePreset(presetKey) {
-        const p = THEME_PRESETS[presetKey] || THEME_PRESETS.claro;
-        // 1) limpa skins/cores manuais do tabuleiro para o tema pintar as casas
-        clearBoardSkinClasses();
-        clearBoardCssOverrides();
-        try {
-            localStorage.removeItem('xadrezpro_board_skin');
-            localStorage.removeItem('xadrezpro_custom_board');
-        } catch (e) {}
-        // 2) UI theme
-        setTheme(p.theme);
-        // 3) peças padrão do preset (salas-cidade usam o mesmo mapeamento)
-        if (p.pieces) setPieceColors(p.pieces);
-        if (p.style) setPieceStyle(p.style);
-        addLog('Preset completo aplicado: ' + presetKey, 'UI');
-        try { refreshSettingsPreview(); } catch (e) {}
-    }
-
-    function tryApplyUnlock(itemId) {
-        const item = UNLOCK_CATALOG.find(function(x) { return x.id === itemId; });
-        if (!item) return;
-        if (!isUnlockOwned(item)) {
-            alert('Ainda bloqueado.\nSeu Elo: ' + playerElo + '\nNecessário: ' + item.elo + '+');
-            return;
-        }
-        if (item.type === 'board') setBoardSkin(item.apply);
-        else if (item.type === 'pieces') setPieceColors(item.apply);
-        else if (item.type === 'theme') {
-            applyThemePreset(item.apply === 'grandmaster' ? 'grandmaster' : item.apply);
-        } else if (item.type === 'cert') {
-            downloadChampionCertificate();
-        }
-        refreshUnlocksUI();
-    }
-
-    function refreshUnlocksUI() {
-        const gallery = document.getElementById('unlocksGallery');
-        if (gallery) {
-            gallery.innerHTML = UNLOCK_CATALOG.map(function(item) {
-                const owned = isUnlockOwned(item);
-                const lockLabel = owned ? '✅ Desbloqueado' : ('🔒 Elo ' + item.elo + '+');
-                const btnLabel = item.type === 'cert' ? '📜 Baixar' : 'Aplicar';
-                const btn = owned
-                    ? '<button type="button" class="action-btn" onclick="tryApplyUnlock(\'' + item.id + '\')">' + btnLabel + '</button>'
-                    : '<button type="button" class="action-btn" disabled style="opacity:0.5">Bloqueado</button>';
-                return '<div class="unlock-card' + (owned ? '' : ' locked') + '">' +
-                    '<div class="u-title">' + item.icon + ' ' + item.title + '</div>' +
-                    '<div class="u-req">' + lockLabel + ' · ' + item.desc + '</div>' +
-                    '<div class="u-actions">' + btn + '</div></div>';
-            }).join('');
-        }
-        const certRow = document.getElementById('certDownloadRow');
-        const certHint = document.getElementById('unlocksCertHint');
-        const certOk = playerElo >= ELO_GM_UNLOCK;
-        if (certRow) certRow.style.display = certOk ? 'flex' : 'none';
-        if (certHint) {
-            certHint.textContent = certOk
-                ? 'Parabéns! Baixe em PNG (imagem) ou PDF real (arquivo .pdf).'
-                : ('Certificado disponível com Elo ' + ELO_GM_UNLOCK + '+ (faltam ' + Math.max(0, ELO_GM_UNLOCK - playerElo) + ')');
-        }
-        // GM theme button (já existia)
-        const btn = document.getElementById('btnThemeGrandmaster');
-        if (btn) {
-            if (playerElo >= ELO_GM_UNLOCK) {
-                btn.style.opacity = '1';
-                btn.innerText = '👑 Grandmaster';
-                btn.title = 'Tema exclusivo desbloqueado';
-            } else {
-                btn.style.opacity = '0.5';
-                btn.innerText = '👑 Grandmaster (bloqueado)';
-                btn.title = 'Desbloqueie com Elo ≥ ' + ELO_GM_UNLOCK;
-            }
-        }
-    }
-
-    function announceNewUnlocks(prevElo, nextElo) {
-        const newly = UNLOCK_CATALOG.filter(function(item) {
-            return prevElo < item.elo && nextElo >= item.elo && seenUnlockIds.indexOf(item.id) < 0;
-        });
-        newly.forEach(function(item) {
-            seenUnlockIds.push(item.id);
-            addChatMessage('Conquista', item.icon + ' Desbloqueou: ' + item.title + '!', true);
-            addLog('Unlock: ' + item.id, 'ELO');
-        });
-        if (newly.length) {
-            try { localStorage.setItem('xadrezpro_seen_unlocks', JSON.stringify(seenUnlockIds)); } catch (e) {}
-            try { refreshUnlocksUI(); } catch (e) {}
-        }
-    }
-
-    /** Gera serial estável do certificado (local) */
-    function certificateSerial(name, elo) {
-        const base = (name || 'XP') + '|' + elo + '|' + (new Date()).toISOString().slice(0, 10);
-        let h = 2166136261;
-        for (let i = 0; i < base.length; i++) {
-            h ^= base.charCodeAt(i);
-            h = Math.imul(h, 16777619);
-        }
-        const hex = (h >>> 0).toString(16).toUpperCase().padStart(8, '0');
-        return 'XP-' + elo + '-' + hex;
-    }
-
-    /** QR visual simples (matriz determinística a partir do serial — decorativo + legível) */
-    function drawCertificateQR(ctx, x, y, size, serial) {
-        const cells = 21;
-        const cell = size / cells;
-        // fundo branco
-        ctx.fillStyle = '#fffef7';
-        ctx.fillRect(x - 4, y - 4, size + 8, size + 8);
-        ctx.strokeStyle = '#eab308';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x - 4, y - 4, size + 8, size + 8);
-        // padrão a partir do serial
-        let seed = 0;
-        for (let i = 0; i < serial.length; i++) seed = (seed * 31 + serial.charCodeAt(i)) >>> 0;
-        function bit(r, c) {
-            // finders
-            if (r < 7 && c < 7) {
-                const onBorder = r === 0 || r === 6 || c === 0 || c === 6;
-                const inCenter = r >= 2 && r <= 4 && c >= 2 && c <= 4;
-                return onBorder || inCenter;
-            }
-            if (r < 7 && c >= cells - 7) {
-                const cc = c - (cells - 7);
-                const onBorder = r === 0 || r === 6 || cc === 0 || cc === 6;
-                const inCenter = r >= 2 && r <= 4 && cc >= 2 && cc <= 4;
-                return onBorder || inCenter;
-            }
-            if (r >= cells - 7 && c < 7) {
-                const rr = r - (cells - 7);
-                const onBorder = rr === 0 || rr === 6 || c === 0 || c === 6;
-                const inCenter = rr >= 2 && rr <= 4 && c >= 2 && c <= 4;
-                return onBorder || inCenter;
-            }
-            const v = (seed ^ (r * 73856093) ^ (c * 19349663)) >>> 0;
-            return (v % 3) !== 0;
-        }
-        ctx.fillStyle = '#1a1025';
-        for (let r = 0; r < cells; r++) {
-            for (let c = 0; c < cells; c++) {
-                if (bit(r, c)) ctx.fillRect(x + c * cell, y + r * cell, cell + 0.5, cell + 0.5);
-            }
-        }
-    }
-
-    function drawCertificateSeal(ctx, cx, cy, r) {
-        ctx.save();
-        // anéis
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(234,179,8,0.15)';
-        ctx.fill();
-        ctx.strokeStyle = '#eab308';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(cx, cy, r - 10, 0, Math.PI * 2);
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(cx, cy, r - 18, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(254,243,199,0.5)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        // brasão
-        ctx.fillStyle = '#fef3c7';
-        ctx.font = 'bold ' + Math.floor(r * 0.7) + 'px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('♚', cx, cy - 2);
-        ctx.font = 'bold 11px system-ui, sans-serif';
-        ctx.fillStyle = '#eab308';
-        ctx.fillText('GRANDMASTER', cx, cy + r * 0.55);
-        ctx.restore();
-    }
-
-    function drawCornerOrnament(ctx, x, y, flipX, flipY) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
-        ctx.strokeStyle = '#eab308';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(0, 28);
-        ctx.lineTo(0, 0);
-        ctx.lineTo(28, 0);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(6, 22);
-        ctx.quadraticCurveTo(6, 6, 22, 6);
-        ctx.stroke();
-        ctx.fillStyle = '#fbbf24';
-        ctx.beginPath();
-        ctx.arc(10, 10, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-    }
-
-    /** Canvas profissional do certificado (v9.6) */
-    function buildChampionCertificateCanvas() {
-        const name = (playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão';
-        const serial = certificateSerial(name, playerElo);
-        const w = 1400, h = 990;
-        const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-
-        // fundo
-        const grd = ctx.createLinearGradient(0, 0, w, h);
-        grd.addColorStop(0, '#12081f');
-        grd.addColorStop(0.45, '#2a1548');
-        grd.addColorStop(1, '#0b1220');
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, w, h);
-
-        // vinheta
-        const vig = ctx.createRadialGradient(w / 2, h / 2, 120, w / 2, h / 2, h * 0.7);
-        vig.addColorStop(0, 'rgba(0,0,0,0)');
-        vig.addColorStop(1, 'rgba(0,0,0,0.35)');
-        ctx.fillStyle = vig;
-        ctx.fillRect(0, 0, w, h);
-
-        // moldura tripla
-        ctx.strokeStyle = '#eab308';
-        ctx.lineWidth = 14;
-        ctx.strokeRect(28, 28, w - 56, h - 56);
-        ctx.strokeStyle = '#fef3c7';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(42, 42, w - 84, h - 84);
-        ctx.strokeStyle = '#b45309';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(52, 52, w - 104, h - 104);
-
-        // ornamentos cantos
-        drawCornerOrnament(ctx, 70, 70, false, false);
-        drawCornerOrnament(ctx, w - 70, 70, true, false);
-        drawCornerOrnament(ctx, 70, h - 70, false, true);
-        drawCornerOrnament(ctx, w - 70, h - 70, true, true);
-
-        // brasão topo
-        drawCertificateSeal(ctx, w / 2, 155, 58);
-
-        // faixa título
-        ctx.fillStyle = 'rgba(234,179,8,0.12)';
-        ctx.fillRect(120, 230, w - 240, 56);
-        ctx.strokeStyle = 'rgba(234,179,8,0.45)';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(120, 230, w - 240, 56);
-
-        ctx.fillStyle = '#fef3c7';
-        ctx.font = 'bold 36px Georgia, "Times New Roman", serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'alphabetic';
-        ctx.fillText('CERTIFICADO DE GRANDE CAMPEÃO', w / 2, 268);
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'italic 18px Georgia, serif';
-        ctx.fillText('Xadrez Pro  ·  Excelência em Estratégia', w / 2, 320);
-
-        // corpo
-        ctx.fillStyle = '#cbd5e1';
-        ctx.font = '20px system-ui, sans-serif';
-        ctx.fillText('Este documento certifica que', w / 2, 390);
-
-        ctx.fillStyle = '#fef3c7';
-        ctx.font = 'bold 54px Georgia, serif';
-        const displayName = name.length > 28 ? name.slice(0, 28) + '…' : name;
-        ctx.fillText(displayName, w / 2, 465);
-
-        // linha sob o nome
-        ctx.strokeStyle = '#eab308';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(w / 2 - 220, 480);
-        ctx.lineTo(w / 2 + 220, 480);
-        ctx.stroke();
-
-        ctx.fillStyle = '#e2e8f0';
-        ctx.font = '20px system-ui, sans-serif';
-        ctx.fillText('alcançou o título honorífico de Grandmaster no Xadrez Pro', w / 2, 525);
-
-        // chips de mérito
-        const chipY = 575;
-        const chips = [
-            '⭐ Elo ' + playerElo,
-            '👑 Grandmaster',
-            '♟️ Progressão local'
-        ];
-        ctx.font = 'bold 16px system-ui, sans-serif';
-        let chipX = w / 2 - 280;
-        chips.forEach(function(t) {
-            const tw = ctx.measureText(t).width + 28;
-            ctx.fillStyle = 'rgba(234,179,8,0.18)';
-            ctx.strokeStyle = '#eab308';
-            ctx.lineWidth = 1.5;
-            roundRectPath(ctx, chipX, chipY - 18, tw, 32, 16);
-            ctx.fill();
-            ctx.stroke();
-            ctx.fillStyle = '#fef3c7';
-            ctx.fillText(t, chipX + tw / 2, chipY + 4);
-            chipX += tw + 16;
-        });
-
-        const when = new Date();
-        const dateStr = when.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-
-        // rodapé esquerdo — data / assinatura
-        ctx.textAlign = 'left';
-        ctx.fillStyle = '#94a3b8';
-        ctx.font = '15px system-ui, sans-serif';
-        ctx.fillText('Emitido em ' + dateStr, 120, 700);
-        ctx.fillText('Documento gerado no dispositivo do jogador', 120, 725);
-        ctx.strokeStyle = '#64748b';
-        ctx.beginPath();
-        ctx.moveTo(120, 800);
-        ctx.lineTo(360, 800);
-        ctx.stroke();
-        ctx.fillStyle = '#cbd5e1';
-        ctx.font = '14px Georgia, serif';
-        ctx.fillText('Diretoria Xadrez Pro', 120, 825);
-        ctx.fillStyle = '#64748b';
-        ctx.font = '12px system-ui, sans-serif';
-        ctx.fillText('Validação cosmética · offline', 120, 845);
-
-        // QR + serial à direita
-        drawCertificateQR(ctx, w - 280, 680, 130, serial);
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 12px ui-monospace, monospace';
-        ctx.fillText(serial, w - 215, 840);
-        ctx.fillStyle = '#64748b';
-        ctx.font = '11px system-ui, sans-serif';
-        ctx.fillText('Cód. de verificação', w - 215, 858);
-
-        // faixa inferior
-        ctx.fillStyle = 'rgba(15,10,30,0.55)';
-        ctx.fillRect(80, h - 90, w - 160, 40);
-        ctx.fillStyle = '#eab308';
-        ctx.font = '14px Georgia, serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('♟️  Estratégia · P2P · IA offline  ·  Xadrez Pro v9.6  ♟️', w / 2, h - 64);
-
-        return { canvas: canvas, name: name, serial: serial };
-    }
-
-    function roundRectPath(ctx, x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.arcTo(x + w, y, x + w, y + h, r);
-        ctx.arcTo(x + w, y + h, x, y + h, r);
-        ctx.arcTo(x, y + h, x, y, r);
-        ctx.arcTo(x, y, x + w, y, r);
-        ctx.closePath();
-    }
-
-    function triggerBlobDownload(blob, filename) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(function() { URL.revokeObjectURL(url); }, 30000);
-    }
-
-    /** PDF real (sem janela de impressão): embute JPEG do certificado */
-    function buildPdfFromJpegBytes(jpegBytes, imgW, imgH) {
-        // Página em pontos (1pt = 1/72") — escala para caber em A4 paisagem ~842x595
-        const pageW = 842;
-        const pageH = Math.max(595, Math.round(pageW * imgH / imgW));
-        const objects = [];
-        function addObj(str) {
-            objects.push(str);
-            return objects.length;
-        }
-
-        const imgObj = addObj(
-            '<< /Type /XObject /Subtype /Image /Width ' + imgW +
-            ' /Height ' + imgH +
-            ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' +
-            jpegBytes.length + ' >>\nstream\n'
-        );
-        // stream bytes handled specially below
-        const imgObjNum = imgObj;
-
-        const content = 'q\n' + pageW + ' 0 0 ' + pageH + ' 0 0 cm\n/Im0 Do\nQ\n';
-        const contentObj = addObj('<< /Length ' + content.length + ' >>\nstream\n' + content + 'endstream');
-        const pageObj = addObj(
-            '<< /Type /Page /Parent 3 0 R /MediaBox [0 0 ' + pageW + ' ' + pageH +
-            '] /Contents ' + contentObj + ' 0 R /Resources << /XObject << /Im0 ' + imgObjNum + ' 0 R >> >> >>'
-        );
-        // We'll renumber carefully - better build with fixed structure
-
-        // Rebuild with known numbers for reliability
-        // 1: catalog, 2: pages, 3: page, 4: content, 5: image
-        const enc = new TextEncoder();
-        const parts = [];
-        const offsets = [0];
-
-        function pushStr(s) {
-            parts.push(enc.encode(s));
-        }
-        function pushBytes(u8) {
-            parts.push(u8);
-        }
-
-        pushStr('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
-
-        function markOffset() {
-            let off = 0;
-            for (let i = 0; i < parts.length; i++) off += parts[i].length;
-            return off;
-        }
-
-        const objOffsets = [];
-
-        // obj 1 catalog
-        objOffsets[1] = markOffset();
-        pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
-
-        // obj 2 pages
-        objOffsets[2] = markOffset();
-        pushStr('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
-
-        // obj 3 page
-        objOffsets[3] = markOffset();
-        pushStr(
-            '3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + pageW + ' ' + pageH +
-            '] /Contents 4 0 R /Resources << /XObject << /Im0 5 0 R >> >> >>\nendobj\n'
-        );
-
-        // obj 4 content
-        objOffsets[4] = markOffset();
-        const stream = 'q\n' + pageW + ' 0 0 ' + pageH + ' 0 0 cm\n/Im0 Do\nQ\n';
-        pushStr('4 0 obj\n<< /Length ' + stream.length + ' >>\nstream\n' + stream + 'endstream\nendobj\n');
-
-        // obj 5 image
-        objOffsets[5] = markOffset();
-        pushStr(
-            '5 0 obj\n<< /Type /XObject /Subtype /Image /Width ' + imgW + ' /Height ' + imgH +
-            ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' +
-            jpegBytes.length + ' >>\nstream\n'
-        );
-        pushBytes(jpegBytes);
-        pushStr('\nendstream\nendobj\n');
-
-        const xrefPos = markOffset();
-        let xref = 'xref\n0 6\n0000000000 65535 f \n';
-        for (let i = 1; i <= 5; i++) {
-            xref += String(objOffsets[i]).padStart(10, '0') + ' 00000 n \n';
-        }
-        pushStr(xref);
-        pushStr('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n' + xrefPos + '\n%%EOF');
-
-        // concat
-        let total = 0;
-        for (let i = 0; i < parts.length; i++) total += parts[i].length;
-        const out = new Uint8Array(total);
-        let o = 0;
-        for (let i = 0; i < parts.length; i++) {
-            out.set(parts[i], o);
-            o += parts[i].length;
-        }
-        return out;
-    }
-
-    function safeCertFilename(name, ext) {
-        const base = 'XadrezPro_Certificado_' + String(name || 'Campeao').replace(/[^\w\-]+/g, '_').slice(0, 40);
-        return base + '.' + ext;
-    }
-
-    function downloadCertificatePNG() {
-        if (playerElo < ELO_GM_UNLOCK) {
-            alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
-            return;
-        }
-        const built = buildChampionCertificateCanvas();
-        built.canvas.toBlob(function(blob) {
-            if (!blob) {
-                alert('Não foi possível gerar o PNG.');
-                return;
-            }
-            triggerBlobDownload(blob, safeCertFilename(built.name, 'png'));
-            addChatMessage('Sistema', '🖼️ Certificado PNG baixado · ' + built.serial, true);
-            addLog('Certificado PNG ' + built.serial, 'UI');
-        }, 'image/png');
-    }
-
-    function downloadCertificatePDF() {
-        if (playerElo < ELO_GM_UNLOCK) {
-            alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
-            return;
-        }
-        const built = buildChampionCertificateCanvas();
-        // JPEG para DCTDecode no PDF
-        built.canvas.toBlob(function(blob) {
-            if (!blob) {
-                alert('Não foi possível gerar o PDF.');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function() {
-                try {
-                    const jpegBytes = new Uint8Array(reader.result);
-                    const pdfBytes = buildPdfFromJpegBytes(jpegBytes, built.canvas.width, built.canvas.height);
-                    const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
-                    triggerBlobDownload(pdfBlob, safeCertFilename(built.name, 'pdf'));
-                    addChatMessage('Sistema', '📄 Certificado PDF baixado · ' + built.serial, true);
-                    addLog('Certificado PDF ' + built.serial, 'UI');
-                } catch (err) {
-                    addLog('Falha PDF: ' + err.message, 'ERROR');
-                    alert('Falha ao montar PDF: ' + err.message);
-                }
-            };
-            reader.onerror = function() { alert('Falha ao ler imagem do certificado.'); };
-            reader.readAsArrayBuffer(blob);
-        }, 'image/jpeg', 0.92);
-    }
-
-    /** Compat: galeria de conquistas ainda chama este nome */
-    function downloadChampionCertificate() {
-        downloadCertificatePDF();
-    }
-
-    // Restaura skin de tabuleiro
-    try {
-        const savedBoard = localStorage.getItem('xadrezpro_board_skin');
-        if (savedBoard) setBoardSkin(savedBoard);
-    } catch (e) {}
+    const AI_ELO = { 1: 800, 2: 1100, 3: 1400, 4: 1700, 5: 2000 };
     let playerAvatar = localStorage.getItem('xadrezpro_avatar') || '♟️';
     let opponentAvatar = '♟️';
     let voiceMovesEnabled = localStorage.getItem('xadrezpro_voice_moves') === '1';
@@ -2762,18 +2021,9 @@
             searchNodes = 0;
             TT.clear();
             const bm = bookMove(game);
-            // Livro de aberturas só a partir do nível 3 (1 e 2 jogam mais "humanos"/erráticos)
-            if (bm && skill >= 3) {
+            // book only for stronger levels (3+) or always for 2+ with random among book
+            if (bm && skill >= 2) {
                 return { bestMove: bm, depthReached: 0, score: 0, nodes: 0, book: true };
-            }
-
-            // Nível 1: ~30% lance legal aleatório (erros reais de iniciante)
-            if (skill === 1 && Math.random() < 0.30) {
-                const all = game.moves({ verbose: true });
-                if (all.length) {
-                    const rnd = all[Math.floor(Math.random() * all.length)];
-                    return { bestMove: rnd, depthReached: 0, score: 0, nodes: 0, book: false };
-                }
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
@@ -2822,43 +2072,20 @@
                 moves = [bestMove].concat(moves.filter(function(x) { return x !== bestMove; }));
             }
 
-            // Fraqueza intencional progressiva (v9.0): 1 bem fraco, 2 iniciante, 3 intermediário
-            if (lastScored.length > 1 && skill <= 3) {
+            // Intentional weakness for lower skill
+            if (lastScored.length > 1 && skill <= 2) {
                 const bestS = lastScored[0].score;
-                if (skill === 1) {
-                    // Janela larga + quase sempre subótimo (escolhe entre os 6 primeiros)
-                    const window = 280;
-                    const pool = lastScored.filter(function(x) { return x.score >= bestS - window; });
-                    const n = Math.min(pool.length, 6);
-                    if (n > 1) {
-                        const pick = pool[Math.floor(Math.random() * n)];
-                        bestMove = pick.m;
-                        bestScore = pick.score;
-                    }
-                } else if (skill === 2) {
-                    // ~55% chance de não jogar o melhor; janela média
-                    if (Math.random() < 0.55) {
-                        const window = 140;
-                        const pool = lastScored.filter(function(x) { return x.score >= bestS - window; });
-                        const n = Math.min(pool.length, 4);
-                        if (n > 1) {
-                            const pick = pool[1 + Math.floor(Math.random() * (n - 1))];
-                            bestMove = pick.m;
-                            bestScore = pick.score;
-                        }
-                    }
-                } else if (skill === 3) {
-                    // ~25% pequeno desvio (ainda sólido)
-                    if (Math.random() < 0.25 && lastScored.length > 1) {
-                        const window = 55;
-                        const pool = lastScored.filter(function(x) { return x.score >= bestS - window; });
-                        const n = Math.min(pool.length, 3);
-                        if (n > 1) {
-                            const pick = pool[Math.floor(Math.random() * n)];
-                            bestMove = pick.m;
-                            bestScore = pick.score;
-                        }
-                    }
+                const window = skill === 1 ? 120 : 50;
+                const pool = lastScored.filter(function(x) { return x.score >= bestS - window; });
+                // prefer not always the best on skill 1
+                if (skill === 1 && pool.length > 1) {
+                    const pick = pool[Math.floor(Math.random() * Math.min(pool.length, 4))];
+                    bestMove = pick.m;
+                    bestScore = pick.score;
+                } else if (skill === 2 && pool.length > 1 && Math.random() < 0.35) {
+                    const pick = pool[Math.floor(Math.random() * Math.min(pool.length, 3))];
+                    bestMove = pick.m;
+                    bestScore = pick.score;
                 }
             }
             return { bestMove: bestMove, depthReached: depthReached, score: bestScore, nodes: searchNodes };
@@ -2920,15 +2147,6 @@
             needsHls: false,
             urls: [
                 'http://rrdns-continental.webnow.com.br/imprensafm64k.mp3'
-            ]
-        },
-        fm1023_poa: {
-            label: '102.3 FM',
-            region: 'Porto Alegre',
-            needsHls: true,
-            urls: [
-                'https://liverd102fm.rbsdirect.com.br/primary/ita_poa.sdp/playlist.m3u8',
-                'https://liverd102fm.rbsdirect.com.br/primary/102_poa.sdp/playlist.m3u8'
             ]
         },
         salamanca_quarai: {
@@ -3332,13 +2550,9 @@
     }, true);
 
     function sendReaction(emoji) {
-        if (isSpectator) {
-            addChatMessage('Sistema', 'Espectadores só assistem — não enviam reações.', true);
-            return;
-        }
         showFloatingReaction(emoji, true);
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'reaction', emoji: emoji, name: playerName || 'Jogador' });
+        if (conn && conn.open && gameMode === 'network') {
+            try { conn.send({ type: 'reaction', emoji: emoji, name: playerName || 'Jogador' }); } catch(e) {}
         }
     }
 
@@ -3389,30 +2603,7 @@
         }
     }
 
-    /** v9.5 — exporta todas as partidas salvas em um único arquivo PGN */
-    function downloadAllHistoryPGN() {
-        if (!gameHistory.length) {
-            alert('Nenhuma partida no histórico ainda.');
-            return;
-        }
-        const blocks = gameHistory.map(function(g, idx) {
-            return (g.pgn && String(g.pgn).trim()) || (';[Event "Xadrez Pro #' + (idx + 1) + '"]\n[Result "' + (g.result || '*') + '"]\n\n*');
-        }).join('\n\n\n');
-        const blob = new Blob([blocks], { type: 'application/x-chess-pgn;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'XadrezPro_Historico_' + new Date().toISOString().slice(0, 10) + '.pgn';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 1000);
-        addChatMessage('Sistema', 'Histórico PGN baixado (' + gameHistory.length + ' partida(s)).', true);
-    }
-
     function applyCustomBoardColors() {
-        // Cores manuais têm prioridade: remove skin de tabuleiro
-        clearBoardSkinClasses();
-        try { localStorage.removeItem('xadrezpro_board_skin'); } catch (e) {}
         const l = document.getElementById('customLightSq');
         const d = document.getElementById('customDarkSq');
         const b = document.getElementById('customBorder');
@@ -3424,13 +2615,15 @@
                 light: l ? l.value : '', dark: d ? d.value : '', border: b ? b.value : ''
             }));
         } catch(e) {}
-        addLog('Cores manuais do tabuleiro aplicadas', 'UI');
+        addLog('Cores do tabuleiro personalizadas', 'UI');
     }
 
     function resetCustomBoardColors() {
-        clearBoardCssOverrides();
+        document.documentElement.style.removeProperty('--light-square');
+        document.documentElement.style.removeProperty('--dark-square');
+        document.documentElement.style.removeProperty('--board-border');
         try { localStorage.removeItem('xadrezpro_custom_board'); } catch(e) {}
-        addLog('Cores manuais removidas — volta ao tema ou skin ativa', 'UI');
+        addLog('Cores do tabuleiro resetadas', 'UI');
     }
 
     function loadCustomBoardColors() {
@@ -3558,7 +2751,6 @@
         playerElo = Math.max(100, Math.min(3000, playerElo + delta));
         try { localStorage.setItem('xadrezpro_elo', String(playerElo)); } catch(e) {}
         refreshEloUI();
-        try { announceNewUnlocks(prev, playerElo); refreshUnlocksUI(); } catch (e) {}
         addLog(`Elo: ${prev} → ${playerElo} (${delta >= 0 ? '+' : ''}${delta}) vs rating ${opponentRating}`, 'ELO');
         return delta;
     }
@@ -3569,22 +2761,35 @@
         const hint = document.getElementById('eloUnlockHint');
         if (hint) {
             if (playerElo >= ELO_GM_UNLOCK) {
-                hint.textContent = '👑 Grandmaster + Certificado!';
+                hint.textContent = '👑 Grandmaster desbloqueado!';
                 hint.style.color = '#eab308';
             } else {
                 hint.textContent = `👑 GM em ${ELO_GM_UNLOCK} (faltam ${ELO_GM_UNLOCK - playerElo})`;
                 hint.style.color = '';
             }
         }
-        try { refreshUnlocksUI(); } catch (e) {}
+        const btn = document.getElementById('btnThemeGrandmaster');
+        if (btn) {
+            if (playerElo >= ELO_GM_UNLOCK) {
+                btn.style.opacity = '1';
+                btn.innerText = '👑 Grandmaster';
+                btn.title = 'Tema exclusivo desbloqueado';
+            } else {
+                btn.style.opacity = '0.5';
+                btn.innerText = '👑 Grandmaster (bloqueado)';
+                btn.title = 'Desbloqueie com Elo ≥ ' + ELO_GM_UNLOCK;
+            }
+        }
     }
 
     function trySetGrandmasterTheme() {
         if (playerElo >= ELO_GM_UNLOCK) {
-            applyThemePreset('grandmaster');
-            addLog('Preset Grandmaster ativado', 'UI');
+            setTheme('grandmaster');
+            setPieceStyle('style-neon');
+            setPieceColors('pieces-gold-purple');
+            addLog('Tema Grandmaster ativado', 'UI');
         } else {
-            alert('Tema Grandmaster bloqueado.\nSeu Elo: ' + playerElo + '\nNecessário: ' + ELO_GM_UNLOCK + '+');
+            alert(`Tema Grandmaster bloqueado.\nSeu Elo: ${playerElo}\nNecessário: ${ELO_GM_UNLOCK}+`);
         }
     }
 
@@ -3807,7 +3012,6 @@
     }
 
     function setTheme(themeName) {
-        // Apenas a camada de interface (theme-*). Não remove board skin nem peças.
         if (!themeName || typeof themeName !== 'string') return;
         const prev = currentTheme;
         currentTheme = themeName;
@@ -3820,24 +3024,20 @@
             }
         });
 
-        document.body.classList.add('theme-' + themeName);
+        document.body.classList.add(`theme-${themeName}`);
         const titleEl = document.getElementById("room-status-title");
-        if (titleEl && !isSpectator) titleEl.innerText = "Xadrez Pro";
-        try { localStorage.setItem('xadrezpro_theme', themeName); } catch (e) {}
-        addLog('Tema UI: ' + prev + ' → ' + themeName, 'UI');
+        if (titleEl) titleEl.innerText = "Xadrez Pro";
+        addLog(`Tema visual alterado: ${prev} → ${themeName}`, "UI");
     }
 
     function setPieceColors(colorScheme) {
-        // Só cores das peças — independente de tema e estilo
         if (!colorScheme || typeof colorScheme !== 'string') return;
         const classes = Array.from(document.body.classList);
         classes.forEach(c => {
             if (c.startsWith('pieces-')) document.body.classList.remove(c);
         });
         document.body.classList.add(colorScheme);
-        try { localStorage.setItem('xadrezpro_piece_colors', colorScheme); } catch (e) {}
-        addLog('Cores das peças: ' + colorScheme, 'UI');
-        try { refreshSettingsPreview(); } catch (e) {}
+        addLog(`Esquema de peças alterado para: ${colorScheme}`, "UI");
     }
 
     function setPieceStyle(styleName) {
@@ -3849,7 +3049,6 @@
         document.body.classList.add(styleName);
         addLog(`Estilo de peças alterado para: ${styleName}`, "UI");
         try { localStorage.setItem('xadrezpro_piece_style', styleName); } catch(e) {}
-        try { refreshSettingsPreview(); } catch (e) {}
     }
     // Restore piece style
     try {
@@ -3858,10 +3057,7 @@
         else document.body.classList.add('style-classic');
     } catch(e) { document.body.classList.add('style-classic'); }
 
-    function openSettingsModal() {
-        document.getElementById("settings-modal").style.display = "flex";
-        try { refreshUnlocksUI(); refreshEloUI(); refreshSettingsPreview(); } catch (e) {}
-    }
+    function openSettingsModal() { document.getElementById("settings-modal").style.display = "flex"; }
     function closeSettingsModal() { document.getElementById("settings-modal").style.display = "none"; }
 
     function applyPlayerSeating() {
@@ -3878,14 +3074,10 @@
         }
 
         if (gameMode === 'network' && isSpectator) {
-            // Vista padrão: Brancas embaixo (local), Pretas em cima (opp)
             localCard.style.order = '5';
             oppCard.style.order = '3';
-            const wName = (typeof spectatorWhiteName !== 'undefined' && spectatorWhiteName) ? spectatorWhiteName : (opponentName || 'Brancas');
-            const bName = (typeof spectatorBlackName !== 'undefined' && spectatorBlackName) ? spectatorBlackName : 'Pretas';
-            // Host é branco; oponente (guest) é preto
-            document.getElementById('player-local-label').innerText = wName + ' (Brancas)';
-            document.getElementById('player-opp-label').innerText = bName + ' (Pretas)';
+            document.getElementById('player-local-label').innerText = "Brancas (Espectador)";
+            document.getElementById('player-opp-label').innerText = "Pretas (Espectador)";
             return;
         }
 
@@ -3893,14 +3085,14 @@
             localCard.style.order = '5';
             oppCard.style.order = '3';
             const localName = gameMode === 'network' ? `${getDisplayName(true)} (Pretas)` : (gameMode === 'pve' ? `${getDisplayName(true)} (Pretas)` : "Jogador 2 (Pretas)");
-            const oppName = gameMode === 'network' ? `${getDisplayName(false)} (Brancas)` : (gameMode === 'pve' ? aiDisplayName(aiDifficulty) + ' (Brancas)' : "Jogador 1 (Brancas)");
+            const oppName = gameMode === 'network' ? `${getDisplayName(false)} (Brancas)` : (gameMode === 'pve' ? `IA Mestre (${aiDifficulty})` : "Jogador 1 (Brancas)");
             document.getElementById('player-local-label').innerText = localName;
             document.getElementById('player-opp-label').innerText = oppName;
         } else {
             localCard.style.order = '5';
             oppCard.style.order = '3';
             const localName = gameMode === 'network' ? `${getDisplayName(true)} (Brancas)` : (gameMode === 'pvp' ? "Jogador 1 (Brancas)" : `${getDisplayName(true)} (Brancas)`);
-            const oppName = gameMode === 'network' ? `${getDisplayName(false)} (Pretas)` : (gameMode === 'pvp' ? "Jogador 2 (Pretas)" : (gameMode === 'pve' ? aiDisplayName(aiDifficulty) + ' (Pretas)' : "Oponente"));
+            const oppName = gameMode === 'network' ? `${getDisplayName(false)} (Pretas)` : (gameMode === 'pvp' ? "Jogador 2 (Pretas)" : (gameMode === 'pve' ? `IA Mestre (${aiDifficulty})` : "Oponente"));
             document.getElementById('player-local-label').innerText = localName;
             document.getElementById('player-opp-label').innerText = oppName;
         }
@@ -4030,17 +3222,10 @@
         lastPathCoords = [];
         wasInCheckLastMove = false;
 
-        spectatorConns.forEach((c) => { try { c.close(); } catch (e) {} });
-        spectatorConns = [];
-        isRoomHost = false;
         if (conn) { try { conn.close(); } catch(e) {} conn = null; }
         if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
         isSpectator = false;
-        spectatorWhiteName = '';
-        spectatorBlackName = '';
-        updateSpectatorChrome();
         clearChat();
-        setTimeout(updateRoomStatuses, 600);
 
         currentCityKey = null;
         Array.from(document.body.classList).forEach(c => {
@@ -4070,7 +3255,7 @@
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         aiRequestId++;
         pendingAICallback = null;
-        if (gameMode === 'network') networkBroadcast({ type: 'reset-board' });
+        if (conn && conn.open) { try { conn.send({ type: 'reset-board' }); } catch(e) {} }
         resetGame(true);
         if (gameMode === 'pve' && playerColor === 'b') {
             setTimeout(() => makeAIMove('w'), 400);
@@ -4087,8 +3272,8 @@
         updateTurnIndicators(); updateCapturedDisplay(); renderBoard();
         addChatMessage("Sistema", "Lance desfeito.", true);
         addLog(`Lance desfeito pelo usuário.`, "MOVE");
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'undo', count: movesToUndo, fen: chess.fen() });
+        if (conn && conn.open && gameMode === 'network') { 
+            try { conn.send({ type: 'undo', count: movesToUndo, fen: chess.fen() }); } catch(e) {} 
         }
     }
 
@@ -4147,29 +3332,15 @@
         box.scrollTop = box.scrollHeight;
     }
 
-    function sendTaunt(text) {
-        if (isSpectator) {
-            addChatMessage('Sistema', 'Espectadores só assistem — chat e frases desativados.', true);
-            return;
-        }
+    function sendTaunt(text) { 
         addChatMessage(playerName || "Você", text); 
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'chat', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), text: text });
-        }
+        if (conn && conn.open) { try { conn.send({ type: 'chat', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), text: text }); } catch(e) {} } 
     }
-    function sendCustomMessage() {
-        if (isSpectator) {
-            addChatMessage('Sistema', 'Espectadores só assistem — não enviam mensagens.', true);
-            const input = document.getElementById("chat-input");
-            if (input) input.value = "";
-            return;
-        }
+    function sendCustomMessage() { 
         const input = document.getElementById("chat-input"); 
         if (!input.value) return; 
         addChatMessage(playerName || "Você", input.value); 
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'chat', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), text: input.value });
-        }
+        if (conn && conn.open) { try { conn.send({ type: 'chat', sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'), text: input.value }); } catch(e) {} } 
         input.value = ""; 
     }
     function handleChatPress(e) { if (e.key === 'Enter') sendCustomMessage(); }
@@ -4183,9 +3354,7 @@
     let voicePending = null; // { dataUrl, duration, blobSize }
     let voiceMsgSeq = 0;
     let micPermissionOk = false;
-    const VOICE_MAX_MS = 8000;
-    const VOICE_CHUNK_CHARS = 10000; // ~7.5 KB base64 por mensagem P2P (seguro no PeerJS json)
-    const voiceIncoming = {}; // id -> { chunks: [], total, sender, duration, mime }
+    const VOICE_MAX_MS = 10000;
 
     function setVoiceBtnRecording(on) {
         const btn = document.getElementById('btnVoiceMsg');
@@ -4194,7 +3363,7 @@
         btn.textContent = on ? '⏹️' : '🎙️';
         btn.title = on
             ? 'Toque para parar e ouvir a prévia'
-            : 'Toque para gravar (máx. 8s). Depois ouça e escolha enviar ou apagar.';
+            : 'Toque para gravar (máx. 10s). Depois ouça e escolha enviar ou apagar.';
     }
 
     async function ensureMicStream() {
@@ -4210,9 +3379,7 @@
             audio: {
                 echoCancellation: true,
                 noiseSuppression: true,
-                channelCount: 1,
-                sampleRate: 16000,
-                sampleSize: 16
+                channelCount: 1
             }
         });
         micPermissionOk = true;
@@ -4229,10 +3396,6 @@
     }
 
     async function startVoiceRecording() {
-        if (isSpectator) {
-            addChatMessage('Sistema', 'Espectadores só assistem — microfone desativado.', true);
-            return;
-        }
         if (voiceRecorder && voiceRecorder.state === 'recording') return;
         if (voicePending) {
             addChatMessage('Sistema', 'Envie ou apague a prévia de áudio antes de gravar outra.', true);
@@ -4244,17 +3407,9 @@
             const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
                 ? 'audio/webm;codecs=opus'
                 : (MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '');
-            // bitrate baixo → arquivo menor → envio P2P mais confiável
-            const recOpts = mime
-                ? { mimeType: mime, audioBitsPerSecond: 24000 }
-                : { audioBitsPerSecond: 24000 };
-            try {
-                voiceRecorder = new MediaRecorder(stream, recOpts);
-            } catch (e) {
-                voiceRecorder = mime
-                    ? new MediaRecorder(stream, { mimeType: mime })
-                    : new MediaRecorder(stream);
-            }
+            voiceRecorder = mime
+                ? new MediaRecorder(stream, { mimeType: mime })
+                : new MediaRecorder(stream);
             voiceRecorder.ondataavailable = function(e) {
                 if (e.data && e.data.size) voiceChunks.push(e.data);
             };
@@ -4282,7 +3437,7 @@
         }
         try { voiceRecorder.stop(); } catch (e) {}
         setVoiceBtnRecording(false);
-        addLog('Gravação finalizada' + (auto ? ' (limite 8s)' : '') + ' — aguardando prévia', 'VOICE');
+        addLog('Gravação finalizada' + (auto ? ' (limite 10s)' : '') + ' — aguardando prévia', 'VOICE');
         // NÃO mata o stream: evita novo pedido de permissão na próxima gravação
     }
 
@@ -4305,8 +3460,8 @@
         }
         const blob = new Blob(voiceChunks, { type: (voiceChunks[0] && voiceChunks[0].type) || 'audio/webm' });
         voiceChunks = [];
-        if (blob.size > 120000) {
-            addChatMessage('Sistema', 'Áudio grande demais para a sala. Grave até ~6–7s.', true);
+        if (blob.size > 280000) {
+            addChatMessage('Sistema', 'Áudio grande demais. Tente mais curto.', true);
             return;
         }
         let dataUrl;
@@ -4348,11 +3503,6 @@
     }
 
     function confirmSendVoice() {
-        if (isSpectator) {
-            hideVoicePreview();
-            addChatMessage('Sistema', 'Espectadores só assistem — não enviam áudio.', true);
-            return;
-        }
         if (!voicePending) return;
         const pending = voicePending;
         hideVoicePreview();
@@ -4360,114 +3510,18 @@
         displayVoiceMessage(playerName || 'Você', pending.dataUrl, pending.duration, true, id);
         if (conn && conn.open) {
             try {
-                sendVoiceChunked(id, pending.dataUrl, pending.duration, playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'));
+                conn.send({
+                    type: 'voice',
+                    id: id,
+                    sender: playerName || (playerColor === 'w' ? 'Brancas' : 'Pretas'),
+                    dataUrl: pending.dataUrl,
+                    duration: pending.duration
+                });
             } catch (e) {
                 addLog('Falha envio voz P2P: ' + e, 'ERROR');
-                addChatMessage('Sistema', 'Falha ao enviar áudio ao oponente.', true);
             }
-        } else {
-            addLog('Voz local (sem conexão P2P)', 'VOICE');
         }
         addLog('Voz enviada ' + pending.duration + 's size=' + pending.blobSize, 'VOICE');
-        try { bumpMission('voice', 1); } catch (e) {}
-    }
-
-    /** Envia áudio em pedaços pequenos — PeerJS/json costuma dropar dataUrl grande (>~16–32KB). */
-    function sendVoiceChunked(id, dataUrl, duration, sender) {
-        if (gameMode !== 'network') return;
-        const payload = String(dataUrl || '');
-        const total = Math.max(1, Math.ceil(payload.length / VOICE_CHUNK_CHARS));
-        const mimeMatch = payload.match(/^data:([^;]+);/);
-        const mime = (mimeMatch && mimeMatch[1]) || 'audio/webm';
-        const startMsg = {
-            type: 'voice-start',
-            id: id,
-            sender: sender,
-            duration: duration,
-            totalChunks: total,
-            mime: mime
-        };
-        try {
-            networkBroadcast(startMsg);
-        } catch (e) {
-            addLog('voice-start falhou: ' + e, 'ERROR');
-            return;
-        }
-        let offset = 0;
-        let idx = 0;
-        const sendNext = function() {
-            if (idx >= total) return;
-            const slice = payload.slice(offset, offset + VOICE_CHUNK_CHARS);
-            offset += VOICE_CHUNK_CHARS;
-            try {
-                networkBroadcast({ type: 'voice-chunk', id: id, index: idx, data: slice });
-            } catch (e) {
-                addLog('voice-chunk ' + idx + ' falhou: ' + e, 'ERROR');
-                return;
-            }
-            idx++;
-            if (idx >= total) {
-                try {
-                    networkBroadcast({ type: 'voice-end', id: id });
-                } catch (e) {
-                    addLog('voice-end falhou: ' + e, 'ERROR');
-                }
-                addLog('Voz P2P enviada em ' + total + ' chunks', 'VOICE');
-            } else {
-                setTimeout(sendNext, 18);
-            }
-        };
-        setTimeout(sendNext, 10);
-    }
-
-    function handleVoiceChunkMessage(data) {
-        if (!data || !data.id) return;
-        const id = data.id;
-        if (data.type === 'voice-start') {
-            voiceIncoming[id] = {
-                chunks: new Array(Math.max(1, parseInt(data.totalChunks, 10) || 1)),
-                total: Math.max(1, parseInt(data.totalChunks, 10) || 1),
-                received: 0,
-                sender: data.sender || opponentName || 'Oponente',
-                duration: Math.max(1, Math.min(15, parseInt(data.duration, 10) || 5)),
-                mime: data.mime || 'audio/webm',
-                ts: Date.now()
-            };
-            // Limpa buffers antigos (>60s)
-            Object.keys(voiceIncoming).forEach(function(k) {
-                if (voiceIncoming[k] && Date.now() - (voiceIncoming[k].ts || 0) > 60000) delete voiceIncoming[k];
-            });
-            return;
-        }
-        if (data.type === 'voice-chunk') {
-            const buf = voiceIncoming[id];
-            if (!buf) return;
-            const i = parseInt(data.index, 10);
-            if (isNaN(i) || i < 0 || i >= buf.total) return;
-            if (buf.chunks[i] == null) {
-                buf.chunks[i] = String(data.data || '');
-                buf.received++;
-            }
-            return;
-        }
-        if (data.type === 'voice-end') {
-            const buf = voiceIncoming[id];
-            if (!buf) return;
-            let complete = true;
-            for (let i = 0; i < buf.total; i++) {
-                if (buf.chunks[i] == null) { complete = false; break; }
-            }
-            if (!complete) {
-                addLog('Voz incompleta id=' + id + ' (' + buf.received + '/' + buf.total + ')', 'WARN');
-                delete voiceIncoming[id];
-                addChatMessage('Sistema', 'Áudio do oponente chegou incompleto.', true);
-                return;
-            }
-            const dataUrl = buf.chunks.join('');
-            delete voiceIncoming[id];
-            displayVoiceMessage(buf.sender, dataUrl, buf.duration, false, id);
-            addLog('Voz recebida (chunks) de ' + buf.sender + ' ' + buf.duration + 's', 'VOICE');
-        }
     }
 
     function displayVoiceMessage(sender, dataUrl, durationSec, isLocal, msgId) {
@@ -4540,10 +3594,6 @@
     }
 
     function sendStandUpJoke() {
-        if (isSpectator) {
-            addChatMessage('Sistema', 'Espectadores só assistem — stand-up desativado.', true);
-            return;
-        }
         if (!diverseStandUpList.length) return;
         if (currentJokeIndex >= diverseStandUpList.length) shuffleStandUpDeck();
         const line = diverseStandUpList[currentJokeIndex];
@@ -4553,8 +3603,8 @@
         if (recentStandUpLines.length > 24) recentStandUpLines.shift();
         const jokeHtml = '🎤 <b>MOMENTO CÔMICO:</b><br>"' + line + '"';
         addChatMessage('Stand up', jokeHtml, true, false, true);
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true });
+        if (conn && conn.open) {
+            try { conn.send({ type: 'chat', sender: 'Stand up', text: jokeHtml, isAI: true }); } catch (e) {}
         }
         addLog('Stand-up: ' + line.slice(0, 80), 'UI');
     }
@@ -4631,13 +3681,6 @@
         }
         document.getElementById("victory-screen").style.display = "flex";
         spawnConfetti();
-        // Missões
-        try {
-            bumpMission('games', 1);
-            if (gameMode === 'pve' && winnerColor === playerColor && aiDifficulty >= 3) {
-                bumpMission('win_ai3', 1);
-            }
-        } catch (e) {}
     }
     function closeVictoryScreen() { document.getElementById("victory-screen").style.display = "none"; }
 
@@ -4670,171 +3713,9 @@
             await navigator.clipboard.writeText(pgn);
             addChatMessage('Sistema', 'PGN copiado para a área de transferência!', true);
             addLog('PGN exportado', 'UI');
-            try { bumpMission('pgn', 1); } catch (e) {}
         } catch (e) {
             prompt('Copie o PGN:', pgn);
-            try { bumpMission('pgn', 1); } catch (e2) {}
         }
-    }
-
-    function downloadPGNFile() {
-        const pgn = buildPGN();
-        const blob = new Blob([pgn], { type: 'application/x-chess-pgn;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const stamp = new Date().toISOString().slice(0, 10);
-        a.href = url;
-        a.download = 'XadrezPro_' + stamp + '.pgn';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 1000);
-        addChatMessage('Sistema', 'Arquivo PGN baixado.', true);
-        addLog('PGN baixado como arquivo', 'UI');
-        try { bumpMission('pgn', 1); } catch (e) {}
-    }
-
-    // === Missões semanais (v9.3) ===
-    const MISSION_DEFS = [
-        { id: 'win_ai3', title: 'Vencer a IA nível 3+', target: 1, key: 'win_ai3' },
-        { id: 'play_3', title: 'Jogar 3 partidas', target: 3, key: 'games' },
-        { id: 'cities', title: 'Entrar em 2 salas-cidade', target: 2, key: 'cities' },
-        { id: 'voice', title: 'Enviar 1 áudio no chat', target: 1, key: 'voice' },
-        { id: 'pgn_export', title: 'Exportar 1 PGN da partida', target: 1, key: 'pgn' }
-    ];
-
-    function missionWeekId() {
-        const d = new Date();
-        const onejan = new Date(d.getFullYear(), 0, 1);
-        const week = Math.ceil((((d - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-        return d.getFullYear() + '-W' + week;
-    }
-
-    function loadMissionState() {
-        try {
-            const raw = localStorage.getItem('xadrezpro_missions_v93');
-            if (!raw) return { week: missionWeekId(), progress: {}, claimed: {} };
-            const st = JSON.parse(raw);
-            if (st.week !== missionWeekId()) return { week: missionWeekId(), progress: {}, claimed: {} };
-            return st;
-        } catch (e) {
-            return { week: missionWeekId(), progress: {}, claimed: {} };
-        }
-    }
-
-    function saveMissionState(st) {
-        try { localStorage.setItem('xadrezpro_missions_v93', JSON.stringify(st)); } catch (e) {}
-    }
-
-    function bumpMission(key, amount) {
-        const st = loadMissionState();
-        st.progress[key] = (st.progress[key] || 0) + (amount || 1);
-        saveMissionState(st);
-        renderMissionsUI();
-        // auto-claim message when just completed
-        MISSION_DEFS.forEach(function(m) {
-            if (m.key === key && (st.progress[key] || 0) >= m.target && !st.claimed[m.id]) {
-                st.claimed[m.id] = true;
-                saveMissionState(st);
-                playerElo = Math.min(3000, playerElo + 5);
-                try { localStorage.setItem('xadrezpro_elo', String(playerElo)); } catch (e) {}
-                refreshEloUI();
-                addChatMessage('Missão', '🎯 ' + m.title + ' concluída! +5 Elo', true);
-            }
-        });
-    }
-
-    function renderMissionsUI() {
-        const box = document.getElementById('missionsList');
-        if (!box) return;
-        const st = loadMissionState();
-        box.innerHTML = '<div style="font-size:8px;color:var(--text-muted);margin-bottom:2px;">Semana ' + st.week + ' · +5 Elo por missão</div>' +
-            MISSION_DEFS.map(function(m) {
-            const cur = Math.min(st.progress[m.key] || 0, m.target);
-            const done = !!st.claimed[m.id] || cur >= m.target;
-            const pct = Math.round((cur / m.target) * 100);
-            return '<div style="padding:6px 8px;border-radius:8px;border:1px solid var(--panel-border);background:var(--panel-bg);">' +
-                '<div style="font-weight:800;color:var(--text-main);">' + (done ? '✅ ' : '▫️ ') + m.title + '</div>' +
-                '<div style="height:6px;border-radius:99px;background:rgba(0,0,0,.12);margin:4px 0;overflow:hidden;">' +
-                '<div style="height:100%;width:' + pct + '%;background:linear-gradient(90deg,var(--board-border),#22c55e);"></div></div>' +
-                '<div style="color:var(--text-muted);font-size:9px;">' + cur + ' / ' + m.target + (done ? ' · +5 Elo' : '') + '</div></div>';
-        }).join('');
-    }
-
-    function updateSpectatorCountUI(n) {
-        let el = document.getElementById('spectatorCountBadge');
-        if (n <= 0) {
-            if (el) el.style.display = 'none';
-            return;
-        }
-        if (!el) {
-            el = document.createElement('span');
-            el.id = 'spectatorCountBadge';
-            el.style.cssText = 'display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;background:#4c1d95;color:#fff;margin-left:6px;';
-            const brand = document.getElementById('room-status-title');
-            if (brand && brand.parentNode) brand.parentNode.insertBefore(el, brand.nextSibling);
-        }
-        el.style.display = 'inline-flex';
-        el.textContent = '👁 ' + n;
-    }
-
-    function refreshSettingsPreview() {
-        const board = document.getElementById('settingsPreviewBoard');
-        if (!board) return;
-        const light = getComputedStyle(document.body).getPropertyValue('--light-square').trim() || '#f1f5f9';
-        const dark = getComputedStyle(document.body).getPropertyValue('--dark-square').trim() || '#64748b';
-        const border = getComputedStyle(document.body).getPropertyValue('--board-border').trim() || '#0284c7';
-        board.style.borderColor = border;
-        board.innerHTML = '';
-        // Mini 4x4 com 4 peças de amostra
-        const sample = [
-            [null, 'n', null, 'k'],
-            [null, null, null, null],
-            [null, null, null, null],
-            ['K', null, 'N', null]
-        ];
-        for (let r = 0; r < 4; r++) {
-            for (let c = 0; c < 4; c++) {
-                const cell = document.createElement('div');
-                cell.style.cssText = 'display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;';
-                cell.style.background = ((r + c) % 2 === 0) ? light : dark;
-                const p = sample[r][c];
-                if (p) {
-                    const isWhite = p === p.toUpperCase();
-                    cell.textContent = ({ K: '♔', Q: '♕', R: '♖', B: '♗', N: '♘', P: '♙', k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' })[p] || '';
-                    cell.style.color = isWhite ? '#f8fafc' : '#0f172a';
-                    cell.style.textShadow = isWhite ? '0 1px 2px rgba(0,0,0,.5)' : '0 0 1px rgba(255,255,255,.3)';
-                }
-                board.appendChild(cell);
-            }
-        }
-    }
-
-    // === Sala privada (código) ===
-    function normalizePrivateCode(raw) {
-        return String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-    }
-
-    function createPrivateRoom() {
-        const input = document.getElementById('privateRoomCode');
-        let code = normalizePrivateCode(input && input.value);
-        if (code.length < 4) {
-            code = Math.random().toString(36).substring(2, 8).toUpperCase();
-            if (input) input.value = code;
-        }
-        joinCityRoom('priv-' + code.toLowerCase());
-        addChatMessage('Sistema', 'Sala privada ' + code + ' — compartilhe o código com o amigo.', true);
-        bumpMission('cities', 1);
-    }
-
-    function joinPrivateRoom() {
-        const input = document.getElementById('privateRoomCode');
-        const code = normalizePrivateCode(input && input.value);
-        if (code.length < 4) {
-            alert('Digite um código de 4 a 6 caracteres.');
-            return;
-        }
-        joinCityRoom('priv-' + code.toLowerCase());
-        bumpMission('cities', 1);
     }
 
     async function copyFEN() {
@@ -4849,11 +3730,10 @@
     }
 
     function requestRematch() {
-        if (gameMode !== 'network' || isSpectator) return;
-        if (!conn || !conn.open) return;
+        if (gameMode !== 'network' || !conn || !conn.open) return;
         rematchPending = true;
         try {
-            networkBroadcast({ type: 'rematch-request', name: playerName || 'Jogador' });
+            conn.send({ type: 'rematch-request', name: playerName || 'Jogador' });
             addChatMessage('Sistema', 'Revanche solicitada. Aguardando oponente...', true);
             const btn = document.getElementById('btnRematch');
             if (btn) { btn.disabled = true; btn.innerText = '⏳ Aguardando...'; }
@@ -4908,17 +3788,14 @@
         const ok = await customConfirm(`Confirma desistência das ${resigningColor === 'w' ? 'Brancas' : 'Pretas'}?`, "Confirmar Desistência");
         if (!ok) return;
         const winnerColor = resigningColor === 'w' ? 'b' : 'w';
-        if (gameMode === 'network') networkBroadcast({ type: 'resign', color: resigningColor });
+        if (conn && conn.open) { try { conn.send({ type: 'resign', color: resigningColor }); } catch(e) {} }
         handleGameOverEvents(`${resigningColor === 'w' ? 'Brancas' : 'Pretas'} desistiram da partida.`, winnerColor);
     }
 
     async function offerDraw() {
         if (isSpectator || gameMode === 'bot-vs-bot' || chess.game_over()) return;
         if (gameMode === 'network') {
-            if (gameMode === 'network') {
-                networkBroadcast({ type: 'draw-offer' });
-                addChatMessage("Sistema", "Você ofereceu empate ao oponente.", true);
-            }
+            if (conn && conn.open) { try { conn.send({ type: 'draw-offer' }); } catch(e) {} addChatMessage("Sistema", "Você ofereceu empate ao oponente.", true); }
             return;
         }
         const ok = await customConfirm("Propor empate?", "Empate");
@@ -5630,14 +4507,16 @@
         if (voiceMovesEnabled && move.san) speak(move.san);
         addLog(`Lance efetuado: ${move.san}`, "MOVE");
         const over = checkGameStateEvents(true);
-        if (gameMode === 'network' && !isSpectator) {
-            networkBroadcast({
-                type: 'move',
-                move: { from: move.from, to: move.to, promotion: move.promotion },
-                fen: chess.fen(),
-                clockWhite: clockWhite,
-                clockBlack: clockBlack
-            });
+        if (conn && conn.open && gameMode === 'network') { 
+            try { 
+                conn.send({ 
+                    type: 'move', 
+                    move: { from: move.from, to: move.to, promotion: move.promotion }, 
+                    fen: chess.fen(),
+                    clockWhite: clockWhite,
+                    clockBlack: clockBlack
+                }); 
+            } catch(e) {} 
         }
         if (gameMode === 'pve' && !over && chess.turn() !== playerColor) {
             setTimeout(() => makeAIMove(chess.turn()), 300);
@@ -5740,16 +4619,16 @@
             selectedMove = moves[0];
             applyAIMove(selectedMove, onDone);
         } else {
-            // Orçamentos v9.0: níveis 1–3 acessíveis; 4 e 5 mantêm força alta
+            // Orçamentos calibrados p/ mobile: prioriza COMPLETAR depth 2–3, não estourar tempo em depth 1.
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
                 depthBudget = [4, 700];
             } else {
-                // 1 = iniciante (erros frequentes) → 3 = intermediário → 4/5 = forte/mestre
+                // Progressão real: 1 jogável → 5 extremamente difícil no motor JS
                 depthBudget = {
-                    1: [2, 220],
-                    2: [3, 400],
-                    3: [4, 850],
+                    1: [3, 500],
+                    2: [4, 1000],
+                    3: [5, 2000],
                     4: [7, 4500],
                     5: [9, 7000]
                 }[aiDifficulty] || [5, 2000];
@@ -5827,43 +4706,14 @@
 
     async function checkRoomAvailability(cityKey) {
         return new Promise((resolve) => {
-            let settled = false;
-            const finish = (status) => {
-                if (settled) return;
-                settled = true;
-                try { if (connTest) connTest.close(); } catch (e) {}
-                try { if (testPeer) testPeer.destroy(); } catch (e) {}
-                resolve(status);
-            };
-            let testPeer = null;
-            let connTest = null;
-            try {
-                testPeer = new Peer();
-            } catch (e) {
-                resolve('disponivel');
-                return;
-            }
-            const roomId = "xadrezpro-cities-v73-" + cityKey;
-            testPeer.on('error', () => finish('disponivel'));
-            testPeer.on('open', () => {
-                try {
-                    connTest = testPeer.connect(roomId, { reliable: true, serialization: 'json' });
-                    connTest.on('open', () => {
-                        try { connTest.send({ type: 'probe-room', city: cityKey }); } catch (e) {}
-                    });
-                    connTest.on('data', (data) => {
-                        if (data && (data.type === 'probe-response' || data.type === 'slot-response')) {
-                            // ocupada se há host (mesmo sem segundo jogador)
-                            finish(data.occupied || data.status === 'full' || data.status === 'accepted' ? 'ocupada' : 'disponivel');
-                        }
-                    });
-                    connTest.on('error', () => finish('disponivel'));
-                } catch (e) {
-                    finish('disponivel');
-                }
-            });
-            // PeerJS costuma levar 1–3s; 400ms gerava sempre "Livre"
-            setTimeout(() => finish('disponivel'), 2800);
+            let testPeer = new Peer();
+            let roomId = "xadrezpro-cities-v73-" + cityKey;
+            testPeer.on('error', () => { testPeer.destroy(); resolve('disponivel'); });
+            let connTest = testPeer.connect(roomId, { reliable: false });
+            let resolved = false;
+            connTest.on('open', () => { resolved = true; try { connTest.send({ type: 'check-slot' }); } catch(e){} });
+            connTest.on('data', (data) => { if (data.type === 'slot-response') { testPeer.destroy(); resolve('lotada'); } });
+            setTimeout(() => { if (!resolved) { resolved = true; testPeer.destroy(); resolve('disponivel'); } }, 400);
         });
     }
 
@@ -5872,43 +4722,13 @@
         for (let c of cities) {
             const statusEl = document.getElementById(`status-${c}`);
             if (statusEl) {
-                statusEl.innerText = '…';
-                statusEl.style.background = '#64748b';
                 let status = await checkRoomAvailability(c);
-                if (status === 'disponivel') {
-                    statusEl.innerText = 'Livre';
-                    statusEl.style.background = '#15803d';
-                } else {
-                    statusEl.innerText = 'Em jogo';
-                    statusEl.style.background = '#b91c1c';
-                }
+                statusEl.innerText = status === 'disponivel' ? 'Livre' : 'Cheia';
+                statusEl.style.background = status === 'disponivel' ? '#15803d' : '#b91c1c';
             }
         }
     }
-    window.addEventListener('load', () => { setTimeout(updateRoomStatuses, 500); });
-    // Atualiza status periodicamente enquanto o menu estiver aberto
-    setInterval(() => {
-        if (gameMode === 'menu' || document.getElementById('menu-screen')?.style.display !== 'none') {
-            updateRoomStatuses();
-        }
-    }, 20000);
-
-    /** Retransmite para todos os espectadores (host) */
-    function relayToSpectators(payload) {
-        if (!spectatorConns.length) return;
-        spectatorConns = spectatorConns.filter((c) => c && c.open);
-        spectatorConns.forEach((c) => {
-            try { c.send(payload); } catch (e) {}
-        });
-    }
-
-    /** Envia para oponente + espectadores */
-    function networkBroadcast(payload) {
-        if (conn && conn.open) {
-            try { conn.send(payload); } catch (e) {}
-        }
-        relayToSpectators(payload);
-    }
+    window.addEventListener('load', () => { setTimeout(updateRoomStatuses, 300); });
 
     function joinCityRoom(cityName) {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
@@ -6011,137 +4831,53 @@
 
     function setupHeartbeat() {
         if (heartbeatInterval) clearInterval(heartbeatInterval);
-        heartbeatInterval = setInterval(() => {
-            if (gameMode !== 'network' || isSpectator) return;
-            const payload = {
-                type: 'ping',
-                fen: chess.fen(),
-                plyCount: chess.history().length,
-                clockWhite: clockWhite,
-                clockBlack: clockBlack,
-                spectators: isRoomHost ? spectatorConns.filter(function(c) { return c && c.open; }).length : undefined
-            };
-            // Host (ou qualquer lado com conexão) sincroniza oponente + espectadores
-            networkBroadcast(payload);
-            if (isRoomHost) updateSpectatorCountUI(payload.spectators || 0);
+        heartbeatInterval = setInterval(() => { 
+            if (conn && conn.open && gameMode === 'network') { 
+                try { 
+                    conn.send({ 
+                        type: 'ping', 
+                        fen: chess.fen(), 
+                        plyCount: chess.history().length,
+                        clockWhite: clockWhite,
+                        clockBlack: clockBlack
+                    }); 
+                } catch(e) {} 
+            } 
         }, 3000);
     }
 
     function setupHostServer(cityName) {
-        isRoomHost = true;
-        spectatorConns = [];
         let guestConn = null;
-
         peer.on('connection', (c) => {
             c.on('data', (data) => {
-                if (!data || typeof data !== 'object') return;
-
-                // Probe só consulta status — NÃO entra na partida nem reseta o tabuleiro
-                if (data.type === 'probe-room') {
-                    try {
-                        c.send({
-                            type: 'probe-response',
-                            occupied: true,
-                            hasGuest: !!guestConn,
-                            spectators: spectatorConns.length,
-                            city: cityName,
-                            plyCount: chess.history().length
-                        });
-                    } catch (e) {}
-                    return;
-                }
-
                 if (data.type === 'check-slot') {
                     if (!guestConn) {
-                        // Segundo jogador (oponente)
-                        guestConn = c;
-                        conn = c;
+                        guestConn = c; conn = c;
                         opponentName = data.guestName || 'Oponente';
                         if (data.guestAvatar) opponentAvatar = data.guestAvatar;
                         setupHostListeners(cityName);
                         setupHeartbeat();
 
-                        // Não reseta se já houver lances (partida em andamento após reconexão)
-                        if (chess.history().length === 0) {
-                            chess.reset();
-                            selectedSquare = null;
-                            possibleMoves = [];
-                            lastPathCoords = [];
-                            wasInCheckLastMove = false;
-                        }
+                        chess.reset();
+                        selectedSquare = null;
+                        possibleMoves = [];
+                        lastPathCoords = [];
+                        wasInCheckLastMove = false;
 
-                        try {
-                            c.send({
-                                type: 'slot-response',
-                                status: 'accepted',
-                                fen: chess.fen(),
-                                city: cityName,
-                                timeControl: timeControlSeconds,
-                                candiesW: candiesWhite,
-                                candiesB: candiesBlack,
+                        try { 
+                            c.send({ 
+                                type: 'slot-response', status: 'accepted', fen: chess.fen(), city: cityName, 
+                                timeControl: timeControlSeconds, candiesW: candiesWhite, candiesB: candiesBlack, 
                                 plyCount: chess.history().length,
-                                hostName: playerName || 'Host',
-                                hostAvatar: playerAvatar
-                            });
-                        } catch (e) {}
+                                hostName: playerName || 'Host', hostAvatar: playerAvatar
+                            }); 
+                        } catch(e) {}
                         addChatMessage("Sistema", (opponentName || 'Oponente') + " entrou na sala!", false, false);
-                        relayToSpectators({ type: 'chat', sender: 'Sistema', text: (opponentName || 'Oponente') + ' entrou na partida.', isAI: true });
-                        c.on('close', () => {
-                            if (guestConn === c) {
-                                guestConn = null;
-                                if (conn === c) conn = null;
-                                addChatMessage("Sistema", "O oponente saiu.", true);
-                            }
-                        });
+                        c.on('close', () => { if (guestConn === c) guestConn = null; });
                     } else {
-                        // Terceiro+ → espectador: mantém conexão e retransmite o jogo
-                        if (!spectatorConns.includes(c)) spectatorConns.push(c);
-                        try {
-                            c.send({
-                                type: 'slot-response',
-                                status: 'full',
-                                fen: chess.fen(),
-                                city: cityName,
-                                timeControl: timeControlSeconds,
-                                candiesW: candiesWhite,
-                                candiesB: candiesBlack,
-                                plyCount: chess.history().length,
-                                hostName: playerName || 'Host',
-                                hostAvatar: playerAvatar,
-                                guestName: opponentName || 'Oponente',
-                                guestAvatar: opponentAvatar,
-                                clockWhite: clockWhite,
-                                clockBlack: clockBlack,
-                                spectator: true
-                            });
-                        } catch (e) {}
-                        addChatMessage("Sistema", (data.guestName || 'Alguém') + " entrou como espectador.", true);
-                        c.on('data', (specData) => {
-                            // Espectador só pode enviar chat (leitura/acompanhamento)
-                            if (specData && specData.type === 'chat') {
-                                handleIncomingConnData(specData);
-                                // retransmite para oponente e outros espectadores
-                                if (conn && conn.open) {
-                                    try { conn.send(specData); } catch (e) {}
-                                }
-                                spectatorConns.forEach((sc) => {
-                                    if (sc !== c && sc.open) {
-                                        try { sc.send(specData); } catch (e) {}
-                                    }
-                                });
-                            }
-                        });
-                        c.on('close', () => {
-                            spectatorConns = spectatorConns.filter((x) => x !== c && x.open);
-                            addLog('Espectador desconectou. Restam: ' + spectatorConns.length, 'P2P_INFO');
-                            updateSpectatorCountUI(spectatorConns.length);
-                        });
-                        addLog('Espectador aceito. Total: ' + spectatorConns.length, 'P2P_INFO');
-                        updateSpectatorCountUI(spectatorConns.length);
+                        try { c.send({ type: 'slot-response', status: 'full', fen: chess.fen(), city: cityName, timeControl: timeControlSeconds }); } catch(e) {}
                     }
-                    return;
                 }
-                // Demais mensagens do oponente são tratadas em setupHostListeners (após aceite)
             });
         });
     }
@@ -6152,7 +4888,6 @@
         if (data.type === 'ping') {
             if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
             if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-            if (typeof data.spectators === 'number') updateSpectatorCountUI(data.spectators);
             if (data.plyCount !== undefined) {
                 const localPly = chess.history().length;
                 if (data.plyCount > localPly && data.fen && data.fen !== chess.fen()) {
@@ -6174,15 +4909,6 @@
 
         if (data.type === 'reset-board') { 
             aiRequestId++; pendingAICallback = null;
-            if (isSpectator) {
-                chess.reset();
-                selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
-                lastSyncedFen = chess.fen();
-                resetClocks();
-                updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateClockDisplay();
-                addChatMessage('Sistema', 'Tabuleiro reiniciado pelos jogadores.', true);
-                return;
-            }
             resetGame(true); 
             return; 
         }
@@ -6260,10 +4986,6 @@
             return; 
         }
         if (data.type === 'draw-offer') {
-            if (isSpectator) {
-                addChatMessage("Sistema", "Proposta de empate entre os jogadores.", true);
-                return;
-            }
             customConfirm("O oponente ofereceu empate. Aceitar?", "Proposta de Empate").then(accept => {
                 if (conn && conn.open) { try { conn.send({ type: accept ? 'draw-accept' : 'draw-decline' }); } catch(e) {} }
                 if (accept) handleGameOverEvents("Empate acordado.", null);
@@ -6277,10 +4999,6 @@
             return;
         }
         if (data.type === 'rematch-request') {
-            if (isSpectator) {
-                addChatMessage("Sistema", (data.name || 'Jogador') + " pediu revanche.", true);
-                return;
-            }
             if (data.name) opponentName = data.name;
             customConfirm((opponentName || 'Oponente') + ' solicitou revanche. Aceitar? (cores serão invertidas)', 'Revanche').then(accept => {
                 if (conn && conn.open) {
@@ -6292,15 +5010,6 @@
             return;
         }
         if (data.type === 'rematch-accept') {
-            if (isSpectator) {
-                chess.reset();
-                selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
-                lastSyncedFen = chess.fen();
-                resetClocks();
-                updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateClockDisplay();
-                addChatMessage('Sistema', 'Revanche aceita — nova partida (você continua espectador).', true);
-                return;
-            }
             if (data.name) opponentName = data.name;
             addChatMessage('Sistema', (opponentName || 'Oponente') + ' aceitou a revanche!', false);
             startRematch(true);
@@ -6317,17 +5026,11 @@
             addChatMessage(data.sender || opponentName || "Oponente", String(data.text || '').slice(0, 300), !!data.isAI, !!data.isAlert, false); 
             return; 
         }
-        // Protocolo novo (v9.0): voz em chunks — PeerJS não aguenta dataUrl grande de uma vez
-        if (data.type === 'voice-start' || data.type === 'voice-chunk' || data.type === 'voice-end') {
-            handleVoiceChunkMessage(data);
-            return;
-        }
-        // Compatibilidade com clientes antigos que ainda enviam dataUrl único
         if (data.type === 'voice' && data.dataUrl) {
             const sec = Math.max(1, Math.min(15, parseInt(data.duration, 10) || 5));
             const vid = data.id || ('v-remote-' + Date.now());
             displayVoiceMessage(data.sender || opponentName || 'Oponente', data.dataUrl, sec, false, vid);
-            addLog('Voz recebida (legado) de ' + (data.sender || '?') + ' ' + sec + 's', 'VOICE');
+            addLog('Voz recebida de ' + (data.sender || '?') + ' ' + sec + 's', 'VOICE');
             return;
         }
         if (data.type === 'voice-delete' && data.id) {
@@ -6341,15 +5044,7 @@
     }
 
     function setupHostListeners(cityName) {
-        // Host: processa dados do oponente e retransmite para espectadores
-        conn.on('data', (data) => {
-            if (!data || typeof data !== 'object') return;
-            if (data.type === 'probe-room' || data.type === 'check-slot') return;
-            handleIncomingConnData(data);
-            if (data.type && data.type !== 'ping') {
-                relayToSpectators(data);
-            }
-        });
+        conn.on('data', handleIncomingConnData);
         conn.on('close', () => { addChatMessage("Sistema", "O oponente saiu.", true); });
     }
 
@@ -6365,14 +5060,11 @@
                 lastPathCoords = [];
                 wasInCheckLastMove = false;
 
-                // Espectador e oponente: ambos precisam do FEN atual da partida
-                if (data.fen) {
-                    try { chess.load(data.fen); lastSyncedFen = data.fen; } catch (e) {}
+                if (data.status !== 'full' && data.fen) {
+                    try { chess.load(data.fen); } catch(e) {}
                 }
 
                 timeControlSeconds = typeof data.timeControl === 'number' ? data.timeControl : 0;
-                if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
-                if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
 
                 if (data.candiesW !== undefined) {
                     candiesWhite = data.candiesW; candiesBlack = data.candiesB;
@@ -6382,44 +5074,13 @@
 
                 if (data.hostName) opponentName = data.hostName;
                 if (data.hostAvatar) opponentAvatar = data.hostAvatar;
-                if (data.status === 'full' || data.spectator) {
-                    playerColor = null;
-                    isSpectator = true;
-                    // Host = brancas, guest = pretas
-                    spectatorWhiteName = data.hostName || 'Host';
-                    spectatorBlackName = data.guestName || opponentName || 'Oponente';
-                    if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
-                    if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-                    closeMenuTransition();
-                    startGameSetup();
-                    // Restaura relógios após startGameSetup (que não reseta no modo espectador)
-                    if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
-                    if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-                    if (data.fen) {
-                        try { chess.load(data.fen); lastSyncedFen = data.fen; } catch (e) {}
-                    }
-                    updateClockDisplay();
-                    updateTurnIndicators();
-                    updateCapturedDisplay();
-                    renderBoard();
-                    applyPlayerSeating();
-                    updateSpectatorChrome();
-                    const titleEl = document.getElementById('room-status-title');
-                    if (titleEl) {
-                        const base = (cityDetails[data.city || cityName] && cityDetails[data.city || cityName].name) || 'Sala';
-                        titleEl.innerText = base + ' · 👁 Espectador';
-                    }
-                    addChatMessage("Sistema", "👁 Modo espectador em tempo real — você vê lances, chat e relógios.", true);
-                    addChatMessage("Sistema", spectatorWhiteName + " (Brancas) vs " + spectatorBlackName + " (Pretas)", true);
-                    if (data.plyCount) addChatMessage("Sistema", "Partida em andamento · " + data.plyCount + " meio-lance(s).", true);
+                if (data.status === 'full') {
+                    playerColor = null; isSpectator = true;
+                    closeMenuTransition(); startGameSetup();
+                    addChatMessage("Sistema", "Modo Espectador.", true);
                 } else {
-                    playerColor = 'b';
-                    isSpectator = false;
-                    spectatorWhiteName = '';
-                    spectatorBlackName = '';
-                    closeMenuTransition();
-                    startGameSetup();
-                    updateSpectatorChrome();
+                    playerColor = 'b'; isSpectator = false;
+                    closeMenuTransition(); startGameSetup();
                     addChatMessage("Sistema", "Conectado com " + (opponentName || 'host') + "!", false, false);
                 }
                 return;
@@ -6432,119 +5093,24 @@
     function startGameSetup() {
         forceFullBoardRebuild();
         gameMode = 'network';
-        boardFlipped = (playerColor === 'b'); // espectador (playerColor null) vê do lado das brancas
+        boardFlipped = (playerColor === 'b');
         applyPlayerSeating();
         selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
         clearChat();
         updateTurnIndicators(); updateCapturedDisplay(); renderBoard();
-        if (!isSpectator) {
-            resetClocks();
-            startClock();
-        } else {
-            // Espectador: relógios vêm do host; só atualiza display e acompanha via ping/moves
-            updateClockDisplay();
-            startClock(); // acompanha contagem localmente; pings corrigem drift
-        }
-        playSFX('move');
-        updateSpectatorChrome();
-    }
-
-    /** UI extra do modo espectador (badge, só assiste — sem chat/voz/reações) */
-    function updateSpectatorChrome() {
-        const brand = document.getElementById('room-status-title');
-        let badge = document.getElementById('spectator-badge');
-        const setDisabled = function(el, on, title) {
-            if (!el) return;
-            if (on) {
-                el.style.opacity = '0.4';
-                el.style.pointerEvents = 'none';
-                if (title) el.title = title;
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'BUTTON') {
-                    el.disabled = true;
-                }
-            } else {
-                el.style.opacity = '';
-                el.style.pointerEvents = '';
-                el.removeAttribute('title');
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'BUTTON') {
-                    el.disabled = false;
-                }
-            }
-        };
-        const spectateOnlyTitle = 'Só visualização — espectadores não enviam mensagens';
-        if (isSpectator) {
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.id = 'spectator-badge';
-                badge.style.cssText = 'display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;padding:2px 8px;border-radius:999px;background:#7c3aed;color:#fff;margin-left:6px;';
-                badge.textContent = '👁 Só assistir';
-                if (brand && brand.parentNode) brand.parentNode.insertBefore(badge, brand.nextSibling);
-                else if (brand) brand.appendChild(badge);
-            }
-            badge.style.display = 'inline-flex';
-            badge.textContent = '👁 Só assistir';
-            document.querySelectorAll('.side-action-btn.resign, .side-action-btn.draw').forEach(function(btn) {
-                setDisabled(btn, true, 'Indisponível no modo espectador');
-            });
-            setDisabled(document.getElementById('chat-input'), true, spectateOnlyTitle);
-            setDisabled(document.getElementById('btnVoiceMsg'), true, spectateOnlyTitle);
-            document.querySelectorAll('.chat-input-row .action-btn, .reaction-btn, .taunt-btn, .taunt-chip, .xp-toggle-btn.reactions-toggle, .xp-toggle-btn.taunts-toggle, .xp-toggle-btn.voice-toggle').forEach(function(btn) {
-                setDisabled(btn, true, spectateOnlyTitle);
-            });
-        } else {
-            if (badge) badge.style.display = 'none';
-            document.querySelectorAll('.side-action-btn.resign, .side-action-btn.draw').forEach(function(btn) {
-                setDisabled(btn, false);
-            });
-            setDisabled(document.getElementById('chat-input'), false);
-            setDisabled(document.getElementById('btnVoiceMsg'), false);
-            document.querySelectorAll('.chat-input-row .action-btn, .reaction-btn, .taunt-btn, .taunt-chip, .xp-toggle-btn.reactions-toggle, .xp-toggle-btn.taunts-toggle, .xp-toggle-btn.voice-toggle').forEach(function(btn) {
-                setDisabled(btn, false);
-            });
-        }
+        resetClocks(); startClock(); playSFX('move');
     }
 
     function applyCityVisualTheme(cityKey) {
-        // Entrar na sala = preset completo da cidade (igual às salas online)
-        if (cityKey && String(cityKey).indexOf('priv-') === 0) {
-            currentCityKey = cityKey;
-            clearBoardSkinClasses();
-            clearBoardCssOverrides();
-            Array.from(document.body.classList).forEach(c => {
-                if (c.startsWith('theme-') || c.startsWith('room-')) document.body.classList.remove(c);
-            });
-            document.body.classList.add('theme-novayork');
-            currentTheme = 'novayork';
-            setPieceColors('pieces-silver-fire');
-            const code = String(cityKey).replace(/^priv-/i, '').toUpperCase();
-            const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code;
-            return;
-        }
         if (cityKey && cityDetails[cityKey]) {
             currentCityKey = cityKey;
-            const map = {
-                paris: 'paris',
-                toquio: 'toquio',
-                novayork: 'novayork',
-                londres: 'londres'
-            };
-            const presetKey = map[cityKey] || cityKey;
-            clearBoardSkinClasses();
-            clearBoardCssOverrides();
-            try {
-                localStorage.removeItem('xadrezpro_board_skin');
-                localStorage.removeItem('xadrezpro_custom_board');
-            } catch (e) {}
             Array.from(document.body.classList).forEach(c => {
                 if (c.startsWith('theme-') || c.startsWith('room-')) document.body.classList.remove(c);
             });
             document.body.classList.add(cityDetails[cityKey].roomClass);
-            currentTheme = presetKey;
             setPieceColors(cityDetails[cityKey].pieceColor);
             const titleEl = document.getElementById("room-status-title");
             if (titleEl) titleEl.innerText = cityDetails[cityKey].name;
-            try { bumpMission('cities', 1); } catch (e) {}
         } else {
             Array.from(document.body.classList).forEach(c => {
                 if (c.startsWith('room-')) document.body.classList.remove(c);
@@ -6608,7 +5174,7 @@
             name: 'Xadrez Pro',
             short_name: 'Xadrez Pro',
             description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './index.html',
+            start_url: './XadrezPro_v8.9.html',
             scope: './',
             display: 'standalone',
             orientation: 'any',
@@ -6859,8 +5425,7 @@
     }
 
 
-    addLog('Xadrez Pro v9.6 — certificado profissional PNG + PDF real no navegador.', 'INIT');
-    try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
+    addLog('Xadrez Pro v8.9 — UI de áudio refinada (bolha + ícones).', 'INIT');
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
     if (typeof bindVoiceButton === 'function') bindVoiceButton();
