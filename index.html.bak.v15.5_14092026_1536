@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v10.1</title>
+    <title>Xadrez Pro - v9.8</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -325,21 +325,7 @@
             background: var(--turn-active-color, #16a34a);
         }
 
-        body, html { width: 100vw; height: 100vh; height: 100dvh; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-        /* Evita zoom automático no iOS em inputs e garante alvos de toque */
-        input, select, textarea, button { font-size: 16px; }
-        .action-btn, .menu-grid-btn, .room-btn, .side-action-btn, .taunt-btn, .reaction-btn {
-            min-height: 44px;
-            min-width: 44px;
-        }
-        @media (max-width: 480px) {
-            .action-btn { font-size: 11px !important; padding: 8px 10px !important; }
-            #settings-modal .tab-btn { font-size: 9px; padding: 6px 8px; min-height: 40px; }
-            #cert-name-modal input { font-size: 16px !important; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .floating-reaction, .confetti-piece, .ghost-piece-slide { animation: none !important; }
-        }
+        body, html { width: 100vw; height: 100vh; height: 100dvh; background-color: var(--bg-main); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; display: flex; align-items: center; justify-content: center; touch-action: manipulation; }
         #game-wrapper { position: relative; width: 100vw; height: 100vh; height: 100dvh; background: var(--bg-gradient); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0px; gap: 8px; box-sizing: border-box; overflow: hidden; }
         .board-section { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--panel-bg); border: 2px solid var(--board-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); padding: 2px; position: relative; flex-shrink: 0; backdrop-filter: blur(10px); width: min(96vw, 48vh); height: min(96vw, 48vh); aspect-ratio: 1 / 1; transition: all 0.25s ease; }
         .side-section { display: flex; flex-direction: column; justify-content: flex-start; background: var(--panel-bg); border: 2px solid var(--panel-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 8px; backdrop-filter: blur(10px); gap: 6px; width: 100%; max-width: 600px; flex: 1; min-height: 0; overflow: hidden; }
@@ -1349,7 +1335,6 @@
                     <option value="antena1_poa">🎶 Antena 1 Nacional</option>
                     <option value="continental_poa">🎷 Continental FM 98.3 (Porto Alegre)</option>
                     <option value="fm1023_poa">🎵 102.3 FM (Porto Alegre)</option>
-                    <option value="total_hits">🔥 Rádio Total Hits</option>
                     <option value="salamanca_quarai">📻 Salamanca FM 101.3 (Quaraí/RS)</option>
                     <option value="cbn">📰 CBN Rio (Notícias)</option>
                     <option value="bandnews">📡 BandNews FM SP</option>
@@ -1410,21 +1395,8 @@
             <div id="confirmTitle" style="font-size: 12px; font-weight: bold; margin-bottom: 10px; color: var(--modal-text);">Confirmar</div>
             <div id="confirmMessage" style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;"></div>
             <div style="display: flex; gap: 8px; justify-content: center;">
-                <button class="action-btn" id="confirmCancelBtn" style="padding: 8px 16px; font-size: 10px; flex: 1; min-height: 44px;">Cancelar</button>
-                <button class="action-btn" id="confirmOkBtn" style="padding: 8px 16px; font-size: 10px; flex: 1; min-height: 44px; background: var(--modal-border); color: #fff; font-weight: bold;">Confirmar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal nome do certificado (mobile-friendly, sem window.prompt) -->
-    <div id="cert-name-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 4100; padding: max(12px, env(safe-area-inset-top, 0px)) 12px max(16px, env(safe-area-inset-bottom, 0px));" role="dialog" aria-modal="true" aria-labelledby="certNameTitle">
-        <div style="background: var(--modal-bg); border: 2px solid var(--modal-border); border-radius: 16px; padding: 18px; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-width: 360px; width: 94%;">
-            <div id="certNameTitle" style="font-size: 13px; font-weight: 800; margin-bottom: 6px; color: var(--modal-text);">📜 Nome no certificado</div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">Digite o nome exatamente como deve aparecer no diploma (até 40 caracteres).</div>
-            <input type="text" id="certNameInput" maxlength="40" autocomplete="name" enterkeyhint="done" style="width:100%; box-sizing:border-box; padding:12px 14px; font-size:16px; border-radius:10px; border:1px solid var(--panel-border); background:var(--chat-input-bg); color:var(--text-main); font-weight:700; margin-bottom:12px;" />
-            <div style="display: flex; gap: 8px;">
-                <button type="button" class="action-btn" id="certNameCancelBtn" style="padding: 10px 14px; font-size: 11px; flex: 1; min-height: 44px;">Cancelar</button>
-                <button type="button" class="action-btn" id="certNameOkBtn" style="padding: 10px 14px; font-size: 11px; flex: 1; min-height: 44px; background: linear-gradient(135deg,#b45309,#eab308); color:#1a1025; font-weight: 800;">Gerar</button>
+                <button class="action-btn" id="confirmCancelBtn" style="padding: 8px 16px; font-size: 10px; flex: 1;">Cancelar</button>
+                <button class="action-btn" id="confirmOkBtn" style="padding: 8px 16px; font-size: 10px; flex: 1; background: var(--modal-border); color: #fff; font-weight: bold;">Confirmar</button>
             </div>
         </div>
     </div>
@@ -1448,7 +1420,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v10.1</p>
+            <p>Estratégia P2P · IA offline · v9.8</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1488,7 +1460,6 @@
                     <option value="antena1_poa">🎶 Antena 1</option>
                     <option value="continental_poa">🎷 Continental</option>
                     <option value="fm1023_poa">🎵 102.3 FM</option>
-                    <option value="total_hits">🔥 Total Hits</option>
                     <option value="salamanca_quarai">📻 Salamanca</option>
                     <option value="cbn">📰 CBN</option>
                     <option value="bandnews">📡 BandNews</option>
@@ -1799,7 +1770,6 @@
                     <option value="antena1_poa">🎶 Antena 1 Nacional</option>
                     <option value="continental_poa">🎷 Continental FM</option>
                     <option value="fm1023_poa">🎵 102.3 FM (POA)</option>
-                    <option value="total_hits">🔥 Rádio Total Hits</option>
                     <option value="salamanca_quarai">📻 Salamanca FM</option>
                     <option value="cbn">📰 CBN</option>
                     <option value="bandnews">📡 BandNews</option>
@@ -1987,16 +1957,14 @@
         if (!pack || typeof pack !== 'object') return;
         currentPrivateVisual = pack;
         if (pack.id) lastPrivateVisualId = pack.id;
-        // Preserva a sala atual (setTheme sem keepCity zerava currentCityKey e quebrava revanche PIN)
-        const keepCity = currentCityKey;
         clearBoardSkinClasses();
         clearBoardCssOverrides();
         try {
             localStorage.removeItem('xadrezpro_board_skin');
             localStorage.removeItem('xadrezpro_custom_board');
         } catch (e) {}
-        if (pack.theme) setTheme(pack.theme, { keepCity: true, keepTitle: true });
-        if (keepCity) currentCityKey = keepCity;
+        // tema UI (sem resetar peças — aplicamos depois)
+        if (pack.theme) setTheme(pack.theme);
         if (pack.board) setBoardSkin(pack.board);
         else {
             clearBoardSkinClasses();
@@ -2004,12 +1972,6 @@
         }
         if (pack.pieces) setPieceColors(pack.pieces);
         if (pack.style) setPieceStyle(pack.style);
-        // Restaura título da sala privada
-        if (keepCity && String(keepCity).indexOf('priv-') === 0) {
-            const code = String(keepCity).replace(/^priv-/i, '').toUpperCase();
-            const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + (pack.label || '');
-        }
         addLog('Visual sala privada: ' + (pack.label || pack.id || '?'), 'UI');
         try { refreshSettingsPreview(); } catch (e) {}
     }
@@ -2486,7 +2448,7 @@
         ctx.fillStyle = '#c9a227';
         ctx.font = '13px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v10.1', w / 2, 935);
+        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v9.8', w / 2, 935);
 
         return { canvas: canvas, name: name, serial: serial };
     }
@@ -2618,56 +2580,21 @@
         return base + '.' + ext;
     }
 
-    /** Modal mobile-friendly para o nome no diploma (sem window.prompt) */
+    /** Pergunta o nome que deve sair no diploma (pode ser diferente do perfil) */
     function askCertificateName() {
-        return new Promise(function(resolve) {
-            const modal = document.getElementById('cert-name-modal');
-            const input = document.getElementById('certNameInput');
-            const okBtn = document.getElementById('certNameOkBtn');
-            const cancelBtn = document.getElementById('certNameCancelBtn');
-            const def = (playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão';
-            if (!modal || !input) {
-                const n = window.prompt('Nome no certificado:', def);
-                resolve(n === null ? null : (String(n).trim().slice(0, 40) || def));
-                return;
-            }
-            input.value = def;
-            modal.style.display = 'flex';
-            setTimeout(function() {
-                try { input.focus(); input.select(); } catch (e) {}
-            }, 80);
-            const cleanup = function(val) {
-                modal.style.display = 'none';
-                okBtn.onclick = null;
-                cancelBtn.onclick = null;
-                input.onkeydown = null;
-                document.removeEventListener('keydown', escHandler);
-                resolve(val);
-            };
-            const escHandler = function(e) {
-                if (e.key === 'Escape') cleanup(null);
-            };
-            document.addEventListener('keydown', escHandler);
-            cancelBtn.onclick = function() { cleanup(null); };
-            okBtn.onclick = function() {
-                const cleaned = String(input.value || '').trim().slice(0, 40);
-                cleanup(cleaned || def);
-            };
-            input.onkeydown = function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    okBtn.click();
-                }
-            };
-        });
+        const def = (playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão';
+        const n = window.prompt('Nome que deve aparecer no certificado:', def);
+        if (n === null) return null; // cancelou
+        const cleaned = String(n).trim().slice(0, 40);
+        return cleaned || def;
     }
 
-    async function downloadCertificatePNG() {
+    function downloadCertificatePNG() {
         if (playerElo < ELO_GM_UNLOCK) {
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
-        const certName = await askCertificateName();
+        const certName = askCertificateName();
         if (certName === null) return;
         const built = buildChampionCertificateCanvas(certName);
         built.canvas.toBlob(function(blob) {
@@ -2681,12 +2608,12 @@
         }, 'image/png');
     }
 
-    async function downloadCertificatePDF() {
+    function downloadCertificatePDF() {
         if (playerElo < ELO_GM_UNLOCK) {
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
-        const certName = await askCertificateName();
+        const certName = askCertificateName();
         if (certName === null) return;
         const built = buildChampionCertificateCanvas(certName);
         built.canvas.toBlob(function(blob) {
@@ -3203,14 +3130,6 @@
             urls: [
                 'https://liverd102fm.rbsdirect.com.br/primary/ita_poa.sdp/playlist.m3u8',
                 'https://liverd102fm.rbsdirect.com.br/primary/102_poa.sdp/playlist.m3u8'
-            ]
-        },
-        total_hits: {
-            label: 'Rádio Total Hits',
-            region: 'Hits',
-            needsHls: false,
-            urls: [
-                'https://eu8.fastcast4u.com/proxy/breaktroy?mp=/stream'
             ]
         },
         salamanca_quarai: {
@@ -4088,15 +4007,12 @@
         addLog("Placar de vitórias zerado.", "GAME");
     }
 
-    function setTheme(themeName, opts) {
+    function setTheme(themeName) {
         // Apenas a camada de interface (theme-*). Não remove board skin nem peças.
-        // opts.keepCity = true → não limpa currentCityKey (salas privadas/cidade)
-        // opts.keepTitle = true → não sobrescreve o título da sala
         if (!themeName || typeof themeName !== 'string') return;
-        opts = opts || {};
         const prev = currentTheme;
         currentTheme = themeName;
-        if (!opts.keepCity) currentCityKey = null;
+        currentCityKey = null;
 
         const classes = Array.from(document.body.classList);
         classes.forEach(c => {
@@ -4106,10 +4022,8 @@
         });
 
         document.body.classList.add('theme-' + themeName);
-        if (!opts.keepTitle) {
-            const titleEl = document.getElementById("room-status-title");
-            if (titleEl && !isSpectator && !currentCityKey) titleEl.innerText = "Xadrez Pro";
-        }
+        const titleEl = document.getElementById("room-status-title");
+        if (titleEl && !isSpectator) titleEl.innerText = "Xadrez Pro";
         try { localStorage.setItem('xadrezpro_theme', themeName); } catch (e) {}
         addLog('Tema UI: ' + prev + ' → ' + themeName, 'UI');
     }
@@ -4325,7 +4239,6 @@
         isSpectator = false;
         spectatorWhiteName = '';
         spectatorBlackName = '';
-        currentPrivateVisual = null;
         updateSpectatorChrome();
         clearChat();
         setTimeout(updateRoomStatuses, 600);
@@ -4909,9 +4822,7 @@
             }
         }
 
-        const analysis = buildPostGameSummary(winnerColor, reason);
-        document.getElementById("victory-subtitle").innerHTML = `${escapeHtml(reason)}<br><b>${winnerText}</b>${eloLine}${analysis.html}`;
-        if (analysis.chat) addChatMessage('Análise', analysis.chat, true);
+        document.getElementById("victory-subtitle").innerHTML = `${escapeHtml(reason)}<br><b>${winnerText}</b>${eloLine}`;
         saveGameToHistory(reason, winnerColor);
         const rematchBtn = document.getElementById('btnRematch');
         if (rematchBtn) {
@@ -4928,38 +4839,6 @@
                 bumpMission('win_ai3', 1);
             }
         } catch (e) {}
-    }
-
-    /** Resumo leve pós-partida (sem travar o aparelho) */
-    function buildPostGameSummary(winnerColor, reason) {
-        try {
-            const hist = chess.history({ verbose: true });
-            const plies = hist.length;
-            const moves = Math.ceil(plies / 2);
-            let opening = '';
-            try { opening = detectOpening() || ''; } catch (e) {}
-            let captures = 0;
-            let checks = 0;
-            hist.forEach(function(m) {
-                if (m.captured) captures++;
-                if (m.san && m.san.indexOf('+') >= 0) checks++;
-                if (m.san && (m.san.indexOf('#') >= 0)) checks++;
-            });
-            const endLabel = chess.in_checkmate() ? 'Xeque-mate'
-                : (chess.in_stalemate() ? 'Afogamento'
-                : (chess.in_threefold_repetition() ? 'Repetição'
-                : (chess.insufficient_material() ? 'Material insuficiente' : 'Fim de jogo')));
-            const html = '<br><span style="color:var(--text-muted);font-size:9px;line-height:1.35;">📊 '
-                + moves + ' lances · ' + captures + ' capturas · ' + checks + ' xeques'
-                + (opening ? (' · ' + escapeHtml(opening)) : '')
-                + '<br>' + escapeHtml(endLabel) + '</span>';
-            const chat = '📊 ' + moves + ' lances, ' + captures + ' capturas'
-                + (opening ? (', abertura: ' + opening) : '')
-                + ' · ' + endLabel;
-            return { html: html, chat: chat };
-        } catch (e) {
-            return { html: '', chat: '' };
-        }
     }
     function closeVictoryScreen() { document.getElementById("victory-screen").style.display = "none"; }
 
@@ -6248,7 +6127,6 @@
         if (heartbeatInterval) { clearInterval(heartbeatInterval); heartbeatInterval = null; }
         aiRequestId++;
         gameMode = 'network';
-        currentCityKey = cityName;
 
         let baseRoomId = "xadrezpro-cities-v73-" + cityName;
         addLog(`Iniciando tentativa de conexão com a sala: ${cityName} (ID base: ${baseRoomId})`, "P2P_CONNECT");
@@ -6366,7 +6244,6 @@
         let guestConn = null;
         // Sala privada: visual aleatório curado (mesmo para host e guest)
         if (cityName && String(cityName).indexOf('priv-') === 0) {
-            currentCityKey = cityName; // antes do pack, para setTheme keepCity funcionar
             const pack = pickPrivateVisualCombo();
             applyPrivateVisualPack(pack);
             const code = String(cityName).replace(/^priv-/i, '').toUpperCase();
@@ -7226,7 +7103,7 @@
     }
 
 
-    addLog('Xadrez Pro v10.1 — v10.0 — modal certificado, análise pós-partida, polish mobile/tablet.', 'INIT');
+    addLog('Xadrez Pro v9.8 — nome no certificado + visual aleatório sincronizado nas salas PIN.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();

@@ -1,5 +1,5 @@
-/* Xadrez Pro Service Worker v10.1 — offline shell + assets */
-const CACHE = 'xadrezpro-v101';
+/* Xadrez Pro Service Worker v9.8 — offline shell + assets */
+const CACHE = 'xadrezpro-v98';
 const PRECACHE = [
   './',
   './index.html',
