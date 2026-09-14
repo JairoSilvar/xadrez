@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v9.8</title>
+    <title>Xadrez Pro - v9.6</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1420,7 +1420,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v9.8</p>
+            <p>Estratégia P2P · IA offline · v9.6</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1918,64 +1918,6 @@
         grandmaster: { theme: 'grandmaster', pieces: 'pieces-gold-purple', style: 'style-neon' }
     };
 
-    /**
-     * Combinações curadas para salas privadas (PIN).
-     * Cada pack = tema UI + skin de tabuleiro + cores de peças + estilo.
-     * Host escolhe um ao abrir a sala; oponente recebe o mesmo pack.
-     * Nova partida / revanche → novo pack aleatório (sincronizado).
-     */
-    const PRIVATE_VISUAL_COMBOS = [
-        { id: 'rosa-madeira', label: 'Rosa & Madeira', theme: 'paris', board: 'board-wood', pieces: 'pieces-blue-pink', style: 'style-classic' },
-        { id: 'cyber-neon', label: 'Cyber Neon', theme: 'toquio', board: '', pieces: 'pieces-cyberpunk', style: 'style-neon' },
-        { id: 'ny-marmore', label: 'N.York Mármore', theme: 'novayork', board: 'board-marble', pieces: 'pieces-silver-fire', style: 'style-soft3d' },
-        { id: 'floresta', label: 'Floresta Esmeralda', theme: 'londres', board: 'board-emerald', pieces: 'pieces-green-cyan', style: 'style-classic' },
-        { id: 'arena-classic', label: 'Arena Clássica', theme: 'arena', board: 'board-wood', pieces: 'pieces-monochrome', style: 'style-classic' },
-        { id: 'ouro-real', label: 'Ouro Real', theme: 'ouro', board: 'board-royal', pieces: 'pieces-gold-purple', style: 'style-soft3d' },
-        { id: 'gelo-soft', label: 'Gelo Suave', theme: 'gelo', board: 'board-marble', pieces: 'pieces-blue-pink', style: 'style-soft3d' },
-        { id: 'menta-lime', label: 'Menta Lima', theme: 'menta', board: 'board-emerald', pieces: 'pieces-neon-lime', style: 'style-minimal' },
-        { id: 'sunset-wood', label: 'Pôr do Sol', theme: 'claro', board: 'board-wood', pieces: 'pieces-sunset', style: 'style-classic' },
-        { id: 'toxic-contrast', label: 'Tóxico Alto Contraste', theme: 'novayork', board: '', pieces: 'pieces-toxic', style: 'style-contrast' },
-        { id: 'ruby-indigo', label: 'Rubi Espacial', theme: 'toquio', board: 'board-marble', pieces: 'pieces-ruby-indigo', style: 'style-neon' },
-        { id: 'gm-royal', label: 'Grandmaster Royal', theme: 'grandmaster', board: 'board-royal', pieces: 'pieces-gold-purple', style: 'style-neon' }
-    ];
-    let currentPrivateVisual = null;
-    let lastPrivateVisualId = '';
-
-    function pickPrivateVisualCombo() {
-        // Evita repetir o mesmo pack da partida anterior
-        let pool = PRIVATE_VISUAL_COMBOS;
-        if (lastPrivateVisualId && PRIVATE_VISUAL_COMBOS.length > 1) {
-            pool = PRIVATE_VISUAL_COMBOS.filter(function(c) { return c.id !== lastPrivateVisualId; });
-        }
-        const pack = pool[Math.floor(Math.random() * pool.length)];
-        lastPrivateVisualId = pack.id;
-        currentPrivateVisual = pack;
-        return pack;
-    }
-
-    function applyPrivateVisualPack(pack) {
-        if (!pack || typeof pack !== 'object') return;
-        currentPrivateVisual = pack;
-        if (pack.id) lastPrivateVisualId = pack.id;
-        clearBoardSkinClasses();
-        clearBoardCssOverrides();
-        try {
-            localStorage.removeItem('xadrezpro_board_skin');
-            localStorage.removeItem('xadrezpro_custom_board');
-        } catch (e) {}
-        // tema UI (sem resetar peças — aplicamos depois)
-        if (pack.theme) setTheme(pack.theme);
-        if (pack.board) setBoardSkin(pack.board);
-        else {
-            clearBoardSkinClasses();
-            try { localStorage.removeItem('xadrezpro_board_skin'); } catch (e) {}
-        }
-        if (pack.pieces) setPieceColors(pack.pieces);
-        if (pack.style) setPieceStyle(pack.style);
-        addLog('Visual sala privada: ' + (pack.label || pack.id || '?'), 'UI');
-        try { refreshSettingsPreview(); } catch (e) {}
-    }
-
     function applyThemePreset(presetKey) {
         const p = THEME_PRESETS[presetKey] || THEME_PRESETS.claro;
         // 1) limpa skins/cores manuais do tabuleiro para o tema pintar as casas
@@ -2066,7 +2008,6 @@
         }
     }
 
-
     /** Gera serial estável do certificado (local) */
     function certificateSerial(name, elo) {
         const base = (name || 'XP') + '|' + elo + '|' + (new Date()).toISOString().slice(0, 10);
@@ -2079,21 +2020,21 @@
         return 'XP-' + elo + '-' + hex;
     }
 
-    /** QR visual (matriz a partir do serial) */
+    /** QR visual simples (matriz determinística a partir do serial — decorativo + legível) */
     function drawCertificateQR(ctx, x, y, size, serial) {
         const cells = 21;
         const cell = size / cells;
-        ctx.fillStyle = '#f8f1e3';
-        ctx.fillRect(x - 6, y - 6, size + 12, size + 12);
-        ctx.strokeStyle = '#c4a574';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(x - 6, y - 6, size + 12, size + 12);
-        ctx.strokeStyle = '#1e3a5f';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x - 2, y - 2, size + 4, size + 4);
+        // fundo branco
+        ctx.fillStyle = '#fffef7';
+        ctx.fillRect(x - 4, y - 4, size + 8, size + 8);
+        ctx.strokeStyle = '#eab308';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x - 4, y - 4, size + 8, size + 8);
+        // padrão a partir do serial
         let seed = 0;
         for (let i = 0; i < serial.length; i++) seed = (seed * 31 + serial.charCodeAt(i)) >>> 0;
         function bit(r, c) {
+            // finders
             if (r < 7 && c < 7) {
                 const onBorder = r === 0 || r === 6 || c === 0 || c === 6;
                 const inCenter = r >= 2 && r <= 4 && c >= 2 && c <= 4;
@@ -2114,226 +2055,71 @@
             const v = (seed ^ (r * 73856093) ^ (c * 19349663)) >>> 0;
             return (v % 3) !== 0;
         }
-        ctx.fillStyle = '#0f2744';
+        ctx.fillStyle = '#1a1025';
         for (let r = 0; r < cells; r++) {
             for (let c = 0; c < cells; c++) {
-                if (bit(r, c)) ctx.fillRect(x + c * cell, y + r * cell, cell + 0.4, cell + 0.4);
+                if (bit(r, c)) ctx.fillRect(x + c * cell, y + r * cell, cell + 0.5, cell + 0.5);
             }
         }
     }
 
-    function drawOrnateFrame(ctx, w, h) {
-        // outer cream margin
-        ctx.fillStyle = '#f3e6d0';
-        ctx.fillRect(0, 0, w, h);
-        // navy panel
-        const m = 28;
-        ctx.fillStyle = '#0f2744';
-        ctx.fillRect(m, m, w - m * 2, h - m * 2);
-        // gold/copper double border
-        ctx.strokeStyle = '#c9a227';
-        ctx.lineWidth = 6;
-        ctx.strokeRect(m + 8, m + 8, w - (m + 8) * 2, h - (m + 8) * 2);
-        ctx.strokeStyle = '#e8d5a3';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(m + 16, m + 16, w - (m + 16) * 2, h - (m + 16) * 2);
-        ctx.strokeStyle = '#8b6914';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(m + 22, m + 22, w - (m + 22) * 2, h - (m + 22) * 2);
-
-        // celtic-like corner knots (simplified scrollwork)
-        function knot(x, y, sx, sy) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.scale(sx, sy);
-            ctx.strokeStyle = '#d4b896';
-            ctx.lineWidth = 2.2;
-            ctx.beginPath();
-            ctx.moveTo(0, 55);
-            ctx.bezierCurveTo(0, 20, 20, 0, 55, 0);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(12, 55);
-            ctx.bezierCurveTo(12, 28, 28, 12, 55, 12);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(28, 28, 10, 0, Math.PI * 1.5);
-            ctx.stroke();
-            ctx.fillStyle = '#e8d5a3';
-            ctx.beginPath();
-            ctx.arc(8, 8, 3, 0, Math.PI * 2);
-            ctx.fill();
-            // mini piece
-            ctx.font = '16px serif';
-            ctx.fillStyle = '#c9a227';
-            ctx.textAlign = 'center';
-            ctx.fillText('♞', 40, 48);
-            ctx.restore();
-        }
-        const inset = 48;
-        knot(inset, inset, 1, 1);
-        knot(w - inset, inset, -1, 1);
-        knot(inset, h - inset, 1, -1);
-        knot(w - inset, h - inset, -1, -1);
-
-        // side diamond ornaments
-        function diamond(x, y) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.strokeStyle = '#c9a227';
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(-10, -10, 20, 20);
-            ctx.rotate(Math.PI / 4);
-            ctx.strokeRect(-8, -8, 16, 16);
-            ctx.restore();
-            ctx.fillStyle = '#e8d5a3';
-            ctx.font = '14px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('♟', x, y);
-        }
-        diamond(52, h / 2);
-        diamond(w - 52, h / 2);
-    }
-
-    function drawBoardWatermark(ctx, w, h) {
-        const size = 36;
-        const cols = Math.ceil(w / size);
-        const rows = Math.ceil(h / size);
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                if ((r + c) % 2 === 0) {
-                    ctx.fillStyle = 'rgba(255,255,255,0.03)';
-                    ctx.fillRect(c * size, r * size, size, size);
-                }
-            }
-        }
-        // soft vignette center glow
-        const g = ctx.createRadialGradient(w / 2, h * 0.42, 40, w / 2, h * 0.42, h * 0.55);
-        g.addColorStop(0, 'rgba(30, 58, 95, 0.0)');
-        g.addColorStop(1, 'rgba(8, 20, 40, 0.55)');
-        ctx.fillStyle = g;
-        ctx.fillRect(40, 40, w - 80, h - 80);
-    }
-
-    function drawGrandmasterCrest(ctx, cx, cy) {
-        // shield background
+    function drawCertificateSeal(ctx, cx, cy, r) {
         ctx.save();
-        ctx.translate(cx, cy);
-        // outer ring
+        // anéis
         ctx.beginPath();
-        ctx.arc(0, 8, 52, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(15, 39, 68, 0.9)';
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(234,179,8,0.15)';
         ctx.fill();
-        ctx.strokeStyle = '#c9a227';
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#eab308';
+        ctx.lineWidth = 4;
         ctx.stroke();
-        // crown
-        ctx.fillStyle = '#e8d5a3';
-        ctx.font = '22px serif';
+        ctx.beginPath();
+        ctx.arc(cx, cy, r - 10, 0, Math.PI * 2);
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, r - 18, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(254,243,199,0.5)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // brasão
+        ctx.fillStyle = '#fef3c7';
+        ctx.font = 'bold ' + Math.floor(r * 0.7) + 'px serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('♛', 0, -28);
-        // king + queen
-        ctx.font = '42px serif';
-        ctx.fillStyle = '#f3e6d0';
-        ctx.fillText('♔', -16, 8);
-        ctx.fillStyle = '#e8d5a3';
-        ctx.fillText('♕', 18, 8);
-        // ribbon
-        ctx.fillStyle = '#1a365d';
-        ctx.beginPath();
-        ctx.moveTo(-70, 40);
-        ctx.lineTo(-58, 28);
-        ctx.lineTo(58, 28);
-        ctx.lineTo(70, 40);
-        ctx.lineTo(58, 52);
-        ctx.lineTo(-58, 52);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#c9a227';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.fillStyle = '#e8d5a3';
-        ctx.font = 'bold 11px Georgia, serif';
-        ctx.fillText('GRANDMASTER', 0, 42);
+        ctx.fillText('♚', cx, cy - 2);
+        ctx.font = 'bold 11px system-ui, sans-serif';
+        ctx.fillStyle = '#eab308';
+        ctx.fillText('GRANDMASTER', cx, cy + r * 0.55);
         ctx.restore();
     }
 
-    function drawFlourishLine(ctx, cx, y, sidePieces) {
-        ctx.strokeStyle = '#c9a227';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(cx - 320, y);
-        ctx.bezierCurveTo(cx - 200, y - 18, cx - 80, y + 18, cx - 40, y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(cx + 40, y);
-        ctx.bezierCurveTo(cx + 80, y + 18, cx + 200, y - 18, cx + 320, y);
-        ctx.stroke();
-        ctx.fillStyle = '#d4b896';
-        ctx.font = '20px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const left = sidePieces || ['♞', '♝', '♜'];
-        const right = ['♜', '♝', '♞'];
-        left.forEach(function(p, i) { ctx.fillText(p, cx - 280 + i * 28, y); });
-        right.forEach(function(p, i) { ctx.fillText(p, cx + 230 + i * 28, y); });
-    }
-
-    function drawMedal(ctx, x, y, metal, icon, label) {
-        const colors = {
-            gold: { a: '#f6e27a', b: '#c9a227', c: '#8b6914' },
-            silver: { a: '#e8eef5', b: '#94a3b8', c: '#475569' },
-            bronze: { a: '#e6b089', b: '#b87333', c: '#7c4a1e' }
-        };
-        const col = colors[metal] || colors.gold;
-        const g = ctx.createRadialGradient(x - 8, y - 10, 4, x, y, 38);
-        g.addColorStop(0, col.a);
-        g.addColorStop(0.55, col.b);
-        g.addColorStop(1, col.c);
-        ctx.beginPath();
-        ctx.arc(x, y, 36, 0, Math.PI * 2);
-        ctx.fillStyle = g;
-        ctx.fill();
-        ctx.strokeStyle = col.a;
+    function drawCornerOrnament(ctx, x, y, flipX, flipY) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+        ctx.strokeStyle = '#eab308';
         ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, 28);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(28, 0);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(x, y, 28, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-        ctx.lineWidth = 1;
+        ctx.moveTo(6, 22);
+        ctx.quadraticCurveTo(6, 6, 22, 6);
         ctx.stroke();
-        ctx.fillStyle = '#0f2744';
-        ctx.font = '26px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(icon, x, y - 2);
-        ctx.fillStyle = col.a;
-        ctx.font = 'bold 9px system-ui, sans-serif';
-        ctx.fillText(label, x, y + 48);
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        ctx.arc(10, 10, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
     }
 
-    function drawFooterPieces(ctx, cx, y) {
-        const row = ['♟', '♞', '♝', '♜', '♛', '♚', '♛', '♜', '♝', '♞', '♟'];
-        ctx.font = '18px serif';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = 'rgba(232, 213, 163, 0.55)';
-        const start = cx - (row.length - 1) * 18;
-        row.forEach(function(p, i) {
-            ctx.fillText(p, start + i * 36, y);
-        });
-    }
-
-    /**
-     * Certificado elaborado v9.7 — estilo diploma de torneio
-     * (borda ornamentada, brasão, medalhas, tabuleiro em marca d'água)
-     */
-    function buildChampionCertificateCanvas(nameOverride) {
-        const raw = (nameOverride != null && String(nameOverride).trim())
-            ? String(nameOverride).trim()
-            : ((playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão');
-        const name = raw.slice(0, 40);
+    /** Canvas profissional do certificado (v9.6) */
+    function buildChampionCertificateCanvas() {
+        const name = (playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão';
         const serial = certificateSerial(name, playerElo);
         const w = 1400, h = 990;
         const canvas = document.createElement('canvas');
@@ -2341,114 +2127,139 @@
         canvas.height = h;
         const ctx = canvas.getContext('2d');
 
-        drawOrnateFrame(ctx, w, h);
-        // clip inner for watermark
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(40, 40, w - 80, h - 80);
-        ctx.clip();
-        drawBoardWatermark(ctx, w, h);
-        ctx.restore();
+        // fundo
+        const grd = ctx.createLinearGradient(0, 0, w, h);
+        grd.addColorStop(0, '#12081f');
+        grd.addColorStop(0.45, '#2a1548');
+        grd.addColorStop(1, '#0b1220');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, w, h);
 
-        // crest
-        drawGrandmasterCrest(ctx, w / 2, 118);
+        // vinheta
+        const vig = ctx.createRadialGradient(w / 2, h / 2, 120, w / 2, h / 2, h * 0.7);
+        vig.addColorStop(0, 'rgba(0,0,0,0)');
+        vig.addColorStop(1, 'rgba(0,0,0,0.35)');
+        ctx.fillStyle = vig;
+        ctx.fillRect(0, 0, w, h);
 
-        // title
-        ctx.fillStyle = '#e8d5a3';
-        ctx.font = 'bold 40px Georgia, "Times New Roman", serif';
+        // moldura tripla
+        ctx.strokeStyle = '#eab308';
+        ctx.lineWidth = 14;
+        ctx.strokeRect(28, 28, w - 56, h - 56);
+        ctx.strokeStyle = '#fef3c7';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(42, 42, w - 84, h - 84);
+        ctx.strokeStyle = '#b45309';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(52, 52, w - 104, h - 104);
+
+        // ornamentos cantos
+        drawCornerOrnament(ctx, 70, 70, false, false);
+        drawCornerOrnament(ctx, w - 70, 70, true, false);
+        drawCornerOrnament(ctx, 70, h - 70, false, true);
+        drawCornerOrnament(ctx, w - 70, h - 70, true, true);
+
+        // brasão topo
+        drawCertificateSeal(ctx, w / 2, 155, 58);
+
+        // faixa título
+        ctx.fillStyle = 'rgba(234,179,8,0.12)';
+        ctx.fillRect(120, 230, w - 240, 56);
+        ctx.strokeStyle = 'rgba(234,179,8,0.45)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(120, 230, w - 240, 56);
+
+        ctx.fillStyle = '#fef3c7';
+        ctx.font = 'bold 36px Georgia, "Times New Roman", serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'alphabetic';
-        ctx.fillText('CERTIFICADO DE GRANDE CAMPEÃO', w / 2, 220);
-        ctx.fillStyle = '#c9a227';
-        ctx.font = 'italic 17px Georgia, serif';
-        ctx.fillText('Xadrez Pro  ·  Excelência em Estratégia', w / 2, 250);
+        ctx.fillText('CERTIFICADO DE GRANDE CAMPEÃO', w / 2, 268);
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'italic 18px Georgia, serif';
+        ctx.fillText('Xadrez Pro  ·  Excelência em Estratégia', w / 2, 320);
 
-        // body
-        ctx.fillStyle = '#c7d2e0';
-        ctx.font = '18px system-ui, sans-serif';
-        ctx.fillText('Este documento certifica que', w / 2, 310);
+        // corpo
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '20px system-ui, sans-serif';
+        ctx.fillText('Este documento certifica que', w / 2, 390);
 
-        // name with script feel
+        ctx.fillStyle = '#fef3c7';
+        ctx.font = 'bold 54px Georgia, serif';
         const displayName = name.length > 28 ? name.slice(0, 28) + '…' : name;
-        ctx.fillStyle = '#f3e6d0';
-        ctx.font = 'italic bold 56px Georgia, "Palatino Linotype", serif';
-        ctx.fillText(displayName, w / 2, 385);
-        drawFlourishLine(ctx, w / 2, 410);
+        ctx.fillText(displayName, w / 2, 465);
 
-        ctx.fillStyle = '#c7d2e0';
-        ctx.font = '18px system-ui, sans-serif';
-        ctx.fillText('alcançou o título honorífico de Grandmaster no Xadrez Pro', w / 2, 455);
+        // linha sob o nome
+        ctx.strokeStyle = '#eab308';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(w / 2 - 220, 480);
+        ctx.lineTo(w / 2 + 220, 480);
+        ctx.stroke();
 
-        // small pill badges
-        const pills = [
-            { t: 'Elo ' + playerElo },
-            { t: 'Grandmaster' },
-            { t: 'Progressão local' }
+        ctx.fillStyle = '#e2e8f0';
+        ctx.font = '20px system-ui, sans-serif';
+        ctx.fillText('alcançou o título honorífico de Grandmaster no Xadrez Pro', w / 2, 525);
+
+        // chips de mérito
+        const chipY = 575;
+        const chips = [
+            '⭐ Elo ' + playerElo,
+            '👑 Grandmaster',
+            '♟️ Progressão local'
         ];
-        ctx.font = 'bold 13px system-ui, sans-serif';
-        let totalW = 0;
-        const pW = pills.map(function(p) {
-            const tw = ctx.measureText(p.t).width + 24;
-            totalW += tw;
-            return tw;
-        });
-        totalW += 12 * (pills.length - 1);
-        let px = w / 2 - totalW / 2;
-        const py = 485;
-        pills.forEach(function(p, i) {
-            const tw = pW[i];
-            ctx.fillStyle = 'rgba(15, 39, 68, 0.85)';
-            ctx.strokeStyle = '#c9a227';
+        ctx.font = 'bold 16px system-ui, sans-serif';
+        let chipX = w / 2 - 280;
+        chips.forEach(function(t) {
+            const tw = ctx.measureText(t).width + 28;
+            ctx.fillStyle = 'rgba(234,179,8,0.18)';
+            ctx.strokeStyle = '#eab308';
             ctx.lineWidth = 1.5;
-            roundRectPath(ctx, px, py, tw, 26, 13);
+            roundRectPath(ctx, chipX, chipY - 18, tw, 32, 16);
             ctx.fill();
             ctx.stroke();
-            ctx.fillStyle = '#e8d5a3';
-            ctx.fillText(p.t, px + tw / 2, py + 18);
-            px += tw + 12;
+            ctx.fillStyle = '#fef3c7';
+            ctx.fillText(t, chipX + tw / 2, chipY + 4);
+            chipX += tw + 16;
         });
 
-        // medals
-        drawMedal(ctx, w / 2 - 120, 600, 'gold', '♞', 'Elo');
-        drawMedal(ctx, w / 2, 600, 'silver', '♜', 'Grandmaster');
-        drawMedal(ctx, w / 2 + 120, 600, 'bronze', '♟', 'Progressão local');
-
-        // left meta
         const when = new Date();
         const dateStr = when.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+        // rodapé esquerdo — data / assinatura
         ctx.textAlign = 'left';
-        ctx.fillStyle = '#9fb0c7';
-        ctx.font = '14px system-ui, sans-serif';
-        ctx.fillText('Emitido em ' + dateStr, 90, 720);
-        ctx.fillText('Documento gerado no dispositivo do jogador', 90, 742);
-        ctx.strokeStyle = '#6b7c93';
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '15px system-ui, sans-serif';
+        ctx.fillText('Emitido em ' + dateStr, 120, 700);
+        ctx.fillText('Documento gerado no dispositivo do jogador', 120, 725);
+        ctx.strokeStyle = '#64748b';
         ctx.beginPath();
-        ctx.moveTo(90, 800);
-        ctx.lineTo(300, 800);
+        ctx.moveTo(120, 800);
+        ctx.lineTo(360, 800);
         ctx.stroke();
-        ctx.fillStyle = '#d4b896';
+        ctx.fillStyle = '#cbd5e1';
         ctx.font = '14px Georgia, serif';
-        ctx.fillText('Diretoria Xadrez Pro', 90, 822);
-        ctx.fillStyle = '#7a8ba3';
+        ctx.fillText('Diretoria Xadrez Pro', 120, 825);
+        ctx.fillStyle = '#64748b';
+        ctx.font = '12px system-ui, sans-serif';
+        ctx.fillText('Validação cosmética · offline', 120, 845);
+
+        // QR + serial à direita
+        drawCertificateQR(ctx, w - 280, 680, 130, serial);
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 12px ui-monospace, monospace';
+        ctx.fillText(serial, w - 215, 840);
+        ctx.fillStyle = '#64748b';
         ctx.font = '11px system-ui, sans-serif';
-        ctx.fillText('Validação cosmética · offline', 90, 842);
+        ctx.fillText('Cód. de verificação', w - 215, 858);
 
-        // QR
-        drawCertificateQR(ctx, w - 250, 700, 120, serial);
+        // faixa inferior
+        ctx.fillStyle = 'rgba(15,10,30,0.55)';
+        ctx.fillRect(80, h - 90, w - 160, 40);
+        ctx.fillStyle = '#eab308';
+        ctx.font = '14px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillStyle = '#e8d5a3';
-        ctx.font = 'bold 11px ui-monospace, monospace';
-        ctx.fillText(serial, w - 190, 848);
-        ctx.fillStyle = '#9fb0c7';
-        ctx.font = '10px system-ui, sans-serif';
-        ctx.fillText('Cód. de verificação', w - 190, 864);
-
-        // footer pieces + version
-        drawFooterPieces(ctx, w / 2, 900);
-        ctx.fillStyle = '#c9a227';
-        ctx.font = '13px Georgia, serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v9.8', w / 2, 935);
+        ctx.fillText('♟️  Estratégia · P2P · IA offline  ·  Xadrez Pro v9.6  ♟️', w / 2, h - 64);
 
         return { canvas: canvas, name: name, serial: serial };
     }
@@ -2580,30 +2391,19 @@
         return base + '.' + ext;
     }
 
-    /** Pergunta o nome que deve sair no diploma (pode ser diferente do perfil) */
-    function askCertificateName() {
-        const def = (playerName && playerName.trim()) ? playerName.trim() : 'Grande Campeão';
-        const n = window.prompt('Nome que deve aparecer no certificado:', def);
-        if (n === null) return null; // cancelou
-        const cleaned = String(n).trim().slice(0, 40);
-        return cleaned || def;
-    }
-
     function downloadCertificatePNG() {
         if (playerElo < ELO_GM_UNLOCK) {
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
-        const certName = askCertificateName();
-        if (certName === null) return;
-        const built = buildChampionCertificateCanvas(certName);
+        const built = buildChampionCertificateCanvas();
         built.canvas.toBlob(function(blob) {
             if (!blob) {
                 alert('Não foi possível gerar o PNG.');
                 return;
             }
             triggerBlobDownload(blob, safeCertFilename(built.name, 'png'));
-            addChatMessage('Sistema', '🖼️ Certificado PNG · ' + built.name + ' · ' + built.serial, true);
+            addChatMessage('Sistema', '🖼️ Certificado PNG baixado · ' + built.serial, true);
             addLog('Certificado PNG ' + built.serial, 'UI');
         }, 'image/png');
     }
@@ -2613,9 +2413,8 @@
             alert('Certificado bloqueado. Elo necessário: ' + ELO_GM_UNLOCK + '+');
             return;
         }
-        const certName = askCertificateName();
-        if (certName === null) return;
-        const built = buildChampionCertificateCanvas(certName);
+        const built = buildChampionCertificateCanvas();
+        // JPEG para DCTDecode no PDF
         built.canvas.toBlob(function(blob) {
             if (!blob) {
                 alert('Não foi possível gerar o PDF.');
@@ -2628,7 +2427,7 @@
                     const pdfBytes = buildPdfFromJpegBytes(jpegBytes, built.canvas.width, built.canvas.height);
                     const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
                     triggerBlobDownload(pdfBlob, safeCertFilename(built.name, 'pdf'));
-                    addChatMessage('Sistema', '📄 Certificado PDF · ' + built.name + ' · ' + built.serial, true);
+                    addChatMessage('Sistema', '📄 Certificado PDF baixado · ' + built.serial, true);
                     addLog('Certificado PDF ' + built.serial, 'UI');
                 } catch (err) {
                     addLog('Falha PDF: ' + err.message, 'ERROR');
@@ -5082,16 +4881,6 @@
         renderBoard();
         resetClocks();
         startClock();
-        // Sala privada: novo visual aleatório a cada revanche (host define e sincroniza)
-        if (gameMode === 'network' && currentCityKey && String(currentCityKey).indexOf('priv-') === 0 && isRoomHost) {
-            const pack = pickPrivateVisualCombo();
-            applyPrivateVisualPack(pack);
-            networkBroadcast({ type: 'visual-pack', visualPack: pack });
-            const code = String(currentCityKey).replace(/^priv-/i, '').toUpperCase();
-            const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + pack.label;
-            addChatMessage('Sistema', 'Novo visual da sala: ' + pack.label, true);
-        }
         addChatMessage('Sistema', 'Revanche iniciada! Cores invertidas.', false);
         addLog('Revanche iniciada. Nova cor local: ' + playerColor, 'GAME');
         playSFX('move');
@@ -6242,15 +6031,6 @@
         isRoomHost = true;
         spectatorConns = [];
         let guestConn = null;
-        // Sala privada: visual aleatório curado (mesmo para host e guest)
-        if (cityName && String(cityName).indexOf('priv-') === 0) {
-            const pack = pickPrivateVisualCombo();
-            applyPrivateVisualPack(pack);
-            const code = String(cityName).replace(/^priv-/i, '').toUpperCase();
-            const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + pack.label;
-            addChatMessage('Sistema', 'Visual da sala: ' + pack.label, true);
-        }
 
         peer.on('connection', (c) => {
             c.on('data', (data) => {
@@ -6291,7 +6071,7 @@
                         }
 
                         try {
-                            const payload = {
+                            c.send({
                                 type: 'slot-response',
                                 status: 'accepted',
                                 fen: chess.fen(),
@@ -6302,12 +6082,7 @@
                                 plyCount: chess.history().length,
                                 hostName: playerName || 'Host',
                                 hostAvatar: playerAvatar
-                            };
-                            if (cityName && String(cityName).indexOf('priv-') === 0) {
-                                if (!currentPrivateVisual) pickPrivateVisualCombo();
-                                payload.visualPack = currentPrivateVisual;
-                            }
-                            c.send(payload);
+                            });
                         } catch (e) {}
                         addChatMessage("Sistema", (opponentName || 'Oponente') + " entrou na sala!", false, false);
                         relayToSpectators({ type: 'chat', sender: 'Sistema', text: (opponentName || 'Oponente') + ' entrou na partida.', isAI: true });
@@ -6322,7 +6097,7 @@
                         // Terceiro+ → espectador: mantém conexão e retransmite o jogo
                         if (!spectatorConns.includes(c)) spectatorConns.push(c);
                         try {
-                            const payload = {
+                            c.send({
                                 type: 'slot-response',
                                 status: 'full',
                                 fen: chess.fen(),
@@ -6338,9 +6113,7 @@
                                 clockWhite: clockWhite,
                                 clockBlack: clockBlack,
                                 spectator: true
-                            };
-                            if (currentPrivateVisual) payload.visualPack = currentPrivateVisual;
-                            c.send(payload);
+                            });
                         } catch (e) {}
                         addChatMessage("Sistema", (data.guestName || 'Alguém') + " entrou como espectador.", true);
                         c.on('data', (specData) => {
@@ -6376,16 +6149,6 @@
     function handleIncomingConnData(data) {
         if (!data || typeof data !== 'object') return;
 
-        if (data.type === 'visual-pack' && data.visualPack) {
-            applyPrivateVisualPack(data.visualPack);
-            if (currentCityKey && String(currentCityKey).indexOf('priv-') === 0) {
-                const code = String(currentCityKey).replace(/^priv-/i, '').toUpperCase();
-                const titleEl = document.getElementById('room-status-title');
-                if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + (data.visualPack.label || '');
-            }
-            addChatMessage('Sistema', 'Visual da sala: ' + (data.visualPack.label || 'atualizado'), true);
-            return;
-        }
         if (data.type === 'ping') {
             if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
             if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
@@ -6593,11 +6356,6 @@
     function setupClientListeners(cityName) {
         conn.on('data', (data) => {
             if (data.type === 'slot-response') {
-                // Visual sincronizado da sala privada (host → guest/espectador)
-                if (data.visualPack) {
-                    currentPrivateVisual = data.visualPack;
-                    applyPrivateVisualPack(data.visualPack);
-                }
                 applyCityVisualTheme(data.city || cityName);
                 setupHeartbeat();
 
@@ -6750,19 +6508,17 @@
         // Entrar na sala = preset completo da cidade (igual às salas online)
         if (cityKey && String(cityKey).indexOf('priv-') === 0) {
             currentCityKey = cityKey;
-            // Host: gera pack aleatório; guest aplica o que veio no slot-response
-            if (isRoomHost) {
-                const pack = currentPrivateVisual || pickPrivateVisualCombo();
-                applyPrivateVisualPack(pack);
-            } else if (currentPrivateVisual) {
-                applyPrivateVisualPack(currentPrivateVisual);
-            }
+            clearBoardSkinClasses();
+            clearBoardCssOverrides();
+            Array.from(document.body.classList).forEach(c => {
+                if (c.startsWith('theme-') || c.startsWith('room-')) document.body.classList.remove(c);
+            });
+            document.body.classList.add('theme-novayork');
+            currentTheme = 'novayork';
+            setPieceColors('pieces-silver-fire');
             const code = String(cityKey).replace(/^priv-/i, '').toUpperCase();
             const titleEl = document.getElementById('room-status-title');
-            if (titleEl) {
-                const label = (currentPrivateVisual && currentPrivateVisual.label) ? (' · ' + currentPrivateVisual.label) : '';
-                titleEl.innerText = '🔐 Privada ' + code + label;
-            }
+            if (titleEl) titleEl.innerText = '🔐 Privada ' + code;
             return;
         }
         if (cityKey && cityDetails[cityKey]) {
@@ -7103,7 +6859,7 @@
     }
 
 
-    addLog('Xadrez Pro v9.8 — nome no certificado + visual aleatório sincronizado nas salas PIN.', 'INIT');
+    addLog('Xadrez Pro v9.6 — certificado profissional PNG + PDF real no navegador.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
