@@ -1,16 +1,20 @@
 
 <!DOCTYPE html>
+<!-- Xadrez Pro v13.0.0 FINAL — consolidacao de todos os recursos da linha 12.x.
+     Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
+     Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
+     relogios, radio e compatibilidade responsiva. -->
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v10.9</title>
+    <title>Xadrez Pro - v13.0.0 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez Pro v13.0.0 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" id="pwa-manifest-link">
@@ -51,6 +55,51 @@
         body.theme-toquio, body.room-toquio { --bg-main: #050508; --bg-gradient: radial-gradient(circle at center, #120a2a 0%, #050508 100%); --panel-bg: rgba(18, 14, 38, 0.98); --panel-border: #f43f5e; --text-main: #00f0ff; --text-muted: #a855f7; --board-border: #00f0ff; --light-square: #2a1b4e; --dark-square: #120a2a; --chat-bg: rgba(11, 7, 26, 0.6); --chat-input-bg: #0b071a; --chat-msg-bg: #1a103c; --btn-bg: #2d1b4e; --btn-hover: #3b2363; --modal-bg: #120e26; --modal-border: #00f0ff; --modal-text: #00f0ff; --hint-dot-color: #a3e635; --candy-w-bg: #00f0ff; --candy-b-bg: #f43f5e; --neon-glow-btn: 0 0 8px rgba(163, 230, 53, 0.4); }
         body.theme-londres, body.room-londres { --bg-main: #062314; --bg-gradient: radial-gradient(circle at center, #0c3b22 0%, #062314 100%); --panel-bg: rgba(12, 59, 34, 0.98); --panel-border: #22c55e; --text-main: #d1fae5; --text-muted: #6ee7b7; --board-border: #10b981; --light-square: #166534; --dark-square: #064e3b; --chat-bg: rgba(5, 35, 20, 0.6); --chat-input-bg: #052314; --chat-msg-bg: #0f4c28; --btn-bg: #14532d; --btn-hover: #166534; --modal-bg: #0c3b22; --modal-border: #22c55e; --modal-text: #d1fae5; --hint-dot-color: #a3e635; --candy-w-bg: #22c55e; --candy-b-bg: #10b981; --neon-glow-btn: 0 0 8px rgba(163, 230, 53, 0.4); }
         body.theme-grandmaster { --bg-main: #1a1025; --bg-gradient: radial-gradient(circle at center, #2d1b4e 0%, #0f0a1a 100%); --panel-bg: rgba(30, 20, 50, 0.98); --panel-border: #eab308; --text-main: #fef3c7; --text-muted: #fbbf24; --board-border: #f59e0b; --light-square: #3b2760; --dark-square: #1e1035; --chat-bg: rgba(15, 10, 30, 0.7); --chat-input-bg: #120a22; --chat-msg-bg: #2a1848; --btn-bg: #3b2760; --btn-hover: #4c1d95; --modal-bg: #1e1035; --modal-border: #eab308; --modal-text: #fef3c7; --hint-dot-color: #fbbf24; --candy-w-bg: #eab308; --candy-b-bg: #a855f7; --neon-glow-btn: 0 0 12px rgba(234, 179, 8, 0.5); --turn-active-color: #eab308; }
+        /* v11.5 — ambientes completos: Matrix, Cyberpunk, Toxic e Esmeralda.
+           Cada ambiente controla UI + tabuleiro + contraste base + brilho, sem remover os temas antigos. */
+        body.theme-matrix, body.room-matrix {
+            --bg-main:#020403; --bg-gradient:radial-gradient(circle at 50% 35%,#07351d 0%,#020403 58%,#000 100%);
+            --panel-bg:rgba(5,18,10,.97); --panel-border:#0b6b3a; --text-main:#d8ffe5; --text-muted:#6bbf8a;
+            --board-border:#00ff66; --light-square:#123b25; --dark-square:#061b10; --chat-bg:rgba(3,14,8,.9);
+            --chat-input-bg:#031009; --chat-msg-bg:#092518; --btn-bg:#07351d; --btn-hover:#0b6b3a;
+            --modal-bg:#04140b; --modal-border:#00ff66; --modal-text:#d8ffe5; --hint-dot-color:#b8ff00;
+            --candy-w-bg:#00ff66; --candy-b-bg:#0b6b3a; --neon-glow-btn:0 0 12px rgba(0,255,102,.48); --turn-active-color:#b8ff00;
+        }
+        body.theme-cyberpunk, body.room-cyberpunk {
+            --bg-main:#050508; --bg-gradient:radial-gradient(circle at 50% 35%,#172b42 0%,#090a12 52%,#020205 100%);
+            --panel-bg:rgba(8,13,24,.97); --panel-border:#00e5ff; --text-main:#e6fbff; --text-muted:#79c8d8;
+            --board-border:#00e5ff; --light-square:#18334b; --dark-square:#081522; --chat-bg:rgba(5,10,18,.9);
+            --chat-input-bg:#050a12; --chat-msg-bg:#0d2030; --btn-bg:#12304a; --btn-hover:#164a68;
+            --modal-bg:#081321; --modal-border:#00e5ff; --modal-text:#e6fbff; --hint-dot-color:#ffea00;
+            --candy-w-bg:#00e5ff; --candy-b-bg:#ffea00; --neon-glow-btn:0 0 13px rgba(0,229,255,.5); --turn-active-color:#ffea00;
+        }
+        body.theme-toxic, body.room-toxic {
+            --bg-main:#090b07; --bg-gradient:radial-gradient(circle at 50% 35%,#202b08 0%,#0b0d08 52%,#050505 100%);
+            --panel-bg:rgba(14,17,9,.97); --panel-border:#84cc16; --text-main:#f4ffe2; --text-muted:#a6c77a;
+            --board-border:#84cc16; --light-square:#283b12; --dark-square:#111b09; --chat-bg:rgba(10,14,7,.92);
+            --chat-input-bg:#080c05; --chat-msg-bg:#18250b; --btn-bg:#24350d; --btn-hover:#385414;
+            --modal-bg:#101707; --modal-border:#84cc16; --modal-text:#f4ffe2; --hint-dot-color:#d946ef;
+            --candy-w-bg:#84cc16; --candy-b-bg:#9333ea; --neon-glow-btn:0 0 12px rgba(132,204,22,.48); --turn-active-color:#d946ef;
+        }
+        body.theme-esmeralda, body.room-esmeralda {
+            --bg-main:#03130d; --bg-gradient:radial-gradient(circle at 50% 35%,#075e42 0%,#032217 48%,#010906 100%);
+            --panel-bg:rgba(4,28,19,.97); --panel-border:#10b981; --text-main:#dcfff0; --text-muted:#78cda9;
+            --board-border:#34d399; --light-square:#b7f7d8; --dark-square:#086b4c; --chat-bg:rgba(2,20,13,.9);
+            --chat-input-bg:#02150d; --chat-msg-bg:#083d2a; --btn-bg:#075c40; --btn-hover:#0a7652;
+            --modal-bg:#05271a; --modal-border:#10b981; --modal-text:#dcfff0; --hint-dot-color:#d9f99d;
+            --candy-w-bg:#34d399; --candy-b-bg:#065f46; --neon-glow-btn:0 0 11px rgba(16,185,129,.45); --turn-active-color:#a7f3d0;
+        }
+        /* Matrix: textura leve, sem partículas pesadas, para manter desempenho em aparelhos antigos. */
+        body.theme-matrix::before {
+            content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.11;
+            background-image:linear-gradient(rgba(0,255,102,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,102,.08) 1px,transparent 1px);
+            background-size:28px 28px;
+        }
+        body.theme-matrix .panel, body.theme-matrix .card, body.theme-cyberpunk .panel, body.theme-cyberpunk .card,
+        body.theme-toxic .panel, body.theme-toxic .card, body.theme-esmeralda .panel, body.theme-esmeralda .card { border-color:var(--panel-border); }
+        body.theme-matrix .action-btn, body.theme-cyberpunk .action-btn, body.theme-toxic .action-btn, body.theme-esmeralda .action-btn { text-shadow:0 0 6px currentColor; }
+        body.theme-matrix .board, body.theme-cyberpunk .board, body.theme-toxic .board, body.theme-esmeralda .board { box-shadow:0 0 0 2px var(--board-border),0 0 22px rgba(0,0,0,.32); }
+
         /* v9.4 — preset Arena (torneio clássico) */
         body.theme-arena {
             --bg-main: #1c1917;
@@ -1007,6 +1056,54 @@
             #restore-btn { top: 15px; bottom: auto; left: auto; right: 15px; transform: none; padding: 8px 16px; border-radius: 8px; font-size: 11px; }
             body.menu-hidden .board-section { width: clamp(420px, 99vh, 99vh) !important; height: clamp(420px, 99vh, 99vh) !important; }
         }
+        /* v11 — desktop: painel lateral compacto, chat priorizado (sem remover recursos) */
+        @media (min-width: 901px) {
+            #game-wrapper { gap: 10px !important; }
+            .side-section {
+                width: clamp(390px, 28vw, 440px) !important;
+                padding: 7px 8px !important;
+                gap: 4px !important;
+            }
+            .brand-title {
+                min-height: 30px;
+                padding: 3px 6px !important;
+                gap: 4px !important;
+            }
+            .brand-title > span { font-size: 10px !important; max-width: 120px; }
+            .header-actions { gap: 3px !important; }
+            .header-actions .icon-btn { width: 28px !important; height: 28px !important; font-size: 12px !important; border-radius: 7px !important; }
+            #btnSandboxEval { height: 28px !important; padding: 0 7px !important; font-size: 9px !important; border-radius: 7px !important; }
+            .panel-meta-row { min-height: 30px; gap: 4px !important; }
+            .opening-chip { font-size: 8px !important; padding: 3px 6px !important; min-height: 26px !important; }
+            .reaction-bar { height: 28px !important; max-height: 28px !important; gap: 3px !important; }
+            .reaction-btn { width: 25px !important; min-width: 25px !important; max-width: 25px !important; height: 25px !important; min-height: 25px !important; font-size: 13px !important; border-radius: 6px !important; }
+            .compact-status-row { min-height: 28px; gap: 3px !important; }
+            .candy-fight-bar-container { padding: 2px 5px !important; gap: 0 !important; border-radius: 5px !important; }
+            .candy-bar-header { font-size: 6.5px !important; }
+            .candy-bar-track { height: 4px !important; }
+            .candy-icons-row { font-size: 6px !important; }
+            .side-action-btn { width: 26px !important; height: 26px !important; min-width: 26px !important; min-height: 26px !important; font-size: 11px !important; }
+            .game-actions-row { gap: 3px !important; }
+            .move-list-container { min-height: 29px !important; height: 29px !important; padding: 3px 6px 2px !important; gap: 4px !important; border-radius: 6px !important; }
+            .move-list-container .move-pair { padding: 2px 4px !important; gap: 3px !important; }
+            .move-list-container .move-num { font-size: 8px !important; }
+            .move-list-container .move-san { font-size: 9px !important; }
+            .player-card { padding: 3px 6px !important; gap: 1px !important; border-radius: 5px !important; min-height: 27px; }
+            .player-info { font-size: 8.5px !important; }
+            .clock-badge { font-size: 7.5px !important; padding: 1px 4px !important; }
+            .material-badge, .turn-badge { font-size: 7px !important; }
+            .captured-area { min-height: 6px !important; gap: 1px !important; }
+            .captured-icon { width: 10px !important; height: 10px !important; }
+            .chat-container { gap: 3px !important; min-height: 80px !important; }
+            .chat-box { min-height: 150px !important; padding: 5px !important; gap: 3px !important; font-size: 10px !important; }
+            .chat-msg { padding: 3px 5px !important; line-height: 1.25 !important; }
+            .chat-input-row { gap: 3px !important; }
+            .chat-input { min-height: 30px !important; height: 30px !important; padding: 5px 7px !important; font-size: 10px !important; }
+            .xp-toggle-btn.voice-toggle { height: 30px !important; min-height: 30px !important; min-width: 32px !important; }
+            .taunt-scroll-container { height: 27px !important; max-height: 27px !important; padding: 1px !important; gap: 3px !important; }
+            .taunt-btn { height: 23px !important; min-height: 23px !important; padding: 3px 7px !important; font-size: 8px !important; border-radius: 4px !important; }
+        }
+
         .brand-title { font-size: 9px; font-weight: bold; color: var(--text-muted); border-bottom: 1px solid var(--panel-border); display: flex; justify-content: space-between; align-items: center; border-radius: 6px; padding: 5px 8px; background: var(--chat-bg); gap: 6px; white-space: nowrap; flex-shrink: 0; }
         .brand-title > span { display: inline-block; overflow: hidden; text-overflow: ellipsis; max-width: 140px; font-weight: 800; color: var(--board-border); font-size: 11px; }
 
@@ -1248,6 +1345,23 @@
         .tutorial-step h3 { font-size: 12px; margin-bottom: 4px; color: var(--board-border); }
         .tutorial-step p { font-size: 11px; line-height: 1.45; color: var(--text-main); }
         .tutorial-nav { display: flex; gap: 8px; justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
+        .tutorial-tools { margin-top: 10px; padding: 10px; border: 1px solid var(--panel-border); border-radius: 12px; background: var(--chat-bg); }
+        .tutorial-tools-title { font-size: 10px; font-weight: 900; color: var(--board-border); margin-bottom: 7px; text-align: center; }
+        .tutorial-tools-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+        .tutorial-tool-btn { min-height: 64px; border: 1px solid var(--panel-border); border-radius: 10px; background: var(--btn-bg); color: var(--text-main); cursor: pointer; padding: 7px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+        .tutorial-tool-btn:hover { transform: translateY(-1px); border-color: var(--board-border); }
+        /* Sandbox do Tutorial: botão único e neutro (sem o antigo azul duplicado). */
+        .tutorial-tool-btn.sandbox-tool { background: var(--btn-bg); color: var(--text-main); border-color: var(--panel-border); }
+        .tutorial-tool-btn.sandbox-tool:hover { background: var(--btn-bg); color: var(--text-main); }
+        .tutorial-tool-btn.sandbox-tool, .tutorial-tool-btn.sandbox-tool:active, .tutorial-tool-btn.sandbox-tool:focus { background: var(--btn-bg) !important; color: var(--text-main) !important; border-color: var(--panel-border) !important; box-shadow: none !important; }
+        .tutorial-tool-btn span { font-size: 18px; line-height: 1; }
+        .tutorial-tool-btn b { font-size: 10px; }
+        .tutorial-tool-btn small { font-size: 8px; color: var(--text-muted); text-align: center; line-height: 1.2; }
+        .xp-train-hud { display:none; width:100%; box-sizing:border-box; margin:8px 0; padding:9px; border:1px solid var(--panel-border); border-radius:12px; background:var(--chat-bg); color:var(--text-main); box-shadow:0 4px 14px rgba(0,0,0,.14); }
+        .xp-train-hud-status { min-height:20px; font-size:11px; font-weight:800; text-align:left; margin-bottom:7px; }
+        .xp-train-hud-actions { display:flex; gap:6px; justify-content:flex-start; flex-wrap:wrap; } .xp-train-hud-actions .action-btn:disabled { opacity:.45; cursor:not-allowed; }
+        @media(max-width:600px){ .tutorial-tools-grid { grid-template-columns:1fr; } .tutorial-tool-btn { min-height:54px; display:grid; grid-template-columns:28px 1fr; grid-template-rows:auto auto; text-align:left; } .tutorial-tool-btn span { grid-row:1 / span 2; align-self:center; justify-self:center; } .tutorial-tool-btn b,.tutorial-tool-btn small { text-align:left; } }
+
         .tutorial-hero {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             margin: 8px 0 12px; flex-wrap: wrap;
@@ -1267,11 +1381,6 @@
             background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.35);
             border-radius: 10px; padding: 8px 10px; font-size: 11px; text-align: left; margin-top: 8px;
         }
-        .tutorial-practice-btn {
-            margin-top: 10px; width: 100%; padding: 10px; font-size: 11px; font-weight: 800;
-            border: none; border-radius: 10px; cursor: pointer; color: #fff;
-            background: linear-gradient(135deg, #7c3aed, #4f46e5);
-        }
         .tutorial-move-demo {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
             max-width: 160px; margin: 8px auto; border-radius: 8px; overflow: hidden;
@@ -1287,32 +1396,79 @@
 
 
         /* Desktop / large tablet: two-column, less scroll */
+        /* === v11 desktop menu: duas colunas realmente independentes === */
         @media (min-width: 900px) {
             #menu-screen {
-                justify-content: center; padding: 16px 24px 24px;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 14px 24px 28px;
+                overflow-x: hidden;
                 overflow-y: auto;
             }
-            .hero-box { margin: 0 0 10px; }
-            .menu-dashboard {
-                max-width: 920px;
-                display: grid;
-                grid-template-columns: 300px 1fr;
-                gap: 12px 14px;
-                padding: 16px;
-                align-items: start;
+            .hero-box {
+                width: min(1080px, 100%);
+                margin: 0 auto 10px;
+                flex-shrink: 0;
             }
-            .menu-dashboard .menu-span-2 { width: 100%; }
+            .menu-dashboard {
+                width: min(1080px, 100%);
+                max-width: 1080px;
+                box-sizing: border-box;
+                display: grid;
+                grid-template-columns: minmax(245px, 285px) minmax(0, 1fr);
+                grid-template-areas: "left right";
+                gap: 12px 14px;
+                padding: 14px;
+                margin: 0 auto;
+                align-items: start;
+                justify-items: stretch;
+            }
+            .menu-dashboard .menu-span-2 {
+                width: auto;
+                min-width: 0;
+            }
             .menu-col-left {
-                grid-column: 1 !important; display: flex; flex-direction: column; gap: 8px;
+                grid-area: left;
+                grid-column: auto !important;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+                min-width: 0;
             }
             .menu-col-right {
-                grid-column: 2 !important; display: flex; flex-direction: column; gap: 8px;
+                grid-area: right;
+                grid-column: auto !important;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+                min-width: 0;
+            }
+            .menu-profile-card,
+            .menu-details,
+            .menu-radio-section,
+            .menu-section-label,
+            .menu-modes-grid {
+                min-width: 0;
+                max-width: 100%;
+                box-sizing: border-box;
             }
             .menu-profile-card { width: 100%; }
-            .menu-modes-grid { grid-template-columns: 1fr 1fr 1fr; }
-            .mode-card { min-height: 72px; padding: 14px; }
-            .mode-card .mode-title { font-size: 13px; }
-            .mode-card .mode-sub { font-size: 10px; }
+            .menu-modes-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                width: 100%;
+            }
+            .mode-card { min-width: 0; min-height: 70px; padding: 12px 9px; }
+            .mode-card .mode-title { font-size: 12.5px; }
+            .mode-card .mode-sub { font-size: 9.5px; }
+            .menu-details { width: 100%; }
+            .menu-details .details-body { min-width: 0; overflow-x: hidden; }
+            .menu-details .menu-grid-5 {
+                grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+            }
+            .menu-details .menu-grid-5 > * { min-width: 0; }
+            .menu-details .room-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
             #history-list { max-height: 90px; }
             .menu-details[open] #history-list { max-height: 120px; }
         }
@@ -1337,6 +1493,16 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+<style id="xp-final-css">
+.xp-ai-progress{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:99999;display:none;min-width:220px;max-width:82vw;padding:8px 12px;border:1px solid var(--board-border);border-radius:12px;background:rgba(0,0,0,.82);color:var(--text-main);font:600 12px ui-monospace,monospace;box-shadow:0 0 18px rgba(0,0,0,.35);text-align:center;pointer-events:none}
+@media(max-width:600px){.xp-ai-progress{top:8px;font-size:11px;min-width:180px}}
+</style>
+
+
+<style id="xp-training-css-v122">
+.xp-train-card{padding:10px;border-radius:14px}.xp-train-title{font-size:15px}.xp-train-board{width:min(88vw,62vh)}}
+</style>
+
 </head>
 <body class="theme-claro pieces-blue-pink">
     <button id="restore-btn" onclick="togglePanel()">⚙️ MENU</button>
@@ -1376,6 +1542,10 @@
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('toquio')">⚡ Tóquio (Cyber)</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="applyThemePreset('londres')">🌲 Londres</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px; grid-column:1/-1; background:linear-gradient(135deg,#44403c,#78716c); color:#fafaf9;" onclick="applyThemePreset('arena')">🏟️ Arena (Torneio clássico)</button>
+                <button class="action-btn" style="padding:6px; font-size:9px; background:linear-gradient(135deg,#020403,#0b6b3a); color:#d8ffe5; border-color:#00ff66;" onclick="applyThemePreset('matrix')">🟩 Matrix — Sistema</button>
+                <button class="action-btn" style="padding:6px; font-size:9px; background:linear-gradient(135deg,#071321,#164a68); color:#e6fbff; border-color:#00e5ff;" onclick="applyThemePreset('cyberpunk')">⚡ Cyberpunk — Neon</button>
+                <button class="action-btn" style="padding:6px; font-size:9px; background:linear-gradient(135deg,#101707,#385414); color:#f4ffe2; border-color:#84cc16;" onclick="applyThemePreset('toxic')">☣️ Toxic — Contaminação</button>
+                <button class="action-btn" style="padding:6px; font-size:9px; background:linear-gradient(135deg,#032217,#0a7652); color:#dcfff0; border-color:#34d399;" onclick="applyThemePreset('esmeralda')">💚 Esmeralda — Floresta</button>
                 <button class="action-btn" id="btnThemeGrandmaster" style="padding: 6px; font-size: 9px; opacity: 0.5; grid-column:1/-1;" onclick="trySetGrandmasterTheme()" title="Desbloqueie com Elo ≥ 1500">👑 Grandmaster (bloqueado)</button>
                 <label style="grid-column:1/-1; font-size:9.5px; font-weight:bold; display:flex; align-items:center; justify-content:space-between; background:var(--chat-bg); padding:5px; border-radius:6px; border:1px solid var(--panel-border);">
                     <span>♿ Padrões (daltonismo)</span>
@@ -1568,7 +1738,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v10.9</p>
+            <p>Estratégia P2P · IA offline · v13.0.0</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1653,10 +1823,6 @@
                         <span class="mode-title">🤖 Bot vs Bot</span>
                         <span class="mode-sub">Assista mestres</span>
                     </button>
-                    <button type="button" class="mode-card mode-sandbox" onclick="startSandboxMode()">
-                        <span class="mode-title">🧪 Sandbox</span>
-                        <span class="mode-sub">Analisar posição</span>
-                    </button>
                     <button type="button" class="mode-card mode-tutorial" onclick="openTutorial()">
                         <span class="mode-title">📖 Tutorial</span>
                         <span class="mode-sub">Aprenda as regras</span>
@@ -1732,10 +1898,18 @@
                 <button class="close-modal-btn" onclick="closeTutorial()" title="Fechar">✕</button>
             </div>
             <div id="tutorialBody"></div>
-            <div class="tutorial-nav">
+            <div class="tutorial-nav" style="flex-wrap:wrap;">
                 <button class="action-btn" id="tutorialPrev" onclick="tutorialStep(-1)" style="padding:8px 12px;font-size:11px;">← Anterior</button>
                 <span id="tutorialPager" style="font-size:11px;color:var(--text-muted);align-self:center;"></span>
                 <button class="action-btn" id="tutorialNext" onclick="tutorialStep(1)" style="padding:8px 12px;font-size:11px;background:var(--modal-border);color:#fff;">Próximo →</button>
+            </div>
+            <div class="tutorial-tools" aria-label="Ferramentas de aprendizado">
+                <div class="tutorial-tools-title">🧰 Aprender, praticar e analisar</div>
+                <div class="tutorial-tools-grid">
+                    <button type="button" class="tutorial-tool-btn" onclick="xpOpenTraining()"><span>🧩</span><b>Treino</b><small>Desafios no tabuleiro principal</small></button>
+                    <button type="button" class="tutorial-tool-btn" onclick="xpImportFEN()"><span>♟️</span><b>FEN</b><small>Carregar e analisar uma posição</small></button>
+                    <button type="button" class="tutorial-tool-btn sandbox-tool" onclick="startSandboxFromTutorial()"><span>🧪</span><b>Sandbox</b><small>Laboratório livre com IA</small></button>
+                </div>
             </div>
         </div>
     </div>
@@ -1957,14 +2131,114 @@
 .god-mode-icon{font-size:42px;line-height:1;margin-bottom:12px}.god-mode-card>div:nth-child(2){font-size:clamp(24px,5vw,42px);letter-spacing:.04em;color:#fde68a}.god-mode-card>div:nth-child(3){margin-top:10px;font-size:14px;color:#e5e7eb;font-weight:700}
 @keyframes godFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 @media(max-width:900px){.god-mode-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,10,20,.88)}.god-mode-card{padding:24px 18px}}
-.god-assist-from,.god-assist-to{box-shadow:inset 0 0 0 4px rgba(250,204,21,.95),0 0 16px rgba(250,204,21,.55)!important;position:relative;z-index:2}
-.god-assist-to::after{content:"⚡";position:absolute;right:4px;top:3px;font-size:14px;line-height:1;filter:drop-shadow(0 1px 2px #000)}
+.god-assist-from,.god-assist-to{box-shadow:inset 0 0 0 3px #B8FF00,0 0 8px rgba(184,255,0,.95),0 0 20px rgba(184,255,0,.75),0 0 34px rgba(184,255,0,.45)!important;position:relative;z-index:2}
+.god-assist-from::after{content:"◈";position:absolute;left:4px;top:3px;color:#B8FF00;font-size:12px;line-height:1;text-shadow:0 0 4px #000,0 0 8px #B8FF00;filter:drop-shadow(0 0 3px rgba(184,255,0,.9))}
+.god-assist-to::after{content:"⚡";position:absolute;right:4px;top:3px;color:#B8FF00;font-size:15px;line-height:1;text-shadow:0 0 4px #000,0 0 8px #B8FF00;filter:drop-shadow(0 0 3px rgba(184,255,0,.9))}
+/* v11.5 — indicador GOD neon verde-limão: origem + destino */
+body.god-stealth .god-assist-from,
+body.god-stealth .god-assist-to {
+    box-shadow: inset 0 0 0 3px #B8FF00, 0 0 8px rgba(184,255,0,.95), 0 0 20px rgba(184,255,0,.75), 0 0 34px rgba(184,255,0,.45) !important;
+}
+body.god-stealth .god-assist-from::after {
+    content: "◈" !important;
+}
+body.god-stealth .god-assist-to::after {
+    content: "⚡" !important;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    font-size: 14px;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px #000);
+}
+
+        /* v11 — barra de movimentos em tempo real + retorno ao atual acessível */
+        .move-list-container { overflow-x: auto !important; overflow-y: hidden !important; white-space: nowrap; scroll-behavior: auto !important; }
+        .move-list-container .move-san { border: 0; background: transparent; font: inherit; color: inherit; padding: 1px 4px; margin: 0; cursor: pointer; white-space: nowrap; }
+        .move-list-container .move-san:hover { text-decoration: underline; }
+        .move-list-container .history-toolbar { position: sticky; left: 0; z-index: 20; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; padding: 2px 4px 2px 2px; margin: -1px 2px -1px -2px; background: var(--chat-bg); border-right: 1px solid var(--panel-border); box-shadow: 4px 0 7px rgba(0,0,0,.10); }
+        .move-list-container .history-return-btn { flex: 0 0 auto; min-height: 30px; border: 1px solid var(--board-border); background: var(--chat-bg); color: inherit; border-radius: 6px; padding: 4px 9px; cursor: pointer; font-size: 10px; font-weight: 800; white-space: nowrap; touch-action: manipulation; }
+        .move-list-container .history-return-btn:hover { background: var(--btn-hover); }
+        .move-list-container .history-position-label { flex: 0 0 auto; opacity: .7; font-size: 9px; padding: 0 4px; white-space: nowrap; }
+        @media (max-width: 600px) {
+            .move-list-container .history-toolbar { padding: 2px 5px 2px 2px; margin-left: -2px; }
+            .move-list-container .history-return-btn { min-height: 40px; padding: 7px 10px; font-size: 10px; }
+        }
 </style>
 <script>
     let chess = new Chess();
+    // === v11 — histórico interativo de posições ===
+    // Guarda um FEN para cada ply, sem alterar a partida ao navegar pelo histórico.
+    let moveHistoryFens = [chess.fen()];
+    let historyViewPly = null;
+    let moveListUserScrolling = false;
+    let gameOverHandled = false;
+
+    function resetMoveHistory() {
+        moveHistoryFens = [chess.fen()];
+        historyViewPly = null;
+    }
+
+    function recordMoveHistoryPosition() {
+        moveListUserScrolling = false;
+        const ply = chess.history().length;
+        moveHistoryFens = moveHistoryFens.slice(0, ply);
+        moveHistoryFens[ply] = chess.fen();
+        historyViewPly = null;
+    }
+
+    function exitHistoryView() {
+        if (historyViewPly === null) return;
+        historyViewPly = null;
+        selectedSquare = null;
+        possibleMoves = [];
+        renderBoard();
+        updateMoveListPanel();
+    }
+
+    function viewHistoryPly(ply) {
+        ply = Number(ply);
+        if (!Number.isInteger(ply) || ply < 0 || ply >= moveHistoryFens.length) return;
+        historyViewPly = ply;
+        selectedSquare = null;
+        possibleMoves = [];
+        renderBoard();
+        updateMoveListPanel();
+    }
+
+    function getDisplayedChess() {
+        if (historyViewPly === null || !moveHistoryFens[historyViewPly]) return chess;
+        try {
+            return new Chess(moveHistoryFens[historyViewPly]);
+        } catch (e) {
+            historyViewPly = null;
+            return chess;
+        }
+    }
+    function scrollMoveListToEnd(immediate = true){
+        const container = document.getElementById('moveListContainer');
+        if (!container) return;
+        if (moveListUserScrolling && historyViewPly === null) return;
+        if (!container.dataset.scrollGuardBound) {
+            container.dataset.scrollGuardBound = '1';
+            ['wheel','touchstart','pointerdown'].forEach(function(ev){
+                container.addEventListener(ev, function(){ moveListUserScrolling = true; }, {passive:true});
+            });
+        }
+        const doScroll = () => {
+            // Atualização em tempo real: vai diretamente para o último lance.
+            container.scrollLeft = container.scrollWidth - container.clientWidth;
+            if (container.scrollLeft < 0) container.scrollLeft = 0;
+        };
+        if (immediate) doScroll();
+        else requestAnimationFrame(doScroll);
+    }
+
+
     let selectedSquare = null;
     let possibleMoves = [];
-    let gameMode = 'menu';
+    const APP_VERSION = '13.0.0';
+        let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
     let trailEnabled = true;
@@ -2039,7 +2313,7 @@
         { id: 'theme_gm', elo: 1500, type: 'theme', apply: 'grandmaster', icon: '👑', title: 'Tema Grandmaster', desc: 'UI dourada + estilo neon.' },
         { id: 'board_royal', elo: 1500, type: 'board', apply: 'board-royal', icon: '👑', title: 'Tabuleiro Real', desc: 'Dourado e violeta de campeão.' },
         { id: 'cert_champion', elo: 1500, type: 'cert', apply: null, icon: '📜', title: 'Certificado Grande Campeão', desc: 'Baixe seu diploma personalizado.' },
-        { id: 'pieces_gold', elo: 1600, type: 'pieces', apply: 'pieces-gold-purple', icon: '🟡', title: 'Peças Ouro Real', desc: 'Dourado vs roxo profundo.' }
+        { id: 'pieces_gold', elo: 1600, type: 'pieces', apply: 'pieces-gold-purple', icon: '🟡', title: 'Peças Ouro Real', desc: 'Dourado vs roxo profundo.' },
     ];
     // Corrigir ícone esmeralda (texto acidental)
     UNLOCK_CATALOG.forEach(function(u) { if (u.id === 'board_emerald') u.icon = '💚'; });
@@ -2098,7 +2372,11 @@
         toquio:   { theme: 'toquio',   pieces: 'pieces-cyberpunk',   style: 'style-neon' },
         londres:  { theme: 'londres',  pieces: 'pieces-green-cyan',  style: 'style-classic' },
         arena:    { theme: 'arena',    pieces: 'pieces-monochrome',  style: 'style-classic' },
-        grandmaster: { theme: 'grandmaster', pieces: 'pieces-gold-purple', style: 'style-neon' }
+        grandmaster: { theme: 'grandmaster', pieces: 'pieces-gold-purple', style: 'style-neon' },
+        matrix: { theme: 'matrix', pieces: 'pieces-neon-lime', style: 'style-neon' },
+        cyberpunk: { theme: 'cyberpunk', pieces: 'pieces-cyberpunk', style: 'style-neon' },
+        toxic: { theme: 'toxic', pieces: 'pieces-toxic', style: 'style-contrast' },
+        esmeralda: { theme: 'esmeralda', pieces: 'pieces-green-cyan', style: 'style-classic' }
     };
 
     /**
@@ -2119,7 +2397,11 @@
         { id: 'sunset-wood', label: 'Pôr do Sol', theme: 'claro', board: 'board-wood', pieces: 'pieces-sunset', style: 'style-classic' },
         { id: 'toxic-contrast', label: 'Tóxico Alto Contraste', theme: 'novayork', board: '', pieces: 'pieces-toxic', style: 'style-contrast' },
         { id: 'ruby-indigo', label: 'Rubi Espacial', theme: 'toquio', board: 'board-marble', pieces: 'pieces-ruby-indigo', style: 'style-neon' },
-        { id: 'gm-royal', label: 'Grandmaster Royal', theme: 'grandmaster', board: 'board-royal', pieces: 'pieces-gold-purple', style: 'style-neon' }
+        { id: 'gm-royal', label: 'Grandmaster Royal', theme: 'grandmaster', board: 'board-royal', pieces: 'pieces-gold-purple', style: 'style-neon' },
+        { id: 'matrix-system', label: 'Matrix System', theme: 'matrix', board: '', pieces: 'pieces-neon-lime', style: 'style-neon' },
+        { id: 'cyber-arena', label: 'Cyber Arena', theme: 'cyberpunk', board: '', pieces: 'pieces-cyberpunk', style: 'style-neon' },
+        { id: 'toxic-zone', label: 'Toxic Zone', theme: 'toxic', board: '', pieces: 'pieces-toxic', style: 'style-contrast' },
+        { id: 'emerald-forest', label: 'Emerald Forest', theme: 'esmeralda', board: '', pieces: 'pieces-green-cyan', style: 'style-classic' }
     ];
     let currentPrivateVisual = null;
     let lastPrivateVisualId = '';
@@ -2205,7 +2487,7 @@
     function refreshUnlocksUI() {
         const gallery = document.getElementById('unlocksGallery');
         if (gallery) {
-            gallery.innerHTML = UNLOCK_CATALOG.map(function(item) {
+            gallery.innerHTML = UNLOCK_CATALOG.filter(function(item) { return !item.secret || godMode; }).map(function(item) {
                 const owned = isUnlockOwned(item);
                 const lockLabel = owned ? (godMode ? '⚡ Desbloqueado pelo Modo GOD' : '✅ Desbloqueado') : ('🔒 Elo ' + item.elo + '+');
                 const btnLabel = item.type === 'cert' ? '📜 Baixar' : 'Aplicar';
@@ -2639,7 +2921,7 @@
         ctx.fillStyle = '#c9a227';
         ctx.font = '13px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v10.9', w / 2, 935);
+        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v11', w / 2, 935);
 
         return { canvas: canvas, name: name, serial: serial };
     }
@@ -2670,30 +2952,7 @@
         // Página em pontos (1pt = 1/72") — escala para caber em A4 paisagem ~842x595
         const pageW = 842;
         const pageH = Math.max(595, Math.round(pageW * imgH / imgW));
-        const objects = [];
-        function addObj(str) {
-            objects.push(str);
-            return objects.length;
-        }
-
-        const imgObj = addObj(
-            '<< /Type /XObject /Subtype /Image /Width ' + imgW +
-            ' /Height ' + imgH +
-            ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' +
-            jpegBytes.length + ' >>\nstream\n'
-        );
-        // stream bytes handled specially below
-        const imgObjNum = imgObj;
-
-        const content = 'q\n' + pageW + ' 0 0 ' + pageH + ' 0 0 cm\n/Im0 Do\nQ\n';
-        const contentObj = addObj('<< /Length ' + content.length + ' >>\nstream\n' + content + 'endstream');
-        const pageObj = addObj(
-            '<< /Type /Page /Parent 3 0 R /MediaBox [0 0 ' + pageW + ' ' + pageH +
-            '] /Contents ' + contentObj + ' 0 R /Resources << /XObject << /Im0 ' + imgObjNum + ' 0 R >> >> >>'
-        );
-        // We'll renumber carefully - better build with fixed structure
-
-        // Rebuild with known numbers for reliability
+        // Estrutura PDF numerada explicitamente para evitar objetos temporários/dead code.
         // 1: catalog, 2: pages, 3: page, 4: content, 5: image
         const enc = new TextEncoder();
         const parts = [];
@@ -3325,11 +3584,13 @@
 
     aiWorker.onmessage = function(e) {
         const data = e.data || {};
+        // v11.3 GOD ONLINE — aceita PvE, Sandbox e Network (silencioso)
         if (data.channel === 'god' && data.requestId === godAssistRequestId) {
-            if ((gameMode === 'pve' || gameMode === 'sandbox') && data.bestMove) {
+            const accepted = gameMode === 'pve' || gameMode === 'sandbox' || (gameMode === 'network' && !isSpectator);
+            if (accepted && data.bestMove) {
                 godAssistBestMove = data.bestMove;
                 renderBoard();
-                addLog('GOD assistência recalculada: ' + (data.bestMove.san || (data.bestMove.from + data.bestMove.to)), 'GOD');
+                addLog('GOD assistência recalculada (local): ' + (data.bestMove.san || (data.bestMove.from + data.bestMove.to)), 'GOD');
             }
             return;
         }
@@ -3536,7 +3797,7 @@
             const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
             const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
             return {
-                ver: '10.8',
+                ver: APP_VERSION,
                 mode: typeof gameMode !== 'undefined' ? gameMode : '-',
                 turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
                 ply: ply,
@@ -3549,9 +3810,26 @@
                 view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
             };
         } catch (e) {
-            return { ver: '10.8', err: String(e && e.message || e) };
+            return { ver: APP_VERSION, err: String(e && e.message || e) };
         }
     }
+
+    // v13.0.0 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
+    window.xpRuntimeHealth = function(){
+        try {
+            return {
+                version: APP_VERSION,
+                mode: typeof gameMode !== 'undefined' ? gameMode : '-',
+                sandbox: typeof sandboxMode !== 'undefined' ? !!sandboxMode : false,
+                training: !!window.xpTrainingActive,
+                turn: (typeof chess !== 'undefined' && chess) ? chess.turn() : '-',
+                ply: (typeof chess !== 'undefined' && chess) ? chess.history().length : 0,
+                fen: (typeof chess !== 'undefined' && chess) ? chess.fen() : null,
+                aiPending: typeof pendingAICallback === 'function',
+                peer: (typeof conn !== 'undefined' && conn && conn.open) || (typeof peer !== 'undefined' && peer && !peer.destroyed)
+            };
+        } catch(e) { return {version: APP_VERSION, error: String(e && e.message || e)}; }
+    };
 
     function addLog(msg, level = 'INFO', meta = null) {
         const now = new Date();
@@ -3693,9 +3971,11 @@
     function setGodMode(active, announce) {
         godMode = !!active;
         try { localStorage.setItem('xadrezpro_god_mode', godMode ? '1' : '0'); } catch(e) {}
+        document.body.classList.toggle('god-stealth', godMode); // v11.3
         try { refreshUnlocksUI(); refreshEloUI(); } catch(e) {}
         if (godMode) {
-            if (gameMode === 'pve' || gameMode === 'sandbox') {
+            // v11.3 — dispara nos três modos (PvE, Sandbox e Network)
+            if (gameMode === 'pve' || gameMode === 'sandbox' || (gameMode === 'network' && !isSpectator)) {
                 setTimeout(requestGodAssistance, 25);
             }
         } else {
@@ -3964,6 +4244,7 @@
         isSpectator = false;
         boardFlipped = false;
         chess.reset();
+        resetMoveHistory();
         selectedSquare = null;
         possibleMoves = [];
         lastPathCoords = [];
@@ -4118,7 +4399,7 @@
         return 0;
     }
 
-    function toggleVoiceNarr(el) { voiceNarrEnabled = el.checked; }
+    function toggleVoiceNarr(el) { voiceNarrEnabled = !!el.checked; try { saveUserPrefs(); } catch(e) {} }
 
     function playSFX(type = 'move') {
         if (!soundEnabled) return;
@@ -4314,8 +4595,8 @@
         evt.currentTarget.classList.add('active');
     }
 
-    function toggleSFX(el) { soundEnabled = el.checked; }
-    function toggleTrail(el) { trailEnabled = el.checked; }
+    function toggleSFX(el) { soundEnabled = !!el.checked; try { saveUserPrefs(); } catch(e) {} }
+    function toggleTrail(el) { trailEnabled = !!el.checked; try { saveUserPrefs(); } catch(e) {} }
 
     function updateFightBarDisplay() {
         const total = candiesWhite + candiesBlack;
@@ -4359,6 +4640,7 @@
             if (titleEl && !isSpectator && !currentCityKey) titleEl.innerText = "Xadrez Pro";
         }
         try { localStorage.setItem('xadrezpro_theme', themeName); } catch (e) {}
+        try { saveUserPrefs(); } catch (e) {}
         addLog('Tema UI: ' + prev + ' → ' + themeName, 'UI');
     }
 
@@ -4448,15 +4730,15 @@
     }
 
     function requestGodAssistance() {
-        // A avaliação rápida é um recurso próprio do Sandbox e não depende do Modo GOD.
-        // No PvE ela continua sendo uma assistência exclusiva do GOD.
+        // v11.3 — Sandbox sempre; GOD libera PvE e Network (contra humano, silencioso).
         const isSandbox = gameMode === 'sandbox';
         const isGodPvE = godMode && gameMode === 'pve';
-        if ((!isSandbox && !isGodPvE) || isSpectator || chess.game_over()) {
+        const isGodNetwork = godMode && gameMode === 'network' && !isSpectator;
+        if ((!isSandbox && !isGodPvE && !isGodNetwork) || isSpectator || chess.game_over()) {
             clearGodAssistance();
             return;
         }
-        if (gameMode === 'pve' && chess.turn() !== playerColor) {
+        if ((gameMode === 'pve' || gameMode === 'network') && chess.turn() !== playerColor) {
             clearGodAssistance();
             return;
         }
@@ -4477,6 +4759,7 @@
 
     function startGame(mode, isRematch = false) {
         forceFullBoardRebuild();
+        gameOverHandled = false;
         if (mode !== 'sandbox') setSandboxEvalVisible(false);
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         gameMode = mode;
@@ -4496,6 +4779,7 @@
         }
 
         chess.reset();
+        resetMoveHistory();
         selectedSquare = null;
         possibleMoves = [];
         lastPathCoords = [];
@@ -4589,7 +4873,9 @@
 
     function resetGame(isRematch = true) {
         forceFullBoardRebuild();
+        gameOverHandled = false;
         chess.reset();
+        resetMoveHistory();
         selectedSquare = null;
         possibleMoves = [];
         lastPathCoords = [];
@@ -4616,6 +4902,16 @@
         aiRequestId++;
         pendingAICallback = null;
         clearGodAssistance();
+        // Limpa qualquer áudio/voz pendente da sessão encerrada.
+        try {
+            Object.keys(voiceIncoming).forEach(function(k){ delete voiceIncoming[k]; });
+            voicePending = null;
+            if (voiceMaxTimer) { clearTimeout(voiceMaxTimer); voiceMaxTimer = null; }
+            if (voiceStream) { voiceStream.getTracks().forEach(function(t){ try { t.stop(); } catch(e){} }); voiceStream = null; }
+            setVoiceBtnRecording(false);
+            const voicePreview = document.getElementById('voicePreview');
+            if (voicePreview) { voicePreview.style.display = 'none'; voicePreview.innerHTML = ''; }
+        } catch(e) {}
         if (menuTransitionTimer) { clearTimeout(menuTransitionTimer); menuTransitionTimer = null; }
         menuTransitionToken++;
         if (roomStatusRefreshTimer) { clearTimeout(roomStatusRefreshTimer); roomStatusRefreshTimer = null; }
@@ -4627,6 +4923,7 @@
 
         resetCandiesScore();
         chess.reset();
+        resetMoveHistory();
         selectedSquare = null;
         possibleMoves = [];
         lastPathCoords = [];
@@ -5196,8 +5493,11 @@
     }
 
     function handleGameOverEvents(reason, winnerColor = null) {
+        if (gameOverHandled) { addLog('Fim de jogo duplicado ignorado: ' + reason, 'GAME'); return; }
+        gameOverHandled = true;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         stopClock();
+        clearGodAssistance(); // v11.3 — limpa destaque GOD no fim
 
         let winnerText = "Empate / Fim de Jogo";
         if (winnerColor === 'w') winnerText = "Vitória das Peças Brancas!";
@@ -5517,6 +5817,7 @@
         playerColor = playerColor === 'w' ? 'b' : 'w';
         boardFlipped = (playerColor === 'b');
         chess.reset();
+        resetMoveHistory();
         selectedSquare = null;
         possibleMoves = [];
         lastPathCoords = [];
@@ -5998,52 +6299,68 @@
         const container = document.getElementById("moveListContainer");
         if (!container) return;
         const history = chess.history();
+        container.classList.toggle('history-browsing', historyViewPly !== null);
+
         if (history.length === 0) {
             container.innerHTML = '<span class="move-empty">Nenhum lance ainda.</span>';
+            scrollMoveListToEnd(true);
             return;
         }
+
         const frag = document.createDocumentFragment();
         const totalPairs = Math.ceil(history.length / 2);
         for (let i = 0; i < history.length; i += 2) {
             const pairIdx = Math.floor(i / 2);
-            const isLatest = pairIdx === totalPairs - 1;
             const wrap = document.createElement('span');
-            wrap.className = 'move-pair' + (isLatest ? ' is-latest' : '');
+            wrap.className = 'move-pair' + (historyViewPly === null && pairIdx === totalPairs - 1 ? ' is-latest' : '');
+
             const num = document.createElement('span');
             num.className = 'move-num';
             num.textContent = (pairIdx + 1) + '.';
             wrap.appendChild(num);
-            const w = document.createElement('span');
-            w.className = 'move-san' + (!history[i + 1] ? ' only' : '');
-            if (history[i].includes('#')) w.classList.add('mate');
-            else if (history[i].includes('+')) w.classList.add('check');
-            w.textContent = history[i];
-            wrap.appendChild(w);
-            if (history[i + 1]) {
-                const b = document.createElement('span');
-                b.className = 'move-san';
-                if (history[i + 1].includes('#')) b.classList.add('mate');
-                else if (history[i + 1].includes('+')) b.classList.add('check');
-                b.textContent = history[i + 1];
-                wrap.appendChild(b);
-            }
+
+            const makeMoveButton = (san, ply) => {
+                const el = document.createElement('span');
+                el.className = 'move-san' + (ply % 2 === 0 && !history[ply + 1] ? ' only' : '');
+                if (san.includes('#')) el.classList.add('mate');
+                else if (san.includes('+')) el.classList.add('check');
+                if (historyViewPly === ply) el.classList.add('history-selected');
+                el.textContent = san;
+                el.setAttribute('role', 'button');
+                el.setAttribute('tabindex', '0');
+                el.title = 'Ver posição após este lance';
+                el.onclick = () => viewHistoryPly(ply + 1);
+                el.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viewHistoryPly(ply + 1); }
+                };
+                return el;
+            };
+
+            wrap.appendChild(makeMoveButton(history[i], i));
+            if (history[i + 1]) wrap.appendChild(makeMoveButton(history[i + 1], i + 1));
             frag.appendChild(wrap);
         }
+
         container.innerHTML = '';
+        if (historyViewPly !== null) {
+            const top = document.createElement('div');
+            top.className = 'history-toolbar';
+            const back = document.createElement('button');
+            back.type = 'button';
+            back.className = 'history-return-btn';
+            back.textContent = historyViewPly === history.length ? '● Atual' : '↩ Atual';
+            back.title = 'Voltar para a posição atual';
+            back.onclick = exitHistoryView;
+            top.appendChild(back);
+            const label = document.createElement('span');
+            label.className = 'history-position-label';
+            label.textContent = `posição ${historyViewPly}/${history.length}`;
+            top.appendChild(label);
+            container.appendChild(top);
+        }
         container.appendChild(frag);
-        // Scroll horizontal dinâmico até o último lance
-        requestAnimationFrame(() => {
-            const latest = container.querySelector('.move-pair.is-latest');
-            if (latest && latest.scrollIntoView) {
-                try {
-                    latest.scrollIntoView({ behavior: 'smooth', inline: 'end', block: 'nearest' });
-                } catch (e) {
-                    container.scrollLeft = container.scrollWidth;
-                }
-            } else {
-                container.scrollLeft = container.scrollWidth;
-            }
-        });
+        // A barra acompanha o último lance em tempo real, sem animação atrasada.
+        scrollMoveListToEnd(true);
     }
 
     function updateMaterialBadges() {
@@ -6124,6 +6441,8 @@
     }
 
     function bindPieceDrag(pieceEl, squareCoord) {
+        if (pieceEl.dataset.dragBound === '1') return;
+        pieceEl.dataset.dragBound = '1';
         pieceEl.setAttribute('draggable', 'true');
         pieceEl.ondragstart = (e) => {
             if (isSpectator || gameMode === 'bot-vs-bot') { e.preventDefault(); return; }
@@ -6144,7 +6463,8 @@
         document.querySelectorAll('.ghost-piece-slide').forEach(el => el.remove());
         const boardEl = document.getElementById("chessboard");
         if (!boardEl) return;
-        const board = chess.board();
+        const displayChess = getDisplayedChess();
+        const board = displayChess.board();
         const needFull = !boardDomReady || boardDomFlipped !== boardFlipped;
 
         const rowOrder = boardFlipped ? [7,6,5,4,3,2,1,0] : [0,1,2,3,4,5,6,7];
@@ -6190,10 +6510,12 @@
             boardDomFlipped = boardFlipped;
         }
 
-        const pathSet = new Set(lastPathCoords);
-        const moveSet = new Set(possibleMoves);
-        const inCheck = chess.in_check();
-        const turnColor = chess.turn();
+        let displayedPath = lastPathCoords;
+        if (historyViewPly !== null && historyViewPly > 0) { const h=chess.history({verbose:true})[historyViewPly-1]; if(h) displayedPath=[h.from,h.to]; }
+        const pathSet = new Set(displayedPath);
+        const moveSet = historyViewPly === null ? new Set(possibleMoves) : new Set();
+        const inCheck = displayChess.in_check();
+        const turnColor = displayChess.turn();
 
         for (let ri = 0; ri < 8; ri++) {
             const r = rowOrder[ri];
@@ -6206,8 +6528,8 @@
                 // classes de estado (sem destruir light/dark)
                 squareEl.classList.toggle('last-move', pathSet.has(squareCoord));
                 squareEl.classList.toggle('selected', selectedSquare === squareCoord);
-                squareEl.classList.toggle('highlight', moveSet.has(squareCoord) && !chess.get(squareCoord));
-                squareEl.classList.toggle('capture-highlight', moveSet.has(squareCoord) && !!chess.get(squareCoord));
+                squareEl.classList.toggle('highlight', moveSet.has(squareCoord) && !displayChess.get(squareCoord));
+                squareEl.classList.toggle('capture-highlight', moveSet.has(squareCoord) && !!displayChess.get(squareCoord));
                 squareEl.classList.toggle('god-assist-from', !!(godMode && godAssistBestMove && godAssistBestMove.from === squareCoord));
                 squareEl.classList.toggle('god-assist-to', !!(godMode && godAssistBestMove && godAssistBestMove.to === squareCoord));
                 squareEl.classList.remove('drag-over-target');
@@ -6280,6 +6602,7 @@
     }
 
     function finalizeLocalMove(move) {
+        recordMoveHistoryPosition();
         lastSyncedFen = chess.fen();
         updateTurnIndicators();
         updateCapturedDisplay();
@@ -6301,6 +6624,10 @@
         }
         if (gameMode === 'pve' && !over && chess.turn() !== playerColor) {
             setTimeout(() => makeAIMove(chess.turn()), 300);
+        }
+        // v11.3 GOD ONLINE — recalcula assistência ao voltar sua vez no online
+        if (gameMode === 'network' && !over && godMode && !isSpectator && chess.turn() === playerColor) {
+            setTimeout(requestGodAssistance, 80);
         }
     }
 
@@ -6343,6 +6670,22 @@
     }
 
     function handleSquareClick(square) {
+        if (historyViewPly !== null) return;
+        if (window.xpTrainingActive === true && typeof window.__xpTrainingMove === 'function') {
+            if (selectedSquare === null) {
+                const piece = chess.get(square);
+                if (piece && piece.color === chess.turn()) {
+                    selectedSquare = square;
+                    possibleMoves = chess.moves({ square, verbose: true }).map(m => m.to);
+                    renderBoard();
+                }
+            } else {
+                const from = selectedSquare;
+                if (square === from) { selectedSquare=null; possibleMoves=[]; renderBoard(); return; }
+                window.__xpTrainingMove(from, square);
+            }
+            return;
+        }
         if (isSpectator || gameMode === 'bot-vs-bot' || (gameMode === 'network' && chess.turn() !== playerColor) || (gameMode === 'pve' && chess.turn() !== playerColor)) return;
         // sandbox: permite ambos os lados
         if (selectedSquare === null) {
@@ -6400,7 +6743,7 @@
             selectedMove = moves[0];
             applyAIMove(selectedMove, onDone);
         } else {
-            // Orçamentos v9.0: níveis 1–3 acessíveis; 4 e 5 mantêm força alta
+            // Orçamentos v11.1: níveis 1–3 acessíveis; 4/5 fortes sem espera excessiva
             let depthBudget;
             if (gameMode === 'bot-vs-bot') {
                 depthBudget = [3, 420];
@@ -6410,8 +6753,11 @@
                     1: [2, 180],
                     2: [3, 320],
                     3: [4, 700],
-                    4: [5, 1500],
-                    5: [6, 2800]
+                    // Níveis 4/5: força alta, com limite de tempo controlado.
+                    // A busca pode aprofundar bastante, mas encerra rápido quando o
+                    // orçamento acaba, preservando a responsividade do jogo.
+                    4: [7, 2200],
+                    5: [9, 3600]
                 }[aiDifficulty] || [5, 2000];
             }
             const currentReqId = ++aiRequestId;
@@ -6460,6 +6806,7 @@
             chess.move(selectedMove);
         }
 
+        recordMoveHistoryPosition();
         const testMove = chess.history({ verbose: true }).slice(-1)[0];
         if (!testMove) { if (onDone) onDone(); return; }
 
@@ -6503,11 +6850,11 @@
             try {
                 testPeer = new Peer();
             } catch (e) {
-                resolve('disponivel');
+                resolve('desconhecido');
                 return;
             }
             const roomId = "xadrezpro-cities-v73-" + cityKey;
-            testPeer.on('error', () => finish('disponivel'));
+            testPeer.on('error', () => finish('desconhecido'));
             testPeer.on('open', () => {
                 try {
                     connTest = testPeer.connect(roomId, { reliable: true, serialization: 'json' });
@@ -6520,13 +6867,13 @@
                             finish(data.occupied || data.status === 'full' || data.status === 'accepted' ? 'ocupada' : 'disponivel');
                         }
                     });
-                    connTest.on('error', () => finish('disponivel'));
+                    connTest.on('error', () => finish('desconhecido'));
                 } catch (e) {
-                    finish('disponivel');
+                    finish('desconhecido');
                 }
             });
-            // PeerJS costuma levar 1–3s; 400ms gerava sempre "Livre"
-            setTimeout(() => finish('disponivel'), 2800);
+            // PeerJS pode levar alguns segundos. Se não houver resposta, não afirmamos que a sala está livre.
+            setTimeout(() => finish('desconhecido'), 5500);
         });
     }
 
@@ -6546,9 +6893,12 @@
                 if (status === 'disponivel') {
                     statusEl.innerText = 'Livre';
                     statusEl.style.background = '#15803d';
-                } else {
+                } else if (status === 'ocupada') {
                     statusEl.innerText = 'Em jogo';
                     statusEl.style.background = '#b91c1c';
+                } else {
+                    statusEl.innerText = 'Indisponível';
+                    statusEl.style.background = '#64748b';
                 }
             }
             }
@@ -6888,7 +7238,8 @@
             aiRequestId++; pendingAICallback = null;
             if (isSpectator) {
                 chess.reset();
-                selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
+                moveHistoryFens = [chess.fen()]; historyViewPly = null;
+            selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
                 lastSyncedFen = chess.fen();
                 resetClocks();
                 updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateClockDisplay();
@@ -6920,9 +7271,9 @@
                 }
                 const moveObj = {
                     from: data.move.from,
-                    to: data.move.to,
-                    promotion: data.move.promotion || undefined
+                    to: data.move.to
                 };
+                if (data.move.promotion) moveObj.promotion = data.move.promotion;
                 const result = chess.move(moveObj);
                 if (!result) {
                     if (data.fen) {
@@ -6948,6 +7299,7 @@
                     lastSyncedFen = chess.fen();
                 }
 
+                recordMoveHistoryPosition();
                 const history = chess.history({ verbose: true });
                 const lastMove = history[history.length - 1];
                 if (lastMove) {
@@ -6959,7 +7311,11 @@
                 if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
                 updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateClockDisplay();
                 detectOpening();
-                checkGameStateEvents(false);
+                const over = checkGameStateEvents(false);
+                // v11.3 GOD ONLINE — recalcula ao voltar sua vez após lance do oponente
+                if (!over && gameMode === 'network' && godMode && !isSpectator && chess.turn() === playerColor) {
+                    setTimeout(requestGodAssistance, 80);
+                }
             } catch (err) {
                 addLog(`Erro ao processar movimento remoto: ${err.message}`, 'ERROR');
             }
@@ -7148,6 +7504,7 @@
 
     function startGameSetup() {
         forceFullBoardRebuild();
+        gameOverHandled = false;
         gameMode = 'network';
         boardFlipped = (playerColor === 'b'); // espectador (playerColor null) vê do lado das brancas
         applyPlayerSeating();
@@ -7164,6 +7521,10 @@
         }
         playSFX('move');
         updateSpectatorChrome();
+        // v11.3 GOD ONLINE — dispara assistência ao entrar em partida online
+        if (gameMode === 'network' && !isSpectator && godMode && chess.turn() === playerColor) {
+            setTimeout(requestGodAssistance, 120);
+        }
     }
 
     /** UI extra do modo espectador (badge, só assiste — sem chat/voz/reações) */
@@ -7292,7 +7653,10 @@
             const raw = localStorage.getItem('xadrezpro_prefs_v73');
             if (!raw) return;
             const prefs = JSON.parse(raw);
-            if (prefs.theme) { currentTheme = prefs.theme; setTheme(prefs.theme); }
+            if (prefs.theme) {
+                currentTheme = prefs.theme;
+                setTheme(prefs.theme);
+            }
             if (typeof prefs.sound === 'boolean') soundEnabled = prefs.sound;
             if (typeof prefs.trail === 'boolean') trailEnabled = prefs.trail;
             if (typeof prefs.voice === 'boolean') voiceNarrEnabled = prefs.voice;
@@ -7304,16 +7668,11 @@
             const voice = document.getElementById('voiceNarrToggle'); if (voice) voice.checked = voiceNarrEnabled;
         } catch(e) {}
     }
-    const _origSetTheme = setTheme;
-    setTheme = function(t) { _origSetTheme(t); saveUserPrefs(); };
-    const _origToggleSFX = toggleSFX;
-    toggleSFX = function(el) { _origToggleSFX(el); saveUserPrefs(); };
-    const _origToggleTrail = toggleTrail;
-    toggleTrail = function(el) { _origToggleTrail(el); saveUserPrefs(); };
-    const _origToggleVoice = toggleVoiceNarr;
-    toggleVoiceNarr = function(el) { _origToggleVoice(el); saveUserPrefs(); };
 
     loadUserPrefs();
+    // v11.3 — aplica stealth ao carregar se GOD já estava ativo
+    if (godMode) document.body.classList.add('god-stealth');
+    try { refreshUnlocksUI(); } catch(e) {}
     updateFightBarDisplay();
     updateTurnIndicators();
     updateCapturedDisplay();
@@ -7518,9 +7877,9 @@
             practice: true
         },
         {
-            title: '9. Plano de abertura (e Sandbox)',
+            title: '9. Plano de abertura',
             pieces: ['N', 'B', 'K'],
-            html: '<p>1) Centro (e4/d4).<br>2) Desenvolva cavalos e bispos.<br>3) Roque cedo.<br>4) Não mova a mesma peça várias vezes na abertura.</p><div class="tutorial-tip">🧪 No <b>Sandbox</b> você joga os dois lados, desfaz lances e usa “Avaliar” com a IA — o melhor laboratório.</div>',
+            html: '<p>1) Centro (e4/d4).<br>2) Desenvolva cavalos e bispos.<br>3) Roque cedo.<br>4) Não mova a mesma peça várias vezes na abertura.</p><div class="tutorial-tip">🧪 O <b>Sandbox</b> fica reunido nas ferramentas do Tutorial: você joga os dois lados, desfaz lances e pode usar “Avaliar” com a IA.</div>',
             practice: true
         },
         {
@@ -7557,10 +7916,9 @@
                     return `<div class="tutorial-piece-card"><div class="tp-img" style="background-image:url('${url}')"></div></div>`;
                 }).join('') + '</div>';
             }
-            const practiceBtn = page.practice
-                ? `<button type="button" class="tutorial-practice-btn" onclick="closeTutorial();startSandboxMode();">🧪 Praticar isso no Sandbox</button>`
-                : '';
-            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${hero}${page.html}${practiceBtn}</div>`;
+            // O Sandbox fica disponível em um único botão fixo na área "Aprender, praticar e analisar".
+            // Remove o antigo botão azul duplicado que aparecia dentro de algumas páginas do Tutorial.
+            body.innerHTML = `<div class="tutorial-step"><h3>${page.title}</h3>${hero}${page.html}</div>`;
         }
         const pager = document.getElementById('tutorialPager');
         if (pager) pager.textContent = `${tutorialIndex + 1} / ${TUTORIAL_PAGES.length}`;
@@ -7589,11 +7947,337 @@
         });
     }
 
-    addLog('Xadrez Pro v10.9 — GOD assistivo, IA responsiva, menu/P2P estáveis e retorno ao menu protegido.', 'INIT');
+    addLog('Xadrez Pro v13.0.0 — revisão integral: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
     if (typeof bindVoiceButton === 'function') bindVoiceButton();
+
+
+/* v11.6 — IA responsiva: feedback visual sem alterar o worker existente. */
+(function(){
+  let xpAiTimer=null;
+  let xpAiStarted=0;
+  function xpAiShow(text){const el=document.getElementById('xp-ai-progress');if(el){el.textContent=text;el.style.display='block';}}
+  function xpAiHide(){const el=document.getElementById('xp-ai-progress');if(el)el.style.display='none';if(xpAiTimer){clearInterval(xpAiTimer);xpAiTimer=null;}}
+  window.xpStartAiProgress=function(){xpAiStarted=Date.now();xpAiShow('IA pensando…');if(xpAiTimer)clearInterval(xpAiTimer);xpAiTimer=setInterval(function(){const sec=((Date.now()-xpAiStarted)/1000).toFixed(1);xpAiShow('IA pensando… '+sec+'s · calculando');},250);};
+  window.xpStopAiProgress=function(){xpAiHide();};
+  const originalApply=window.applyAIMove;
+  if(typeof originalApply==='function' && !window.__xpApplyWrapped){
+    window.__xpApplyWrapped=true;
+    window.applyAIMove=function(){xpAiHide();return originalApply.apply(this,arguments);};
+  }
+  const originalRequest=window.requestAIMove;
+  if(typeof originalRequest==='function' && !window.__xpRequestWrapped){
+    window.__xpRequestWrapped=true;
+    window.requestAIMove=function(){xpStartAiProgress();return originalRequest.apply(this,arguments);};
+  }
+  setTimeout(function(){
+    try{ if(typeof aiWorker!=='undefined' && aiWorker && !aiWorker.__xpProgressWrapped){
+      const old=aiWorker.onmessage;
+      if(old){ aiWorker.onmessage=function(ev){xpAiHide();return old.call(this,ev);} }
+      aiWorker.__xpProgressWrapped=true;
+    }}catch(e){}
+  },0);
+})();
+
+
+
+/* v11.7 — revisão pós-partida baseada no histórico local já existente. */
+(function(){
+ window.xpOpenReview=function(){
+  const modal=document.getElementById('xp-review-modal'), body=document.getElementById('xp-review-body'); if(!modal||!body)return;
+  let hist=[]; try{hist=chess.history({verbose:true})||[]}catch(e){}
+  const sans=hist.map(m=>m.san||''); const captures=hist.filter(m=>m.captured).length; const checks=hist.filter(m=>String(m.san||'').includes('+')||String(m.san||'').includes('#')).length;
+  let summary='Partida sem lances registrados.'; try{summary=typeof buildPostGameSummary==='function'?buildPostGameSummary(null,'Revisão manual'):summary;}catch(e){}
+  body.innerHTML='<div class="xp-review-grid"><div class="xp-review-stat"><b>Lances</b><br>'+hist.length+'</div><div class="xp-review-stat"><b>Capturas</b><br>'+captures+'</div><div class="xp-review-stat"><b>Xeques</b><br>'+checks+'</div></div><div class="xp-review-stat"><b>Resumo</b><br>'+summary+'</div><h3>Histórico</h3><div class="xp-review-moves">'+(sans.length?sans.map((m,i)=>'<span class="xp-review-move">'+(i+1)+'. '+escapeHtml(String(m))+'</span>').join(''):'<span>Nenhum lance.</span>')+'</div>';
+  modal.style.display='flex';
+ };
+ window.xpCloseReview=function(){const m=document.getElementById('xp-review-modal');if(m)m.style.display='none';};
+ window.xpCopyGameData=function(){let fen='';try{fen=chess.fen()}catch(e){} let pgn='';try{pgn=chess.pgn()}catch(e){} const text='FEN: '+fen+'\n\nPGN:\n'+pgn; if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>{try{addLog('FEN/PGN copiado.','REVIEW')}catch(e){}}); else window.prompt('Copie os dados:',text);};
+ window.addEventListener('keydown',e=>{if(e.key==='Escape')xpCloseReview();});
+ setTimeout(function(){
+   try{const original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpReviewGameOver){window.__xpReviewGameOver=true;window.handleGameOverEvents=function(){const r=original.apply(this,arguments);setTimeout(function(){const old=document.getElementById('xp-review-open-btn');if(!old){const b=document.createElement('button');b.id='xp-review-open-btn';b.type='button';b.textContent='🔎 Revisar partida';b.onclick=xpOpenReview;b.style.cssText='position:fixed;right:12px;bottom:12px;z-index:9998;padding:9px 12px;border-radius:10px;border:1px solid var(--board-border);background:var(--btn-bg);color:var(--text-main);font-weight:700';document.body.appendChild(b);}},80);return r;};}}catch(e){}
+ },100);
+})();
+
+
+
+/* v11.8 — estatísticas locais e compartilhamento FEN/PGN. */
+(function(){
+ const key='xadrezpro_final_stats_v118';
+ function get(){try{return JSON.parse(localStorage.getItem(key)||'{"games":0,"wins":0,"losses":0,"draws":0,"moves":0}')}catch(e){return {games:0,wins:0,losses:0,draws:0,moves:0}}}
+ function save(x){try{localStorage.setItem(key,JSON.stringify(x))}catch(e){} render(x)}
+ function render(x){const b=document.getElementById('xp-stats-badge');if(b)b.textContent='📊 '+x.games+' partidas · '+x.wins+' vitórias';}
+ window.xpGetStats=get; render(get());
+ window.xpShareFEN=function(){let f='';try{f=chess.fen()}catch(e){} const t='Xadrez Pro — FEN\n'+f;navigator.clipboard?.writeText(t).then(()=>alert('FEN copiado.'))};
+ window.xpSharePGN=function(){let p='';try{p=chess.pgn()}catch(e){}navigator.clipboard?.writeText(p).then(()=>alert('PGN copiado.'))};
+ setTimeout(function(){try{const original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpStatsWrapped){window.__xpStatsWrapped=true;window.handleGameOverEvents=function(reason,winner){const r=original.apply(this,arguments);try{const x=get();x.games++;x.moves+=chess.history().length;if(winner==='w' || winner==='b'){if((winner==='w'&&typeof playerColor!=='undefined'&&playerColor==='w')||(winner==='b'&&typeof playerColor!=='undefined'&&playerColor==='b'))x.wins++;else x.losses++;}else x.draws++;save(x)}catch(e){}return r;};}}catch(e){}},120);
+})();
+
+
+
+/* v12.6 — Treino integrado ao Sandbox: revisão de estado, restauração segura e sem remoção de recursos. */
+(function(){
+  const puzzles=[
+    {name:'Controle do centro',fen:'r1bqkbnr/pppp1ppp/2n5/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2',from:'d7',to:'d5',hint:'Controle o centro com …d5.'},
+    {name:'Ganho de espaço',fen:'rnbqkb1r/pp1ppppp/5n2/2p5/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 2 4',from:'e4',to:'e5',hint:'Avance o peão central para ganhar espaço.'},
+    {name:'Desenvolvimento',fen:'r1bqkbnr/pppp1ppp/2n5/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2',from:'g8',to:'f6',hint:'Desenvolva o cavalo para uma casa natural.'}
+  ];
+  let idx=0;
+  let trainingActive=false;
+  let trainingSnapshot=null;
+  let solved=false;
+  let attempts=0;
+  let solvedCount=0;
+  // Estado público: handleSquareClick vive fora deste IIFE e não pode acessar trainingActive diretamente.
+  window.xpTrainingActive=false;
+
+  function hud(){return document.getElementById('xp-train-hud');}
+  function status(text){const el=document.getElementById('xp-train-hud-status');if(el)el.textContent=text;}
+  function showHud(on){const el=hud();if(el)el.style.display=on?'block':'none';}
+  function updateTrainingButtons(){
+    const next=document.getElementById('xp-train-next');
+    if(next) next.disabled=!solved;
+    const evalBtn=document.getElementById('xp-train-eval');
+    if(evalBtn) evalBtn.disabled=!solved;
+  }
+  function loadPuzzle(){
+    try{
+      const p=puzzles[idx];
+      chess.load(p.fen);
+      selectedSquare=null; possibleMoves=[]; lastPathCoords=[]; wasInCheckLastMove=false;
+      historyViewPly=null; solved=false; attempts=0;
+      if(typeof moveHistoryFens!=='undefined') moveHistoryFens=[chess.fen()];
+      if(typeof lastSyncedFen!=='undefined') lastSyncedFen=chess.fen();
+      const turnName=chess.turn()==='w'?'Brancas':'Pretas';
+      status('🧩 '+p.name+' · Desafio '+(idx+1)+'/'+puzzles.length+' · vez das '+turnName+' — encontre o melhor lance.');
+      updateTrainingButtons();
+      renderBoard(); updateTurnIndicators(); updateCapturedDisplay();
+      if(typeof updateMoveListPanel==='function')updateMoveListPanel();
+    }catch(e){ status('Não foi possível carregar este desafio.'); }
+  }
+
+  window.xpOpenTraining=function(){
+    if(trainingActive || window.xpTrainingActive === true)return;
+    try{
+      const evalBtn=document.getElementById('btnSandboxEval');
+      trainingSnapshot={
+        chess: chess, gameMode: gameMode, sandboxMode: sandboxMode, playerColor: playerColor,
+        isSpectator: isSpectator, boardFlipped: boardFlipped, selectedSquare:selectedSquare,
+        possibleMoves: possibleMoves.slice(), historyViewPly: historyViewPly,
+        moveHistoryFens: (typeof moveHistoryFens!=='undefined' && Array.isArray(moveHistoryFens)) ? moveHistoryFens.slice() : null,
+        lastPathCoords: Array.isArray(lastPathCoords)?lastPathCoords.slice():[],
+        wasInCheckLastMove: !!wasInCheckLastMove,
+        lastSyncedFen: (typeof lastSyncedFen!=='undefined'?lastSyncedFen:null),
+        gameOverHandled: !!gameOverHandled,
+        clockWhite: (typeof clockWhite!=='undefined'?clockWhite:0),
+        clockBlack: (typeof clockBlack!=='undefined'?clockBlack:0),
+        timeControlSeconds: (typeof timeControlSeconds!=='undefined'?timeControlSeconds:0),
+        clockWasRunning: !!clockInterval,
+        sandboxEvalVisible: !!(evalBtn && evalBtn.classList.contains('visible')),
+        godAssistBestMove: (typeof godAssistBestMove!=='undefined'?godAssistBestMove:null)
+      };
+      trainingActive=true;
+      window.xpTrainingActive=true;
+      // O Treino é uma experiência dentro do mesmo tabuleiro do Sandbox.
+      // Ao entrar, a tela/menu principal é fechado imediatamente e o tabuleiro fica visível.
+      gameMode='sandbox'; sandboxMode=true; isSpectator=false;
+      selectedSquare=null; possibleMoves=[]; historyViewPly=null;
+      if(typeof closeMenuTransition==='function')closeMenuTransition();
+      if(typeof stopClock==='function')stopClock();
+      if(typeof aiRequestId!=='undefined')aiRequestId++;
+      if(typeof pendingAICallback!=='undefined')pendingAICallback=null;
+      if(typeof godAssistBestMove!=='undefined')godAssistBestMove=null;
+      chess=new Chess(puzzles[idx].fen);
+      closeTutorial();
+      const trainHud= hud();
+      const sidePanel=document.getElementById('sidePanel');
+      if(trainHud && sidePanel && trainHud.parentElement!==sidePanel) sidePanel.insertBefore(trainHud,sidePanel.children[1]||null);
+      showHud(true);
+      setSandboxEvalVisible(false);
+      loadPuzzle();
+      addLog('Centro de Treino iniciado no tabuleiro do Sandbox','TRAINING');
+    }catch(e){
+      trainingActive=false; window.xpTrainingActive=false; trainingSnapshot=null;
+      status('Erro ao iniciar o treino.'); showHud(false);
+      try{renderBoard();}catch(err){}
+    }
+  };
+
+  window.xpNextPuzzle=function(){
+    if(!trainingActive || !solved)return;
+    idx=(idx+1)%puzzles.length;
+    loadPuzzle();
+  };
+
+  window.xpHintPuzzle=function(){
+    if(!trainingActive)return;
+    const p=puzzles[idx];
+    status('💡 '+p.hint);
+  };
+
+  window.xpEvaluateTraining=function(){
+    if(!trainingActive)return;
+    if(!solved){status('Resolva o desafio antes de pedir a avaliação da IA.');return;}
+    try{
+      if(typeof evaluateSandboxPosition==='function'){
+        status('🔎 IA analisando a posição resolvida…');
+        evaluateSandboxPosition();
+      }else status('Avaliação da IA indisponível nesta sessão.');
+    }catch(e){status('Não foi possível avaliar esta posição.');}
+  };
+
+  window.xpCloseTraining=function(){
+    if(!trainingActive){ window.xpTrainingActive=false; showHud(false); return; }
+    const snap=trainingSnapshot;
+    try{
+      const cameFromMenu = !!(snap && snap.gameMode === 'menu');
+      if(snap){
+        chess=snap.chess;
+        gameMode=snap.gameMode;
+        sandboxMode=snap.sandboxMode;
+        playerColor=snap.playerColor;
+        isSpectator=snap.isSpectator;
+        boardFlipped=snap.boardFlipped;
+        selectedSquare=snap.selectedSquare;
+        possibleMoves=snap.possibleMoves||[];
+        historyViewPly=snap.historyViewPly;
+        lastPathCoords=snap.lastPathCoords||[];
+        wasInCheckLastMove=!!snap.wasInCheckLastMove;
+        if(typeof moveHistoryFens!=='undefined' && snap.moveHistoryFens) moveHistoryFens=snap.moveHistoryFens.slice();
+        if(typeof lastSyncedFen!=='undefined') lastSyncedFen=snap.lastSyncedFen;
+        gameOverHandled=!!snap.gameOverHandled;
+        if(typeof clockWhite!=='undefined')clockWhite=snap.clockWhite;
+        if(typeof clockBlack!=='undefined')clockBlack=snap.clockBlack;
+        if(typeof timeControlSeconds!=='undefined')timeControlSeconds=snap.timeControlSeconds;
+        if(typeof godAssistBestMove!=='undefined')godAssistBestMove=snap.godAssistBestMove||null;
+      }
+      // Se o Treino foi aberto a partir do menu/tutorial, nunca devolvemos o usuário
+      // ao menu. O destino é sempre o tabuleiro principal em modo Sandbox.
+      if(cameFromMenu){
+        gameMode='sandbox';
+        sandboxMode=true;
+        playerColor='w';
+        isSpectator=false;
+        if(typeof closeMenuTransition==='function') closeMenuTransition();
+      }
+      selectedSquare=null; possibleMoves=[];
+      trainingActive=false; window.xpTrainingActive=false; trainingSnapshot=null; solved=false; attempts=0;
+      if(typeof stopClock==='function')stopClock();
+      showHud(false);
+      setSandboxEvalVisible(cameFromMenu ? true : !!(snap && snap.sandboxEvalVisible));
+      renderBoard(); updateTurnIndicators(); updateCapturedDisplay(); detectOpening();
+      if(typeof updateMoveListPanel==='function')updateMoveListPanel();
+      if(typeof updateClockDisplay==='function')updateClockDisplay();
+      if(snap && snap.clockWasRunning && typeof startClock==='function')startClock();
+      addLog('Centro de Treino encerrado; estado da partida restaurado','TRAINING');
+    }catch(e){
+      trainingActive=false; window.xpTrainingActive=false; trainingSnapshot=null; showHud(false);
+      try{renderBoard();updateMoveListPanel();}catch(err){}
+    }
+  };
+  window.xpExitTraining=window.xpCloseTraining;
+
+  window.startSandboxFromTutorial=function(){
+    try{
+      if(window.xpTrainingActive && typeof window.xpCloseTraining==='function') window.xpCloseTraining();
+      closeTutorial();
+      startSandboxMode();
+    }catch(e){try{startSandboxMode();}catch(err){}}
+  };
+
+  window.xpImportFEN=function(){
+    const f=prompt('Cole um FEN para analisar:');
+    if(!f)return;
+    try{
+      const test=new Chess(f.trim());
+      if(!test || typeof test.fen!=='function') throw new Error('FEN inválido');
+
+      // FEN é uma ferramenta de análise: sai de qualquer modo anterior
+      // (PvE/Bot-vs-Bot/Treino/Network) sem apagar a posição importada.
+      if(window.xpTrainingActive && typeof window.xpCloseTraining==='function'){
+        window.xpCloseTraining();
+      }
+      if(typeof botVsBotInterval!=='undefined' && botVsBotInterval){
+        clearTimeout(botVsBotInterval);
+        botVsBotInterval=null;
+      }
+      if(typeof aiRequestId!=='undefined') aiRequestId++;
+      if(typeof pendingAICallback!=='undefined') pendingAICallback=null;
+      if(typeof stopClock==='function') stopClock();
+      if(typeof godAssistBestMove!=='undefined') godAssistBestMove=null;
+      if(typeof gameOverHandled!=='undefined') gameOverHandled=false;
+
+      chess=new Chess(test.fen());
+      gameMode='sandbox';
+      sandboxMode=true;
+      playerColor='w';
+      isSpectator=false;
+      selectedSquare=null;
+      possibleMoves=[];
+      lastPathCoords=[];
+      wasInCheckLastMove=false;
+      historyViewPly=null;
+
+      if(typeof resetMoveHistory==='function') resetMoveHistory();
+      if(typeof closeMenuTransition==='function') closeMenuTransition();
+      if(typeof applyPlayerSeating==='function') applyPlayerSeating();
+      if(typeof updateTurnIndicators==='function') updateTurnIndicators();
+      if(typeof updateCapturedDisplay==='function') updateCapturedDisplay();
+      if(typeof renderBoard==='function') renderBoard();
+      if(typeof detectOpening==='function') detectOpening();
+      if(typeof updateMoveListPanel==='function') updateMoveListPanel();
+      if(typeof setSandboxEvalVisible==='function') setSandboxEvalVisible(true);
+      closeTutorial();
+      addLog('FEN carregado no Sandbox para análise livre','FEN');
+      alert('FEN carregado com sucesso no Sandbox.');
+    }catch(e){
+      console.warn('[FEN] Falha ao carregar FEN:',e);
+      alert('FEN inválido. Verifique as 6 partes da posição e tente novamente.');
+    }
+  };
+
+  window.__xpTrainingMove=function(from,to){
+    if(!trainingActive)return false;
+    try{
+      const expected=puzzles[idx];
+      const legal=chess.moves({square:from,verbose:true}).find(m=>m.to===to);
+      if(!legal){selectedSquare=null;possibleMoves=[];renderBoard();status('⚠️ Lance ilegal. Tente novamente.');return true;}
+      attempts++;
+      const move=chess.move({from,to,promotion:legal.promotion||'q'});
+      if(!move){selectedSquare=null;possibleMoves=[];renderBoard();status('⚠️ Não foi possível executar o lance.');return true;}
+      selectedSquare=null;possibleMoves=[];
+      if(move.from===expected.from&&move.to===expected.to){
+        solved=true; solvedCount++;
+        status('✅ Excelente! '+expected.name+' resolvido. Tentativas: '+attempts+'. Use “Próximo” ou “Avaliar IA”.');
+        try{playSFX('move');}catch(e){}
+        addLog('Desafio resolvido: '+expected.name+' ('+attempts+' tentativa(s))','TRAINING');
+      }else{
+        chess.undo();
+        status('❌ Não é o lance esperado. '+expected.hint+' · Tentativas: '+attempts);
+      }
+      updateTrainingButtons();
+      renderBoard();
+      if(typeof updateTurnIndicators==='function')updateTurnIndicators();
+      return true;
+    }catch(e){selectedSquare=null;possibleMoves=[];renderBoard();status('⚠️ Erro ao processar o lance.');return true;}
+  };
+
+  window.xpGetTrainingState=function(){return {active:trainingActive,puzzle:idx+1,total:puzzles.length,solved:solved,solvedCount:solvedCount,attempts:attempts};};
+})();
+
 </script>
+
+<div id="xp-train-hud" class="xp-train-hud" role="dialog" aria-live="polite" aria-label="Centro de Treino">
+  <div id="xp-train-hud-status" class="xp-train-hud-status">🧩 Centro de Treino</div>
+  <div class="xp-train-hud-actions">
+    <button type="button" class="action-btn" onclick="xpHintPuzzle()">💡 Dica</button>
+    <button type="button" id="xp-train-next" class="action-btn" onclick="xpNextPuzzle()" disabled>➡️ Próximo</button>
+    <button type="button" id="xp-train-eval" class="action-btn" onclick="xpEvaluateTraining()" disabled>🔎 Avaliar IA</button>
+    <button type="button" class="action-btn" onclick="xpCloseTraining()">↩️ Voltar à partida</button>
+  </div>
+</div>
+
 </body>
 </html>
