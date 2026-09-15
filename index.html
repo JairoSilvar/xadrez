@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<!-- Xadrez Pro v13.0.0 FINAL — consolidacao de todos os recursos da linha 12.x.
+<!-- Xadrez Pro v13.0.2 FINAL — consolidacao de todos os recursos da linha 12.x.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -8,13 +8,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v13.0.0 · Tutorial Unificado</title>
+    <title>Xadrez Pro - v13.0.2 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro v13.0.0 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez Pro v13.0.2 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" id="pwa-manifest-link">
@@ -3814,7 +3814,7 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // v13.0.0 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
+    // v13.0.2 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
     window.xpRuntimeHealth = function(){
         try {
             return {
@@ -4896,6 +4896,19 @@ body.god-stealth .god-assist-to::after {
         setSandboxEvalVisible(false);
         const ok = await customConfirm("Deseja sair da partida e retornar ao menu?", "Sair da Partida");
         if (!ok) return;
+
+        // Sair de uma partida online ativa equivale a desistir.
+        if (gameMode === 'network' && networkMatchActive && !isSpectator && !gameOverHandled && !chess.game_over()) {
+            const leavingColor = playerColor;
+            const winnerColor = leavingColor === 'w' ? 'b' : 'w';
+            networkAbandonmentHandled = true;
+            try { networkBroadcast({ type: 'resign', color: leavingColor, reason: 'leave-room' }); } catch(e) {}
+            addLog('Jogador saiu da partida e foi registrado como abandono.', 'GAME');
+            handleGameOverEvents((leavingColor === 'w' ? 'Brancas' : 'Pretas') + ' abandonaram a partida.', winnerColor);
+        }
+        clearNetworkDisconnectTimer();
+        networkMatchActive = false;
+        networkAbandonmentHandled = false;
         
         // Invalida imediatamente qualquer callback/time-out P2P da sessão que está sendo encerrada.
         p2pSessionToken++;
@@ -6835,22 +6848,58 @@ body.god-stealth .god-assist-to::after {
         if (onDone) onDone();
     }
 
+    // v13.0.1 — status das salas: falha/timeout do broker NÃO significa sala indisponível.
+    // Mantemos o último estado conhecido e usamos "Verificando" durante uma checagem.
+    const roomStatusCache = {
+        paris: 'disponivel',
+        toquio: 'disponivel',
+        novayork: 'disponivel',
+        londres: 'disponivel'
+    };
+
+    function paintRoomStatus(cityKey, status, transient) {
+        const el = document.getElementById(`status-${cityKey}`);
+        if (!el) return;
+        if (status === 'ocupada') {
+            el.innerText = 'Em jogo';
+            el.style.background = '#b91c1c';
+            return;
+        }
+        if (status === 'disponivel') {
+            el.innerText = 'Livre';
+            el.style.background = '#15803d';
+            return;
+        }
+        // "desconhecido" é falha de verificação, não indisponibilidade da sala.
+        if (transient) {
+            el.innerText = 'Verificando…';
+            el.style.background = '#64748b';
+        } else {
+            const last = roomStatusCache[cityKey] || 'disponivel';
+            el.innerText = last === 'ocupada' ? 'Em jogo' : 'Livre';
+            el.style.background = last === 'ocupada' ? '#b91c1c' : '#15803d';
+            el.title = 'Status mantido: o servidor P2P não respondeu à última verificação.';
+        }
+    }
+
     async function checkRoomAvailability(cityKey) {
         return new Promise((resolve) => {
             let settled = false;
+            let timer = null;
+            let testPeer = null;
+            let connTest = null;
             const finish = (status) => {
                 if (settled) return;
                 settled = true;
+                if (timer) clearTimeout(timer);
                 try { if (connTest) connTest.close(); } catch (e) {}
                 try { if (testPeer) testPeer.destroy(); } catch (e) {}
                 resolve(status);
             };
-            let testPeer = null;
-            let connTest = null;
             try {
                 testPeer = new Peer();
             } catch (e) {
-                resolve('desconhecido');
+                finish('desconhecido');
                 return;
             }
             const roomId = "xadrezpro-cities-v73-" + cityKey;
@@ -6863,7 +6912,6 @@ body.god-stealth .god-assist-to::after {
                     });
                     connTest.on('data', (data) => {
                         if (data && (data.type === 'probe-response' || data.type === 'slot-response')) {
-                            // ocupada se há host (mesmo sem segundo jogador)
                             finish(data.occupied || data.status === 'full' || data.status === 'accepted' ? 'ocupada' : 'disponivel');
                         }
                     });
@@ -6872,8 +6920,8 @@ body.god-stealth .god-assist-to::after {
                     finish('desconhecido');
                 }
             });
-            // PeerJS pode levar alguns segundos. Se não houver resposta, não afirmamos que a sala está livre.
-            setTimeout(() => finish('desconhecido'), 5500);
+            // Timeout curto: nunca convertemos timeout em "Indisponível".
+            timer = setTimeout(() => finish('desconhecido'), 3500);
         });
     }
 
@@ -6883,24 +6931,17 @@ body.god-stealth .god-assist-to::after {
         roomStatusBusy = true;
         try {
             const cities = ['paris', 'toquio', 'novayork', 'londres'];
-            for (let c of cities) {
+            for (const c of cities) {
                 if (gameMode !== 'menu') break;
-            const statusEl = document.getElementById(`status-${c}`);
-            if (statusEl) {
-                statusEl.innerText = '…';
-                statusEl.style.background = '#64748b';
-                let status = await checkRoomAvailability(c);
-                if (status === 'disponivel') {
-                    statusEl.innerText = 'Livre';
-                    statusEl.style.background = '#15803d';
-                } else if (status === 'ocupada') {
-                    statusEl.innerText = 'Em jogo';
-                    statusEl.style.background = '#b91c1c';
+                paintRoomStatus(c, roomStatusCache[c] || 'disponivel', true);
+                const status = await checkRoomAvailability(c);
+                if (status === 'disponivel' || status === 'ocupada') {
+                    roomStatusCache[c] = status;
+                    paintRoomStatus(c, status, false);
                 } else {
-                    statusEl.innerText = 'Indisponível';
-                    statusEl.style.background = '#64748b';
+                    // Preserva o último estado válido; jamais exibe "Indisponível".
+                    paintRoomStatus(c, 'desconhecido', false);
                 }
-            }
             }
         } finally {
             roomStatusBusy = false;
@@ -7101,6 +7142,7 @@ body.god-stealth .god-assist-to::after {
                         // Segundo jogador (oponente)
                         guestConn = c;
                         conn = c;
+                        markNetworkMatchActive();
                         opponentName = data.guestName || 'Oponente';
                         if (data.guestAvatar) opponentAvatar = data.guestAvatar;
                         setupHostListeners(cityName);
@@ -7321,11 +7363,10 @@ body.god-stealth .god-assist-to::after {
             }
             return;
         }
-        if (data.type === 'resign') { 
+        if (data.type === 'resign') {
             if (data.color !== 'w' && data.color !== 'b') return;
-            const winnerColor = data.color === 'w' ? 'b' : 'w'; 
-            handleGameOverEvents(`${data.color === 'w' ? 'Brancas' : 'Pretas'} desistiram.`, winnerColor); 
-            return; 
+            handleNetworkOpponentResign(data);
+            return;
         }
         if (data.type === 'draw-offer') {
             if (isSpectator) {
@@ -7408,6 +7449,52 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
+    // v13.0.2 — abandono/desconexao P2P robustos.
+    let networkMatchActive = false;
+    let networkDisconnectTimer = null;
+    let networkAbandonmentHandled = false;
+    const NETWORK_RECONNECT_GRACE_MS = 12000;
+
+    function clearNetworkDisconnectTimer() {
+        if (networkDisconnectTimer) { clearTimeout(networkDisconnectTimer); networkDisconnectTimer = null; }
+    }
+    function markNetworkMatchActive() {
+        networkMatchActive = true;
+        networkAbandonmentHandled = false;
+        clearNetworkDisconnectTimer();
+    }
+    function confirmNetworkAbandonment(reason) {
+        if (gameMode !== 'network' || isSpectator || !networkMatchActive || networkAbandonmentHandled || gameOverHandled) return;
+        networkAbandonmentHandled = true;
+        clearNetworkDisconnectTimer();
+        stopClock();
+        const winnerColor = playerColor === 'w' ? 'w' : 'b';
+        const text = reason || 'Seu adversario abandonou a partida.';
+        addLog('Vitoria por abandono confirmada: ' + text, 'GAME');
+        handleGameOverEvents(text + ' Vitoria por abandono.', winnerColor);
+    }
+    function handleNetworkOpponentDisconnect(source) {
+        if (gameMode !== 'network' || isSpectator || !networkMatchActive || networkAbandonmentHandled || gameOverHandled) return;
+        clearNetworkDisconnectTimer();
+        addChatMessage('Sistema', '🔄 Seu adversario perdeu a conexao. Tentando reconectar por ' + Math.round(NETWORK_RECONNECT_GRACE_MS / 1000) + 's...', true);
+        addLog('Conexao do adversario perdida (' + (source || 'P2P') + '). Aguardando reconexao.', 'P2P_INFO');
+        networkDisconnectTimer = setTimeout(function(){
+            networkDisconnectTimer = null;
+            if (gameMode === 'network' && networkMatchActive && !gameOverHandled && !networkAbandonmentHandled) {
+                confirmNetworkAbandonment('Seu adversario saiu da sala ou perdeu a conexao.');
+            }
+        }, NETWORK_RECONNECT_GRACE_MS);
+    }
+    function handleNetworkOpponentResign(data) {
+        if (gameMode !== 'network' || isSpectator || !networkMatchActive || networkAbandonmentHandled || gameOverHandled) return;
+        clearNetworkDisconnectTimer();
+        const loser = data && (data.color === 'w' || data.color === 'b') ? data.color : (playerColor === 'w' ? 'b' : 'w');
+        const winnerColor = loser === 'w' ? 'b' : 'w';
+        networkAbandonmentHandled = true;
+        addLog('Oponente desistiu explicitamente. Vitoria por abandono.', 'GAME');
+        handleGameOverEvents((loser === 'w' ? 'Brancas' : 'Pretas') + ' desistiram. Vitoria por abandono.', winnerColor);
+    }
+
     function setupHostListeners(cityName) {
         // Host: processa dados do oponente e retransmite para espectadores
         conn.on('data', (data) => {
@@ -7418,12 +7505,13 @@ body.god-stealth .god-assist-to::after {
                 relayToSpectators(data);
             }
         });
-        conn.on('close', () => { addChatMessage("Sistema", "O oponente saiu.", true); });
+        conn.on('close', () => { handleNetworkOpponentDisconnect('oponente'); });
     }
 
     function setupClientListeners(cityName) {
         conn.on('data', (data) => {
             if (data.type === 'slot-response') {
+                clearNetworkDisconnectTimer();
                 // Visual sincronizado da sala privada (host → guest/espectador)
                 if (data.visualPack) {
                     currentPrivateVisual = data.visualPack;
@@ -7486,6 +7574,7 @@ body.god-stealth .god-assist-to::after {
                     addChatMessage("Sistema", spectatorWhiteName + " (Brancas) vs " + spectatorBlackName + " (Pretas)", true);
                     if (data.plyCount) addChatMessage("Sistema", "Partida em andamento · " + data.plyCount + " meio-lance(s).", true);
                 } else {
+                    markNetworkMatchActive();
                     playerColor = 'b';
                     isSpectator = false;
                     spectatorWhiteName = '';
@@ -7499,7 +7588,7 @@ body.god-stealth .god-assist-to::after {
             }
             handleIncomingConnData(data);
         });
-        conn.on('close', () => { addChatMessage("Sistema", "O host saiu.", true); });
+        conn.on('close', () => { handleNetworkOpponentDisconnect('host'); });
     }
 
     function startGameSetup() {
@@ -7947,7 +8036,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez Pro v13.0.0 — revisão integral: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
+    addLog('Xadrez Pro v13.0.1 — status de salas corrigido: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
