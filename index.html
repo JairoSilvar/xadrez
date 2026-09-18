@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<!-- Xadrez Pro v13.0.2 FINAL — consolidacao de todos os recursos da linha 12.x.
+<!-- Xadrez Pro v13.0.7 FINAL — consolidacao de todos os recursos da linha 12.x.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -8,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v13.0.2 · Tutorial Unificado</title>
+    <title>Xadrez Pro - v13.0.7 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro v13.0.2 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez Pro v13.0.7 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" id="pwa-manifest-link">
@@ -1503,6 +1502,7 @@
 .xp-train-card{padding:10px;border-radius:14px}.xp-train-title{font-size:15px}.xp-train-board{width:min(88vw,62vh)}}
 </style>
 
+
 </head>
 <body class="theme-claro pieces-blue-pink">
     <button id="restore-btn" onclick="togglePanel()">⚙️ MENU</button>
@@ -1669,7 +1669,7 @@
             </div>
             <button class="action-btn" onclick="closeSettingsModal()" style="margin-top: 8px; padding: 7px; font-size: 9.5px; width: 100%; background: var(--modal-border); color: #fff;">💾 APLICAR</button>
         </div>
-    </div>
+</div>
     <div id="log-modal">
         <div class="log-content">
             <div style="font-size: 12px; font-weight: bold; color: var(--modal-border); display: flex; justify-content: space-between; align-items: center;">
@@ -1738,7 +1738,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v13.0.0</p>
+            <p>Estratégia P2P · IA offline · v13.0.7</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1933,6 +1933,7 @@
                         <div id="headerDropdown" class="dropdown-content">
                             <button class="dropdown-item" onclick="toggleBoardFlip()">🔁 Girar Tabuleiro</button>
                             <button class="dropdown-item" id="dropdownEval" onclick="evaluateSandboxPosition()" style="display:none;">🔎 Avaliar posição</button>
+                            <button class="dropdown-item" id="xp-review-gear-open" onclick="xpOpenReview(); closeActionDropdownSafe()" disabled>🔎 Revisar partida</button>
                             <button class="dropdown-item" onclick="openSettingsModal()">🎨 Temas e Configurações</button>
                             <button class="dropdown-item" onclick="openLogModal()">📜 Ver Logs</button>
                         </div>
@@ -2237,7 +2238,7 @@ body.god-stealth .god-assist-to::after {
 
     let selectedSquare = null;
     let possibleMoves = [];
-    const APP_VERSION = '13.0.0';
+    const APP_VERSION = '13.0.7';
         let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
@@ -3814,7 +3815,7 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // v13.0.2 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
+    // v13.0.7 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
     window.xpRuntimeHealth = function(){
         try {
             return {
@@ -4235,7 +4236,28 @@ body.god-stealth .god-assist-to::after {
         try { localStorage.setItem('xadrezpro_voice_moves', voiceMovesEnabled ? '1' : '0'); } catch(e) {}
     }
 
+
+    function closeTrainingForModeSwitch(reason) {
+        try {
+            if (typeof window.xpAbortTrainingForModeSwitch === 'function') {
+                window.xpAbortTrainingForModeSwitch(reason || 'troca de modo');
+            } else {
+                const h = document.getElementById('xp-train-hud');
+                if (h) h.style.display = 'none';
+                window.xpTrainingActive = false;
+            }
+        } catch (e) {
+            try {
+                const h = document.getElementById('xp-train-hud');
+                if (h) h.style.display = 'none';
+                window.xpTrainingActive = false;
+            } catch (err) {}
+        }
+    }
+
     function startSandboxMode() {
+        closeTrainingForModeSwitch('Sandbox');
+        try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         forceFullBoardRebuild();
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         sandboxMode = true;
@@ -4313,14 +4335,14 @@ body.god-stealth .god-assist-to::after {
                 addLog(`Sandbox eval depth=${payload.depthReached} nodes=${payload.nodes||'?'} eval=${payload.score}`, 'AI_PERF');
             }
             const san = bestMove.san || (bestMove.from + bestMove.to);
+            // Sandbox sempre mostra origem + destino no tabuleiro, sem ativar o Modo GOD.
+            godAssistRequestId++;
+            godAssistBestMove = bestMove;
+            renderBoard();
             if (godMode) {
-                // Reaproveita o mesmo destaque do assistente GOD: origem + destino.
-                godAssistRequestId++;
-                godAssistBestMove = bestMove;
-                renderBoard();
                 addChatMessage('⚡ GOD', 'Sugestão rápida: <b>' + san + '</b> — lance destacado no tabuleiro.', true, false, true);
             } else {
-                addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b>', true, false, true);
+                addChatMessage('Oráculo', 'Melhor continuação sugerida: <b>' + san + '</b> — lance destacado no tabuleiro.', true, false, true);
             }
             speak('Melhor lance: ' + san);
         };
@@ -4675,6 +4697,13 @@ body.god-stealth .god-assist-to::after {
         else document.body.classList.add('style-classic');
     } catch(e) { document.body.classList.add('style-classic'); }
 
+    function closeActionDropdownSafe() {
+        try {
+            var d = document.getElementById('headerDropdown');
+            if (d) d.classList.remove('show');
+        } catch(e) {}
+    }
+
     function openSettingsModal() {
         document.getElementById("settings-modal").style.display = "flex";
         try { refreshUnlocksUI(); refreshEloUI(); refreshSettingsPreview(); } catch (e) {}
@@ -4758,6 +4787,8 @@ body.god-stealth .god-assist-to::after {
     }
 
     function startGame(mode, isRematch = false) {
+        closeTrainingForModeSwitch('novo jogo: ' + mode);
+        try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         forceFullBoardRebuild();
         gameOverHandled = false;
         if (mode !== 'sandbox') setSandboxEvalVisible(false);
@@ -4893,9 +4924,11 @@ body.god-stealth .god-assist-to::after {
     }
 
     async function safeLeaveRoom() {
+        try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         setSandboxEvalVisible(false);
         const ok = await customConfirm("Deseja sair da partida e retornar ao menu?", "Sair da Partida");
         if (!ok) return;
+        closeTrainingForModeSwitch("retorno ao menu");
 
         // Sair de uma partida online ativa equivale a desistir.
         if (gameMode === 'network' && networkMatchActive && !isSpectator && !gameOverHandled && !chess.game_over()) {
@@ -6543,8 +6576,9 @@ body.god-stealth .god-assist-to::after {
                 squareEl.classList.toggle('selected', selectedSquare === squareCoord);
                 squareEl.classList.toggle('highlight', moveSet.has(squareCoord) && !displayChess.get(squareCoord));
                 squareEl.classList.toggle('capture-highlight', moveSet.has(squareCoord) && !!displayChess.get(squareCoord));
-                squareEl.classList.toggle('god-assist-from', !!(godMode && godAssistBestMove && godAssistBestMove.from === squareCoord));
-                squareEl.classList.toggle('god-assist-to', !!(godMode && godAssistBestMove && godAssistBestMove.to === squareCoord));
+                const xpAssistVisible = !!(godAssistBestMove && (godMode || gameMode === 'sandbox'));
+                squareEl.classList.toggle('god-assist-from', !!(xpAssistVisible && godAssistBestMove.from === squareCoord));
+                squareEl.classList.toggle('god-assist-to', !!(xpAssistVisible && godAssistBestMove.to === squareCoord));
                 squareEl.classList.remove('drag-over-target');
 
                 const piece = board[r][c];
@@ -6848,7 +6882,7 @@ body.god-stealth .god-assist-to::after {
         if (onDone) onDone();
     }
 
-    // v13.0.1 — status das salas: falha/timeout do broker NÃO significa sala indisponível.
+    // v13.0.7 — status das salas: falha/timeout do broker NÃO significa sala indisponível.
     // Mantemos o último estado conhecido e usamos "Verificando" durante uma checagem.
     const roomStatusCache = {
         paris: 'disponivel',
@@ -6974,6 +7008,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function joinCityRoom(cityName) {
+        closeTrainingForModeSwitch('sala online: ' + cityName);
         const sessionToken = ++p2pSessionToken;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
@@ -7449,7 +7484,7 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // v13.0.2 — abandono/desconexao P2P robustos.
+    // v13.0.7 — abandono/desconexao P2P robustos.
     let networkMatchActive = false;
     let networkDisconnectTimer = null;
     let networkAbandonmentHandled = false;
@@ -7592,6 +7627,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function startGameSetup() {
+        closeTrainingForModeSwitch('partida online');
         forceFullBoardRebuild();
         gameOverHandled = false;
         gameMode = 'network';
@@ -8036,7 +8072,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez Pro v13.0.1 — status de salas corrigido: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
+    addLog('Xadrez Pro v13.0.7 — status de salas corrigido: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
@@ -8072,26 +8108,86 @@ body.god-stealth .god-assist-to::after {
 
 
 
-/* v11.7 — revisão pós-partida baseada no histórico local já existente. */
+/* v13.0.7 — revisão robusta, acesso pela engrenagem e integração segura com Sandbox. */
 (function(){
- window.xpOpenReview=function(){
-  const modal=document.getElementById('xp-review-modal'), body=document.getElementById('xp-review-body'); if(!modal||!body)return;
-  let hist=[]; try{hist=chess.history({verbose:true})||[]}catch(e){}
-  const sans=hist.map(m=>m.san||''); const captures=hist.filter(m=>m.captured).length; const checks=hist.filter(m=>String(m.san||'').includes('+')||String(m.san||'').includes('#')).length;
-  let summary='Partida sem lances registrados.'; try{summary=typeof buildPostGameSummary==='function'?buildPostGameSummary(null,'Revisão manual'):summary;}catch(e){}
-  body.innerHTML='<div class="xp-review-grid"><div class="xp-review-stat"><b>Lances</b><br>'+hist.length+'</div><div class="xp-review-stat"><b>Capturas</b><br>'+captures+'</div><div class="xp-review-stat"><b>Xeques</b><br>'+checks+'</div></div><div class="xp-review-stat"><b>Resumo</b><br>'+summary+'</div><h3>Histórico</h3><div class="xp-review-moves">'+(sans.length?sans.map((m,i)=>'<span class="xp-review-move">'+(i+1)+'. '+escapeHtml(String(m))+'</span>').join(''):'<span>Nenhum lance.</span>')+'</div>';
-  modal.style.display='flex';
+ var REVIEW_KEY='xadrezpro_last_review_v1307', lastReview=null, copyTimer=null;
+ function loadSaved(){
+   try{
+     var x=JSON.parse(localStorage.getItem(REVIEW_KEY)||'null');
+     if(x&&x.moves&&x.fen) lastReview=x;
+     if(!lastReview){
+       var old=JSON.parse(localStorage.getItem('xadrezpro_last_review_v1306')||'null');
+       if(old&&old.moves&&old.fen){ lastReview=old; try{localStorage.setItem(REVIEW_KEY,JSON.stringify(old));}catch(e){} }
+     }
+   }catch(e){}
+ }
+ function saveReview(x){lastReview=x;try{localStorage.setItem(REVIEW_KEY,JSON.stringify(x));}catch(e){}xpRefreshReviewAvailability();}
+ function resultLabel(reason,winner){if(reason)return String(reason);if(winner==='w')return'Vitória das Brancas';if(winner==='b')return'Vitória das Pretas';return'Partida encerrada';}
+ function captureCurrent(reason,winner){
+  var hist=[],fen='',pgn='';
+  try{hist=chess.history({verbose:true})||[];}catch(e){}
+  try{fen=chess.fen()||'';}catch(e){}
+  try{pgn=chess.pgn()||'';}catch(e){}
+  if(!hist.length&&!pgn)return null;
+  var moves=hist.map(function(m){return{san:m.san||'',from:m.from||'',to:m.to||'',captured:m.captured||'',promotion:m.promotion||''};});
+  var x={savedAt:Date.now(),result:resultLabel(reason,winner),winner:winner||null,fen:fen,pgn:pgn,moves:moves,
+    captures:moves.filter(function(m){return!!m.captured;}).length,
+    checks:moves.filter(function(m){var z=String(m.san||'');return z.indexOf('+')>=0||z.indexOf('#')>=0;}).length};
+  saveReview(x);return x;
+ }
+ window.xpCaptureLastReview=function(reason,winner){return captureCurrent(reason,winner);};
+ window.xpHasReview=function(){return!!(lastReview&&lastReview.moves&&lastReview.moves.length&&lastReview.fen);};
+ window.xpRefreshReviewAvailability=function(){
+   var b=document.getElementById('xp-review-gear-open'); if(!b)return;
+   var ok=xpHasReview(); b.disabled=!ok;
+   b.textContent=ok?'🔎 Revisar partida ('+lastReview.moves.length+' lances)':'🔎 Revisar partida — indisponível';
+   b.title=ok?'Abrir a última partida encerrada':'Finalize uma partida para habilitar a revisão';
  };
- window.xpCloseReview=function(){const m=document.getElementById('xp-review-modal');if(m)m.style.display='none';};
- window.xpCopyGameData=function(){let fen='';try{fen=chess.fen()}catch(e){} let pgn='';try{pgn=chess.pgn()}catch(e){} const text='FEN: '+fen+'\n\nPGN:\n'+pgn; if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>{try{addLog('FEN/PGN copiado.','REVIEW')}catch(e){}}); else window.prompt('Copie os dados:',text);};
- window.addEventListener('keydown',e=>{if(e.key==='Escape')xpCloseReview();});
- setTimeout(function(){
-   try{const original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpReviewGameOver){window.__xpReviewGameOver=true;window.handleGameOverEvents=function(){const r=original.apply(this,arguments);setTimeout(function(){const old=document.getElementById('xp-review-open-btn');if(!old){const b=document.createElement('button');b.id='xp-review-open-btn';b.type='button';b.textContent='🔎 Revisar partida';b.onclick=xpOpenReview;b.style.cssText='position:fixed;right:12px;bottom:12px;z-index:9998;padding:9px 12px;border-radius:10px;border:1px solid var(--board-border);background:var(--btn-bg);color:var(--text-main);font-weight:700';document.body.appendChild(b);}},80);return r;};}}catch(e){}
- },100);
+ window.xpRenderReviewSettings=function(){xpRefreshReviewAvailability();};
+ function ensureModal(){
+  var m=document.getElementById('xp-review-modal');if(m)return m;
+  m=document.createElement('div');m.id='xp-review-modal';m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');
+  m.innerHTML='<div class="xp-review-card"><div class="xp-review-head"><strong>🔎 Revisão da partida</strong><button type="button" onclick="xpCloseReview()">✕ Fechar</button></div><div id="xp-review-body"></div><div class="xp-review-actions"><button type="button" id="xp-review-copy" onclick="xpCopyGameData()">📋 Copiar FEN/PGN</button><button type="button" onclick="xpReviewOpenSandbox()">♟️ Abrir no Sandbox</button><button type="button" onclick="xpCloseReview()">↩ Voltar</button></div></div>';
+  document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m)xpCloseReview();});return m;
+ }
+ function ensureStyle(){
+  if(document.getElementById('xp-review-style-v1307'))return;
+  var st=document.createElement('style');st.id='xp-review-style-v1307';
+  st.textContent='#xp-review-modal{display:none;position:fixed;inset:0;z-index:10050;background:rgba(15,23,42,.72);padding:12px;align-items:center;justify-content:center}.xp-review-card{width:min(760px,96vw);max-height:90vh;overflow:auto;background:var(--modal-bg,#fff);color:var(--modal-text,#0f172a);border:2px solid var(--board-border,#0284c7);border-radius:14px;padding:12px}.xp-review-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px;margin-bottom:10px}.xp-review-head button,.xp-review-actions button{border:1px solid var(--panel-border,#cbd5e1);background:var(--btn-bg,#e2e8f0);color:var(--text-main,#0f172a);border-radius:9px;padding:8px 10px;font-weight:700}.xp-review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.xp-review-stat{padding:8px;border:1px solid var(--panel-border,#cbd5e1);border-radius:9px;background:var(--panel-bg,#fff);margin-bottom:7px}.xp-review-moves{display:flex;flex-wrap:wrap;gap:5px;max-height:230px;overflow:auto;padding:7px;border:1px solid var(--panel-border,#cbd5e1);border-radius:9px}.xp-review-move{padding:3px 6px;border-radius:6px;background:var(--btn-bg,#e2e8f0)}.xp-review-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:10px;flex-wrap:wrap}@media(max-width:700px){.xp-review-card{width:100%;max-height:94vh;padding:9px}.xp-review-head{font-size:14px}.xp-review-actions{display:grid;grid-template-columns:1fr}.xp-review-actions button{width:100%}}';
+  document.head.appendChild(st);
+ }
+ window.xpOpenReview=function(){
+   if(!lastReview)loadSaved();if(!lastReview){xpRefreshReviewAvailability();return;}
+   ensureStyle();var modal=ensureModal(),body=document.getElementById('xp-review-body'),moves=lastReview.moves||[];
+   body.innerHTML='<div class="xp-review-grid"><div class="xp-review-stat"><b>Lances</b><br>'+moves.length+'</div><div class="xp-review-stat"><b>Capturas</b><br>'+(lastReview.captures||0)+'</div><div class="xp-review-stat"><b>Xeques</b><br>'+(lastReview.checks||0)+'</div></div><div class="xp-review-stat"><b>Resultado</b><br>'+escapeHtml(String(lastReview.result||'Partida encerrada'))+'</div><h3>Histórico</h3><div class="xp-review-moves">'+moves.map(function(m,i){return'<span class="xp-review-move">'+(i+1)+'. '+escapeHtml(String(m.san||''))+'</span>';}).join('')+'</div>';
+   modal.style.display='flex';document.body.style.overflow='hidden';
+ };
+ window.xpCloseReview=function(){var m=document.getElementById('xp-review-modal');if(m)m.style.display='none';document.body.style.overflow='';};
+ function copyFeedback(ok){
+   var b=document.getElementById('xp-review-copy');if(!b)return;
+   if(copyTimer)clearTimeout(copyTimer);
+   b.textContent=ok?'✓ FEN/PGN copiado!':'⚠️ Não foi possível copiar';
+   copyTimer=setTimeout(function(){var x=document.getElementById('xp-review-copy');if(x)x.textContent='📋 Copiar FEN/PGN';},1800);
+ }
+ window.xpCopyGameData=function(){
+   if(!lastReview)return;
+   var t='FEN: '+(lastReview.fen||'')+'\n\nPGN:\n'+(lastReview.pgn||'');
+   if(navigator.clipboard&&navigator.clipboard.writeText){
+     navigator.clipboard.writeText(t).then(function(){copyFeedback(true);try{addLog('FEN/PGN da revisão copiado.','REVIEW');}catch(e){}},function(){copyFeedback(false);});
+   }else{
+     try{window.prompt('Copie os dados:',t);copyFeedback(true);}catch(e){copyFeedback(false);}
+   }
+ };
+ window.xpReviewOpenSandbox=function(){
+   if(!lastReview||!lastReview.fen)return;
+   var ok=false;
+   try{ if(typeof window.xpLoadAnalysisPosition==='function') ok=window.xpLoadAnalysisPosition(lastReview.fen,'REVIEW'); }catch(e){ok=false;}
+   if(ok){xpCloseReview();try{closeActionDropdownSafe();}catch(e){}}
+ };
+ window.addEventListener('keydown',function(e){if(e.key==='Escape'||e.keyCode===27)xpCloseReview();});
+ loadSaved();setTimeout(xpRefreshReviewAvailability,0);
+ setTimeout(function(){try{var original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpReviewSnapshotWrapped){window.__xpReviewSnapshotWrapped=true;window.handleGameOverEvents=function(reason,winner){try{captureCurrent(reason,winner);}catch(e){}return original.apply(this,arguments);};}}catch(e){}},50);
 })();
-
-
-
 /* v11.8 — estatísticas locais e compartilhamento FEN/PGN. */
 (function(){
  const key='xadrezpro_final_stats_v118';
@@ -8217,6 +8313,37 @@ body.god-stealth .god-assist-to::after {
     }catch(e){status('Não foi possível avaliar esta posição.');}
   };
 
+  window.xpAbortTrainingForModeSwitch=function(reason){
+    if(!trainingActive && window.xpTrainingActive !== true){
+      showHud(false);
+      window.xpTrainingActive=false;
+      return false;
+    }
+    try{
+      trainingActive=false;
+      window.xpTrainingActive=false;
+      trainingSnapshot=null;
+      solved=false;
+      attempts=0;
+      showHud(false);
+      selectedSquare=null;
+      possibleMoves=[];
+      historyViewPly=null;
+      if(typeof aiRequestId!=='undefined') aiRequestId++;
+      if(typeof pendingAICallback!=='undefined') pendingAICallback=null;
+      if(typeof godAssistBestMove!=='undefined') godAssistBestMove=null;
+      if(typeof setSandboxEvalVisible==='function') setSandboxEvalVisible(false);
+      addLog('Centro de Treino encerrado por troca de modo'+(reason?': '+reason:''),'TRAINING');
+      return true;
+    }catch(e){
+      trainingActive=false;
+      window.xpTrainingActive=false;
+      trainingSnapshot=null;
+      try{showHud(false);}catch(err){}
+      return true;
+    }
+  };
+
   window.xpCloseTraining=function(){
     if(!trainingActive){ window.xpTrainingActive=false; showHud(false); return; }
     const snap=trainingSnapshot;
@@ -8276,54 +8403,94 @@ body.god-stealth .god-assist-to::after {
     }catch(e){try{startSandboxMode();}catch(err){}}
   };
 
-  window.xpImportFEN=function(){
-    const f=prompt('Cole um FEN para analisar:');
-    if(!f)return;
-    try{
-      const test=new Chess(f.trim());
-      if(!test || typeof test.fen!=='function') throw new Error('FEN inválido');
+  function xpValidateAnalysisChess(test){
+    if(!test || typeof test.fen!=='function') throw new Error('Posição inválida');
+    var fen=test.fen(), board=(fen.split(' ')[0]||'');
+    var whiteKings=(board.match(/K/g)||[]).length, blackKings=(board.match(/k/g)||[]).length;
+    if(whiteKings!==1 || blackKings!==1) throw new Error('A posição precisa conter exatamente um rei branco e um rei preto.');
+    var pieces=board.replace(/[1-8\/]/g,'');
+    if(pieces.length<2) throw new Error('Tabuleiro vazio ou incompleto.');
+    return fen;
+  }
 
-      // FEN é uma ferramenta de análise: sai de qualquer modo anterior
-      // (PvE/Bot-vs-Bot/Treino/Network) sem apagar a posição importada.
-      if(window.xpTrainingActive && typeof window.xpCloseTraining==='function'){
-        window.xpCloseTraining();
+  window.xpLoadAnalysisPosition=function(raw,source){
+    var text=String(raw||'').trim();
+    if(!text){alert('Nenhuma posição foi informada.');return false;}
+    var test=null, loadedAs='FEN';
+    try{
+      // Aceita também o texto produzido por "Copiar FEN/PGN": extrai primeiro o FEN.
+      var fenMatch=text.match(/(?:^|\n)\s*FEN:\s*([^\r\n]+)/i);
+      var candidate=fenMatch?fenMatch[1].trim():text;
+      try{
+        test=new Chess(candidate);
+        xpValidateAnalysisChess(test);
+      }catch(fenErr){
+        test=new Chess();
+        var pgnText=text.replace(/^\s*PGN:\s*/i,'');
+        if(fenMatch){
+          var p=text.match(/(?:^|\n)\s*PGN:\s*([\s\S]*)$/i);
+          pgnText=p?p[1].trim():'';
+        }
+        if(!pgnText) throw fenErr;
+        var pgnOk=false;
+        if(typeof test.load_pgn==='function') pgnOk=test.load_pgn(pgnText);
+        else if(typeof test.loadPgn==='function') pgnOk=test.loadPgn(pgnText);
+        if(pgnOk===false) throw new Error('PGN inválido');
+        xpValidateAnalysisChess(test); loadedAs='PGN';
       }
-      if(typeof botVsBotInterval!=='undefined' && botVsBotInterval){
-        clearTimeout(botVsBotInterval);
-        botVsBotInterval=null;
-      }
-      if(typeof aiRequestId!=='undefined') aiRequestId++;
-      if(typeof pendingAICallback!=='undefined') pendingAICallback=null;
-      if(typeof stopClock==='function') stopClock();
-      if(typeof godAssistBestMove!=='undefined') godAssistBestMove=null;
-      if(typeof gameOverHandled!=='undefined') gameOverHandled=false;
+
+      // Só depois da validação alteramos o estado real do jogo.
+      if(window.xpTrainingActive && typeof window.xpAbortTrainingForModeSwitch==='function') window.xpAbortTrainingForModeSwitch('importação de posição');
+      if(typeof botVsBotInterval!=='undefined' && botVsBotInterval){clearTimeout(botVsBotInterval);botVsBotInterval=null;}
+      if(typeof aiRequestId!=='undefined')aiRequestId++;
+      if(typeof pendingAICallback!=='undefined')pendingAICallback=null;
+      if(typeof stopClock==='function')stopClock();
+      if(typeof godAssistBestMove!=='undefined')godAssistBestMove=null;
+      if(typeof gameOverHandled!=='undefined')gameOverHandled=false;
+      if(typeof clearNetworkDisconnectTimer==='function')clearNetworkDisconnectTimer();
+      if(typeof networkMatchActive!=='undefined')networkMatchActive=false;
+
+      // Limpeza P2P local sem chamar startSandboxMode(), que resetaria a posição.
+      try{
+        p2pSessionToken++;
+        if(heartbeatInterval){clearInterval(heartbeatInterval);heartbeatInterval=null;}
+        spectatorConns.forEach(function(c){try{c.close();}catch(e){}});
+        spectatorConns=[];isRoomHost=false;
+        if(conn){try{conn.close();}catch(e){}conn=null;}
+        if(peer){try{peer.destroy();}catch(e){}peer=null;}
+        currentCityKey=null;
+      }catch(e){}
 
       chess=new Chess(test.fen());
-      gameMode='sandbox';
-      sandboxMode=true;
-      playerColor='w';
-      isSpectator=false;
-      selectedSquare=null;
-      possibleMoves=[];
-      lastPathCoords=[];
-      wasInCheckLastMove=false;
-      historyViewPly=null;
+      gameMode='sandbox';sandboxMode=true;playerColor='w';isSpectator=false;
+      selectedSquare=null;possibleMoves=[];lastPathCoords=[];wasInCheckLastMove=false;historyViewPly=null;
 
-      if(typeof resetMoveHistory==='function') resetMoveHistory();
-      if(typeof closeMenuTransition==='function') closeMenuTransition();
-      if(typeof applyPlayerSeating==='function') applyPlayerSeating();
-      if(typeof updateTurnIndicators==='function') updateTurnIndicators();
-      if(typeof updateCapturedDisplay==='function') updateCapturedDisplay();
-      if(typeof renderBoard==='function') renderBoard();
-      if(typeof detectOpening==='function') detectOpening();
-      if(typeof updateMoveListPanel==='function') updateMoveListPanel();
-      if(typeof setSandboxEvalVisible==='function') setSandboxEvalVisible(true);
-      closeTutorial();
-      addLog('FEN carregado no Sandbox para análise livre','FEN');
-      alert('FEN carregado com sucesso no Sandbox.');
+      if(typeof resetMoveHistory==='function')resetMoveHistory();
+      if(typeof closeMenuTransition==='function')closeMenuTransition();
+      var menu=document.getElementById('menu-screen');if(menu)menu.style.display='none';
+      var wrapper=document.getElementById('game-wrapper');if(wrapper)wrapper.style.display='flex';
+      if(typeof applyPlayerSeating==='function')applyPlayerSeating();
+      if(typeof updateTurnIndicators==='function')updateTurnIndicators();
+      if(typeof updateCapturedDisplay==='function')updateCapturedDisplay();
+      if(typeof renderBoard==='function')renderBoard();
+      if(typeof detectOpening==='function')detectOpening();
+      if(typeof updateMoveListPanel==='function')updateMoveListPanel();
+      if(typeof setSandboxEvalVisible==='function')setSandboxEvalVisible(true);
+      try{closeTutorial();}catch(e){}
+      addLog(loadedAs+' carregado no Sandbox para análise livre'+(source?' via '+source:''),'FEN');
+      return true;
     }catch(e){
-      console.warn('[FEN] Falha ao carregar FEN:',e);
-      alert('FEN inválido. Verifique as 6 partes da posição e tente novamente.');
+      console.warn('[FEN/PGN] Falha ao carregar posição:',e);
+      alert('FEN/PGN inválido — a posição atual foi preservada.\n'+(e&&e.message?e.message:'Verifique os dados e tente novamente.'));
+      return false;
+    }
+  };
+
+  window.xpImportFEN=function(){
+    var f=prompt('Cole um FEN ou PGN para analisar:');
+    if(!f)return;
+    if(window.xpLoadAnalysisPosition(f,'IMPORT')){
+      alert('Posição carregada com sucesso no Sandbox.');
     }
   };
 
@@ -8356,6 +8523,19 @@ body.god-stealth .god-assist-to::after {
   window.xpGetTrainingState=function(){return {active:trainingActive,puzzle:idx+1,total:puzzles.length,solved:solved,solvedCount:solvedCount,attempts:attempts};};
 })();
 
+
+/* v13.0.7 — ponte global defensiva para controles inline do Tutorial/Treino. */
+(function(){
+  function expose(name){
+    try{
+      if(typeof window[name] === 'function') return;
+      var candidate;
+      try { candidate = eval('typeof '+name+'==="function" ? '+name+' : null'); } catch(e) { candidate=null; }
+      if(typeof candidate === 'function') window[name]=candidate;
+    }catch(e){}
+  }
+  ['xpOpenTraining','xpImportFEN','startSandboxFromTutorial','xpHintPuzzle','xpNextPuzzle','xpEvaluateTraining','xpCloseTraining','xpAbortTrainingForModeSwitch'].forEach(expose);
+})();
 </script>
 
 <div id="xp-train-hud" class="xp-train-hud" role="dialog" aria-live="polite" aria-label="Centro de Treino">
@@ -8368,5 +8548,6 @@ body.god-stealth .god-assist-to::after {
   </div>
 </div>
 
+<script id="xp-review-old-button-cleanup">document.addEventListener('DOMContentLoaded',function(){try{var b=document.getElementById('xp-review-open-btn');if(b)b.remove();}catch(e){}});</script>
 </body>
 </html>
