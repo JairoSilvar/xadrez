@@ -1,0 +1,31 @@
+{
+  "version": "14.0.0",
+  "basis": "v13.0.10",
+  "target": "Git + Vercel",
+  "staticAudit": {
+    "duplicateIds": [],
+    "oldVersionStrings": 0,
+    "localLauncherReferences": false,
+    "inlineJavaScriptSyntax": "OK (node --check)",
+    "apiJavaScriptSyntax": "OK (node --check)",
+    "idsPreservedFromV13_0_10": true,
+    "namedFunctionsPreservedFromV13_0_10": true
+  },
+  "changesVerified": [
+    "CMD/local server removed",
+    "Vercel-only room messaging",
+    "no hidden dynamic PeerID fallback",
+    "appGeneration added to AI stale-result guard",
+    "Tester stress 50/100/500",
+    "functional probes with real UI moves",
+    "PvE AI response wait",
+    "Bot-vs-Bot real move wait",
+    "global stress invariants"
+  ],
+  "runtimeLimitations": [
+    "Real PeerJS multi-device requires deployed HTTPS and 2 devices",
+    "Upstash registry requires Vercel environment variables",
+    "Microphone/radio autoplay require browser permission/user gesture",
+    "Third-device spectator remains a physical-device test"
+  ]
+}
