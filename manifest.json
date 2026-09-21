@@ -1,0 +1,11 @@
+{
+  "name": "Xadrez Pro",
+  "short_name": "Xadrez Pro",
+  "description": "Xadrez Pro v14.0.1 — xadrez P2P, IA offline e rádio em tempo real",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#111111",
+  "theme_color": "#111111"
+}

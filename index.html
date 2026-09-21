@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Xadrez Pro v13.0.7 FINAL — consolidacao de todos os recursos da linha 12.x.
+<!-- Xadrez Pro v14.0.1 FINAL — consolidacao de todos os recursos da linha 12.x.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -7,16 +7,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v13.0.7 · Tutorial Unificado</title>
+    <title>Xadrez Pro - v14.0.1 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro v13.0.7 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez Pro v14.0.1 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
-    <link rel="manifest" id="pwa-manifest-link">
+    <link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
         :root {
@@ -1738,7 +1738,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v13.0.7</p>
+            <p>Estratégia P2P · IA offline · v14.0.1</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1746,7 +1746,7 @@
                 <div class="menu-profile-card">
                     <div class="profile-name-row">
                         <span id="avatarPreview" style="font-size:22px; line-height:1;">♟️</span>
-                        <input type="text" id="playerNameInput" maxlength="18" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()" title="Código secreto: 81=Nome alterna o Modo GOD">
+                        <input type="text" id="playerNameInput" maxlength="18" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()" title="Códigos locais: 81=Nome alterna GOD · 82=Nome alterna DEV/TESTER">
                     </div>
                     <div class="profile-elo">⭐ Elo <span id="eloDisplay">1200</span></div>
                     <div class="profile-gm" id="eloUnlockHint">👑 GM em 1500</div>
@@ -1876,13 +1876,18 @@
                             <button class="room-btn" style="background: linear-gradient(135deg, #059669, #022c22);" onclick="joinCityRoom('londres')">🌲 Londres (Floresta) <span id="status-londres" class="room-status">Livre</span></button>
                         </div>
                         <div style="margin-top:8px; padding:8px; border-radius:10px; border:1px solid var(--panel-border); background:var(--chat-bg); display:flex; flex-direction:column; gap:6px;">
-                            <div style="font-size:10px; font-weight:800; color:var(--board-border);">🔐 Sala privada (código)</div>
-                            <div style="display:flex; gap:4px;">
-                                <input type="text" id="privateRoomCode" maxlength="6" placeholder="ABC123" style="flex:1; text-transform:uppercase; letter-spacing:2px; font-weight:800; font-size:12px; padding:8px; border-radius:8px; border:1px solid var(--panel-border); background:var(--chat-input-bg); color:var(--text-main); text-align:center;" />
-                                <button type="button" class="action-btn" style="padding:8px 10px; font-size:10px; font-weight:800;" onclick="createPrivateRoom()">Criar</button>
-                                <button type="button" class="action-btn" style="padding:8px 10px; font-size:10px; font-weight:800; background:var(--board-border); color:#fff;" onclick="joinPrivateRoom()">Entrar</button>
+                            <div style="font-size:10px; font-weight:800; color:var(--board-border);">🌍 Salas criadas por jogadores</div>
+                            <button type="button" class="action-btn" id="xpCreateAutoRoomBtn" style="padding:9px 12px;font-size:10px;font-weight:900;background:var(--board-border);color:#fff;" onclick="createPrivateRoom()">➕ Criar nova sala</button>
+                            <div style="font-size:8px;color:var(--text-muted);">O sistema sorteia automaticamente uma cidade livre. O nome técnico P2P fica oculto.</div>
+                            <div style="display:flex;gap:4px;align-items:center;">
+                                <input type="text" id="privateRoomCode" maxlength="18" placeholder="Entrar pelo nome (ex.: Miami)" style="flex:1;min-width:0;font-weight:800;font-size:11px;padding:8px;border-radius:8px;border:1px solid var(--panel-border);background:var(--chat-input-bg);color:var(--text-main);text-align:center;" />
+                                <button type="button" class="action-btn" style="padding:8px 10px;font-size:10px;font-weight:800;" onclick="joinPrivateRoom()">Entrar</button>
                             </div>
-                            <div style="font-size:8px; color:var(--text-muted);">Gere um código e envie ao amigo. Mesmo protocolo P2P das cidades.</div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+                                <b style="font-size:9px;">Salas disponíveis <span id="xpRoomsFreshness" style="font-weight:400;color:var(--text-muted);"></span></b>
+                                <button type="button" class="action-btn" onclick="xpRefreshDiscoveredRooms()" style="padding:4px 7px;font-size:8px;">↻ Atualizar</button>
+                            </div>
+                            <div id="xpActiveRoomsList" style="font-size:9px;display:flex;flex-direction:column;gap:4px;"><span style="color:var(--text-muted);">Nenhuma sala carregada.</span></div>
                         </div>
                     </div>
                 </details>
@@ -1934,6 +1939,7 @@
                             <button class="dropdown-item" onclick="toggleBoardFlip()">🔁 Girar Tabuleiro</button>
                             <button class="dropdown-item" id="dropdownEval" onclick="evaluateSandboxPosition()" style="display:none;">🔎 Avaliar posição</button>
                             <button class="dropdown-item" id="xp-review-gear-open" onclick="xpOpenReview(); closeActionDropdownSafe()" disabled>🔎 Revisar partida</button>
+                            <button class="dropdown-item" id="xp-tester-gear-open" onclick="xpOpenTester(); closeActionDropdownSafe()" style="display:none;">🧪 DEV / TESTER</button>
                             <button class="dropdown-item" onclick="openSettingsModal()">🎨 Temas e Configurações</button>
                             <button class="dropdown-item" onclick="openLogModal()">📜 Ver Logs</button>
                         </div>
@@ -2238,7 +2244,8 @@ body.god-stealth .god-assist-to::after {
 
     let selectedSquare = null;
     let possibleMoves = [];
-    const APP_VERSION = '13.0.7';
+    const APP_VERSION = '14.0.1';
+    const BUILD_ID = 'xp-14.0.1-20260921';
         let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
@@ -2276,6 +2283,7 @@ body.god-stealth .god-assist-to::after {
     let menuTransitionToken = 0;
     // Token de sessão P2P: invalida callbacks/timeouts de salas antigas ao sair ou trocar de sala.
     let p2pSessionToken = 0;
+    let appGeneration = 0; // v14: invalida trabalho assíncrono de modos anteriores
     let aiRequestId = 0;
     let pendingAICallback = null;
     let pvePlayerColor = 'w';
@@ -3815,7 +3823,7 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // v13.0.7 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
+    // v14.0.1 — diagnóstico centralizado. Não altera regras de jogo; apenas expõe estado seguro para testes.
     window.xpRuntimeHealth = function(){
         try {
             return {
@@ -3996,9 +4004,37 @@ body.god-stealth .god-assist-to::after {
         return cleanName;
     }
 
+    let testerMode = false;
+    try { testerMode = localStorage.getItem('xadrezpro_tester_mode') === '1'; } catch(e) {}
+
+    function xpShowTesterToast(active) {
+        let t=document.getElementById('xpTesterToast');
+        if(!t){t=document.createElement('div');t.id='xpTesterToast';t.style.cssText='position:fixed;left:50%;bottom:70px;transform:translateX(-50%);z-index:15000;background:#111827;color:#fff;border:1px solid #22c55e;border-radius:10px;padding:10px 14px;font-size:11px;font-weight:800;box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;transition:opacity .18s;pointer-events:none;text-align:center';document.body.appendChild(t);}
+        t.textContent=active?'🧪 Modo DEV/TESTER ativado':'🧪 Modo DEV/TESTER desativado';t.style.opacity='1';clearTimeout(window.__xpTesterToastTimer);window.__xpTesterToastTimer=setTimeout(function(){t.style.opacity='0';},2600);
+    }
+
+    function processTesterNameInput(rawValue) {
+        const raw = String(rawValue || '').trim();
+        const match = raw.match(/^82=(.*)$/i);
+        if (!match) return null;
+        const cleanName = String(match[1] || '').trim().slice(0, 18);
+        if (!cleanName) {
+            alert('Use 82= seguido do nome do usuário.');
+            return '';
+        }
+        testerMode = !testerMode;
+        try { localStorage.setItem('xadrezpro_tester_mode', testerMode ? '1' : '0'); } catch(e) {}
+        addLog('Modo DEV/TESTER ' + (testerMode ? 'ativado' : 'desativado') + '.', 'TESTER');
+        try { xpShowTesterToast(testerMode); } catch(e) {}
+        setTimeout(function(){ try { xpTesterRefreshEntry(); } catch(e){} }, 0);
+        return cleanName;
+    }
+
     function savePlayerName() {
         const el = document.getElementById('playerNameInput');
         if (!el) return;
+        const testerResult = processTesterNameInput(el.value);
+        if (testerResult !== null) el.value = testerResult;
         const godResult = processGodNameInput(el.value);
         if (godResult !== null) el.value = godResult;
         playerName = (el.value || '').trim().slice(0, 18);
@@ -4256,6 +4292,8 @@ body.god-stealth .god-assist-to::after {
     }
 
     function startSandboxMode() {
+        appGeneration++;
+        aiRequestId++; pendingAICallback = null;
         closeTrainingForModeSwitch('Sandbox');
         try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         forceFullBoardRebuild();
@@ -4787,9 +4825,11 @@ body.god-stealth .god-assist-to::after {
     }
 
     function startGame(mode, isRematch = false) {
+        appGeneration++;
         closeTrainingForModeSwitch('novo jogo: ' + mode);
         try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         forceFullBoardRebuild();
+        aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
         if (mode !== 'sandbox') setSandboxEvalVisible(false);
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
@@ -4904,6 +4944,7 @@ body.god-stealth .god-assist-to::after {
 
     function resetGame(isRematch = true) {
         forceFullBoardRebuild();
+        aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
         chess.reset();
         resetMoveHistory();
@@ -4942,6 +4983,9 @@ body.god-stealth .god-assist-to::after {
         clearNetworkDisconnectTimer();
         networkMatchActive = false;
         networkAbandonmentHandled = false;
+        const xpLeavingRoomKey = currentCityKey;
+        const xpLeavingPeerId = (peer && peer.id) ? peer.id : '';
+        const xpWasRoomHost = !!isRoomHost;
         
         // Invalida imediatamente qualquer callback/time-out P2P da sessão que está sendo encerrada.
         p2pSessionToken++;
@@ -4961,7 +5005,7 @@ body.god-stealth .god-assist-to::after {
         if (menuTransitionTimer) { clearTimeout(menuTransitionTimer); menuTransitionTimer = null; }
         menuTransitionToken++;
         if (roomStatusRefreshTimer) { clearTimeout(roomStatusRefreshTimer); roomStatusRefreshTimer = null; }
-        gameMode = 'menu';
+        // O modo só vira menu depois que a sessão P2P local foi realmente desmontada.
         sandboxMode = false;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         if (clockInterval) { clearInterval(clockInterval); clockInterval = null; }
@@ -4980,6 +5024,12 @@ body.god-stealth .god-assist-to::after {
         isRoomHost = false;
         if (conn) { try { conn.close(); } catch(e) {} conn = null; }
         if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
+        if (xpRoomRegistryTimer) { clearInterval(xpRoomRegistryTimer); xpRoomRegistryTimer = null; }
+        if (xpWasRoomHost && xpLeavingRoomKey && String(xpLeavingRoomKey).indexOf('priv-') === 0) {
+            xpUnregisterCurrentRoom(xpLeavingRoomKey, xpLeavingPeerId);
+        }
+        addLog('Sessão P2P local desmontada antes do retorno ao menu.', 'P2P_CLEANUP', {room:xpLeavingRoomKey||'-', peerId:xpLeavingPeerId||'-', token:p2pSessionToken});
+        gameMode = 'menu';
         isSpectator = false;
         spectatorWhiteName = '';
         spectatorBlackName = '';
@@ -5802,32 +5852,135 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // === Sala privada (código) ===
-    function normalizePrivateCode(raw) {
-        return String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
-    }
+    // === Salas criadas por jogadores — nome amigável + descoberta opcional via Vercel ===
+    const XP_FRIENDLY_CITIES = ['Miami','Roma','Dubai','Lisboa','Berlim','Madrid','Sydney','Toronto','Cairo','Atenas','Seul','Dublin','Viena','Praga','Oslo','Zurique','Boston','Chicago','Havana','Lima','Quito','Recife','Salvador','Monaco','Napoles','Milao','Genebra','Bruxelas','Amsterda','Vancouver'];
+    let xpRoomRegistryTimer = null;
+    let xpDiscoveredRooms = [];
+    let xpRoomLease = null;
+    let xpRoomsLastOk = 0;
+    let xpRoomsAutoTimer = null;
 
-    function createPrivateRoom() {
-        const input = document.getElementById('privateRoomCode');
-        let code = normalizePrivateCode(input && input.value);
-        if (code.length < 4) {
-            code = Math.random().toString(36).substring(2, 8).toUpperCase();
-            if (input) input.value = code;
-        }
-        joinCityRoom('priv-' + code.toLowerCase());
-        addChatMessage('Sistema', 'Sala privada ' + code + ' — compartilhe o código com o amigo.', true);
-        bumpMission('cities', 1);
+    function xpNormalizeRoomName(raw) {
+        let v = String(raw || '').trim();
+        try { v = v.normalize('NFD').replace(/[\u0300-\u036f]/g,''); } catch(e) {}
+        v = v.replace(/[^A-Za-z0-9 _-]/g,'').replace(/\s+/g,' ').trim().slice(0,18);
+        return v;
     }
-
-    function joinPrivateRoom() {
-        const input = document.getElementById('privateRoomCode');
-        const code = normalizePrivateCode(input && input.value);
-        if (code.length < 4) {
-            alert('Digite um código de 4 a 6 caracteres.');
-            return;
+    function xpRoomSlug(name) {
+        return xpNormalizeRoomName(name).toLowerCase().replace(/\s+/g,'-');
+    }
+    function xpPickFriendlyCity() {
+        const used = {};
+        xpDiscoveredRooms.forEach(function(r){ used[String(r.name||'').toLowerCase()] = true; });
+        const free = XP_FRIENDLY_CITIES.filter(function(c){ return !used[c.toLowerCase()]; });
+        const pool = free.length ? free : XP_FRIENDLY_CITIES;
+        return pool[Math.floor(Math.random()*pool.length)];
+    }
+    async function xpRegistryRequest(method, body) {
+        try {
+            if (location.protocol === 'file:') {
+                const er = new Error('LOCAL_FILE_NO_API'); er.status = 0; er.localFile = true; throw er;
+            }
+            const opt = { method: method, headers: {'Content-Type':'application/json'}, cache:'no-store' };
+            if (body) opt.body = JSON.stringify(body);
+            const r = await fetch('/api/rooms', opt);
+            let data = null; try { data = await r.json(); } catch(e) {}
+            if (!r.ok) { const er=new Error((data&&data.error)||('HTTP '+r.status)); er.status=r.status; er.data=data; throw er; }
+            return data;
+        } catch(e) {
+            addLog('Registro compartilhado de salas indisponível: '+(e.message||e), 'WARN', {status:e.status||0});
+            return {ok:false,error:String(e.message||e),status:e.status||0};
         }
-        joinCityRoom('priv-' + code.toLowerCase());
-        bumpMission('cities', 1);
+    }
+    async function xpRegisterCurrentRoom(state) {
+        if (gameMode !== 'network' || !isRoomHost || !currentCityKey || String(currentCityKey).indexOf('priv-') !== 0 || !peer || !peer.id || !xpRoomLease) return;
+        const data=await xpRegistryRequest('POST',{action:'heartbeat',slug:xpRoomLease.slug,roomInstanceId:xpRoomLease.roomInstanceId,hostToken:xpRoomLease.hostToken,peerId:peer.id,state:state||'waiting',version:APP_VERSION,host:playerName||'Host'});
+        if(!data||!data.ok) addLog('Heartbeat da sala rejeitado: '+((data&&data.error)||'erro'), 'WARN');
+    }
+    async function xpUnregisterCurrentRoom(roomKey, peerId) {
+        if(!xpRoomLease)return;
+        await xpRegistryRequest('DELETE',{slug:xpRoomLease.slug,roomInstanceId:xpRoomLease.roomInstanceId,hostToken:xpRoomLease.hostToken});
+        xpRoomLease=null;
+    }
+    function xpScheduleRoomsRefresh(delay){
+        if(xpRoomsAutoTimer)clearTimeout(xpRoomsAutoTimer);
+        xpRoomsAutoTimer=setTimeout(function(){xpRoomsAutoTimer=null;if(document.visibilityState!=='hidden')xpRefreshDiscoveredRooms(true);else xpScheduleRoomsRefresh(15000);},delay||7000);
+    }
+    function xpRoomsUiMessage(message, tone) {
+        const list=document.getElementById('xpActiveRoomsList');
+        if(!list)return;
+        const color=tone==='error'?'#f59e0b':tone==='ok'?'#16a34a':'var(--text-muted)';
+        list.innerHTML='<span style="color:'+color+';">'+escapeHtml(message)+'</span>';
+    }
+    function xpRegistryEnvironmentMessage(data) {
+        if(location.protocol==='file:' || (data&&data.error==='LOCAL_FILE_NO_API')) return 'Salas compartilhadas exigem a versão publicada na Vercel; file:// não possui a API /api/rooms.';
+        if(data&&data.error==='ROOM_REGISTRY_NOT_CONFIGURED') return 'Registro de salas não configurado no servidor. Configure as variáveis Upstash/KV no projeto Vercel.';
+        return 'Não foi possível consultar o registro de salas. Tentando novamente…';
+    }
+    async function xpRefreshDiscoveredRooms(silent) {
+        const list=document.getElementById('xpActiveRoomsList'),fresh=document.getElementById('xpRoomsFreshness');
+        if(list&&!silent)list.innerHTML='<span style="color:var(--text-muted);">Consultando...</span>';
+        const data=await xpRegistryRequest('GET');
+        if(data&&data.ok&&Array.isArray(data.rooms)){
+            xpDiscoveredRooms=data.rooms.filter(function(r){return r&&r.peerId&&r.state!=='creating';});xpRoomsLastOk=Date.now();
+            if(fresh)fresh.textContent='· atualizado agora';
+        }else{
+            if(fresh)fresh.textContent='· ⚠ atualização indisponível';
+            if(list&&!xpDiscoveredRooms.length)xpRoomsUiMessage('⚠ '+xpRegistryEnvironmentMessage(data),'error');
+            xpScheduleRoomsRefresh(10000);return;
+        }
+        if(!list){xpScheduleRoomsRefresh(7000);return;}
+        if(!xpDiscoveredRooms.length){list.innerHTML='<span style="color:var(--text-muted);">Nenhuma sala ativa encontrada.</span>';xpScheduleRoomsRefresh(7000);return;}
+        list.innerHTML=xpDiscoveredRooms.slice(0,16).map(function(r,i){
+            const safeName=escapeHtml(String(r.name||'Sala')),suspect=r.health==='suspect';
+            const state=suspect?'🔄 Reconectando':(r.state==='playing'?'⚔️ Em jogo':'🟢 Aguardando');
+            const action=r.state==='playing'?'Assistir':'Entrar';
+            return '<div style="display:flex;align-items:center;justify-content:space-between;gap:5px;padding:5px;border:1px solid var(--panel-border);border-radius:7px;"><span><b>'+safeName+'</b> · '+state+'</span><button class="action-btn" '+(suspect?'disabled':'')+' style="padding:4px 7px;font-size:8px;" onclick="xpJoinDiscoveredRoomByIndex('+i+')">'+action+'</button></div>';
+        }).join('');
+        xpScheduleRoomsRefresh(7000);
+    }
+    function xpJoinDiscoveredRoomByIndex(i){const r=xpDiscoveredRooms[Number(i)];if(!r){alert('Sala não encontrada. Atualize a lista.');return;}xpJoinDiscoveredRoom(r.slug,r.peerId,r.state==='playing');}
+    async function xpJoinDiscoveredRoom(slug,peerId,spectate){
+        const data=await xpRegistryRequest('GET');
+        const room=data&&data.ok&&Array.isArray(data.rooms)?data.rooms.find(function(r){return r.slug===slug&&r.peerId===peerId;}):null;
+        if(!room){alert('A sala mudou ou foi encerrada. A lista será atualizada.');xpRefreshDiscoveredRooms();return;}
+        const input=document.getElementById('privateRoomCode');if(input)input.value='';
+        joinCityRoom('priv-'+slug,{targetPeerId:room.peerId,forceSpectator:!!spectate,friendlyName:room.name||slug,roomInstanceId:room.roomInstanceId});
+    }
+    async function createPrivateRoom(){
+        const btn=document.getElementById('xpCreateAutoRoomBtn');
+        if(btn&&btn.disabled)return;
+        if(btn){btn.disabled=true;btn.textContent='⏳ Escolhendo cidade…';}
+        try{
+            if(location.protocol==='file:'){
+                xpRoomsUiMessage('⚠ Salas compartilhadas exigem a versão publicada na Vercel. Abra o endereço HTTPS do projeto.','error');
+                addLog('Criação de sala bloqueada em file://: use o deploy HTTPS da Vercel.', 'WARN');
+                return;
+            }
+            const creationRequestId='create-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+            const data=await xpRegistryRequest('POST',{action:'createAuto',creationRequestId:creationRequestId,version:APP_VERSION,host:playerName||'Host'});
+            if(!data||!data.ok||!data.room){
+                const msg=data&&data.error==='NO_CITY_AVAILABLE'?'Todas as cidades estão em uso no momento.':xpRegistryEnvironmentMessage(data);
+                xpRoomsUiMessage('⚠ '+msg,'error'); addLog('Falha ao reservar nova sala: '+((data&&data.error)||'sem resposta'),'WARN'); return;
+            }
+            xpRoomLease={slug:data.room.slug,roomInstanceId:data.room.roomInstanceId,hostToken:data.room.hostToken,aliasEpoch:data.room.aliasEpoch};
+            const input=document.getElementById('privateRoomCode');if(input)input.value='';
+            joinCityRoom('priv-'+data.room.slug,{forceHost:true,friendlyName:data.room.name,roomInstanceId:data.room.roomInstanceId});
+            addChatMessage('Sistema','Sala '+data.room.name+' criada — ela aparecerá na lista automaticamente.',true);bumpMission('cities',1);
+            setTimeout(function(){xpRegisterCurrentRoom('waiting');xpRefreshDiscoveredRooms(true);},900);
+        } finally {
+            if(btn){btn.disabled=false;btn.textContent='➕ Criar nova sala';}
+        }
+    }
+    async function joinPrivateRoom(){
+        const input=document.getElementById('privateRoomCode'),name=xpNormalizeRoomName(input&&input.value);
+        if(!name){alert('Digite o nome da cidade da sala.');return;}
+        const slug=xpRoomSlug(name),data=await xpRegistryRequest('GET');
+        if(!data||!data.ok){alert('Não foi possível consultar as salas agora. Tente novamente.');return;}
+        const found=Array.isArray(data.rooms)?data.rooms.find(function(r){return r.slug===slug&&r.peerId;}):null;
+        if(!found){alert('Sala '+name+' não encontrada ou já encerrada.');xpRefreshDiscoveredRooms(true);return;}
+        if(input)input.value='';
+        joinCityRoom('priv-'+slug,{targetPeerId:found.peerId,friendlyName:found.name||name,forceSpectator:found.state==='playing',roomInstanceId:found.roomInstanceId});bumpMission('cities',1);
     }
 
     async function copyFEN() {
@@ -6808,6 +6961,9 @@ body.god-stealth .god-assist-to::after {
                 }[aiDifficulty] || [5, 2000];
             }
             const currentReqId = ++aiRequestId;
+            const aiModeAtRequest = gameMode;
+            const aiGenerationAtRequest = appGeneration;
+            const aiFenAtRequest = chess.fen();
             const thinkStarted = performance.now();
 
             document.getElementById('turn-badge-local').innerText = "Pensando...";
@@ -6816,7 +6972,7 @@ body.god-stealth .god-assist-to::after {
             document.getElementById('turn-badge-opponent').style.display = 'inline-block';
 
             pendingAICallback = (payload) => {
-                if (currentReqId !== aiRequestId) return;
+                if (currentReqId !== aiRequestId || appGeneration !== aiGenerationAtRequest || gameMode !== aiModeAtRequest || chess.fen() !== aiFenAtRequest) { addLog('Resposta IA obsoleta descartada.', 'AI_STALE'); return; }
                 const bestMove = (payload && payload.bestMove) ? payload.bestMove : payload;
                 const ms = Math.round(performance.now() - thinkStarted);
                 const depth = payload && payload.depthReached != null ? payload.depthReached : '?';
@@ -6882,7 +7038,7 @@ body.god-stealth .god-assist-to::after {
         if (onDone) onDone();
     }
 
-    // v13.0.7 — status das salas: falha/timeout do broker NÃO significa sala indisponível.
+    // v14.0.1 — status das salas: falha/timeout do broker NÃO significa sala indisponível.
     // Mantemos o último estado conhecido e usamos "Verificando" durante uma checagem.
     const roomStatusCache = {
         paris: 'disponivel',
@@ -7007,7 +7163,9 @@ body.god-stealth .god-assist-to::after {
         relayToSpectators(payload);
     }
 
-    function joinCityRoom(cityName) {
+    function joinCityRoom(cityName, xpJoinOptions) {
+        appGeneration++;
+        xpJoinOptions = xpJoinOptions || {};
         closeTrainingForModeSwitch('sala online: ' + cityName);
         const sessionToken = ++p2pSessionToken;
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
@@ -7017,8 +7175,31 @@ body.god-stealth .god-assist-to::after {
         gameMode = 'network';
         currentCityKey = cityName;
 
-        let baseRoomId = "xadrezpro-cities-v73-" + cityName;
+        let baseRoomId = xpJoinOptions.targetPeerId || ("xadrezpro-cities-v73-" + cityName);
         addLog(`Iniciando tentativa de conexão com a sala: ${cityName} (ID base: ${baseRoomId})`, "P2P_CONNECT");
+
+        if (xpJoinOptions.targetPeerId) {
+            if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
+            if (conn) { try { conn.close(); } catch(e) {} conn = null; }
+            peer = new Peer();
+            peer.on('open', function(){
+                if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
+                const c = peer.connect(baseRoomId, {reliable:true, serialization:'json'});
+                const t = setTimeout(function(){
+                    if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
+                    if (!c.open) { try{c.close();}catch(e){} addLog('Timeout ao entrar na sala publicada '+cityName,'ERROR'); }
+                }, 7000);
+                c.on('open', function(){
+                    if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
+                    clearTimeout(t); conn=c; setupClientListeners(cityName);
+                    try { conn.send({type: xpJoinOptions.forceSpectator ? 'spectator-join':'check-slot', city:cityName, guestName:playerName||'Guest', guestAvatar:playerAvatar}); } catch(e){}
+                    addLog('Cliente conectado ao Peer ID publicado da sala '+cityName,'P2P_SUCCESS');
+                });
+                c.on('error', function(err){ clearTimeout(t); addLog('Falha ao entrar na sala publicada: '+(err&&err.message||err),'ERROR'); });
+            });
+            peer.on('error', function(err){ if(sessionToken===p2pSessionToken) addLog('Falha no peer cliente: '+(err&&err.message||err),'ERROR'); });
+            return;
+        }
 
         if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
         if (conn) { try { conn.close(); } catch(e) {} conn = null; }
@@ -7044,12 +7225,24 @@ body.god-stealth .god-assist-to::after {
             setupHostServer(cityName);
             setupHeartbeat();
             addLog(`Host P2P criado com sucesso na sala ${cityName}. ID atribuído: ${id}`, "P2P_SUCCESS");
+            if (String(cityName).indexOf('priv-') === 0) {
+                xpRegisterCurrentRoom('waiting');
+                if (xpRoomRegistryTimer) clearInterval(xpRoomRegistryTimer);
+                xpRoomRegistryTimer = setInterval(function(){ xpRegisterCurrentRoom(networkMatchActive ? 'playing' : 'waiting'); }, 15000);
+                setTimeout(xpRefreshDiscoveredRooms, 300);
+            }
         });
 
         peer.on('error', (err) => {
             if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
             if (err.type === 'unavailable-id') {
                 clearTimeout(connectionTimeout);
+                if (xpJoinOptions.forceHost) {
+                    addLog(`Nome de sala ${cityName} ainda está reservado no broker. Não será criada cópia invisível.`, "WARN");
+                    alert('Essa sala ainda está sendo liberada. Aguarde alguns segundos ou escolha outra cidade.');
+                    safeLeaveRoom();
+                    return;
+                }
                 addLog(`ID ${baseRoomId} está reservado/ocupado no broker público. Tentando entrar como cliente...`, "P2P_INFO");
                 if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
                 
@@ -7092,32 +7285,30 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
+    function xpTransientNotice(message, ms) {
+        try {
+            var id='xp-transient-notice', el=document.getElementById(id);
+            if(!el){el=document.createElement('div');el.id=id;el.style.cssText='position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:13000;max-width:88vw;padding:9px 12px;border-radius:10px;background:rgba(15,23,42,.94);color:#fff;font-size:11px;font-weight:800;box-shadow:0 6px 22px rgba(0,0,0,.3)';document.body.appendChild(el);}
+            el.textContent=String(message||'');el.style.display='block';
+            clearTimeout(el.__xpTimer);el.__xpTimer=setTimeout(function(){el.style.display='none';},ms||2400);
+        } catch(e) {}
+    }
+
     function joinCityRoomAlternative(cityName, sessionToken) {
+        // v14 — nunca cria Peer ID oculto/sufixado: uma sala lógica deve ter uma única identidade.
         sessionToken = sessionToken || p2pSessionToken;
         if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
-        if (peer) { try { peer.destroy(); } catch(e) {} peer = null; }
-        let suffix = Math.random().toString(36).substring(2, 6);
-        let dynamicRoomId = `xadrezpro-cities-v73-${cityName}-${suffix}`;
-        addLog(`Criando nova instância limpa para ${cityName} com ID dinâmico: ${dynamicRoomId}`, "P2P_CONNECT");
-
-        peer = new Peer(dynamicRoomId);
-        peer.on('open', (id) => {
-            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
-            playerColor = 'w';
-            isSpectator = false;
-            applyCityVisualTheme(cityName);
-            closeMenuTransition();
-            startGameSetup();
-            setupHostServer(cityName);
-            setupHeartbeat();
-            addLog(`Instância alternativa de ${cityName} criada com sucesso (ID: ${id}).`, "P2P_SUCCESS");
-        });
-        peer.on('error', (err) => {
-            if (sessionToken !== p2pSessionToken || gameMode !== 'network') return;
-            addLog(`Falha ao abrir instância dinâmica: ${err.message}`, "ERROR");
-            alert("Erro ao conectar à sala. Retornando ao menu principal.");
-            safeLeaveRoom();
-        });
+        addLog('Fallback P2P dinâmico bloqueado para '+cityName+'. A sala será revalidada em vez de criar cópia invisível.', 'WARN');
+        try { if (conn) conn.close(); } catch(e) {}
+        try { if (peer) peer.destroy(); } catch(e) {}
+        conn = null; peer = null;
+        if (String(cityName).indexOf('priv-') === 0) {
+            xpRefreshDiscoveredRooms(true);
+            xpTransientNotice('⚠ Sala não confirmada. Atualizando o registro…', 2600);
+        } else {
+            xpTransientNotice('⚠ Sala temporariamente indisponível. Tente novamente em alguns segundos.', 2600);
+        }
+        safeLeaveRoom();
     }
 
     function setupHeartbeat() {
@@ -7484,7 +7675,7 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    // v13.0.7 — abandono/desconexao P2P robustos.
+    // v14.0.1 — abandono/desconexao P2P robustos.
     let networkMatchActive = false;
     let networkDisconnectTimer = null;
     let networkAbandonmentHandled = false;
@@ -7629,6 +7820,7 @@ body.god-stealth .god-assist-to::after {
     function startGameSetup() {
         closeTrainingForModeSwitch('partida online');
         forceFullBoardRebuild();
+        aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
         gameMode = 'network';
         boardFlipped = (playerColor === 'b'); // espectador (playerColor null) vê do lado das brancas
@@ -7803,53 +7995,51 @@ body.god-stealth .god-assist-to::after {
     updateCapturedDisplay();
     renderBoard();
 
-    // === PWA: manifest dinâmico + service worker ===
-    let deferredInstallPrompt = null;
+    // === PWA v14.0.1: manifest estático + Service Worker versionado ===
+    // O manifest fica em /manifest.json para evitar start_url/scope inválidos de Blob URLs.
+    // O SW usa BUILD_ID próprio e navegação network-first para impedir HTML antigo persistente.
+    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-14.0.1-20260921' };
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(reg) {
+                addLog('Service Worker registrado: ' + (reg.scope || '') + ' | build=' + BUILD_ID, 'PWA');
+                try { reg.update(); } catch(e) {}
+                reg.addEventListener('updatefound', function() {
+                    var w = reg.installing;
+                    if (!w) return;
+                    w.addEventListener('statechange', function() {
+                        if (w.state === 'installed' && navigator.serviceWorker.controller) {
+                            addLog('Nova versão do Service Worker instalada; será usada sem interromper a partida atual.', 'PWA');
+                        }
+                    });
+                });
+            }).catch(function(err) {
+                addLog('Falha ao registrar Service Worker: ' + String(err && err.message || err), 'PWA');
+            });
+        });
+        navigator.serviceWorker.addEventListener('message', function(ev) {
+            if (ev.data && ev.data.type === 'XP_SW_BUILD') {
+                window.xpBuildInfo.swActual = ev.data.buildId || '?';
+                if (window.xpBuildInfo.swActual !== window.xpBuildInfo.swExpected) {
+                    addLog('DIVERGÊNCIA DE BUILD: página=' + BUILD_ID + ' sw=' + window.xpBuildInfo.swActual, 'PWA');
+                }
+            }
+        });
+        navigator.serviceWorker.ready.then(function(reg) {
+            var target = reg.active || reg.waiting || reg.installing;
+            if (target) try { target.postMessage({type:'XP_GET_SW_BUILD'}); } catch(e) {}
+        }).catch(function(){});
+    } else if (location.protocol === 'file:') {
+        addLog('PWA/Service Worker desativado em file://. Use o deploy Vercel para recursos online.', 'PWA');
+    }
 
     function setupPWA() {
-        const manifest = {
-            name: 'Xadrez Pro',
-            short_name: 'Xadrez Pro',
-            description: 'Xadrez P2P com IA offline, temas e rádio',
-            start_url: './index.html',
-            scope: './',
-            display: 'standalone',
-            orientation: 'any',
-            background_color: '#0f172a',
-            theme_color: '#0284c7',
-            lang: 'pt-BR',
-            icons: [
-                {
-                    src: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg',
-                    sizes: 'any',
-                    type: 'image/svg+xml',
-                    purpose: 'any maskable'
-                }
-            ]
-        };
-        try {
-            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const link = document.getElementById('pwa-manifest-link');
-            if (link) link.setAttribute('href', url);
-        } catch (e) {
-            addLog('Manifest PWA: ' + e.message, 'WARN');
-        }
-
-        if ('serviceWorker' in navigator) {
-            // Só registra se estiver em http/https (não file://)
-            if (location.protocol === 'http:' || location.protocol === 'https:') {
-                navigator.serviceWorker.register('./sw-v73.js').then((reg) => {
-                    addLog('Service Worker registrado: ' + (reg.scope || ''), 'PWA');
-                    const st = document.getElementById('pwaStatus');
-                    if (st) { st.style.display = 'block'; st.textContent = 'PWA ativo — pode instalar / usar offline (IA e tabuleiro)'; }
-                }).catch((err) => {
-                    addLog('SW não registrado: ' + err.message, 'WARN');
-                });
-            } else {
-                const st = document.getElementById('pwaStatus');
-                if (st) { st.style.display = 'block'; st.textContent = 'Abra via HTTP (servidor local ou hospedagem) para instalar como app'; }
-            }
+        // v14.0.1: manifest e SW são arquivos estáticos versionados.
+        // O registro real ocorre no bloco PWA acima; esta função preserva apenas a UI de instalação.
+        const st = document.getElementById('pwaStatus');
+        if (st && location.protocol === 'file:') {
+            st.style.display = 'block';
+            st.textContent = 'PWA e salas online requerem a versão hospedada (HTTP/HTTPS).';
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -8072,7 +8262,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez Pro v13.0.7 — status de salas corrigido: Treino/Sandbox/Tutorial/FEN, diagnóstico e compatibilidade.', 'INIT');
+    addLog('Xadrez Pro v14.0.1 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
@@ -8108,7 +8298,7 @@ body.god-stealth .god-assist-to::after {
 
 
 
-/* v13.0.7 — revisão robusta, acesso pela engrenagem e integração segura com Sandbox. */
+/* v14.0.1 — revisão robusta, acesso pela engrenagem e integração segura com Sandbox. */
 (function(){
  var REVIEW_KEY='xadrezpro_last_review_v1307', lastReview=null, copyTimer=null;
  function loadSaved(){
@@ -8415,7 +8605,7 @@ body.god-stealth .god-assist-to::after {
 
   window.xpLoadAnalysisPosition=function(raw,source){
     var text=String(raw||'').trim();
-    if(!text){alert('Nenhuma posição foi informada.');return false;}
+    if(!text){if(source!=='TESTER')alert('Nenhuma posição foi informada.');return false;}
     var test=null, loadedAs='FEN';
     try{
       // Aceita também o texto produzido por "Copiar FEN/PGN": extrai primeiro o FEN.
@@ -8481,7 +8671,7 @@ body.god-stealth .god-assist-to::after {
       return true;
     }catch(e){
       console.warn('[FEN/PGN] Falha ao carregar posição:',e);
-      alert('FEN/PGN inválido — a posição atual foi preservada.\n'+(e&&e.message?e.message:'Verifique os dados e tente novamente.'));
+      if(source!=='TESTER')alert('FEN/PGN inválido — a posição atual foi preservada.\n'+(e&&e.message?e.message:'Verifique os dados e tente novamente.')); else addLog('TESTER confirmou rejeição de FEN/PGN inválido sem alterar a posição.', 'TESTER');
       return false;
     }
   };
@@ -8524,7 +8714,7 @@ body.god-stealth .god-assist-to::after {
 })();
 
 
-/* v13.0.7 — ponte global defensiva para controles inline do Tutorial/Treino. */
+/* v14.0.1 — ponte global defensiva para controles inline do Tutorial/Treino. */
 (function(){
   function expose(name){
     try{
@@ -8549,5 +8739,212 @@ body.god-stealth .god-assist-to::after {
 </div>
 
 <script id="xp-review-old-button-cleanup">document.addEventListener('DOMContentLoaded',function(){try{var b=document.getElementById('xp-review-open-btn');if(b)b.remove();}catch(e){}});</script>
+
+<script>
+/* Xadrez Pro v14.0.1 — DEV/TESTER persistente ("gravador de voo"). */
+(function(){
+  var KEY='xp_tester_runs_v1400', current=null, watchdog=null, oldOnError=window.onerror;
+  function now(){return Date.now();}
+  function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')||[];}catch(e){return[];}}
+  function persist(){
+    if(!current)return;
+    var all=load().filter(function(x){return x.id!==current.id;});
+    all.unshift(current); if(all.length>12)all=all.slice(0,12);
+    try{localStorage.setItem(KEY,JSON.stringify(all));}catch(e){}
+  }
+  function snap(){
+    var x={ts:now(),version:(typeof APP_VERSION!=='undefined'?APP_VERSION:'?'),mode:(typeof gameMode!=='undefined'?gameMode:'?'),appGeneration:(typeof appGeneration!=='undefined'?appGeneration:null),tester:(typeof testerMode!=='undefined'?!!testerMode:false)};
+    try{x.fen=chess.fen();x.ply=chess.history().length;x.turn=chess.turn();}catch(e){}
+    try{x.p2p={peer:!!(peer&&!peer.destroyed),peerId:peer&&peer.id||'',conn:!!(conn&&conn.open),host:!!isRoomHost,spectator:!!isSpectator,room:currentCityKey||'',token:p2pSessionToken};}catch(e){}
+    try{x.ui={theme:document.body.getAttribute('data-theme')||'',classes:document.body.className,viewport:innerWidth+'x'+innerHeight};}catch(e){}
+    return x;
+  }
+  function evt(type,name,status,detail){
+    if(!current)return;
+    current.events.push({ts:now(),type:type,name:name,status:status||'',detail:detail||null,state:snap()});
+    if(current.events.length>5000)current.events=current.events.slice(-5000);
+    current.updatedAt=now(); persist();
+  }
+  function begin(kind){
+    if(current&&current.status==='RUNNING'){throw new Error('Já existe um teste em execução: '+current.id);}
+    current={id:'XPTEST-'+new Date().toISOString().replace(/[-:.TZ]/g,'').slice(0,14)+'-'+Math.random().toString(36).slice(2,6),kind:kind||'complete',startedAt:now(),updatedAt:now(),endedAt:null,status:'RUNNING',events:[],summary:{pass:0,warn:0,fail:0,timeout:0,flaky:0,notTested:0,requiresInteraction:0,skipped:0}};
+    evt('TEST_START',kind,'RUNNING',{user:typeof playerName!=='undefined'?playerName:''}); return current;
+  }
+  function mark(name,status,detail){
+    if(!current)begin('manual');
+    var k=status==='PASS'?'pass':status==='WARN'?'warn':status==='TIMEOUT'?'timeout':status==='FLAKY'?'flaky':status==='NOT_TESTED'?'notTested':status==='REQUIRES_INTERACTION'?'requiresInteraction':status==='SKIPPED'?'skipped':'fail';
+    current.summary[k]=(current.summary[k]||0)+1; evt('CHECK',name,status,detail);
+  }
+  function finish(status){
+    if(!current)return;
+    current.status=status||((current.summary.fail||current.summary.timeout)?'COMPLETED_WITH_ERRORS':'PASS');
+    current.endedAt=now();evt('TEST_END','final',current.status,current.summary);persist();render();
+  }
+  function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+  async function waitFor(predicate,opt){opt=opt||{};var timeout=opt.timeout||2500,interval=opt.interval||40,start=now(),lastErr=null;while(now()-start<timeout){try{if(predicate())return {ok:true,ms:now()-start};}catch(e){lastErr=e;}await wait(interval);}return {ok:false,ms:now()-start,error:lastErr?String(lastErr):'timeout'};}
+  async function expectState(name,predicate,opt){var r=await waitFor(predicate,opt);mark(name,r.ok?'PASS':'TIMEOUT',r);return r.ok;}
+  function cleanupAsync(){try{aiRequestId++;pendingAICallback=null;if(botVsBotInterval){clearTimeout(botVsBotInterval);botVsBotInterval=null;}}catch(e){}}
+  function assert(name,fn){
+    try{var v=fn();mark(name,v?'PASS':'FAIL',v===true?null:v);return !!v;}catch(e){mark(name,'FAIL',{error:String(e&&e.message||e),stack:e&&e.stack||''});return false;}
+  }
+  function inventory(){
+    var controls=[].slice.call(document.querySelectorAll('button,input,select,textarea,[onclick]'));
+    var buttons=[].slice.call(document.querySelectorAll('button'));
+    var ids={};[].slice.call(document.querySelectorAll('[id]')).forEach(function(e){ids[e.id]=(ids[e.id]||0)+1;});
+    var dup=Object.keys(ids).filter(function(k){return ids[k]>1;});
+    return {controls:controls.length,buttons:buttons.length,onclick:document.querySelectorAll('[onclick]').length,duplicateIds:dup,radioStations:document.querySelectorAll('#radioSelectSettings option').length,themeButtons:document.querySelectorAll('[onclick*="setTheme"]').length,pieceColorButtons:document.querySelectorAll('[onclick*="setPieceColors"]').length,pieceStyleButtons:document.querySelectorAll('[onclick*="setPieceStyle"]').length};
+  }
+  async function runComplete(){
+    begin('COMPLETE');
+    var inv=inventory();evt('INVENTORY','DOM','INFO',inv);
+    mark('IDs únicos',inv.duplicateIds.length?'FAIL':'PASS',inv.duplicateIds);
+    ['startGame','startBotVsBot','startSandboxMode','openTutorial','xpOpenTraining','xpImportFEN','xpOpenReview','safeLeaveRoom','joinCityRoom','toggleRadioMenuPlay'].forEach(function(n){assert('Função '+n,function(){return typeof window[n]==='function';});});
+    assert('Sem overflow horizontal inicial',function(){return document.documentElement.scrollWidth<=innerWidth+2;});
+
+    // Temas/peças/estilos: percorre os valores reais presentes nos handlers, restaurando ao final.
+    function values(re){var a=[],m;while((m=re.exec(document.documentElement.innerHTML)))if(a.indexOf(m[1])<0)a.push(m[1]);return a;}
+    var themes=values(/setTheme\(['"]([^'"]+)['"]/g), colors=values(/setPieceColors\(['"]([^'"]+)['"]/g), styles=values(/setPieceStyle\(['"]([^'"]+)['"]/g);
+    for(var i=0;i<themes.length;i++){try{setTheme(themes[i]);await wait(25);mark('Tema '+themes[i],'PASS');}catch(e){mark('Tema '+themes[i],'FAIL',String(e));}}
+    for(var j=0;j<colors.length;j++){try{setPieceColors(colors[j]);await wait(20);mark('Peças '+colors[j],'PASS');}catch(e){mark('Peças '+colors[j],'FAIL',String(e));}}
+    for(var k=0;k<styles.length;k++){try{setPieceStyle(styles[k]);await wait(20);mark('Estilo '+styles[k],'PASS');}catch(e){mark('Estilo '+styles[k],'FAIL',String(e));}}
+    try{setTheme('claro');setPieceColors('pieces-blue-pink');setPieceStyle('style-classic');}catch(e){}
+
+    // Sandbox/FEN real.
+    try{
+      var oldFen=chess.fen();
+      var ok=xpLoadAnalysisPosition('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1','TESTER');
+      mark('Sandbox importa FEN válido',ok&&gameMode==='sandbox'?'PASS':'FAIL');
+      var before=chess.fen(),bad=xpLoadAnalysisPosition('8/8/8/8/8/8/8/8 w - - 0 1','TESTER');
+      mark('Sandbox preserva posição em FEN inválido',(!bad&&chess.fen()===before)?'PASS':'FAIL');
+    }catch(e){mark('Sandbox/FEN','FAIL',{error:String(e),stack:e.stack});}
+
+    // Tutorial/Training: verifica abertura/fechamento sem manter HUD.
+    try{openTutorial();await wait(80);mark('Tutorial abre',document.getElementById('tutorial-modal').style.display!=='none'?'PASS':'FAIL');closeTutorial();}catch(e){mark('Tutorial','FAIL',String(e));}
+    try{xpOpenTraining();await wait(100);mark('Treino inicia',window.xpTrainingActive?'PASS':'FAIL');if(typeof xpAbortTrainingForModeSwitch==='function')xpAbortTrainingForModeSwitch('tester');await wait(50);mark('Treino encerra',!window.xpTrainingActive?'PASS':'FAIL');}catch(e){mark('Treino','FAIL',String(e));}
+
+    // Rádio: inventaria todas as estações e valida URLs/configuração; autoplay real pode exigir gesto.
+    try{
+      var opts=[].slice.call(document.querySelectorAll('#radioSelectSettings option'));
+      for(var r=0;r<opts.length;r++){var val=opts[r].value;mark('Rádio configurada: '+(opts[r].textContent||val),val?'PASS':'WARN',{value:val});}
+      mark('Rádio reprodução automática','REQUIRES_INTERACTION','Navegador pode exigir gesto do usuário; use teste interativo de rádio.');
+    }catch(e){mark('Rádios','FAIL',String(e));}
+
+    // Cobertura de controles: cada controle é inventariado; ações destrutivas/permissões são marcadas explicitamente.
+    var btns=[].slice.call(document.querySelectorAll('button'));
+    btns.forEach(function(b,idx){
+      var label=(b.innerText||b.title||b.id||('button-'+idx)).trim().replace(/\s+/g,' ').slice(0,80);
+      if(!b.disabled && b.offsetParent!==null) mark('Controle inventariado: '+label,'NOT_TESTED',{id:b.id||'',onclick:b.getAttribute('onclick')||''});
+      else mark('Controle não executado: '+label,'NOT_TESTED',{reason:b.disabled?'disabled':'not-visible'});
+    });
+
+    // Modos de partida: valida inicialização; partidas longas ficam para stress/bot e P2P duplo.
+    try{cleanupAsync();startGame('pvp');await expectState('PvP local inicia',function(){return gameMode==='pvp'&&chess&&chess.fen();},{timeout:1800});}catch(e){mark('PvP local','FAIL',String(e));}
+    try{cleanupAsync();startBotVsBot();await expectState('Bot vs Bot inicia',function(){return gameMode==='bot-vs-bot'&&chess&&chess.fen();},{timeout:2200});if(botVsBotInterval){clearTimeout(botVsBotInterval);botVsBotInterval=null;}}catch(e){mark('Bot vs Bot','FAIL',String(e));}
+    for(var lv=1;lv<=5;lv++){
+      try{cleanupAsync();aiDifficulty=lv;startGame('pve');await expectState('PvE nível '+lv+' inicia',function(){return gameMode==='pve'&&aiDifficulty===lv&&chess&&chess.fen();},{timeout:1800});cleanupAsync();}catch(e){mark('PvE nível '+lv,'FAIL',String(e));}
+    }
+    finish();
+  }
+  function xpTesterInvariant(label){
+    var problems=[];
+    try{if(document.documentElement.scrollWidth>innerWidth+2)problems.push('overflow-horizontal');}catch(e){}
+    try{if(window.xpTrainingActive&&gameMode!=='sandbox')problems.push('training-leak:'+gameMode);}catch(e){}
+    try{if(gameMode!=='network'&&conn&&conn.open)problems.push('p2p-conn-fora-network');}catch(e){}
+    try{if(gameMode!=='bot-vs-bot'&&botVsBotInterval)problems.push('bot-timer-fora-modo');}catch(e){}
+    if(problems.length){mark('Invariantes '+label,'FAIL',{problems:problems});return false;}
+    return true;
+  }
+  async function xpTesterUiMove(from,to,timeout){
+    var before=chess.history().length;
+    handleSquareClick(from); handleSquareClick(to);
+    var r=await waitFor(function(){return chess.history().length>before;},{timeout:timeout||1500,interval:20});
+    return r.ok;
+  }
+  async function xpTesterScriptPvP(){
+    var script=[['e2','e4'],['e7','e5'],['g1','f3'],['b8','c6']];
+    for(var i=0;i<script.length;i++){if(!(await xpTesterUiMove(script[i][0],script[i][1],1400)))return false;}
+    return chess.history().length===4&&chess.turn()==='w';
+  }
+  async function xpTesterFunctionalProbe(cycle){
+    // Exercita tabuleiro/UI de verdade; não conta apenas troca de mode.
+    if(cycle%5!==0)return {ok:true,kind:'transition'};
+    cleanupAsync(); startGame('pvp');
+    if(!(await waitFor(function(){return gameMode==='pvp'&&chess.history().length===0;},{timeout:1800})).ok)return {ok:false,kind:'pvp-start'};
+    if(!(await xpTesterScriptPvP()))return {ok:false,kind:'pvp-moves',fen:chess.fen(),ply:chess.history().length};
+    if(cycle%10===0){
+      cleanupAsync(); playerColor='w'; aiDifficulty=((cycle/10)%5)+1; startGame('pve');
+      if(!(await waitFor(function(){return gameMode==='pve'&&chess.history().length===0;},{timeout:1800})).ok)return {ok:false,kind:'pve-start'};
+      if(!(await xpTesterUiMove('e2','e4',1400)))return {ok:false,kind:'pve-user-move'};
+      var ai=await waitFor(function(){return gameMode==='pve'&&chess.history().length>=2;},{timeout:5200,interval:50});
+      if(!ai.ok)return {ok:false,kind:'pve-ai-timeout',ply:chess.history().length};
+    }
+    if(cycle%20===0){
+      cleanupAsync(); startBotVsBot();
+      var bot=await waitFor(function(){return gameMode==='bot-vs-bot'&&chess.history().length>=1;},{timeout:3500,interval:50});
+      cleanupAsync(); if(!bot.ok)return {ok:false,kind:'bot-no-move'};
+    }
+    return {ok:true,kind:'functional',ply:chess.history().length,fen:chess.fen()};
+  }
+  async function runStress(cycles){
+    cycles=Number(cycles)||50; if(cycles<1)cycles=50; if(cycles>500)cycles=500;
+    begin('STRESS_'+cycles);
+    for(var i=1;i<=cycles;i++){
+      evt('CYCLE','ciclo '+i,'RUNNING',{target:cycles});
+      try{
+        cleanupAsync(); startSandboxMode();
+        var a=await waitFor(function(){return gameMode==='sandbox'&&sandboxMode===true;},{timeout:1800}); if(!a.ok)throw new Error('Sandbox não estabilizou');
+        if(i%5===0){
+          xpOpenTraining();
+          var tr=await waitFor(function(){return !!window.xpTrainingActive;},{timeout:1800}); if(!tr.ok)throw new Error('Treino não iniciou');
+          if(typeof xpAbortTrainingForModeSwitch==='function')xpAbortTrainingForModeSwitch('stress');
+          var tr2=await waitFor(function(){return !window.xpTrainingActive;},{timeout:1200}); if(!tr2.ok)throw new Error('Treino não encerrou');
+        }
+        cleanupAsync(); startGame('pvp');
+        var b=await waitFor(function(){return gameMode==='pvp'&&chess&&chess.history().length===0;},{timeout:1800}); if(!b.ok)throw new Error('PvP não estabilizou');
+        if(i%2===0){
+          cleanupAsync(); aiDifficulty=(i%5)+1; startGame('pve');
+          var c=await waitFor(function(){return gameMode==='pve'&&chess&&chess.history().length===0;},{timeout:1800}); if(!c.ok)throw new Error('PvE não estabilizou');
+        }
+        var probe=await xpTesterFunctionalProbe(i); if(!probe.ok)throw new Error('Probe funcional falhou: '+probe.kind);
+        if(!xpTesterInvariant('ciclo '+i))throw new Error('Invariante global violada');
+        if(i%5===0)persist();
+        mark('Ciclo acumulativo '+i,'PASS',{functional:probe.kind,ply:probe.ply||0,mode:gameMode,generation:appGeneration});
+      }catch(e){mark('Ciclo acumulativo '+i,'FAIL',{error:String(e),stack:e.stack,mode:gameMode,generation:appGeneration});cleanupAsync();}
+      // yield real para timers/Worker/UI; maior em probes funcionais.
+      await wait(i%5===0?80:25);
+    }
+    finish();
+  }
+
+  function exportRun(ext){
+    var data=current||load()[0];if(!data){alert('Nenhum relatório disponível.');return;}
+    var text=ext==='txt'?data.events.map(function(e){return new Date(e.ts).toISOString()+' ['+e.status+'] '+e.type+' '+e.name+' '+JSON.stringify(e.detail||'');}).join('\n'):JSON.stringify(data,null,2);
+    var blob=new Blob([text],{type:ext==='txt'?'text/plain':'application/json'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='XadrezPro_'+data.id+'.'+ext;a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+  }
+  function render(){
+    var box=document.getElementById('xpTesterStatus');if(!box)return;
+    var d=current||load()[0];
+    if(!d){box.innerHTML='Nenhum teste executado.';return;}
+    var fails=(d.events||[]).filter(function(e){return e.status==='FAIL'||e.status==='TIMEOUT'||e.status==='FLAKY';}).slice(-8);box.innerHTML='<b>'+escapeHtml(d.id)+'</b><br>Status: '+escapeHtml(d.status)+'<br>PASS '+(d.summary.pass||0)+' · FAIL '+(d.summary.fail||0)+' · TIMEOUT '+(d.summary.timeout||0)+' · FLAKY '+(d.summary.flaky||0)+' · WARN '+(d.summary.warn||0)+' · NÃO TESTADO '+(d.summary.notTested||0)+' · INTERAÇÃO '+(d.summary.requiresInteraction||0)+(fails.length?'<hr style="border:0;border-top:1px solid var(--panel-border)"><b>Falhas/instabilidades recentes:</b><br>'+fails.map(function(e,i){return (i+1)+'. '+escapeHtml(e.name)+' — '+escapeHtml(e.status);}).join('<br>'):'');
+  }
+  function ensure(){
+    if(document.getElementById('xpTesterModal'))return;
+    var m=document.createElement('div');m.id='xpTesterModal';m.style.cssText='display:none;position:fixed;inset:0;z-index:12000;background:rgba(0,0,0,.72);padding:10px;align-items:center;justify-content:center';
+    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v14.0.1</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
+    document.body.appendChild(m);
+  }
+  window.xpTesterRefreshEntry=function(){var on=(typeof testerMode!=='undefined'&&testerMode),b=document.getElementById('xp-tester-gear-open');if(b)b.style.display=on?'block':'none';var f=document.getElementById('xpTesterFooterBtn');if(on&&!f){f=document.createElement('button');f.id='xpTesterFooterBtn';f.className='action-btn';f.innerHTML='🧪 DEV / TESTER';f.style.cssText='position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:9500;padding:7px 12px;font-size:9px;font-weight:900;box-shadow:0 5px 18px rgba(0,0,0,.28)';f.onclick=xpOpenTester;document.body.appendChild(f);}else if(!on&&f)f.remove();};
+  window.xpOpenTester=function(){if(!(typeof testerMode!=='undefined'&&testerMode))return;ensure();document.getElementById('xpTesterModal').style.display='flex';render();};
+  window.xpCloseTester=function(){var m=document.getElementById('xpTesterModal');if(m)m.style.display='none';};
+  window.xpTesterRunComplete=runComplete;window.xpTesterRunStress=runStress;window.xpTesterExport=exportRun;window.xpTesterWaitFor=waitFor;
+  window.addEventListener('error',function(e){if(current){mark('window.error','FAIL',{message:e.message,source:e.filename,line:e.lineno,col:e.colno,stack:e.error&&e.error.stack||''});}});
+  window.addEventListener('unhandledrejection',function(e){if(current){mark('unhandledrejection','FAIL',{reason:String(e.reason),stack:e.reason&&e.reason.stack||''});}});
+  setInterval(function(){if(current&&current.status==='RUNNING'){current.updatedAt=now();persist();}},2000);
+  var previous=load()[0];if(previous&&previous.status==='RUNNING'){previous.status='INTERRUPTED';previous.endedAt=now();try{var a=load();a[0]=previous;localStorage.setItem(KEY,JSON.stringify(a));}catch(e){}}
+  setTimeout(function(){xpTesterRefreshEntry();try{xpRefreshDiscoveredRooms(true);}catch(e){}},150);
+})();
+</script>
+
 </body>
 </html>
