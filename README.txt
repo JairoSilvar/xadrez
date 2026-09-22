@@ -26,6 +26,8 @@ MUDANÇAS VISUAIS
 - Frases, reações e stand-up mais acessíveis. No computador, esses controles ficam compactos para não ocupar a área das mensagens.
 - Painel da partida inteiro na altura do computador, sem rolagem externa; quando necessário, somente o histórico do chat rola.
 - Campo de mensagem, microfone e Enviar compactos no computador, com uma área maior para as conversas.
+- No celular, o tabuleiro mantém o tamanho máximo; os controles se compactam no espaço restante até o card do jogador.
+- A prévia de áudio flutua sobre o chat e não desloca o placar, os jogadores ou os demais controles.
 - Configurações amplas com prévia nas quatro abas visuais e Aplicar sempre visível.
 - As escolhas visuais continuam sendo salvas ao selecionar, como na base anterior; o X não desfaz a seleção.
 - Rádios em lista com busca, seleção e controles no rodapé.

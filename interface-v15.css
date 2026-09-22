@@ -252,4 +252,89 @@ body.xp-v15 {font-family:Arial,Helvetica,sans-serif;}
   .xp-v15 .chat-input-row>.action-btn {height:38px!important;min-height:38px!important;flex:0 0 58px!important;font-size:10px!important;border-radius:9px!important;}
   .xp-v15 .taunt-scroll-container {height:34px!important;min-height:34px!important;max-height:34px!important;padding:1px 0 4px!important;gap:5px!important;}
   .xp-v15 .taunt-scroll-container .taunt-btn {height:28px!important;min-height:28px!important;padding:4px 9px!important;font-size:11px!important;line-height:16px!important;border-radius:7px!important;}
+  .xp-v15 #card-local {margin-top:0!important;flex-shrink:0!important;}
+  .xp-v15 .voice-preview-bar {
+    position:absolute!important;
+    left:10px!important;
+    right:10px!important;
+    bottom:78px!important;
+    margin:0!important;
+    z-index:30!important;
+    box-shadow:0 10px 28px rgba(15,23,42,.22)!important;
+  }
+}
+
+/* Mobile: preserve the full-width board and fit the complete panel below it. */
+@media(max-width:900px) and (orientation:portrait) {
+  .xp-v15 #game-wrapper {gap:3px!important;padding-top:2px!important;}
+  .xp-v15 .board-section {
+    width:min(98vw,62vh)!important;
+    height:min(98vw,62vh)!important;
+    min-height:0!important;
+    flex-shrink:0!important;
+    margin:0!important;
+  }
+  .xp-v15 #sidePanel {
+    width:98vw!important;
+    height:calc(100dvh - min(98vw,62vh) - 7px)!important;
+    min-height:0!important;
+    max-height:none!important;
+    flex:0 0 auto!important;
+    padding:5px!important;
+    gap:3px!important;
+    overflow:hidden!important;
+  }
+  .xp-v15 #brandTitleBox {padding:3px 5px!important;gap:3px!important;border-radius:8px!important;}
+  .xp-v15 #brandTitleBox>span {font-size:11px!important;line-height:12px!important;}
+  .xp-v15 .header-actions {gap:3px!important;}
+  .xp-v15 .header-actions .icon-btn {height:40px!important;min-height:40px!important;width:auto!important;flex:1 1 0!important;padding:2px 1px!important;border-radius:8px!important;}
+  .xp-v15 .v15-tool-icon {font-size:17px!important;}
+  .xp-v15 .v15-tool-label {font-size:8px!important;line-height:9px!important;}
+  .xp-v15 .panel-meta-row {display:none!important;}
+  .xp-v15 .compact-status-row {height:25px!important;min-height:25px!important;gap:3px!important;}
+  .xp-v15 #btnToggleReactions {height:25px!important;min-height:25px!important;min-width:68px!important;padding:1px 7px!important;font-size:10px!important;}
+  .xp-v15 .candy-fight-bar-container {height:25px!important;padding:1px 5px!important;gap:0!important;border-radius:6px!important;}
+  .xp-v15 .candy-bar-header,.xp-v15 .candy-icons-row {font-size:7px!important;line-height:8px!important;}
+  .xp-v15 .candy-bar-track {height:2px!important;}
+  .xp-v15 .move-list-container {height:25px!important;min-height:25px!important;max-height:25px!important;padding:4px 6px!important;font-size:9px!important;border-radius:6px!important;}
+  .xp-v15 .move-list-container .move-san {font-size:9px!important;}
+  .xp-v15 .player-card {height:31px!important;min-height:31px!important;padding:3px 6px!important;gap:0!important;border-radius:7px!important;}
+  .xp-v15 .player-info {font-size:10px!important;line-height:15px!important;gap:3px!important;}
+  .xp-v15 .clock-badge,.xp-v15 .turn-badge {font-size:8px!important;padding:1px 4px!important;}
+  .xp-v15 .captured-area {min-height:0!important;height:6px!important;line-height:6px!important;}
+  .xp-v15 #sidePanel .chat-container {position:relative;flex:1 1 0!important;min-height:88px!important;overflow:hidden!important;gap:3px!important;}
+  .xp-v15 #sidePanel .chat-box {height:auto!important;min-height:48px!important;max-height:none!important;flex:1 1 0!important;padding:5px!important;font-size:11px!important;border-radius:7px!important;overflow-y:auto!important;}
+  .xp-v15 .chat-msg {padding:3px 5px!important;line-height:1.2!important;}
+  .xp-v15 .chat-input-row {height:33px!important;min-height:33px!important;gap:3px!important;}
+  .xp-v15 .chat-input {height:33px!important;min-height:33px!important;padding:5px 8px!important;font-size:12px!important;border-radius:7px!important;}
+  .xp-v15 #btnVoiceMsg {height:33px!important;min-height:33px!important;min-width:35px!important;padding:0 5px!important;font-size:16px!important;border-radius:7px!important;}
+  .xp-v15 .chat-input-row>.action-btn {height:33px!important;min-height:33px!important;flex:0 0 50px!important;padding:0 3px!important;font-size:9px!important;border-radius:7px!important;}
+  .xp-v15 .v15-social-actions {height:30px!important;min-height:30px!important;gap:4px!important;}
+  .xp-v15 .v15-social-actions .xp-toggle-btn {height:30px!important;min-height:30px!important;padding:2px 6px!important;font-size:10px!important;border-radius:7px!important;}
+  .xp-v15 #card-local {flex-shrink:0!important;}
+  .xp-v15 .voice-preview-bar {
+    position:absolute!important;
+    left:10px!important;
+    right:10px!important;
+    bottom:70px!important;
+    margin:0!important;
+    z-index:30!important;
+    padding:6px 8px!important;
+    gap:6px!important;
+    border-radius:999px!important;
+    box-shadow:0 10px 28px rgba(15,23,42,.28)!important;
+  }
+  .xp-v15 .voice-preview-bar .vp-label {display:none!important;}
+  .xp-v15 .voice-preview-bar audio {height:32px!important;max-width:none!important;}
+  .xp-v15 .voice-preview-bar .vp-btn {width:34px!important;height:34px!important;font-size:14px!important;}
+}
+
+@media(max-width:900px) and (orientation:portrait) and (max-height:680px) {
+  .xp-v15 #brandTitleBox>span {display:none!important;}
+  .xp-v15 #brandTitleBox {padding:2px 4px!important;}
+  .xp-v15 .header-actions .icon-btn {height:36px!important;min-height:36px!important;}
+  .xp-v15 .v15-tool-icon {font-size:15px!important;}
+  .xp-v15 #sidePanel .chat-container {min-height:72px!important;}
+  .xp-v15 .v15-social-actions {height:27px!important;min-height:27px!important;}
+  .xp-v15 .v15-social-actions .xp-toggle-btn {height:27px!important;min-height:27px!important;}
 }

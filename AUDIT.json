@@ -1,6 +1,6 @@
 {
   "version": "15.0.0",
-  "date": "2026-09-21",
+  "date": "2026-09-22",
   "baseline": "JairoSilvar/termux-xadrez main b0439ad358efb7e2e2d897e48a0e198e81e6a98c",
   "inlineScriptsSyntaxChecked": 3,
   "addedScriptsSyntax": "OK",
@@ -13,11 +13,15 @@
     "Rádio: busca, seleção e habilitação de Tocar",
     "Diagnóstico ampliado e acionamento do download TXT",
     "Largura intermediária 1024 px: painel 390 px sem exceder a página",
-    "Painel desktop em 1366x768 e 1648x826: sem rolagem externa, jogadores visíveis e chat ampliado"
+    "Painel desktop em 1366x768 e 1648x826: sem rolagem externa, jogadores visíveis e chat ampliado",
+    "Celular 392x735: tabuleiro 376x376, painel sem rolagem externa e card local totalmente visível",
+    "Celular curto 360x640: tabuleiro 345x345 e painel completo até o card local",
+    "Prévia de áudio configurada como sobreposição absoluta, sem ocupar espaço no fluxo"
   ],
   "limitations": [
     "P2P real, registro de salas e espectador não testados nesta rodada; servidor local usou resposta vazia para /api/rooms",
-    "Microfone, compartilhamento nativo em aparelho físico e reprodução de todas as rádios não testados",
+    "A captura real de microfone não ficou disponível no navegador local; posição flutuante da prévia foi verificada pela folha de estilo",
+    "Compartilhamento nativo em aparelho físico e reprodução de todas as rádios não testados",
     "Não foi repetido o stress de 500 ciclos nesta rodada visual"
   ]
 }
