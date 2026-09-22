@@ -55,12 +55,9 @@
   actions.remove();
   $('btnToggleReactions').textContent='😊 Reagir';
   $('btnToggleReactions').setAttribute('aria-label','Enviar uma reação');
-  $('btnToggleTaunts').textContent='💬 Frases';
-  $('btnToggleTaunts').setAttribute('aria-label','Abrir mensagens rápidas e stand-up');
-  const standup=button('🎤 Stand-up',()=>sendStandUpJoke(),'xp-toggle-btn standup-direct taunt-btn');
-  const social=el('div','v15-social-actions');
-  social.append($('btnToggleTaunts'),standup);
-  document.querySelector('.chat-container').append(social);
+  $('btnToggleTaunts').textContent='💬';
+  $('btnToggleTaunts').setAttribute('aria-label','Abrir frases rápidas e stand-up');
+  $('btnToggleTaunts').title='Frases rápidas e stand-up';
   document.querySelectorAll('.reaction-btn').forEach(b=>{if(b.title)b.setAttribute('aria-label',b.title);});
 
   // Configurações: um único scroll e a mesma prévia nas quatro abas visuais.

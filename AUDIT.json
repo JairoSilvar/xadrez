@@ -8,14 +8,15 @@
   "visualChecks": [
     "Home e configurações em desktop e celular",
     "Partida local e lance e2-e4",
-    "Frases rápidas acessíveis no celular",
-    "Botões de frases com 28 px no desktop",
     "Rádio: busca, seleção e habilitação de Tocar",
     "Diagnóstico ampliado e acionamento do download TXT",
-    "Largura intermediária 1024 px: painel 390 px sem exceder a página",
-    "Painel desktop em 1366x768 e 1648x826: sem rolagem externa, jogadores visíveis e chat ampliado",
+    "Desktop 1480x829: tabuleiro 821x821, painel da mesma altura, chat 428 px e apenas 10 px após o card local",
+    "Largura intermediária 1024 px: painel sem exceder a página",
     "Celular 392x735: tabuleiro 376x376, painel sem rolagem externa e card local totalmente visível",
     "Celular curto 360x640: tabuleiro 345x345 e painel completo até o card local",
+    "Botão único de frases e stand-up dentro da linha de mensagem; menu completo verificado",
+    "Engrenagem móvel: sete opções visíveis sem corte",
+    "Painel móvel de reações: 18 emojis sobre fundo branco opaco",
     "Prévia de áudio configurada como sobreposição absoluta, sem ocupar espaço no fluxo"
   ],
   "limitations": [
