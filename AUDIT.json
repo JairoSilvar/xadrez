@@ -17,7 +17,11 @@
     "Seis botões superiores com largura e altura iguais, incluindo a engrenagem",
     "Botão único de frases e stand-up dentro da linha de mensagem; menu completo verificado",
     "Menus móveis de opções, reações e frases com botão X funcional e sem deslocar os cards",
-    "Engrenagem móvel: sete opções visíveis sem corte",
+    "Painel de reações elevado; botão X não cruza a primeira linha de emojis",
+    "Os cinco níveis da IA cabem integralmente em 392 px, inclusive Mestre 5",
+    "Botão DEV reduzido e oculto enquanto opções ou painéis flutuantes estão abertos",
+    "Compartilhar usa texto no compartilhamento nativo e possui fallback para copiar ou baixar",
+    "Engrenagem móvel: desistir e propor empate visíveis sem corte",
     "Painel móvel de reações: 18 emojis sobre fundo branco opaco",
     "Prévia de áudio configurada como sobreposição absoluta, sem ocupar espaço no fluxo"
   ],

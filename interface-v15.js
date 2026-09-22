@@ -172,13 +172,22 @@
   function downloadLog(){const file=logFile(),url=URL.createObjectURL(file),a=el('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);feedback.textContent='Arquivo TXT preparado para download.';}
   const download=button('↓ Baixar TXT',downloadLog);
   const share=button('↗ Compartilhar…',async()=>{
-    const file=logFile();
+    const text=$('logTextarea').value;
+    feedback.textContent='Abrindo as opções de compartilhamento…';
     try{
-      if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'Diagnóstico Xadrez Pro'});
-      else if(navigator.share)await navigator.share({title:'Diagnóstico Xadrez Pro',text:$('logTextarea').value});
-      else {feedback.textContent='Compartilhamento indisponível neste navegador. Use Baixar TXT ou Copiar Log.';return;}
-      feedback.textContent='Compartilhamento concluído.';
-    }catch(error){if(error.name!=='AbortError')feedback.textContent='Não foi possível compartilhar. Use Baixar TXT ou Copiar Log.';}
+      if(!navigator.share)throw new Error('Web Share indisponível');
+      await navigator.share({title:'Diagnóstico Xadrez Pro',text:text.slice(0,12000)});
+      feedback.textContent='Compartilhamento aberto.';
+    }catch(error){
+      if(error&&error.name==='AbortError'){feedback.textContent='Compartilhamento cancelado.';return;}
+      try{
+        await navigator.clipboard.writeText(text);
+        feedback.textContent='O compartilhamento não abriu; o log foi copiado para você colar no aplicativo desejado.';
+      }catch(copyError){
+        downloadLog();
+        feedback.textContent='O compartilhamento não abriu; o arquivo TXT foi baixado para você anexar.';
+      }
+    }
   });
   logActions.append(download,share);logs.append(feedback);
 

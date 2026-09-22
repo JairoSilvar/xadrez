@@ -34,6 +34,10 @@ MUDANÇAS VISUAIS
 - Frases rápidas e stand-up usam um único botão ao lado do microfone no celular; a linha separada foi removida para ampliar o chat.
 - Opções, reações e frases rápidas abrem em painéis sobrepostos com botão X, sem mover os outros cards.
 - A engrenagem móvel mostra todas as opções, e as reações usam fundo sólido para manter os emojis legíveis.
+- O painel de reações sobe na tela e reserva uma faixa exclusiva para o botão X.
+- Os cinco níveis da IA permanecem inteiros na largura do celular, inclusive o nível 5.
+- O botão DEV fica discreto no canto e desaparece enquanto menus sobrepostos estão abertos.
+- Compartilhar diagnóstico usa o menu nativo do aparelho; se ele falhar, copia o log ou baixa o TXT.
 - Configurações amplas com prévia nas quatro abas visuais e Aplicar sempre visível.
 - As escolhas visuais continuam sendo salvas ao selecionar, como na base anterior; o X não desfaz a seleção.
 - Rádios em lista com busca, seleção e controles no rodapé.
