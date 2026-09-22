@@ -53,6 +53,15 @@
     b.addEventListener('click',()=>closeActionDropdownSafe()); $('headerDropdown').append(b);
   });
   actions.remove();
+  const optionsClose=button('✕',()=>closeActionDropdownSafe(),'v15-popover-close');
+  optionsClose.setAttribute('aria-label','Fechar opções');
+  $('headerDropdown').prepend(optionsClose);
+  const reactionsClose=button('✕',()=>closeFloatPanels(),'v15-popover-close');
+  reactionsClose.setAttribute('aria-label','Fechar reações');
+  $('reactionsFloatPanel').prepend(reactionsClose);
+  const tauntsClose=button('✕',()=>closeFloatPanels(),'v15-popover-close');
+  tauntsClose.setAttribute('aria-label','Fechar frases rápidas');
+  $('tauntsFloatPanel').prepend(tauntsClose);
   $('btnToggleReactions').textContent='😊 Reagir';
   $('btnToggleReactions').setAttribute('aria-label','Enviar uma reação');
   $('btnToggleTaunts').textContent='💬';

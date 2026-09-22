@@ -27,9 +27,13 @@ MUDANÇAS VISUAIS
 - Painel da partida inteiro na altura do computador, sem rolagem externa; quando necessário, somente o histórico do chat rola.
 - Campo de mensagem, microfone e Enviar compactos no computador, com uma área maior para as conversas.
 - No celular, o tabuleiro mantém o tamanho máximo; os controles se compactam no espaço restante até o card do jogador.
+- O tabuleiro e o painel se ajustam de forma líquida à largura e à altura disponíveis, no computador e no celular.
+- No computador, o chat cresce para aproveitar todo o espaço livre até o card do jogador.
+- Os seis botões superiores ficam com o mesmo tamanho no celular, inclusive a engrenagem.
 - A prévia de áudio flutua sobre o chat e não desloca o placar, os jogadores ou os demais controles.
 - Frases rápidas e stand-up usam um único botão ao lado do microfone no celular; a linha separada foi removida para ampliar o chat.
-- A engrenagem móvel abre todas as opções em um painel sobreposto, e as reações usam fundo sólido para manter os emojis legíveis.
+- Opções, reações e frases rápidas abrem em painéis sobrepostos com botão X, sem mover os outros cards.
+- A engrenagem móvel mostra todas as opções, e as reações usam fundo sólido para manter os emojis legíveis.
 - Configurações amplas com prévia nas quatro abas visuais e Aplicar sempre visível.
 - As escolhas visuais continuam sendo salvas ao selecionar, como na base anterior; o X não desfaz a seleção.
 - Rádios em lista com busca, seleção e controles no rodapé.
