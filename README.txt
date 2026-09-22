@@ -1,46 +1,47 @@
-XADREZ PRO v14.0.0 — GIT + VERCEL
-=================================
+XADREZ PRO v15.0.0 — INTERFACE RESPONSIVA
 
-Publicação oficial
-------------------
-1. Envie a pasta/projeto para o Git.
-2. Importe/conecte o repositório na Vercel.
-3. Configure no projeto Vercel UM destes pares de variáveis:
-   KV_REST_API_URL + KV_REST_API_TOKEN
-   ou
-   UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN
-4. Faça o deploy e abra a URL HTTPS da Vercel.
+COMO PUBLICAR
+1. Extraia o ZIP.
+2. Copie o conteúdo extraído para a raiz do repositório ligado ao txadrez na Vercel.
+3. Não crie uma pasta extra envolvendo index.html e api/.
+4. Publique pelo seu fluxo normal do GitHub/Vercel.
+5. Reabra o jogo e confirme v15.0 na tela inicial. Se a versão anterior continuar aparecendo, feche e reabra o aplicativo e atualize a página.
 
-Salas compartilhadas
---------------------
-- /api/rooms.js é o registro de descoberta/reserva.
-- A cidade é escolhida automaticamente entre nomes livres.
-- A reserva usa operação atômica SET NX no Redis/Upstash.
-- Cada sala recebe roomInstanceId e hostToken.
-- O nome volta a ficar disponível após encerramento/expiração.
-- Não existe fallback invisível com Peer ID sufixado: uma sala lógica não cria uma cópia secreta.
-- file:// pode abrir a interface para inspeção, mas NÃO possui /api/rooms e não cria salas compartilhadas.
+ARQUIVOS DO APLICATIVO ALTERADOS
+- index.html: versão 15, inclusão da interface e proteção contra iniciar dois testes simultâneos.
+- sw.js: versão do cache e inclusão dos dois arquivos novos.
+- interface-v15.css: novo arquivo de apresentação responsiva.
+- interface-v15.js: novo arquivo de organização dos menus, prévias, rádio e exportação de logs.
+Os quatro devem ser publicados juntos.
 
-DEV / TESTER
-------------
-- Ative pelo campo de nome usando 82=Nome.
-- O botão DEV/TESTER aparece somente enquanto o modo está ativo.
-- Teste completo mantém PASS/FAIL/TIMEOUT/NÃO TESTADO/REQUER INTERAÇÃO separados.
-- Stress: 50, 100 ou 500 ciclos.
-- A cada 5 ciclos há probe funcional com lances reais via interface; periodicamente PvE espera resposta real da IA e Bot-vs-Bot precisa produzir lance.
-- O relatório continua persistente e exportável em JSON/TXT.
+PRESERVADOS
+api/rooms.js, manifest.json, vercel.json e sw-v73.js foram mantidos da base. O motor e as regras de xadrez não foram substituídos. Nenhum recurso foi intencionalmente removido. Desistir e propor empate estão em Opções.
 
-Observação
-----------
-P2P real, microfone, autoplay de rádio e espectador físico exigem hardware/permissões reais. O Tester não deve transformar esses casos em PASS sem execução real.
+CONFIGURAÇÃO VERCEL
+Mantenha as variáveis existentes do projeto. O registro de salas usa KV_REST_API_URL + KV_REST_API_TOKEN ou UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN. Não coloque tokens nos arquivos do jogo.
 
-=== IMPORTANTE — GIT / VERCEL v14.0.1 ===
-Os arquivos abaixo devem ficar NA RAIZ do repositório configurado como Root Directory na Vercel:
-  index.html
-  manifest.json
-  sw.js
-  vercel.json
-  api/rooms.js
+MUDANÇAS VISUAIS
+- Entrada com ação principal clara e modos secundários organizados.
+- Botões de jogo maiores, com ícone e nome; placar discreto.
+- Frases, reações e stand-up mais acessíveis. No computador, esses controles ficam compactos para não ocupar a área das mensagens.
+- Painel da partida inteiro na altura do computador, sem rolagem externa; quando necessário, somente o histórico do chat rola.
+- Campo de mensagem, microfone e Enviar compactos no computador, com uma área maior para as conversas.
+- Configurações amplas com prévia nas quatro abas visuais e Aplicar sempre visível.
+- As escolhas visuais continuam sendo salvas ao selecionar, como na base anterior; o X não desfaz a seleção.
+- Rádios em lista com busca, seleção e controles no rodapé.
+- Diagnóstico maior com Baixar TXT e Compartilhar, preservando copiar, e-mail e WhatsApp.
+- Compartilhar usa as opções oferecidas pelo aparelho. Quando indisponível, orienta baixar/copiar.
 
-Não publique uma pasta-pai contendo outra pasta XadrezPro_v14.x como raiz do projeto. Se /api/rooms retornar 404, confirme primeiro que api/rooms.js está na raiz efetiva do deploy.
-Depois do deploy, abra https://SEU-DOMINIO/api/rooms. O resultado esperado é JSON (200 se Redis configurado, ou 503 ROOM_REGISTRY_NOT_CONFIGURED se faltarem variáveis). 404 significa estrutura/root de deploy incorreta.
+VALIDAÇÃO
+Sintaxe dos scripts conferida; nenhum ID duplicado no HTML. Verificados no navegador: entrada, configurações/prévia de estilo, partida local com e2-e4, frases móveis, seleção/busca de rádio, diagnóstico e acionamento do download TXT. Dimensões verificadas incluem 360x800, 392x735, 1024x768, 1366x768 e 1440x900; são simulações de viewport, não testes em todos esses aparelhos físicos.
+
+APÓS PUBLICAR
+Confira uma partida contra IA, uma partida online entre dois aparelhos, áudio, rádio, instalar/reabrir o aplicativo e compartilhar/abrir o TXT. P2P real, microfone, compartilhamento nativo físico e todas as transmissões de rádio não foram retestados nesta rodada. O teste de stress de 500 ciclos não foi repetido. AUDIT.json registra o escopo real desta validação.
+
+REFERÊNCIAS DE INTERFACE
+Hierarquia de ações e escolha progressiva de modo: https://support.chess.com/en/articles/8609779-how-do-i-start-a-game-on-chess-com
+Princípios de interface: https://developer.apple.com/design/human-interface-guidelines
+Compartilhamento nativo: https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API
+
+Base: JairoSilvar/termux-xadrez, revisão b0439ad358efb7e2e2d897e48a0e198e81e6a98c.
+Este pacote não foi enviado ao GitHub nem publicado automaticamente.

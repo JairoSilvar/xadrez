@@ -1,7 +1,7 @@
-/* Xadrez Pro Service Worker v14.0.1 */
-const XP_SW_BUILD = 'xp-sw-14.0.1-20260921';
+/* Xadrez Pro Service Worker v15.0.0 */
+const XP_SW_BUILD = 'xp-sw-15.0.0-20260921';
 const XP_CACHE = 'xadrez-pro-' + XP_SW_BUILD;
-const CORE = ['./', './index.html', './manifest.json'];
+const CORE = ['./', './index.html', './manifest.json', './interface-v15.css', './interface-v15.js'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(XP_CACHE).then(cache => cache.addAll(CORE).catch(() => {})).then(() => self.skipWaiting()));
@@ -32,3 +32,4 @@ self.addEventListener('fetch', event => {
     event.respondWith(fetch(req).then(res => { const copy=res.clone(); caches.open(XP_CACHE).then(c=>c.put(req,copy)).catch(()=>{}); return res; }).catch(()=>caches.match(req)));
   }
 });
+

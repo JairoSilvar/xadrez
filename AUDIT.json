@@ -1,31 +1,23 @@
 {
-  "version": "14.0.0",
-  "basis": "v13.0.10",
-  "target": "Git + Vercel",
-  "staticAudit": {
-    "duplicateIds": [],
-    "oldVersionStrings": 0,
-    "localLauncherReferences": false,
-    "inlineJavaScriptSyntax": "OK (node --check)",
-    "apiJavaScriptSyntax": "OK (node --check)",
-    "idsPreservedFromV13_0_10": true,
-    "namedFunctionsPreservedFromV13_0_10": true
-  },
-  "changesVerified": [
-    "CMD/local server removed",
-    "Vercel-only room messaging",
-    "no hidden dynamic PeerID fallback",
-    "appGeneration added to AI stale-result guard",
-    "Tester stress 50/100/500",
-    "functional probes with real UI moves",
-    "PvE AI response wait",
-    "Bot-vs-Bot real move wait",
-    "global stress invariants"
+  "version": "15.0.0",
+  "date": "2026-09-21",
+  "baseline": "JairoSilvar/termux-xadrez main b0439ad358efb7e2e2d897e48a0e198e81e6a98c",
+  "inlineScriptsSyntaxChecked": 3,
+  "addedScriptsSyntax": "OK",
+  "duplicateIds": [],
+  "visualChecks": [
+    "Home e configurações em desktop e celular",
+    "Partida local e lance e2-e4",
+    "Frases rápidas acessíveis no celular",
+    "Botões de frases com 28 px no desktop",
+    "Rádio: busca, seleção e habilitação de Tocar",
+    "Diagnóstico ampliado e acionamento do download TXT",
+    "Largura intermediária 1024 px: painel 390 px sem exceder a página",
+    "Painel desktop em 1366x768 e 1648x826: sem rolagem externa, jogadores visíveis e chat ampliado"
   ],
-  "runtimeLimitations": [
-    "Real PeerJS multi-device requires deployed HTTPS and 2 devices",
-    "Upstash registry requires Vercel environment variables",
-    "Microphone/radio autoplay require browser permission/user gesture",
-    "Third-device spectator remains a physical-device test"
+  "limitations": [
+    "P2P real, registro de salas e espectador não testados nesta rodada; servidor local usou resposta vazia para /api/rooms",
+    "Microfone, compartilhamento nativo em aparelho físico e reprodução de todas as rádios não testados",
+    "Não foi repetido o stress de 500 ciclos nesta rodada visual"
   ]
 }

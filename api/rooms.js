@@ -58,3 +58,4 @@ export default async function handler(req,res){
     return res.status(405).json({ok:false,error:'METHOD_NOT_ALLOWED'});
   }catch(e){return res.status(500).json({ok:false,error:String(e&&e.message||e),rooms:[]});}
 }
+

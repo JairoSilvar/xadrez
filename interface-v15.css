@@ -1,0 +1,255 @@
+/* Responsive presentation layer — deliberately scoped, no chessboard geometry changes. */
+body.xp-v15 {font-family:Arial,Helvetica,sans-serif;}
+.xp-v15 button,.xp-v15 summary,.xp-v15 input,.xp-v15 select {touch-action:manipulation;}
+.xp-v15 button:focus-visible,.xp-v15 summary:focus-visible,.xp-v15 input:focus-visible {outline:3px solid var(--board-border);outline-offset:3px;}
+.xp-v15 button:disabled {opacity:.48;cursor:not-allowed;}
+.xp-v15 [hidden] {display:none!important;}
+.xp-v15 .v15-source-select {display:none!important;}
+.xp-v15 #menu-screen {padding:28px 24px 40px;}
+.xp-v15 .hero-box {margin:0 auto 22px;text-align:center;}
+.xp-v15 .hero-box h1 {font-size:38px;margin:0 0 8px;letter-spacing:-1.2px;}
+.xp-v15 .hero-box p {font-size:17px;margin:0 0 8px;color:var(--text-main);}
+.v15-version {font-size:12px;color:var(--text-muted);}
+.xp-v15 .menu-dashboard {width:100%;max-width:1180px;display:grid!important;grid-template-columns:minmax(0,1fr) 310px!important;gap:28px;padding:28px;border-radius:24px;align-items:start;}
+.xp-v15 .menu-col-right {grid-column:1!important;grid-row:1;min-width:0;}
+.xp-v15 .menu-col-left {grid-column:2!important;grid-row:1;min-width:0;gap:14px;}
+.xp-v15 .menu-span-2 {grid-column:auto;}
+.v15-welcome {position:relative;padding:6px 70px 18px 0;}
+.v15-welcome h2 {font-size:27px;letter-spacing:-.7px;line-height:1.15;margin:0 0 10px;max-width:440px;}
+.v15-welcome p {font-size:14px;line-height:1.55;color:var(--text-muted);margin:0;max-width:460px;}
+.v15-welcome-piece {position:absolute;right:12px;top:0;font-size:64px;color:var(--board-border);}
+.xp-v15 .menu-section-label,.v15-eyebrow {font-size:12px;letter-spacing:1.1px;font-weight:800;color:var(--text-muted);margin:0 0 10px;}
+.xp-v15 .menu-modes-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px;}
+.xp-v15 .mode-card {min-height:82px;padding:16px 18px;align-items:flex-start;justify-content:center;border:1px solid var(--panel-border);border-radius:15px;background:var(--chat-bg);color:var(--text-main);box-shadow:none;gap:6px;}
+.xp-v15 .mode-card:hover {border-color:var(--board-border);transform:translateY(-2px);box-shadow:0 5px 14px #0000000d;}
+.xp-v15 .mode-card.mode-ia {grid-column:1/-1;min-height:100px;background:linear-gradient(115deg,#0369a1,#1d4ed8);border-color:transparent;color:white;position:relative;padding-right:65px;}
+.xp-v15 .mode-ia::after {content:'→';position:absolute;right:24px;font-size:30px;}
+.xp-v15 .mode-title {font-size:17px;line-height:1.2;}
+.xp-v15 .mode-sub {font-size:13px;line-height:1.3;font-weight:400;opacity:.85;}
+.xp-v15 .mode-ia .mode-title {font-size:21px;}
+.xp-v15 .menu-details {margin:0 0 10px;border-radius:13px;}
+.xp-v15 .menu-details summary {min-height:48px;padding:13px 14px;font-size:14px;gap:8px;}
+.xp-v15 .menu-details summary span {font-size:12px!important;}
+.xp-v15 .details-body {padding:12px;}
+.xp-v15 .menu-grid-btn {min-height:48px;border-radius:10px;font-size:14px;padding:10px 6px;}
+.xp-v15 .menu-grid-btn span {font-size:11px;line-height:1.3;margin-top:4px;}
+.xp-v15 .time-control-btn {background:var(--btn-bg)!important;color:var(--text-main);}
+.xp-v15 .time-control-btn.active {background:var(--board-border)!important;color:white;}
+.xp-v15 .room-btn {min-height:58px;font-size:14px;border-radius:10px;}
+.v15-hint {font-size:13px;line-height:1.4;color:var(--text-muted);margin:0 0 12px;}
+.xp-v15 .menu-profile-card {padding:16px;gap:12px;}
+.xp-v15 #playerNameInput {font-size:16px;min-height:44px;padding:10px;}
+.xp-v15 .profile-elo {font-size:15px;}
+.xp-v15 .profile-gm {font-size:11px;}
+.xp-v15 .profile-avatars {display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.xp-v15 .profile-avatars .reaction-btn {width:100%!important;max-width:none!important;min-height:42px!important;height:42px!important;font-size:21px!important;}
+.xp-v15 .v15-menu-radio {display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:12px;}
+.xp-v15 .v15-browse-radio {grid-column:1/-1;min-height:44px;font-size:14px;}
+.xp-v15 .radio-volume-slider {width:100%;max-width:none;}
+.xp-v15 .radio-status-text {grid-column:1/-1;max-width:100%;font-size:12px;}
+.xp-v15 .radio-icon-btn {width:44px;height:44px;font-size:22px;}
+.xp-v15 .v15-home-settings,.xp-v15 #btnInstallPwa {min-height:46px;font-size:14px!important;border-radius:12px!important;}
+.xp-v15 #pwaStatus {font-size:12px!important;}
+.xp-v15 #detailsOnline input {font-size:16px!important;min-height:44px;}
+.xp-v15 #detailsOnline .action-btn {min-height:42px;font-size:13px!important;}
+
+/* Game controls: use existing board dimensions and keep player seating nodes intact. */
+.xp-v15 #sidePanel {gap:8px!important;padding:12px!important;min-width:0;}
+.xp-v15 #brandTitleBox {display:flex;flex-direction:column;align-items:stretch;gap:9px!important;padding:10px!important;flex-shrink:0;}
+.xp-v15 #brandTitleBox>span {font-size:14px!important;max-width:100%!important;}
+.xp-v15 .header-actions {display:flex;justify-content:space-between;gap:5px!important;width:100%;}
+.xp-v15 .header-actions .icon-btn {display:flex;flex-direction:column;justify-content:center;gap:4px;width:54px!important;height:52px!important;padding:5px 2px!important;min-width:0;flex-shrink:1;border-radius:10px!important;}
+.v15-tool-icon {font-size:20px;line-height:1.1;}
+.v15-tool-label {font-size:10px;font-weight:700;line-height:1.1;}
+.xp-v15 #btnSandboxEval {min-height:44px!important;font-size:12px!important;}
+.xp-v15 .dropdown-content {min-width:230px;max-width:calc(100vw - 32px);max-height:65dvh;overflow-y:auto;padding:8px;border-radius:14px;z-index:2500;}
+.xp-v15 .dropdown-item {font-size:14px;min-height:44px;padding:10px 12px;white-space:normal;}
+.xp-v15 .dropdown-content .side-action-btn {width:100%!important;max-width:none!important;height:auto!important;min-height:44px!important;border-radius:8px!important;font-size:14px!important;justify-content:flex-start;transform:none;}
+.v15-dropdown-heading {font-size:10px;letter-spacing:1px;margin:9px 12px;color:var(--text-muted);}
+.xp-v15 .compact-status-row {display:flex!important;gap:10px!important;min-height:32px!important;}
+.xp-v15 .candy-fight-bar-container {flex:1;padding:4px 7px!important;gap:2px;}
+.xp-v15 .candy-bar-header,.xp-v15 .candy-icons-row {font-size:10px!important;}
+.xp-v15 .candy-bar-track {height:3px!important;}
+.xp-v15 .panel-meta-row {min-height:0;flex-shrink:0;gap:5px!important;}
+.xp-v15 .reaction-bar {height:54px!important;max-height:none!important;gap:6px!important;align-items:center;padding:3px 1px 10px;flex-shrink:0;}
+.xp-v15 .reaction-bar .reaction-btn {height:38px!important;min-height:38px!important;width:38px!important;min-width:38px!important;max-width:38px!important;font-size:21px!important;border-radius:9px!important;}
+.xp-v15 .move-list-container {min-height:34px!important;max-height:58px!important;font-size:13px!important;padding:7px!important;flex-shrink:0;}
+.xp-v15 .move-list-container .move-san {font-size:13px!important;}
+.xp-v15 .player-card {padding:8px!important;border-radius:9px!important;}
+.xp-v15 .player-info {font-size:13px!important;gap:6px!important;}
+.xp-v15 .clock-badge,.xp-v15 .turn-badge {font-size:11px!important;padding:3px 5px!important;}
+.xp-v15 .chat-container {gap:7px!important;min-height:180px!important;}
+.xp-v15 .chat-box {min-height:80px!important;font-size:14px!important;padding:9px!important;border-radius:10px;}
+.xp-v15 .chat-input-row {gap:6px!important;flex-shrink:0;}
+.xp-v15 .chat-input {width:0;min-width:0;font-size:16px!important;min-height:44px!important;height:44px!important;padding:10px!important;border-radius:10px;}
+.xp-v15 .chat-input-row>.action-btn {flex:0 0 64px!important;min-height:44px!important;font-size:12px!important;border-radius:10px;}
+.xp-v15 #btnVoiceMsg {display:inline-flex!important;height:44px!important;min-width:44px!important;font-size:22px!important;border-radius:10px;}
+.xp-v15 .taunt-scroll-container {min-height:54px!important;height:54px!important;max-height:none!important;gap:6px!important;padding:3px 1px 11px!important;align-items:center;flex-shrink:0;}
+.xp-v15 .taunt-scroll-container .taunt-btn {height:38px;min-height:38px;font-size:13px!important;padding:8px 12px!important;border-radius:8px;}
+.v15-social-actions {display:none;gap:8px;flex-shrink:0;}
+.xp-v15 .opening-chip {font-size:11px!important;}
+.xp-v15 .xp-float-panel .reaction-btn {width:44px!important;min-width:44px!important;max-width:none!important;height:44px!important;font-size:24px!important;}
+.xp-v15 .xp-float-panel .taunt-chip {min-height:44px;font-size:14px!important;}
+.xp-v15 .xp-float-panel {max-width:calc(100vw - 36px);}
+.xp-v15.v15-modal-open #xp-tester-launcher,.xp-v15.v15-modal-open #xpTesterEntry {visibility:hidden!important;}
+
+/* Dialogs have fixed controls with only their content scrolling. */
+.xp-v15 #settings-modal,.xp-v15 #log-modal,.xp-v15 #radio-modal {padding:24px!important;z-index:10000!important;}
+.xp-v15.v15-modal-open #xpTesterFooterBtn {visibility:hidden!important;}
+.xp-v15 .v15-dialog {width:100%!important;max-width:1000px!important;max-height:calc(100dvh - 48px)!important;background:var(--modal-bg);color:var(--modal-text);border:1px solid var(--panel-border)!important;border-radius:22px!important;padding:24px!important;box-shadow:0 25px 90px #0005;overflow:hidden!important;display:flex;flex-direction:column;gap:16px;box-sizing:border-box;}
+.xp-v15 .v15-dialog-header {font-size:20px!important;line-height:1.25;flex-shrink:0;margin:0!important;gap:16px;}
+.xp-v15 .close-modal-btn {width:44px;height:44px;min-width:44px;font-size:24px;}
+.xp-v15 .settings-tabs {display:flex;flex-wrap:wrap;gap:6px;margin:0;overflow:visible;flex-shrink:0;}
+.xp-v15 #settings-modal .tab-btn {min-height:44px;font-size:14px!important;padding:10px 14px!important;border-radius:10px;flex:1;white-space:nowrap;}
+.xp-v15 .v15-settings-workspace {display:grid;grid-template-columns:minmax(0,1fr);min-height:0;overflow:hidden;gap:22px;}
+.xp-v15 .v15-settings-workspace.v15-with-preview {grid-template-columns:260px minmax(0,1fr);}
+.v15-settings-choices {overflow-y:auto;min-height:0;overscroll-behavior:contain;padding:3px 6px 4px 3px;scrollbar-gutter:stable;}
+.xp-v15 #settingsPreview {flex-direction:column;justify-content:center;align-self:start;padding:20px!important;text-align:center;grid-column:auto!important;}
+.xp-v15 #settingsPreviewBoard {width:210px!important;height:210px!important;}
+.xp-v15 #settingsPreview>div:last-child {font-size:13px!important;line-height:1.6!important;}
+.xp-v15 #settingsPreview small {display:block;font-size:11px;margin-top:8px;color:var(--text-muted);}
+.v15-preview-square {display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.v15-preview-square .piece {pointer-events:none;}
+.xp-v15 #settings-modal .tab-content {overflow:visible!important;max-height:none!important;gap:10px;align-content:start;}
+.xp-v15 #settings-modal .tab-content .action-btn {min-height:48px;font-size:14px!important;padding:11px!important;border-radius:10px;}
+.xp-v15 #settings-modal .tab-content>div,.xp-v15 #settings-modal .tab-content label {font-size:13px!important;line-height:1.45;}
+.xp-v15 #settings-modal label {min-height:42px;gap:8px;}
+.xp-v15 #settings-modal input[type=color] {width:100%;min-height:40px;}
+.xp-v15 #settings-modal input[type=url],.xp-v15 #settings-modal select {font-size:16px!important;min-height:44px;padding:10px!important;}
+.xp-v15 #settings-modal button[aria-pressed=true] {outline:2px solid var(--board-border);outline-offset:1px;box-shadow:inset 0 0 0 1px var(--modal-bg);}
+.v15-dialog-footer {flex-shrink:0;border-top:1px solid var(--panel-border);padding-top:14px;}
+.xp-v15 .v15-dialog-footer button {margin:0!important;min-height:48px;font-size:15px!important;border-radius:12px;}
+.xp-v15 .log-content {height:min(780px,calc(100dvh - 48px));max-width:1000px!important;gap:10px;}
+.xp-v15 .log-content>p {font-size:13px!important;line-height:1.4;margin:0;}
+.xp-v15 .log-textarea {flex:1;min-height:100px;height:auto!important;max-height:none!important;font-size:13px!important;line-height:1.5;padding:14px;border-radius:12px;resize:none;}
+.xp-v15 .v15-log-actions {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;flex-shrink:0;}
+.xp-v15 .v15-log-actions button {grid-column:auto!important;font-size:14px!important;min-height:46px;border-radius:10px;padding:10px!important;}
+.v15-share-feedback:empty {display:none;}
+.xp-v15 .v15-radio-dialog {max-width:640px!important;height:min(780px,calc(100dvh - 48px));text-align:left!important;}
+.v15-radio-search {width:100%;font-size:16px;padding:13px 15px;border:1px solid var(--panel-border);background:var(--chat-input-bg);color:var(--text-main);border-radius:12px;flex-shrink:0;}
+.v15-station-list {flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:8px;padding:3px 5px 3px 3px;}
+.v15-station {display:flex;align-items:center;text-align:left;gap:12px;min-height:62px;flex-shrink:0;background:var(--chat-bg);color:var(--text-main);border:1px solid var(--panel-border);border-radius:12px;padding:12px;cursor:pointer;}
+.v15-station[aria-pressed=true] {border:2px solid var(--board-border);padding:11px;}
+.v15-station-icon {display:grid;place-items:center;background:var(--btn-bg);color:var(--board-border);border-radius:10px;width:36px;height:36px;font-size:23px;flex-shrink:0;}
+.v15-station-name {font-size:15px;line-height:1.3;font-weight:700;flex:1;}
+.v15-station-check {font-size:20px;color:var(--board-border);}
+.v15-radio-footer {flex-shrink:0;border-top:1px solid var(--panel-border);padding-top:12px;display:flex;flex-direction:column;gap:9px;}
+.v15-selected-station {font-size:16px;}
+.xp-v15 #radioStatusPopup {margin:0!important;text-align:left!important;font-size:12px!important;}
+.v15-volume {display:flex;align-items:center;gap:14px;font-size:13px;}
+.v15-volume input {flex:1;min-width:0;height:28px;}
+.xp-v15 #v15-radio-play {min-height:48px;font-size:17px!important;border-radius:12px;}
+.xp-v15 #tutorial-modal .tutorial-content {width:min(900px,96vw);max-width:900px;max-height:92dvh;overflow-y:auto;font-size:15px;}
+.xp-v15 #tutorial-modal .action-btn {min-height:44px;font-size:14px!important;}
+
+@media(min-width:901px) {
+  .xp-v15 #sidePanel {width:clamp(390px,30vw,520px)!important;overflow-y:auto!important;overflow-x:hidden;}
+  .xp-v15 #sidePanel.minimized {width:0!important;padding:0!important;}
+  .xp-v15 .chat-container {flex:1 1 auto;}
+}
+@media(max-width:900px) {
+  .xp-v15 #menu-screen {padding:20px 12px 24px;}
+  .xp-v15 .hero-box {margin-bottom:20px;}
+  .xp-v15 .hero-box h1 {font-size:30px;}
+  .xp-v15 .hero-box p {font-size:15px;}
+  .xp-v15 .menu-dashboard {grid-template-columns:minmax(0,1fr)!important;gap:22px;padding:18px;border-radius:20px;}
+  .xp-v15 .menu-col-right {grid-column:1!important;grid-row:1;}
+  .xp-v15 .menu-col-left {grid-column:1!important;grid-row:2;}
+  .v15-welcome h2 {font-size:23px;}
+  .v15-welcome p {font-size:13px;}
+  .v15-welcome-piece {font-size:53px;right:0;}
+  .xp-v15 .mode-card {padding:14px 12px;min-height:86px;}
+  .xp-v15 .mode-title {font-size:15px;}
+  .xp-v15 .mode-sub {font-size:12px;}
+  .xp-v15 .mode-ia .mode-title {font-size:19px;}
+  .xp-v15 .profile-avatars {grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;}
+  .xp-v15 .profile-avatars .reaction-btn {min-width:0!important;min-height:40px!important;}
+  .xp-v15 #settings-modal,.xp-v15 #radio-modal,.xp-v15 #log-modal {padding:10px!important;}
+  .xp-v15 .v15-dialog {max-height:calc(100dvh - 20px)!important;padding:16px!important;border-radius:18px!important;gap:12px;}
+  .xp-v15 .settings-content {height:calc(100dvh - 20px);}
+  .xp-v15 .v15-dialog-header {font-size:17px!important;gap:8px;}
+  .xp-v15 #settings-modal .tab-btn {font-size:12px!important;padding:8px 10px!important;min-height:42px;}
+  .xp-v15 .v15-settings-workspace {flex:1;display:flex!important;flex-direction:column;gap:12px;}
+  .xp-v15 #settingsPreview {flex-direction:row!important;width:100%;padding:10px!important;gap:12px!important;flex-shrink:0;text-align:left;}
+  .xp-v15 #settingsPreviewBoard {width:96px!important;height:96px!important;}
+  .xp-v15 #settingsPreview small {font-size:10px;margin-top:4px;}
+  .xp-v15 #settingsPreview>div:last-child {font-size:12px!important;}
+  .v15-settings-choices {flex:1;}
+  .xp-v15 #settings-modal .tab-content .action-btn {font-size:13px!important;}
+  .xp-v15 .v15-log-actions {grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .xp-v15 .v15-log-actions button {font-size:13px!important;}
+  .xp-v15 .v15-log-actions button:last-child {grid-column:1/-1!important;}
+  .xp-v15 .log-content,.xp-v15 .v15-radio-dialog {height:calc(100dvh - 20px);}
+  .xp-v15 .log-textarea {font-size:12px!important;padding:10px;}
+}
+@media(max-width:900px) and (orientation:portrait) {
+  .xp-v15 #sidePanel {height:auto!important;max-height:none!important;overflow:visible!important;padding:10px!important;gap:8px!important;}
+  .xp-v15 .panel-meta-row>.reaction-bar {display:none!important;}
+  .xp-v15 #btnToggleReactions {display:inline-flex!important;min-height:44px!important;min-width:80px!important;font-size:13px!important;border-radius:10px;}
+  .xp-v15 #sidePanel .chat-container {flex:0 0 auto!important;}
+  .xp-v15 #sidePanel .chat-box {height:150px!important;min-height:150px!important;max-height:230px!important;flex:auto!important;}
+  .xp-v15 .taunt-scroll-container {display:none!important;}
+  .v15-social-actions {display:flex;}
+  .xp-v15 .v15-social-actions .xp-toggle-btn {display:inline-flex!important;flex:1;align-items:center;justify-content:center;min-height:44px!important;height:44px!important;font-size:14px!important;border-radius:10px;}
+  .xp-v15 .xp-float-panel.open {display:flex!important;max-height:300px!important;bottom:48px!important;}
+  .xp-v15 .xp-float-panel.reactions.open {display:grid!important;grid-template-columns:repeat(5,1fr)!important;}
+}
+@media(max-height:600px) and (min-width:901px) {
+  .xp-v15 #sidePanel {overflow-y:auto!important;}
+  .xp-v15 #sidePanel .chat-container {flex:0 0 auto!important;}
+  .xp-v15 #sidePanel .chat-box {min-height:100px!important;max-height:130px!important;}
+}
+@media(max-width:900px) and (orientation:landscape) {
+  .xp-v15 #sidePanel {min-width:260px;overflow-y:auto!important;}
+  .xp-v15 #sidePanel .chat-container {flex:0 0 auto!important;}
+  .xp-v15 .v15-settings-workspace.v15-with-preview {display:grid!important;grid-template-columns:160px minmax(0,1fr);}
+  .xp-v15 #settingsPreview {flex-direction:column!important;}
+  .xp-v15 #settingsPreview small {display:none;}
+  .xp-v15 .settings-tabs {gap:3px;}
+  .xp-v15 #settings-modal .tab-btn {min-height:36px;font-size:11px!important;padding:6px!important;}
+  .xp-v15 .v15-dialog {gap:8px;padding:12px!important;}
+}
+@media(prefers-reduced-motion:reduce) {.xp-v15 .mode-card {transition:none;transform:none;}}
+.xp-v15 .taunt-scroll-container .taunt-btn {height:38px!important;min-height:38px!important;line-height:20px!important;display:inline-flex!important;align-items:center;flex-shrink:0!important;}
+@media(min-width:901px) {
+ .xp-v15:not(.menu-hidden) .board-section {width:min(98vh,calc(100vw - clamp(390px,30vw,520px) - 24px))!important;height:min(98vh,calc(100vw - clamp(390px,30vw,520px) - 24px))!important;}
+ .xp-v15 #sidePanel:not(.minimized) {flex-shrink:0!important;}
+}
+
+/* Desktop compact game panel: the full panel fits beside the board. */
+@media(min-width:901px) {
+  .xp-v15 #sidePanel {
+    height:min(98vh,98dvh)!important;
+    max-height:min(98vh,98dvh)!important;
+    padding:8px!important;
+    gap:5px!important;
+    overflow:hidden!important;
+  }
+  .xp-v15 #brandTitleBox {padding:6px 8px!important;gap:5px!important;}
+  .xp-v15 #brandTitleBox>span {font-size:13px!important;line-height:16px;}
+  .xp-v15 .header-actions {gap:4px!important;}
+  .xp-v15 .header-actions .icon-btn {width:48px!important;height:44px!important;padding:3px 1px!important;border-radius:9px!important;}
+  .xp-v15 .v15-tool-icon {font-size:18px;}
+  .xp-v15 .v15-tool-label {font-size:9px;}
+  .xp-v15 .panel-meta-row {height:42px!important;min-height:42px!important;}
+  .xp-v15 .reaction-bar {height:42px!important;padding:1px 0 5px!important;gap:5px!important;}
+  .xp-v15 .reaction-bar .reaction-btn {height:34px!important;min-height:34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;font-size:19px!important;border-radius:8px!important;}
+  .xp-v15 .compact-status-row {height:25px!important;min-height:25px!important;}
+  .xp-v15 .candy-fight-bar-container {padding:2px 6px!important;gap:0!important;border-radius:7px!important;}
+  .xp-v15 .candy-bar-header,.xp-v15 .candy-icons-row {font-size:9px!important;line-height:10px!important;}
+  .xp-v15 .candy-bar-track {height:2px!important;}
+  .xp-v15 .move-list-container {height:32px!important;min-height:32px!important;max-height:32px!important;padding:6px 7px!important;font-size:12px!important;}
+  .xp-v15 .move-list-container .move-san {font-size:12px!important;}
+  .xp-v15 .player-card {min-height:40px!important;padding:5px 7px!important;gap:0!important;border-radius:8px!important;}
+  .xp-v15 .player-info {font-size:12px!important;line-height:18px;}
+  .xp-v15 .clock-badge,.xp-v15 .turn-badge {font-size:10px!important;padding:2px 5px!important;}
+  .xp-v15 .captured-area {min-height:0!important;line-height:12px!important;}
+  .xp-v15 .chat-container {flex:1 1 0!important;min-height:0!important;gap:5px!important;overflow:hidden!important;}
+  .xp-v15 .chat-box {flex:1 1 0!important;min-height:120px!important;max-height:none!important;padding:7px!important;font-size:13px!important;gap:4px!important;overflow-y:auto!important;}
+  .xp-v15 .chat-input-row {height:38px!important;min-height:38px!important;gap:5px!important;}
+  .xp-v15 .chat-input {height:38px!important;min-height:38px!important;font-size:14px!important;padding:7px 9px!important;border-radius:9px!important;}
+  .xp-v15 #btnVoiceMsg {height:38px!important;min-height:38px!important;min-width:42px!important;font-size:19px!important;border-radius:9px!important;}
+  .xp-v15 .chat-input-row>.action-btn {height:38px!important;min-height:38px!important;flex:0 0 58px!important;font-size:10px!important;border-radius:9px!important;}
+  .xp-v15 .taunt-scroll-container {height:34px!important;min-height:34px!important;max-height:34px!important;padding:1px 0 4px!important;gap:5px!important;}
+  .xp-v15 .taunt-scroll-container .taunt-btn {height:28px!important;min-height:28px!important;padding:4px 9px!important;font-size:11px!important;line-height:16px!important;border-radius:7px!important;}
+}
