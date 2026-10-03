@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Xadrez Pro v15.0.0 FINAL — consolidacao de todos os recursos da linha 12.x.
+<!-- Xadrez Pro v18.0.0 — correções de capturas, telemetria, desempenho e assistência GOD.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -7,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v15.0.0 · Tutorial Unificado</title>
+    <title>Xadrez Pro - v18.0.0 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro v15.0.0 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez Pro v18.0.0 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
@@ -1177,9 +1177,9 @@
         .move-list-container .move-san.check { color: #dc2626; }
         .move-list-container .move-san.mate { color: #16a34a; font-weight: 900; }
         .captured-area { display: flex; gap: 2px; flex-wrap: wrap; min-height: 8px; align-items: center; }
-        .captured-icon { width: 12px; height: 12px; background-size: contain; background-repeat: no-repeat; }
-        .captured-icon.white-cap { filter: brightness(1.2); }
-        .captured-icon.black-cap { filter: brightness(1.8) saturate(2) sepia(1) hue-rotate(310deg); }
+        .captured-icon { width: 12px; height: 12px; background-size: contain; background-repeat: no-repeat; filter: none !important; }
+        .captured-icon.white-cap { filter: drop-shadow(0 0 0.5px rgba(0,0,0,0.55)) !important; }
+        .captured-icon.black-cap { filter: drop-shadow(0 0 0.5px rgba(255,255,255,0.55)) !important; }
         .chat-container { display: flex; flex-direction: column; flex: 1; min-height: 50px; gap: 5px; overflow: hidden; }
         .chat-box { flex: 1; background: var(--chat-bg); border: 1px solid var(--panel-border); border-radius: 6px; padding: 6px; overflow-y: auto; font-size: 10.5px; color: var(--text-main); display: flex; flex-direction: column; gap: 4px; min-height: 40px; }
         .chat-msg { background: var(--chat-msg-bg); padding: 4px 6px; border-radius: 4px; border-left: 3px solid #f43f5e; line-height: 1.3; }
@@ -1738,7 +1738,7 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v15.0.0</p>
+            <p>Estratégia P2P · IA offline · v18.0.0</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -2184,6 +2184,7 @@ body.god-stealth .god-assist-to::after {
     function resetMoveHistory() {
         moveHistoryFens = [chess.fen()];
         historyViewPly = null;
+        if (typeof syncedRemotePly !== 'undefined') syncedRemotePly = 0;
     }
 
     function recordMoveHistoryPosition() {
@@ -2192,6 +2193,7 @@ body.god-stealth .god-assist-to::after {
         moveHistoryFens = moveHistoryFens.slice(0, ply);
         moveHistoryFens[ply] = chess.fen();
         historyViewPly = null;
+        if (typeof syncedRemotePly !== 'undefined') syncedRemotePly = ply;
     }
 
     function exitHistoryView() {
@@ -2244,8 +2246,8 @@ body.god-stealth .god-assist-to::after {
 
     let selectedSquare = null;
     let possibleMoves = [];
-    const APP_VERSION = '15.0.0';
-    const BUILD_ID = 'xp-15.0.0-20260921';
+    const APP_VERSION = '18.0.0';
+    const BUILD_ID = 'xp-18.0.0-20260928';
         let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
@@ -2254,6 +2256,8 @@ body.god-stealth .god-assist-to::after {
     let botVsBotInterval = null;
     let currentTheme = 'claro';
     let currentCityKey = null;
+    // Nome humano mostrado e compartilhado; IDs técnicos continuam ocultos.
+    let currentRoomFriendlyName = '';
     let wasInCheckLastMove = false;
 
     let peer = null;
@@ -2292,6 +2296,8 @@ body.god-stealth .god-assist-to::after {
     let godMode = localStorage.getItem('xadrezpro_god_mode') === '1';
     let godAssistBestMove = null;
     let godAssistRequestId = 0;
+    let godAssistFen = '';
+    let syncedRemotePly = 0;
     let opponentName = '';
     let rematchPending = false;
     let playerElo = parseInt(localStorage.getItem('xadrezpro_elo') || '1200', 10);
@@ -2452,7 +2458,7 @@ body.god-stealth .god-assist-to::after {
         if (keepCity && String(keepCity).indexOf('priv-') === 0) {
             const code = String(keepCity).replace(/^priv-/i, '').toUpperCase();
             const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + (pack.label || '');
+            if (titleEl) titleEl.innerText = xpVisibleRoomTitle(keepCity, pack.label || '');
         }
         addLog('Visual sala privada: ' + (pack.label || pack.id || '?'), 'UI');
         try { refreshSettingsPreview(); } catch (e) {}
@@ -3282,7 +3288,7 @@ body.god-stealth .god-assist-to::after {
         function evaluateBoard(game) {
             const board = game.board();
             const end = isEndgamePosition(board);
-            let score = 0;
+            let score = 0, materialScore = 0, positionalScore = 0;
             let wB = 0, bB = 0, wN = 0, bN = 0;
             let wPfile = [0,0,0,0,0,0,0,0], bPfile = [0,0,0,0,0,0,0,0];
 
@@ -3292,7 +3298,7 @@ body.god-stealth .god-assist-to::after {
                     if (!piece) continue;
                     const side = piece.color === 'w' ? 1 : -1;
                     const sq = r * 8 + c;
-                    let v = PIECE_VAL[piece.type] || 0;
+                    const v = PIECE_VAL[piece.type] || 0;
                     let table = null;
                     if (piece.type === 'p') table = PST_P;
                     else if (piece.type === 'n') table = PST_N;
@@ -3302,9 +3308,9 @@ body.god-stealth .god-assist-to::after {
                     else if (piece.type === 'k') table = end ? PST_K_END : PST_K_MID;
                     if (table) {
                         const idx = piece.color === 'w' ? sq : (63 - sq);
-                        v += table[idx] || 0;
+                        positionalScore += side * (table[idx] || 0);
                     }
-                    score += side * v;
+                    materialScore += side * v;
                     if (piece.type === 'b') { if (piece.color === 'w') wB++; else bB++; }
                     if (piece.type === 'n') { if (piece.color === 'w') wN++; else bN++; }
                     if (piece.type === 'p') {
@@ -3312,6 +3318,8 @@ body.god-stealth .god-assist-to::after {
                     }
                 }
             }
+            // v15.1.0 — finais: o material domina e as tabelas posicionais perdem peso.
+            score = materialScore + Math.round(positionalScore * (end ? 0.55 : 1));
             // pair of bishops
             if (wB >= 2) score += 35;
             if (bB >= 2) score -= 35;
@@ -3324,12 +3332,18 @@ body.god-stealth .god-assist-to::after {
                 if (wIso) score -= 12;
                 if (bIso) score += 12;
             }
-            // mobility (expensive but strong) — sample legal moves count
-            try {
-                const mob = game.moves().length;
-                // side to move mobility relative: approximate by using current turn
-                score += game.turn() === 'w' ? Math.min(40, mob) : -Math.min(40, mob);
-            } catch (e) {}
+            // v15.1.0 — mobilidade aproximada sem gerar todos os lances em cada nó.
+            let cheapMob = 0;
+            for (let rr = 0; rr < 8; rr++) {
+                for (let cc = 0; cc < 8; cc++) {
+                    const pp = board[rr][cc];
+                    if (!pp) continue;
+                    const side = pp.color === 'w' ? 1 : -1;
+                    if (pp.type === 'p' && cc >= 2 && cc <= 5) cheapMob += side;
+                    if ((pp.type === 'n' || pp.type === 'b') && rr >= 2 && rr <= 5) cheapMob += side;
+                }
+            }
+            score += Math.max(-40, Math.min(40, cheapMob * 4));
             // check pressure
             if (game.in_check()) {
                 score += game.turn() === 'w' ? -45 : 45;
@@ -3360,7 +3374,8 @@ body.god-stealth .god-assist-to::after {
         const TT = new Map();
         const TT_MAX = 80000;
         function ttKey(game, depth) {
-            return game.fen() + '|' + depth;
+            const f = game.fen().split(' ');
+            return f[0] + '|' + f[1] + '|' + f[2] + '|' + f[3] + '|' + depth;
         }
 
         function quiescence(game, alpha, beta, deadline, qDepth) {
@@ -3371,6 +3386,7 @@ body.god-stealth .god-assist-to::after {
             if (standPat > alpha) alpha = standPat;
             let moves = game.moves({ verbose: true }).filter(m => m.captured || m.promotion);
             moves = orderMoves(moves);
+            moves = moves.slice(0, 6);
             for (let i = 0; i < moves.length; i++) {
                 if (performance.now() > deadline) break;
                 const m = moves[i];
@@ -3396,7 +3412,7 @@ body.god-stealth .god-assist-to::after {
             }
 
             if (depth <= 0) {
-                return quiescence(game, alpha, beta, deadline, 4);
+                return quiescence(game, alpha, beta, deadline, 2);
             }
 
             let moves = orderMoves(game.moves({ verbose: true }));
@@ -3588,6 +3604,8 @@ body.god-stealth .god-assist-to::after {
         pendingAICallback = null;
         godAssistRequestId++;
         godAssistBestMove = null;
+        godAssistFen = '';
+        try { xpShowGodThinking(false); } catch (err) {}
         try { renderBoard(); } catch (err) {}
     };
 
@@ -3596,8 +3614,10 @@ body.god-stealth .god-assist-to::after {
         // v11.3 GOD ONLINE — aceita PvE, Sandbox e Network (silencioso)
         if (data.channel === 'god' && data.requestId === godAssistRequestId) {
             const accepted = gameMode === 'pve' || gameMode === 'sandbox' || (gameMode === 'network' && !isSpectator);
+            xpShowGodThinking(false);
             if (accepted && data.bestMove) {
                 godAssistBestMove = data.bestMove;
+                godAssistFen = chess.fen();
                 renderBoard();
                 addLog('GOD assistência recalculada (local): ' + (data.bestMove.san || (data.bestMove.from + data.bestMove.to)), 'GOD');
             }
@@ -3803,7 +3823,7 @@ body.god-stealth .god-assist-to::after {
         try {
             const ua = (navigator.userAgent || '').slice(0, 90);
             const net = (navigator.connection && navigator.connection.effectiveType) || '?';
-            const ply = (typeof chess !== 'undefined' && chess) ? chess.history().length : 0;
+            const ply = (typeof chess !== 'undefined' && chess) ? Math.max(chess.history().length, syncedRemotePly || 0) : 0;
             const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
             return {
                 ver: APP_VERSION,
@@ -3814,7 +3834,7 @@ body.god-stealth .god-assist-to::after {
                 color: typeof playerColor !== 'undefined' ? playerColor : '-',
                 ai: typeof aiDifficulty !== 'undefined' ? aiDifficulty : '-',
                 p2p: ((typeof conn !== 'undefined' && conn && conn.open) ? 'up' : ((typeof isRoomHost !== 'undefined' && isRoomHost && typeof peer !== 'undefined' && peer && !peer.destroyed) ? 'up-host' : 'down')),
-                radio: (typeof radioPlaying !== 'undefined' && radioPlaying) ? (currentRadioChannelId || 'on') : 'off',
+                radio: (typeof radioPlaying !== 'undefined' && radioPlaying && currentRadioChannelId) ? currentRadioChannelId : 'off',
                 net: net,
                 view: (window.innerWidth || 0) + 'x' + (window.innerHeight || 0)
             };
@@ -4145,6 +4165,8 @@ body.god-stealth .god-assist-to::after {
         if (!insideR && !insideT) closeFloatPanels();
     }, true);
 
+    let xpReactionQueue = [];
+    let xpReactionTimer = null;
     function sendReaction(emoji) {
         if (isSpectator) {
             addChatMessage('Sistema', 'Espectadores só assistem — não enviam reações.', true);
@@ -4152,7 +4174,19 @@ body.god-stealth .god-assist-to::after {
         }
         showFloatingReaction(emoji, true);
         if (gameMode === 'network') {
-            networkBroadcast({ type: 'reaction', emoji: emoji, name: playerName || 'Jogador' });
+            xpReactionQueue.push(emoji);
+            if (!xpReactionTimer) {
+                const flush = () => {
+                    const last = xpReactionQueue.length ? xpReactionQueue[xpReactionQueue.length - 1] : null;
+                    xpReactionQueue = [];
+                    xpReactionTimer = null;
+                    if (last) {
+                        try { networkBroadcast({ type: 'reaction', emoji: last, name: playerName || 'Jogador' }); } catch(e) {}
+                    }
+                    if (xpReactionQueue.length && !xpReactionTimer) xpReactionTimer = setTimeout(flush, 200);
+                };
+                xpReactionTimer = setTimeout(flush, 200);
+            }
         }
     }
 
@@ -4504,6 +4538,12 @@ body.god-stealth .god-assist-to::after {
         'londres': { name: 'Londres 🌲', roomClass: 'room-londres', pieceColor: 'pieces-green-cyan' }
     };
 
+    function xpVisibleRoomTitle(cityKey, themeLabel) {
+        if (cityDetails[cityKey]) return cityDetails[cityKey].name;
+        let city = String(currentRoomFriendlyName || cityKey || 'Sala').replace(/^priv-/i, '').trim();
+        city = city.replace(/(^|-)([a-z])/g, function(_, sep, ch) { return (sep ? ' ' : '') + ch.toUpperCase(); });
+        return themeLabel ? city + ' · ' + themeLabel : city;
+    }
     const diverseStandUpList = [
         /* Virais e clássicos BR (o que não ficou nos botões rápidos) */
         "Não sou capaz de opinar.",
@@ -4790,9 +4830,26 @@ body.god-stealth .god-assist-to::after {
         }
     }
 
-    function clearGodAssistance() {
+    function xpShowGodThinking(on) {
+        let el = document.getElementById('xp-god-thinking');
+        if (on && !el) {
+            el = document.createElement('div');
+            el.id = 'xp-god-thinking';
+            el.textContent = '⚡ GOD pensando…';
+            el.style.cssText = 'position:fixed;top:max(8px,env(safe-area-inset-top,0px));right:8px;z-index:9998;padding:6px 10px;border-radius:10px;background:rgba(15,23,42,.9);border:1px solid #b8ff00;color:#b8ff00;font:800 11px ui-monospace,monospace;pointer-events:none;';
+            document.body.appendChild(el);
+        } else if (!on && el) {
+            el.remove();
+        }
+    }
+
+    function clearGodAssistance(force) {
+        const suggestionStillAllowed = gameMode === 'sandbox' || (godMode && (gameMode === 'pve' || gameMode === 'network') && !isSpectator && chess.turn() === playerColor);
+        if (!force && suggestionStillAllowed && !chess.game_over() && godAssistBestMove && godAssistFen === chess.fen()) return;
         godAssistRequestId++;
         godAssistBestMove = null;
+        godAssistFen = '';
+        xpShowGodThinking(false);
         try { renderBoard(); } catch(e) {}
     }
 
@@ -4813,13 +4870,37 @@ body.god-stealth .god-assist-to::after {
         if (!moves.length) { clearGodAssistance(); return; }
         const req = ++godAssistRequestId;
         godAssistBestMove = null;
+        godAssistFen = '';
         renderBoard();
         try {
-            // Sandbox: análise curta e rápida. GOD/PvE mantém a análise mais profunda.
-            const budget = isSandbox ? [4, 420] : [5, 1600];
-            aiWorker.postMessage({ channel: 'god', fen: chess.fen(), depthBudget: budget, requestId: req, skill: isSandbox ? 4 : 5 });
+            let budget;
+            if (isSandbox) {
+                budget = [4, 420];
+            } else if (isGodNetwork) {
+                budget = [5, 1600];
+            } else {
+                const aiBudget = {1:[2,180],2:[3,320],3:[4,700],4:[7,2200],5:[9,3600]}[aiDifficulty] || [5,1200];
+                budget = [Math.max(aiBudget[0] + 2, 6), Math.min(2000, aiBudget[1] + 800)];
+            }
+            const requestFen = chess.fen();
+            xpShowGodThinking(true);
+            aiWorker.postMessage({ channel: 'god', fen: requestFen, depthBudget: budget, requestId: req, skill: 5 });
+            setTimeout(() => {
+                if (godAssistRequestId !== req || godAssistBestMove || chess.fen() !== requestFen) return;
+                const currentMoves = chess.moves({ verbose: true });
+                const fallbackValues = {p:1,n:3,b:3,r:5,q:9,k:100};
+                const captures = currentMoves.filter(m => m.captured).sort((a,b) => (fallbackValues[b.captured] || 0) - (fallbackValues[a.captured] || 0));
+                const development = currentMoves.filter(m => m.piece === 'n' || m.piece === 'b');
+                godAssistBestMove = captures[0] || development[0] || currentMoves[0] || null;
+                godAssistFen = godAssistBestMove ? chess.fen() : '';
+                xpShowGodThinking(false);
+                renderBoard();
+                if (godAssistBestMove) addLog('GOD fallback local (worker não respondeu em 2.5s)', 'GOD');
+            }, 2500);
         } catch(e) {
             godAssistBestMove = moves[0];
+            godAssistFen = chess.fen();
+            xpShowGodThinking(false);
             renderBoard();
         }
     }
@@ -5039,6 +5120,7 @@ body.god-stealth .god-assist-to::after {
         setTimeout(updateRoomStatuses, 600);
 
         currentCityKey = null;
+        currentRoomFriendlyName = '';
         currentPrivateVisual = null;
         Array.from(document.body.classList).forEach(c => {
             if (c.startsWith('room-')) document.body.classList.remove(c);
@@ -5096,6 +5178,7 @@ body.god-stealth .god-assist-to::after {
         if (gameMode === 'network') {
             networkBroadcast({ type: 'undo', count: movesToUndo, fen: chess.fen() });
         }
+        if (godMode && !isSpectator && chess.turn() === playerColor) setTimeout(requestGodAssistance, 60);
     }
 
     function toggleBoardFlip() {
@@ -5595,6 +5678,24 @@ body.god-stealth .god-assist-to::after {
         stopClock();
         clearGodAssistance(); // v11.3 — limpa destaque GOD no fim
 
+        // v15.1.0 — o último lance da IA atualiza o turno antes de detectar o fim.
+        // Limpa o estado transitório "Processando..." para o card não parecer ativo
+        // depois de xeque-mate, empate ou encerramento por tempo.
+        const localCard = document.getElementById('card-local');
+        const opponentCard = document.getElementById('card-opponent');
+        const localTurnBadge = document.getElementById('turn-badge-local');
+        const opponentTurnBadge = document.getElementById('turn-badge-opponent');
+        if (localCard) localCard.classList.remove('active-turn');
+        if (opponentCard) opponentCard.classList.remove('active-turn');
+        if (localTurnBadge) {
+            localTurnBadge.innerText = 'Finalizada';
+            localTurnBadge.style.display = 'none';
+        }
+        if (opponentTurnBadge) {
+            opponentTurnBadge.innerText = 'Finalizada';
+            opponentTurnBadge.style.display = 'none';
+        }
+
         let winnerText = "Empate / Fim de Jogo";
         if (winnerColor === 'w') winnerText = "Vitória das Peças Brancas!";
         else if (winnerColor === 'b') winnerText = "Vitória das Peças Pretas!";
@@ -6035,7 +6136,7 @@ body.god-stealth .god-assist-to::after {
             networkBroadcast({ type: 'visual-pack', visualPack: pack });
             const code = String(currentCityKey).replace(/^priv-/i, '').toUpperCase();
             const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + pack.label;
+            if (titleEl) titleEl.innerText = xpVisibleRoomTitle(currentCityKey, pack.label || '');
             addChatMessage('Sistema', 'Novo visual da sala: ' + pack.label, true);
         }
         addChatMessage('Sistema', 'Revanche iniciada! Cores invertidas.', false);
@@ -6126,9 +6227,9 @@ body.god-stealth .god-assist-to::after {
     let radioSwitchTimer = null;
     let radioBusy = false;
 
-    function cleanupCurrentRadio(fromRemote = false) {
+    function cleanupCurrentRadio(fromRemote = false, explicitPrevChannel) {
         const wasPlaying = radioPlaying;
-        const prevChannel = currentRadioChannelId;
+        const prevChannel = typeof explicitPrevChannel === 'string' ? explicitPrevChannel : currentRadioChannelId;
         stopLatencyMonitor();
         if (hlsInstance) {
             try { hlsInstance.stopLoad(); } catch (e) {}
@@ -6194,6 +6295,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     async function playRadioChannel(channelId, urlIndex = 0) {
+        const previousChannelId = currentRadioChannelId;
         currentRadioChannelId = channelId;
         const channel = RADIO_CHANNELS[channelId];
         if (!channel || !channel.urls || channel.urls.length === 0) {
@@ -6212,7 +6314,7 @@ body.god-stealth .god-assist-to::after {
         let errorHandled = false;
 
         updateAllRadioStatus(totalUrls > 1 ? `Conectando (${urlIndex + 1}/${totalUrls})...` : 'Conectando...');
-        cleanupCurrentRadio();
+        cleanupCurrentRadio(false, previousChannelId);
 
         const handleError = (reason = 'erro') => {
             if (myRequestId !== radioRequestId || errorHandled) return;
@@ -6582,20 +6684,22 @@ body.god-stealth .god-assist-to::after {
         document.getElementById('turn-badge-opponent').style.display = 'none';
 
         if (gameMode === 'network' && isSpectator) { 
-            if (turn === 'w') { 
-                oppCard.classList.add('active-turn');
-                document.getElementById('turn-badge-opponent').style.display = 'inline-block';
-                document.getElementById('turn-badge-opponent').innerText = "Vez da Branca";
-            } else {
-                localCard.classList.add('active-turn');
-                document.getElementById('turn-badge-local').style.display = 'inline-block';
-                document.getElementById('turn-badge-local').innerText = "Vez da Preta";
-            }
+            // No modo espectador, associa o turno à cor escrita no card.
+            // A posição visual pode mudar, por isso não deve definir a cor ativa.
+            const localLabel = document.getElementById('player-local-label');
+            const localIsWhite = !!(localLabel && /\(Brancas\)/i.test(localLabel.textContent));
+            const activeIsLocal = turn === 'w' ? localIsWhite : !localIsWhite;
+            const activeCard = activeIsLocal ? localCard : oppCard;
+            const activeBadge = document.getElementById(activeIsLocal ? 'turn-badge-local' : 'turn-badge-opponent');
+            activeCard.classList.add('active-turn');
+            activeBadge.style.display = 'inline-block';
+            activeBadge.innerText = turn === 'w' ? "Vez da Branca" : "Vez da Preta";
             return;
         }
 
-        let localIsTurn = (turn === playerColor);
-        if (gameMode === 'bot-vs-bot') localIsTurn = false;
+        // Em todos os modos, inclusive Bot vs Bot, o destaque acompanha
+        // a cor que realmente joga. Isso impede dois cards em "Pensando".
+        const localIsTurn = (turn === playerColor);
 
         if (localIsTurn) {
             localCard.classList.add('active-turn');
@@ -6604,7 +6708,7 @@ body.god-stealth .god-assist-to::after {
         } else {
             oppCard.classList.add('active-turn');
             document.getElementById('turn-badge-opponent').style.display = 'inline-block';
-            document.getElementById('turn-badge-opponent').innerText = gameMode === 'bot-vs-bot' ? "Processando..." : "Aguardando...";
+                document.getElementById('turn-badge-opponent').innerText = gameMode === 'bot-vs-bot' ? "Pensando..." : "Aguardando...";
         }
     }
 
@@ -6613,8 +6717,10 @@ body.god-stealth .god-assist-to::after {
         let wCaps = [], bCaps = [];
         history.forEach(m => { if (m.captured) m.color === 'w' ? wCaps.push(m.captured) : bCaps.push(m.captured.toUpperCase()); });
 
-        let localCaps = playerColor === 'b' ? wCaps : bCaps;
-        let oppCaps = playerColor === 'b' ? bCaps : wCaps;
+        // v18.0.0 — a barra local mostra o que o jogador local capturou.
+        // wCaps = peças pretas capturadas pelas Brancas; bCaps = peças brancas capturadas pelas Pretas.
+        let localCaps = playerColor === 'b' ? bCaps : wCaps;
+        let oppCaps = playerColor === 'b' ? wCaps : bCaps;
 
         document.getElementById("captured-by-local").innerHTML = localCaps.map(p => `<div class="captured-icon ${playerColor === 'b' ? 'white-cap' : 'black-cap'}" style="background-image:url('${pieceSvgs[p]}')"></div>`).join('');
         document.getElementById("captured-by-opponent").innerHTML = oppCaps.map(p => `<div class="captured-icon ${playerColor === 'b' ? 'black-cap' : 'white-cap'}" style="background-image:url('${pieceSvgs[p]}')"></div>`).join('');
@@ -6810,7 +6916,7 @@ body.god-stealth .god-assist-to::after {
         detectOpening();
         if (move.captured) { showCaptureInChat(move); playSFX('capture'); } else playSFX('move');
         if (voiceMovesEnabled && move.san) speak(move.san);
-        addLog(`Lance efetuado: ${move.san}`, "MOVE");
+        addLog(`Lance efetuado: ${move.san} (${move.from}→${move.to})`, "MOVE");
         if (godMode) clearGodAssistance();
         const over = checkGameStateEvents(true);
         if (gameMode === 'network' && !isSpectator) {
@@ -6825,8 +6931,8 @@ body.god-stealth .god-assist-to::after {
         if (gameMode === 'pve' && !over && chess.turn() !== playerColor) {
             setTimeout(() => makeAIMove(chess.turn()), 300);
         }
-        // v11.3 GOD ONLINE — recalcula assistência ao voltar sua vez no online
-        if (gameMode === 'network' && !over && godMode && !isSpectator && chess.turn() === playerColor) {
+        // v15.1.0 — GOD só recalcula quando o turno pertence ao humano.
+        if (!over && godMode && !isSpectator && chess.turn() === playerColor && (gameMode === 'network' || gameMode === 'pve')) {
             setTimeout(requestGodAssistance, 80);
         }
     }
@@ -6966,10 +7072,12 @@ body.god-stealth .god-assist-to::after {
             const aiFenAtRequest = chess.fen();
             const thinkStarted = performance.now();
 
-            document.getElementById('turn-badge-local').innerText = "Pensando...";
-            document.getElementById('turn-badge-opponent').innerText = "Pensando...";
-            document.getElementById('turn-badge-local').style.display = 'inline-block';
-            document.getElementById('turn-badge-opponent').style.display = 'inline-block';
+            const thinkingLocal = chess.turn() === playerColor;
+            const localThinkingBadge = document.getElementById('turn-badge-local');
+            const opponentThinkingBadge = document.getElementById('turn-badge-opponent');
+            localThinkingBadge.style.display = thinkingLocal ? 'inline-block' : 'none';
+            opponentThinkingBadge.style.display = thinkingLocal ? 'none' : 'inline-block';
+            (thinkingLocal ? localThinkingBadge : opponentThinkingBadge).innerText = "Pensando...";
 
             pendingAICallback = (payload) => {
                 if (currentReqId !== aiRequestId || appGeneration !== aiGenerationAtRequest || gameMode !== aiModeAtRequest || chess.fen() !== aiFenAtRequest) { addLog('Resposta IA obsoleta descartada.', 'AI_STALE'); return; }
@@ -7021,7 +7129,7 @@ body.god-stealth .god-assist-to::after {
         detectOpening();
         if (voiceMovesEnabled && testMove.san) speak('IA joga ' + testMove.san);
         checkGameStateEvents(true);
-        if (gameMode === 'pve' || gameMode === 'sandbox') {
+        if ((gameMode === 'pve' || gameMode === 'sandbox') && chess.turn() === playerColor) {
             setTimeout(requestGodAssistance, godMode ? 35 : 60);
         }
         if (conn && conn.open && gameMode === 'network') { 
@@ -7174,6 +7282,7 @@ body.god-stealth .god-assist-to::after {
         aiRequestId++;
         gameMode = 'network';
         currentCityKey = cityName;
+        currentRoomFriendlyName = xpJoinOptions.friendlyName || (cityDetails[cityName] && cityDetails[cityName].name) || String(cityName || 'Sala');
 
         let baseRoomId = xpJoinOptions.targetPeerId || ("xadrezpro-cities-v73-" + cityName);
         addLog(`Iniciando tentativa de conexão com a sala: ${cityName} (ID base: ${baseRoomId})`, "P2P_CONNECT");
@@ -7319,6 +7428,7 @@ body.god-stealth .god-assist-to::after {
                 type: 'ping',
                 fen: chess.fen(),
                 plyCount: chess.history().length,
+                moves: chess.history({verbose:true}).map(function(m) { return {from:m.from,to:m.to,promotion:m.promotion||''}; }),
                 clockWhite: clockWhite,
                 clockBlack: clockBlack,
                 spectators: isRoomHost ? spectatorConns.filter(function(c) { return c && c.open; }).length : undefined
@@ -7340,7 +7450,7 @@ body.god-stealth .god-assist-to::after {
             applyPrivateVisualPack(pack);
             const code = String(cityName).replace(/^priv-/i, '').toUpperCase();
             const titleEl = document.getElementById('room-status-title');
-            if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + pack.label;
+            if (titleEl) titleEl.innerText = xpVisibleRoomTitle(currentCityKey, pack.label || '');
             addChatMessage('Sistema', 'Visual da sala: ' + pack.label, true);
         }
 
@@ -7394,7 +7504,8 @@ body.god-stealth .god-assist-to::after {
                                 candiesB: candiesBlack,
                                 plyCount: chess.history().length,
                                 hostName: playerName || 'Host',
-                                hostAvatar: playerAvatar
+                                hostAvatar: playerAvatar,
+                                roomName: currentRoomFriendlyName
                             };
                             if (cityName && String(cityName).indexOf('priv-') === 0) {
                                 if (!currentPrivateVisual) pickPrivateVisualCombo();
@@ -7431,6 +7542,7 @@ body.god-stealth .god-assist-to::after {
                                 clockWhite: clockWhite,
                                 clockBlack: clockBlack,
                                 spectator: true
+                                ,roomName: currentRoomFriendlyName
                             };
                             if (currentPrivateVisual) payload.visualPack = currentPrivateVisual;
                             c.send(payload);
@@ -7474,7 +7586,7 @@ body.god-stealth .god-assist-to::after {
             if (currentCityKey && String(currentCityKey).indexOf('priv-') === 0) {
                 const code = String(currentCityKey).replace(/^priv-/i, '').toUpperCase();
                 const titleEl = document.getElementById('room-status-title');
-                if (titleEl) titleEl.innerText = '🔐 Privada ' + code + ' · ' + (data.visualPack.label || '');
+                if (titleEl) titleEl.innerText = xpVisibleRoomTitle(currentCityKey, data.visualPack.label || '');
             }
             addChatMessage('Sistema', 'Visual da sala: ' + (data.visualPack.label || 'atualizado'), true);
             return;
@@ -7484,18 +7596,41 @@ body.god-stealth .god-assist-to::after {
             if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
             if (typeof data.spectators === 'number') updateSpectatorCountUI(data.spectators);
             if (data.plyCount !== undefined) {
-                const localPly = chess.history().length;
+                const localPly = Math.max(chess.history().length, syncedRemotePly || 0);
                 if (data.plyCount > localPly && data.fen && data.fen !== chess.fen()) {
                     try {
-                        const test = new Chess(data.fen);
-                        if (test) {
-                            chess.load(data.fen);
-                            lastSyncedFen = data.fen;
-                            renderBoard(); updateTurnIndicators(); updateCapturedDisplay();
-                            updateClockDisplay();
+                        let rebuilt = null, rebuiltFens = null;
+                        if (Array.isArray(data.moves) && data.moves.length === Number(data.plyCount)) {
+                            const candidate = new Chess();
+                            const fens = [candidate.fen()];
+                            for (let i = 0; i < data.moves.length; i++) {
+                                const m = data.moves[i] || {};
+                                const applied = candidate.move({from:m.from,to:m.to,promotion:m.promotion||undefined});
+                                if (!applied) throw new Error('PING_MOVE_' + i);
+                                fens.push(candidate.fen());
+                            }
+                            const short = f => String(f||'').split(' ').slice(0,4).join(' ');
+                            if (short(candidate.fen()) !== short(data.fen)) throw new Error('PING_FEN_MISMATCH');
+                            rebuilt = candidate; rebuiltFens = fens;
                         }
+                        if (rebuilt) {
+                            chess = rebuilt;
+                            moveHistoryFens = rebuiltFens;
+                        } else {
+                            const test = new Chess(data.fen);
+                            chess.load(test.fen());
+                            moveHistoryFens = new Array(Number(data.plyCount) + 1).fill(null);
+                            moveHistoryFens[Number(data.plyCount)] = chess.fen();
+                        }
+                        syncedRemotePly = Number(data.plyCount) || 0;
+                        historyViewPly = null;
+                        lastSyncedFen = chess.fen();
+                        selectedSquare = null; possibleMoves = [];
+                        renderBoard(); updateTurnIndicators(); updateCapturedDisplay();
+                        updateClockDisplay(); updateMoveListPanel();
+                        addLog('Ping ressincronizou posição remota (ply ' + localPly + ' → ' + syncedRemotePly + ')', 'P2P_INFO');
                     } catch (e) {
-                        addLog('FEN inválido no ping (ignorado)', 'WARN');
+                        addLog('Estado inválido no ping (ignorado): ' + (e.message || e), 'WARN');
                     }
                 }
             }
@@ -7739,6 +7874,7 @@ body.god-stealth .god-assist-to::after {
             if (data.type === 'slot-response') {
                 clearNetworkDisconnectTimer();
                 // Visual sincronizado da sala privada (host → guest/espectador)
+                if (data.roomName) currentRoomFriendlyName = data.roomName;
                 if (data.visualPack) {
                     currentPrivateVisual = data.visualPack;
                     applyPrivateVisualPack(data.visualPack);
@@ -7914,7 +8050,7 @@ body.god-stealth .god-assist-to::after {
             const titleEl = document.getElementById('room-status-title');
             if (titleEl) {
                 const label = (currentPrivateVisual && currentPrivateVisual.label) ? (' · ' + currentPrivateVisual.label) : '';
-                titleEl.innerText = '🔐 Privada ' + code + label;
+                titleEl.innerText = xpVisibleRoomTitle(cityKey, currentPrivateVisual && currentPrivateVisual.label || '');
             }
             return;
         }
@@ -7998,7 +8134,7 @@ body.god-stealth .god-assist-to::after {
     // === PWA v15.0.0: manifest estático + Service Worker versionado ===
     // O manifest fica em /manifest.json para evitar start_url/scope inválidos de Blob URLs.
     // O SW usa BUILD_ID próprio e navegação network-first para impedir HTML antigo persistente.
-    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-15.0.0-20260921' };
+    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-18.0.0-20260928' };
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(reg) {
@@ -8262,7 +8398,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez Pro v15.0.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
+    addLog('Xadrez Pro v18.0.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
@@ -8934,7 +9070,7 @@ body.god-stealth .god-assist-to::after {
   function ensure(){
     if(document.getElementById('xpTesterModal'))return;
     var m=document.createElement('div');m.id='xpTesterModal';m.style.cssText='display:none;position:fixed;inset:0;z-index:12000;background:rgba(0,0,0,.72);padding:10px;align-items:center;justify-content:center';
-    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v15.0.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
+    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v18.0.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
     document.body.appendChild(m);
   }
   window.xpTesterRefreshEntry=function(){var on=(typeof testerMode!=='undefined'&&testerMode),b=document.getElementById('xp-tester-gear-open');if(b)b.style.display=on?'block':'none';var f=document.getElementById('xpTesterFooterBtn');if(on&&!f){f=document.createElement('button');f.id='xpTesterFooterBtn';f.className='action-btn';f.innerHTML='🧪 DEV / TESTER';f.style.cssText='position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:9500;padding:7px 12px;font-size:9px;font-weight:900;box-shadow:0 5px 18px rgba(0,0,0,.28)';f.onclick=xpOpenTester;document.body.appendChild(f);}else if(!on&&f)f.remove();};
@@ -8949,8 +9085,7 @@ body.god-stealth .god-assist-to::after {
 })();
 </script>
 
-<link rel="stylesheet" href="./interface-v15.css">
-<script src="./interface-v15.js"></script>
+<link rel="stylesheet" href="./interface-v18.css">
+<script src="./interface-v18.js"></script>
 </body>
 </html>
-

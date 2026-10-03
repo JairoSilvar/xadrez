@@ -1,34 +1,37 @@
 {
-  "version": "15.0.0",
-  "date": "2026-09-22",
-  "baseline": "JairoSilvar/termux-xadrez main b0439ad358efb7e2e2d897e48a0e198e81e6a98c",
+  "version": "18.0.0",
+  "date": "2026-09-28",
+  "baseline": "Xadrez Pro v17.0.0",
   "inlineScriptsSyntaxChecked": 3,
+  "workerScriptSyntax": "OK",
   "addedScriptsSyntax": "OK",
   "duplicateIds": [],
-  "visualChecks": [
-    "Home e configurações em desktop e celular",
-    "Partida local e lance e2-e4",
-    "Rádio: busca, seleção e habilitação de Tocar",
-    "Diagnóstico ampliado e acionamento do download TXT",
-    "Desktop 1480x829: tabuleiro e painel com 825 px; chat usa toda a altura livre e termina junto ao card local",
-    "Largura intermediária 1024 px: painel sem exceder a página",
-    "Celular 392x735: tabuleiro 384x384, painel sem rolagem externa, chat com 140 px e card local totalmente visível",
-    "Celular curto 360x640: tabuleiro 353x353 e painel completo até o card local",
-    "Seis botões superiores com largura e altura iguais, incluindo a engrenagem",
-    "Botão único de frases e stand-up dentro da linha de mensagem; menu completo verificado",
-    "Menus móveis de opções, reações e frases com botão X funcional e sem deslocar os cards",
-    "Painel de reações elevado; botão X não cruza a primeira linha de emojis",
-    "Os cinco níveis da IA cabem integralmente em 392 px, inclusive Mestre 5",
-    "Botão DEV reduzido e oculto enquanto opções ou painéis flutuantes estão abertos",
-    "Compartilhar usa texto no compartilhamento nativo e possui fallback para copiar ou baixar",
-    "Engrenagem móvel: desistir e propor empate visíveis sem corte",
-    "Painel móvel de reações: 18 emojis sobre fundo branco opaco",
-    "Prévia de áudio configurada como sobreposição absoluta, sem ocupar espaço no fluxo"
+  "implemented": [
+    "Ping P2P transporta movimentos compactos e reconstrói chess + moveHistoryFens; fallback mantém ply remoto conhecido",
+    "IA remove geração de lances na avaliação, reduz quiescência e limita capturas",
+    "Rádio preserva canal anterior ao trocar estação",
+    "Reações P2P são coalescidas em janela de 200 ms",
+    "GOD só calcula na vez humana, recebe orçamento superior, indicador, timeout e fallback local",
+    "Undo recalcula GOD; sugestões são vinculadas ao FEN",
+    "Logs incluem from→to, ply remoto e rádio coerente",
+    "Avaliação de final reduz peso posicional",
+    "Fim de partida limpa o estado transitório Processando dos cards Bot vs Bot",
+    "Barras de captura mostram o material capturado pelo lado correto e preservam as cores dos SVGs",
+    "Cabeçalho do PC separa contexto da sala e controles em duas linhas",
+    "Metadados de espectador ficam agrupados sem sobreposição",
+    "Indicador do espectador acompanha a cor que realmente joga",
+    "Compartilhar mostra texto no PC e permanece compacto no celular",
+    "Versão, build, service worker e manifesto atualizados"
+  ],
+  "inheritedVisualChecks": [
+    "Composição móvel responsiva da v17 preservada",
+    "Tabuleiro máximo no PC preservado"
   ],
   "limitations": [
-    "P2P real, registro de salas e espectador não testados nesta rodada; servidor local usou resposta vazia para /api/rooms",
-    "A captura real de microfone não ficou disponível no navegador local; posição flutuante da prévia foi verificada pela folha de estilo",
-    "Compartilhamento nativo em aparelho físico e reprodução de todas as rádios não testados",
-    "Não foi repetido o stress de 500 ciclos nesta rodada visual"
+    "P2P real requer dois aparelhos; espectador real requer um terceiro",
+    "Desempenho AI_PERF e GOD deve ser medido em hardware real; profundidade depende do dispositivo",
+    "Microfone, compartilhamento nativo, rádios e instalação PWA precisam de reteste físico",
+    ":has() permanece na interface e exige navegador moderno",
+    "Stress DEV/TESTER de 500 ciclos não foi executado nesta rodada"
   ]
 }

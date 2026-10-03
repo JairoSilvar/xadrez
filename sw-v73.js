@@ -74,4 +74,5 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
-
+// ATENÇÃO: este arquivo está DESATIVADO. O SW ativo é ./sw.js.
+// Mantido apenas por compatibilidade/histórico. Não referencie este arquivo.
