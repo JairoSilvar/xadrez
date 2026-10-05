@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Xadrez Pro v18.0.0 — correções de capturas, telemetria, desempenho e assistência GOD.
+<!-- Xadrez v19.0.0 — correções de capturas, telemetria, desempenho e assistência GOD.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -7,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez Pro - v18.0.0 · Tutorial Unificado</title>
+    <title>Xadrez v19 — Diamante - v19.0.0 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Xadrez Pro">
-    <meta name="description" content="Xadrez Pro v18.0.0 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="apple-mobile-web-app-title" content="Xadrez">
+    <meta name="description" content="Xadrez v19.0.0 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
@@ -160,20 +160,20 @@
         .unlock-card .u-actions .action-btn { flex: 1; min-width: 70px; padding: 6px; font-size: 9px; }
 
         /* Cores de peças via CSS variables (combinam com estilos) */
-        body.pieces-blue-pink { --pw: drop-shadow(0 0 8px #38bdf8) brightness(1.25); --pb: drop-shadow(0 0 8px #ec4899) brightness(1.20); }
-        body.pieces-green-cyan { --pw: drop-shadow(0 0 8px #22c55e) brightness(1.25); --pb: drop-shadow(0 0 8px #06b6d4) brightness(1.20); }
-        body.pieces-gold-purple { --pw: drop-shadow(0 0 8px #eab308) brightness(1.25); --pb: drop-shadow(0 0 8px #a855f7) brightness(1.20); }
-        body.pieces-silver-fire { --pw: drop-shadow(0 0 8px #cbd5e1) brightness(1.3); --pb: drop-shadow(0 0 8px #f97316) brightness(1.20); }
-        body.pieces-neon-lime { --pw: drop-shadow(0 0 8px #a3e635) brightness(1.3); --pb: drop-shadow(0 0 8px #ec4899) brightness(1.20); }
-        body.pieces-ruby-indigo { --pw: drop-shadow(0 0 8px #ef4444) brightness(1.25); --pb: drop-shadow(0 0 8px #6366f1) brightness(1.20); }
-        body.pieces-sunset { --pw: drop-shadow(0 0 8px #f97316) brightness(1.25); --pb: drop-shadow(0 0 8px #d946ef) brightness(1.20); }
-        body.pieces-toxic { --pw: drop-shadow(0 0 8px #84cc16) brightness(1.25); --pb: drop-shadow(0 0 8px #9333ea) brightness(1.20); }
-        body.pieces-monochrome { --pw: drop-shadow(0 0 8px #ffffff) brightness(1.4); --pb: drop-shadow(0 0 8px #000000) brightness(0.8); }
-        body.pieces-cyberpunk { --pw: drop-shadow(0 0 8px #06b6d4) brightness(1.25); --pb: drop-shadow(0 0 8px #eab308) brightness(1.20); }
+        body.pieces-blue-pink { --pw: drop-shadow(0 0 8px var(--neon-w, #38bdf8)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #ec4899)) brightness(1.20); }
+        body.pieces-green-cyan { --pw: drop-shadow(0 0 8px var(--neon-w, #22c55e)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #06b6d4)) brightness(1.20); }
+        body.pieces-gold-purple { --pw: drop-shadow(0 0 8px var(--neon-w, #eab308)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #a855f7)) brightness(1.20); }
+        body.pieces-silver-fire { --pw: drop-shadow(0 0 8px var(--neon-w, #cbd5e1)) brightness(1.3); --pb: drop-shadow(0 0 8px var(--neon-b, #f97316)) brightness(1.20); }
+        body.pieces-neon-lime { --pw: drop-shadow(0 0 8px var(--neon-w, #a3e635)) brightness(1.3); --pb: drop-shadow(0 0 8px var(--neon-b, #ec4899)) brightness(1.20); }
+        body.pieces-ruby-indigo { --pw: drop-shadow(0 0 8px var(--neon-w, #ef4444)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #6366f1)) brightness(1.20); }
+        body.pieces-sunset { --pw: drop-shadow(0 0 8px var(--neon-w, #f97316)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #d946ef)) brightness(1.20); }
+        body.pieces-toxic { --pw: drop-shadow(0 0 8px var(--neon-w, #84cc16)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #9333ea)) brightness(1.20); }
+        body.pieces-monochrome { --pw: drop-shadow(0 0 8px var(--neon-w, #ffffff)) brightness(1.4); --pb: drop-shadow(0 0 8px var(--neon-b, #000000)) brightness(0.8); }
+        body.pieces-cyberpunk { --pw: drop-shadow(0 0 8px var(--neon-w, #06b6d4)) brightness(1.25); --pb: drop-shadow(0 0 8px var(--neon-b, #eab308)) brightness(1.20); }
 
         /* Base: aplica a cor */
-        .piece.white-piece, .ghost-piece-slide.white-piece { filter: var(--pw, drop-shadow(0 0 8px #38bdf8) brightness(1.25)); }
-        .piece.black-piece, .ghost-piece-slide.black-piece { filter: var(--pb, drop-shadow(0 0 8px #ec4899) brightness(1.20)); }
+        .piece.white-piece, .ghost-piece-slide.white-piece { filter: var(--pw, drop-shadow(0 0 8px var(--neon-w, #38bdf8)) brightness(1.25)); }
+        .piece.black-piece, .ghost-piece-slide.black-piece { filter: var(--pb, drop-shadow(0 0 8px var(--neon-b, #ec4899)) brightness(1.20)); }
 
         /* Estilos combinam com a cor (transform + reforço de filter) */
         body.style-classic .piece { transform: none; }
@@ -182,8 +182,8 @@
         body.style-minimal .piece.white-piece { filter: var(--pw, brightness(1.2)) saturate(0.25) contrast(1.45) !important; }
         body.style-minimal .piece.black-piece { filter: var(--pb, brightness(1.0)) saturate(0.25) contrast(1.5) !important; }
 
-        body.style-neon .piece.white-piece { filter: var(--pw, brightness(1.2)) drop-shadow(0 0 10px currentColor) drop-shadow(0 0 18px #22d3ee) saturate(1.6) brightness(1.15) !important; }
-        body.style-neon .piece.black-piece { filter: var(--pb, brightness(1.1)) drop-shadow(0 0 10px currentColor) drop-shadow(0 0 18px #f472b6) saturate(1.6) brightness(1.1) !important; }
+        body.style-neon .piece.white-piece { filter: var(--pw, brightness(1.2)) drop-shadow(0 0 10px var(--neon-w, currentColor)) drop-shadow(0 0 18px var(--neon-w, #22d3ee)) saturate(1.6) brightness(1.15) !important; }
+        body.style-neon .piece.black-piece { filter: var(--pb, brightness(1.1)) drop-shadow(0 0 10px var(--neon-b, currentColor)) drop-shadow(0 0 18px var(--neon-b, #f472b6)) saturate(1.6) brightness(1.1) !important; }
 
         body.style-soft3d .piece { transform: scale(0.92); }
         body.style-soft3d .piece.white-piece { filter: var(--pw, brightness(1.2)) drop-shadow(3px 4px 6px rgba(0,0,0,0.45)) !important; }
@@ -1490,8 +1490,8 @@
         }
 
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.2/peerjs.min.js"></script>
+    <script src="./vendor/chess-0.10.3.min.js"></script>
+    <script src="./vendor/peerjs-1.5.2.min.js"></script>
 <style id="xp-final-css">
 .xp-ai-progress{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:99999;display:none;min-width:220px;max-width:82vw;padding:8px 12px;border:1px solid var(--board-border);border-radius:12px;background:rgba(0,0,0,.82);color:var(--text-main);font:600 12px ui-monospace,monospace;box-shadow:0 0 18px rgba(0,0,0,.35);text-align:center;pointer-events:none}
 @media(max-width:600px){.xp-ai-progress{top:8px;font-size:11px;min-width:180px}}
@@ -1499,7 +1499,7 @@
 
 
 <style id="xp-training-css-v122">
-.xp-train-card{padding:10px;border-radius:14px}.xp-train-title{font-size:15px}.xp-train-board{width:min(88vw,62vh)}}
+.xp-train-card{padding:10px;border-radius:14px}.xp-train-title{font-size:15px}.xp-train-board{width:min(88vw,62vh)}
 </style>
 
 
@@ -1593,7 +1593,8 @@
             </div>
             <!-- CORES DAS PEÇAS (só glow/cores) -->
             <div id="tab-piece-colors" class="tab-content" style="grid-template-columns: 1fr; max-height: 280px; overflow-y: auto;">
-                <div style="font-size:9px; color:var(--text-muted); margin-bottom:4px;">Só a <b>cor/brilho</b> das peças. Independente do tema e do estilo.</div>
+                <div id="neon-settings"></div>
+                <div style="font-size:9px; color:var(--text-muted); margin-bottom:4px;">Conjuntos de cores originais — os modelos 3D são preservados.</div>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-blue-pink')">🔵 Azul Elétrico vs 🔴 Rosa Choque</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-green-cyan')">🟢 Verde Esmeralda vs 🔵 Ciano</button>
                 <button class="action-btn" style="padding: 6px; font-size: 9px;" onclick="setPieceColors('pieces-gold-purple')">🟡 Dourado Real vs 🟣 Roxo Profundo</button>
@@ -1737,8 +1738,8 @@
     </div>
     <div id="menu-screen">
         <div class="hero-box">
-            <h1>♟️ Xadrez Pro</h1>
-            <p>Estratégia P2P · IA offline · v18.0.0</p>
+            <h1>♟️ Xadrez</h1>
+            <p>Estratégia P2P · IA offline · v19.0.0</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1799,7 +1800,7 @@
                     <span class="radio-status-text" id="radioStatusCompact">Desligada</span>
                 </div>
 
-                <button id="btnInstallPwa" class="action-btn" onclick="installPWA()" style="display:none; padding:8px; font-size:10px; width:100%; background:linear-gradient(135deg,#0284c7,#2563eb); color:#fff; font-weight:bold; border-radius:10px;">📲 Instalar Xadrez Pro</button>
+                <button id="btnInstallPwa" class="action-btn" onclick="installPWA()" style="display:none; padding:8px; font-size:10px; width:100%; background:linear-gradient(135deg,#0284c7,#2563eb); color:#fff; font-weight:bold; border-radius:10px;">📲 Instalar Xadrez</button>
                 <div id="pwaStatus" style="font-size:8px; color:var(--text-muted); text-align:center; display:none;"></div>
             </div>
 
@@ -1925,7 +1926,7 @@
         </div>
         <div class="side-section" id="sidePanel">
             <div class="brand-title" id="brandTitleBox">
-                <span id="room-status-title">Xadrez Pro</span>
+                <span id="room-status-title">Xadrez</span>
                 <div class="header-actions">
                     <button class="icon-btn" onclick="safeResetGame()" title="Novo Jogo">🔄</button>
                     <button class="icon-btn" onclick="toggleRadioSidebar()" id="radioSidebarBtn" title="Rádio">📻</button>
@@ -2180,6 +2181,11 @@ body.god-stealth .god-assist-to::after {
     let historyViewPly = null;
     let moveListUserScrolling = false;
     let gameOverHandled = false;
+    let xpMatchId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+    let xpEloApplied = false;
+    let xpLastReaction = -Infinity, xpLastRemoteReaction = -Infinity;
+    let xpRemoteMoves = new Set();
+    let xpPendingMoves = new Map();
 
     function resetMoveHistory() {
         moveHistoryFens = [chess.fen()];
@@ -2246,8 +2252,8 @@ body.god-stealth .god-assist-to::after {
 
     let selectedSquare = null;
     let possibleMoves = [];
-    const APP_VERSION = '18.0.0';
-    const BUILD_ID = 'xp-18.0.0-20260928';
+    const APP_VERSION = '19.0.0';
+    const BUILD_ID = 'xp-19.0.0-20261005';
         let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
@@ -2849,7 +2855,7 @@ body.god-stealth .god-assist-to::after {
         ctx.fillText('CERTIFICADO DE GRANDE CAMPEÃO', w / 2, 220);
         ctx.fillStyle = '#c9a227';
         ctx.font = 'italic 17px Georgia, serif';
-        ctx.fillText('Xadrez Pro  ·  Excelência em Estratégia', w / 2, 250);
+        ctx.fillText('Xadrez  ·  Excelência em Estratégia', w / 2, 250);
 
         // body
         ctx.fillStyle = '#c7d2e0';
@@ -2865,7 +2871,7 @@ body.god-stealth .god-assist-to::after {
 
         ctx.fillStyle = '#c7d2e0';
         ctx.font = '18px system-ui, sans-serif';
-        ctx.fillText('alcançou o título honorífico de Grandmaster no Xadrez Pro', w / 2, 455);
+        ctx.fillText('alcançou o título honorífico de Grandmaster no Xadrez', w / 2, 455);
 
         // small pill badges
         const pills = [
@@ -2916,7 +2922,7 @@ body.god-stealth .god-assist-to::after {
         ctx.stroke();
         ctx.fillStyle = '#d4b896';
         ctx.font = '14px Georgia, serif';
-        ctx.fillText('Diretoria Xadrez Pro', 90, 822);
+        ctx.fillText('Diretoria Xadrez', 90, 822);
         ctx.fillStyle = '#7a8ba3';
         ctx.font = '11px system-ui, sans-serif';
         ctx.fillText('Validação cosmética · offline', 90, 842);
@@ -2936,7 +2942,7 @@ body.god-stealth .god-assist-to::after {
         ctx.fillStyle = '#c9a227';
         ctx.font = '13px Georgia, serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez Pro v11', w / 2, 935);
+        ctx.fillText('Estratégia · P2P · IA offline  ·  Xadrez v11', w / 2, 935);
 
         return { canvas: canvas, name: name, serial: serial };
     }
@@ -3041,7 +3047,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function safeCertFilename(name, ext) {
-        const base = 'XadrezPro_Certificado_' + String(name || 'Campeao').replace(/[^\w\-]+/g, '_').slice(0, 40);
+        const base = 'Xadrez_Certificado_' + String(name || 'Campeao').replace(/[^\w\-]+/g, '_').slice(0, 40);
         return base + '.' + ext;
     }
 
@@ -3822,7 +3828,8 @@ body.god-stealth .god-assist-to::after {
     function getLogContext() {
         try {
             const ua = (navigator.userAgent || '').slice(0, 90);
-            const net = (navigator.connection && navigator.connection.effectiveType) || '?';
+            const rawNet = navigator.connection && navigator.connection.effectiveType;
+            const net = ['slow-2g','2g','3g','4g'].includes(rawNet) ? rawNet : 'unknown';
             const ply = (typeof chess !== 'undefined' && chess) ? Math.max(chess.history().length, syncedRemotePly || 0) : 0;
             const fenShort = (typeof chess !== 'undefined' && chess) ? chess.fen().split(' ').slice(0, 4).join(' ') : '-';
             return {
@@ -4172,6 +4179,8 @@ body.god-stealth .god-assist-to::after {
             addChatMessage('Sistema', 'Espectadores só assistem — não enviam reações.', true);
             return;
         }
+        if (performance.now()-xpLastReaction<1200)return;
+        xpLastReaction=performance.now();
         showFloatingReaction(emoji, true);
         if (gameMode === 'network') {
             xpReactionQueue.push(emoji);
@@ -4244,13 +4253,13 @@ body.god-stealth .god-assist-to::after {
             return;
         }
         const blocks = gameHistory.map(function(g, idx) {
-            return (g.pgn && String(g.pgn).trim()) || (';[Event "Xadrez Pro #' + (idx + 1) + '"]\n[Result "' + (g.result || '*') + '"]\n\n*');
+            return (g.pgn && String(g.pgn).trim()) || (';[Event "Xadrez #' + (idx + 1) + '"]\n[Result "' + (g.result || '*') + '"]\n\n*');
         }).join('\n\n\n');
         const blob = new Blob([blocks], { type: 'application/x-chess-pgn;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'XadrezPro_Historico_' + new Date().toISOString().slice(0, 10) + '.pgn';
+        a.download = 'Xadrez_Historico_' + new Date().toISOString().slice(0, 10) + '.pgn';
         document.body.appendChild(a);
         a.click();
         setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 1000);
@@ -4332,6 +4341,7 @@ body.god-stealth .god-assist-to::after {
         try{var __rb=document.getElementById('xp-review-open-btn');if(__rb)__rb.style.display='none';}catch(e){}
         forceFullBoardRebuild();
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
+        gameOverHandled = false; xpEloApplied = false; closeVictoryScreen();
         sandboxMode = true;
         gameMode = 'sandbox';
         playerColor = 'w';
@@ -4471,6 +4481,8 @@ body.god-stealth .god-assist-to::after {
     }
 
     function applyEloAfterGame(winnerColor) {
+        if (xpEloApplied || isSpectator || !['pve','network'].includes(gameMode)) return 0;
+        xpEloApplied = true;
         // winnerColor: 'w' | 'b' | null (draw)
         let score = 0.5;
         if (gameMode === 'pve') {
@@ -4676,14 +4688,14 @@ body.god-stealth .god-assist-to::after {
     function copyLogContent() { navigator.clipboard.writeText(systemLogs.join('\n')).then(() => alert("Relatório copiado para a área de transferência!")); }
 
     function sendReportEmail() {
-        let bodyContent = encodeURIComponent("--- RELATÓRIO TÉCNICO DE TELEMETRIA XADREZ PRO ---\n\n" + systemLogs.join('\n'));
+        let bodyContent = encodeURIComponent("--- RELATÓRIO TÉCNICO DE TELEMETRIA XADREZ ---\n\n" + systemLogs.join('\n'));
         window.location.href = `mailto:?subject=Relatório%20de%20Diagnóstico%20Xadrez%20Pro&body=${bodyContent}`;
         addLog("Solicitação de envio de log por E-mail disparada.", "SHARE");
     }
 
     function sendReportWhatsApp() {
         let recentSummary = systemLogs.slice(-30).join('\n');
-        let msgContent = encodeURIComponent("*Relatório Técnico Xadrez Pro*\n\n" + recentSummary);
+        let msgContent = encodeURIComponent("*Relatório Técnico Xadrez*\n\n" + recentSummary);
         window.open(`https://api.whatsapp.com/send?text=${msgContent}`, '_blank');
         addLog("Solicitação de envio de log por WhatsApp disparada.", "SHARE");
     }
@@ -4737,7 +4749,7 @@ body.god-stealth .god-assist-to::after {
         document.body.classList.add('theme-' + themeName);
         if (!opts.keepTitle) {
             const titleEl = document.getElementById("room-status-title");
-            if (titleEl && !isSpectator && !currentCityKey) titleEl.innerText = "Xadrez Pro";
+            if (titleEl && !isSpectator && !currentCityKey) titleEl.innerText = "Xadrez";
         }
         try { localStorage.setItem('xadrezpro_theme', themeName); } catch (e) {}
         try { saveUserPrefs(); } catch (e) {}
@@ -4912,6 +4924,9 @@ body.god-stealth .god-assist-to::after {
         forceFullBoardRebuild();
         aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
+        xpEloApplied = false; window.xpDrawOfferFen=null; xpRemoteMoves.clear(); xpPendingMoves.clear();
+        xpMatchId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+        closeVictoryScreen();
         if (mode !== 'sandbox') setSandboxEvalVisible(false);
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         gameMode = mode;
@@ -4970,7 +4985,7 @@ body.god-stealth .god-assist-to::after {
     function loopBot() {
         if (gameMode !== 'bot-vs-bot' || chess.game_over()) {
             if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
-            if (chess.game_over() && !chess.in_checkmate()) handleGameOverEvents("Fim de Jogo (Empate)", null);
+            if (chess.game_over()) checkGameStateEvents(false);
             return;
         }
         // Ritmo contínuo: busca curta + pausa visual pequena, sem bloquear o próximo ciclo.
@@ -4993,7 +5008,7 @@ body.god-stealth .god-assist-to::after {
         boardFlipped = (playerColor === 'b');
         startGame('pve', false);
         if (playerColor === 'b' && !chess.game_over()) {
-            setTimeout(() => makeAIMove('w'), 400);
+            xpScheduleAI(400,'w');
         }
     }
 
@@ -5027,6 +5042,9 @@ body.god-stealth .god-assist-to::after {
         forceFullBoardRebuild();
         aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
+        xpEloApplied = false; xpRemoteMoves.clear(); xpPendingMoves.clear();
+        xpMatchId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+        closeVictoryScreen();
         chess.reset();
         resetMoveHistory();
         selectedSquare = null;
@@ -5161,24 +5179,28 @@ body.god-stealth .god-assist-to::after {
         if (gameMode === 'network') networkBroadcast({ type: 'reset-board' });
         resetGame(true);
         if (gameMode === 'pve' && playerColor === 'b') {
-            setTimeout(() => makeAIMove('w'), 400);
+            xpScheduleAI(400,'w');
         }
     }
 
     async function safeUndoMove() {
-        if (isSpectator || gameMode === 'bot-vs-bot' || chess.history().length === 0) return;
-        const ok = await customConfirm("Desfazer o último lance?", "Desfazer");
-        if (!ok) return;
-        let movesToUndo = (gameMode === 'pve' && chess.history().length >= 2) ? 2 : 1;
-        for (let i = 0; i < movesToUndo; i++) { chess.undo(); }
-        selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
-        updateTurnIndicators(); updateCapturedDisplay(); renderBoard();
-        addChatMessage("Sistema", "Lance desfeito.", true);
-        addLog(`Lance desfeito pelo usuário.`, "MOVE");
-        if (gameMode === 'network') {
-            networkBroadcast({ type: 'undo', count: movesToUndo, fen: chess.fen() });
-        }
-        if (godMode && !isSpectator && chess.turn() === playerColor) setTimeout(requestGodAssistance, 60);
+        if (isSpectator || gameMode === 'bot-vs-bot' || !chess.history().length) return;
+        if (gameOverHandled) { addChatMessage('Sistema','Partida encerrada: use Revisão/Sandbox ou inicie uma nova partida.',true); return; }
+        const before=chess.fen(), mode=gameMode, generation=appGeneration;
+        if (!await customConfirm('Desfazer o último lance?', 'Desfazer')) return;
+        if (gameOverHandled || before!==chess.fen() || mode!==gameMode || generation!==appGeneration) return;
+        aiRequestId++; pendingAICallback=null; clearGodAssistance(); closePromotionModal();
+        let count=0;
+        do { if(!chess.undo())break; count++; }
+        while(gameMode==='pve' && chess.turn()!==playerColor && chess.history().length);
+        moveHistoryFens=moveHistoryFens.slice(0,chess.history().length+1); historyViewPly=null;
+        syncedRemotePly=chess.history().length; lastSyncedFen=chess.fen();
+        selectedSquare=null; possibleMoves=[]; lastPathCoords=[]; wasInCheckLastMove=false;
+        updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateMoveListPanel();
+        addLog('Undo: '+count+' meio-lance(s)', 'MOVE');
+        if(gameMode==='network') networkBroadcast({type:'undo',count,fen:chess.fen(),beforeFen:before});
+        if(gameMode==='pve' && chess.turn()!==playerColor) makeAIMove(chess.turn());
+        if(godMode && chess.turn()===playerColor)setTimeout(requestGodAssistance,60);
     }
 
     function toggleBoardFlip() {
@@ -5210,7 +5232,7 @@ body.god-stealth .god-assist-to::after {
         stopClock();
         if (timeControlSeconds <= 0 || gameMode === 'bot-vs-bot') return;
         clockInterval = setInterval(() => {
-            if (chess.game_over() || isSpectator || gameMode === 'menu') { stopClock(); return; }
+            if (gameOverHandled || chess.game_over() || isSpectator || gameMode === 'menu') { stopClock(); return; }
             if (chess.turn() === 'w') clockWhite--; else clockBlack--;
             updateClockDisplay();
             if (clockWhite <= 0 || clockBlack <= 0) { 
@@ -5672,8 +5694,14 @@ body.god-stealth .god-assist-to::after {
     }
 
     function handleGameOverEvents(reason, winnerColor = null) {
-        if (gameOverHandled) { addLog('Fim de jogo duplicado ignorado: ' + reason, 'GAME'); return; }
+        if (gameOverHandled) return false;
         gameOverHandled = true;
+        aiRequestId++; pendingAICallback = null;
+        selectedSquare = null; possibleMoves = []; closePromotionModal();
+        // Show the essential result before optional audio, storage or analysis can fail.
+        document.getElementById('victory-subtitle').textContent = reason;
+        document.getElementById('victory-screen').style.display = 'flex';
+        try {
         if (botVsBotInterval) { clearTimeout(botVsBotInterval); botVsBotInterval = null; }
         stopClock();
         clearGodAssistance(); // v11.3 — limpa destaque GOD no fim
@@ -5707,18 +5735,17 @@ body.god-stealth .god-assist-to::after {
         if (winnerColor === 'w') {
             candiesWhite += 1;
             document.getElementById("victoryCandyIcon").innerText = "🍫🏆 Brancas ganharam!";
-            speak("Xeque-mate! Vitória das brancas!");
+            speak("Vitória das brancas!");
         } else if (winnerColor === 'b') {
             candiesBlack += 1;
             document.getElementById("victoryCandyIcon").innerText = "🍫🏆 Pretas ganharam!";
-            speak("Xeque-mate! Vitória das pretas!");
+            speak("Vitória das pretas!");
         } else {
-            document.getElementById("victoryCandyIcon").innerText = "🤝 Empate Técnico!";
+            document.getElementById("victoryCandyIcon").innerText = "🤝 Empate";
             speak("Empate!");
         }
 
-        localStorage.setItem('chess_candies_w', candiesWhite);
-        localStorage.setItem('chess_candies_b', candiesBlack);
+        try { localStorage.setItem('chess_candies_w', candiesWhite); localStorage.setItem('chess_candies_b', candiesBlack); } catch(e) { addLog('Placar mantido em memória: armazenamento indisponível','STORAGE'); }
         updateFightBarDisplay();
 
         let eloLine = '';
@@ -5750,6 +5777,8 @@ body.god-stealth .god-assist-to::after {
                 bumpMission('win_ai3', 1);
             }
         } catch (e) {}
+        } catch (e) { try { addLog('Resultado exibido; falha em efeito auxiliar: '+e.message, 'ERROR'); } catch (_) {} }
+        return true;
     }
 
     /** Resumo leve pós-partida (sem travar o aparelho) */
@@ -5801,7 +5830,7 @@ body.god-stealth .god-assist-to::after {
         let result = '*';
         if (chess.in_checkmate()) result = chess.turn() === 'w' ? '0-1' : '1-0';
         else if (chess.game_over()) result = '1/2-1/2';
-        const header = `[Event "Xadrez Pro"]\n[Site "Local / P2P"]\n[Date "${date}"]\n[White "${wName}"]\n[Black "${bName}"]\n[Result "${result}"]`;
+        const header = `[Event "Xadrez"]\n[Site "Local / P2P"]\n[Date "${date}"]\n[White "${wName}"]\n[Black "${bName}"]\n[Result "${result}"]`;
         let body = '';
         try { body = chess.pgn({ max_width: 80, newline_char: '\n' }); } catch(e) { body = chess.history().join(' '); }
         body = body.replace(/\[.*?\]\n?/g, '').trim();
@@ -5828,7 +5857,7 @@ body.god-stealth .god-assist-to::after {
         const a = document.createElement('a');
         const stamp = new Date().toISOString().slice(0, 10);
         a.href = url;
-        a.download = 'XadrezPro_' + stamp + '.pgn';
+        a.download = 'Xadrez_' + stamp + '.pgn';
         document.body.appendChild(a);
         a.click();
         setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 1000);
@@ -6174,7 +6203,8 @@ body.god-stealth .god-assist-to::after {
         if (isSpectator || gameMode === 'bot-vs-bot' || chess.game_over()) return;
         if (gameMode === 'network') {
             if (gameMode === 'network') {
-                networkBroadcast({ type: 'draw-offer' });
+                window.xpDrawOfferFen=chess.fen();
+                networkBroadcast({ type: 'draw-offer',fen:chess.fen() });
                 addChatMessage("Sistema", "Você ofereceu empate ao oponente.", true);
             }
             return;
@@ -6683,6 +6713,7 @@ body.god-stealth .god-assist-to::after {
         document.getElementById('turn-badge-local').style.display = 'none';
         document.getElementById('turn-badge-opponent').style.display = 'none';
 
+        if (gameOverHandled) return;
         if (gameMode === 'network' && isSpectator) { 
             // No modo espectador, associa o turno à cor escrita no card.
             // A posição visual pode mudar, por isso não deve definir a cor ativa.
@@ -6717,7 +6748,7 @@ body.god-stealth .god-assist-to::after {
         let wCaps = [], bCaps = [];
         history.forEach(m => { if (m.captured) m.color === 'w' ? wCaps.push(m.captured) : bCaps.push(m.captured.toUpperCase()); });
 
-        // v18.0.0 — a barra local mostra o que o jogador local capturou.
+        // v19.0.0 — a barra local mostra o que o jogador local capturou.
         // wCaps = peças pretas capturadas pelas Brancas; bCaps = peças brancas capturadas pelas Pretas.
         let localCaps = playerColor === 'b' ? bCaps : wCaps;
         let oppCaps = playerColor === 'b' ? wCaps : bCaps;
@@ -6750,7 +6781,7 @@ body.god-stealth .god-assist-to::after {
         pieceEl.dataset.dragBound = '1';
         pieceEl.setAttribute('draggable', 'true');
         pieceEl.ondragstart = (e) => {
-            if (isSpectator || gameMode === 'bot-vs-bot') { e.preventDefault(); return; }
+            if (gameOverHandled || chess.game_over() || isSpectator || gameMode === 'bot-vs-bot') { e.preventDefault(); return; }
             if (gameMode === 'network' && chess.turn() !== playerColor) { e.preventDefault(); return; }
             if (gameMode === 'pve' && chess.turn() !== playerColor) { e.preventDefault(); return; }
             e.dataTransfer.setData('text/plain', squareCoord);
@@ -6871,6 +6902,7 @@ body.god-stealth .god-assist-to::after {
 
 
     function checkGameStateEvents(isLocalMove) {
+        if (gameOverHandled) return true;
         let currentInCheck = chess.in_check();
 
         if (!currentInCheck) {
@@ -6894,6 +6926,12 @@ body.god-stealth .god-assist-to::after {
             return true; 
         }
         
+        if (chess.insufficient_material()) {
+            handleGameOverEvents('Empate por material insuficiente', null); return true;
+        }
+        if (Number(chess.fen().split(' ')[4]) >= 100) {
+            handleGameOverEvents('Empate pela regra dos 50 lances', null); return true;
+        }
         if (currentInCheck && !wasInCheckLastMove) { 
             addChatMessage("Árbitro", "⚡ <b>ATENÇÃO: REI EM XEQUE!</b>", true, true, true); 
             speak("Xeque!"); 
@@ -6908,8 +6946,10 @@ body.god-stealth .god-assist-to::after {
     }
 
     function finalizeLocalMove(move) {
+        if (!move || gameOverHandled) return;
         recordMoveHistoryPosition();
         lastSyncedFen = chess.fen();
+        const over = checkGameStateEvents(true);
         updateTurnIndicators();
         updateCapturedDisplay();
         renderBoard();
@@ -6918,7 +6958,6 @@ body.god-stealth .god-assist-to::after {
         if (voiceMovesEnabled && move.san) speak(move.san);
         addLog(`Lance efetuado: ${move.san} (${move.from}→${move.to})`, "MOVE");
         if (godMode) clearGodAssistance();
-        const over = checkGameStateEvents(true);
         if (gameMode === 'network' && !isSpectator) {
             networkBroadcast({
                 type: 'move',
@@ -6929,7 +6968,7 @@ body.god-stealth .god-assist-to::after {
             });
         }
         if (gameMode === 'pve' && !over && chess.turn() !== playerColor) {
-            setTimeout(() => makeAIMove(chess.turn()), 300);
+            xpScheduleAI(300,chess.turn());
         }
         // v15.1.0 — GOD só recalcula quando o turno pertence ao humano.
         if (!over && godMode && !isSpectator && chess.turn() === playerColor && (gameMode === 'network' || gameMode === 'pve')) {
@@ -6966,7 +7005,7 @@ body.god-stealth .god-assist-to::after {
     }
     function closePromotionModal() { document.getElementById('promotion-modal').style.display = 'none'; pendingPromotion = null; }
     function completePromotionMove(promoPiece) {
-        if (!pendingPromotion) return;
+        if (!pendingPromotion || gameOverHandled) return;
         const { from, to } = pendingPromotion;
         closePromotionModal();
         try {
@@ -6976,7 +7015,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function handleSquareClick(square) {
-        if (historyViewPly !== null) return;
+        if (historyViewPly !== null || gameOverHandled || chess.game_over()) return;
         if (window.xpTrainingActive === true && typeof window.__xpTrainingMove === 'function') {
             if (selectedSquare === null) {
                 const piece = chess.get(square);
@@ -7036,7 +7075,8 @@ body.god-stealth .god-assist-to::after {
     }
 
     function makeAIMove(expectedTurn = 'b', onDone = null) {
-        if (gameMode === 'menu' || chess.game_over()) { if (onDone) onDone(); return; }
+        if (gameMode === 'menu' || gameOverHandled || expectedTurn !== chess.turn() || (gameMode === 'pve' && chess.turn() === playerColor)) { if (onDone) onDone(); return; }
+        if (checkGameStateEvents(false)) { if (onDone) onDone(); return; }
         const moves = chess.moves({ verbose: true }); 
         if (moves.length === 0) { if (onDone) onDone(); return; }
 
@@ -7101,8 +7141,8 @@ body.god-stealth .god-assist-to::after {
     }
 
     function applyAIMove(selectedMove, onDone = null) {
-        if (gameMode === 'menu') { if (onDone) onDone(); return; }
-        chess.move(selectedMove);
+        if (gameMode === 'menu' || gameOverHandled || chess.game_over()) { checkGameStateEvents(false); if (onDone) onDone(); return; }
+        if (!selectedMove || !chess.move(selectedMove)) { if (onDone) onDone(); return; }
         if (chess.in_threefold_repetition()) {
             chess.undo();
             const moves = chess.moves({ verbose: true });
@@ -7121,6 +7161,7 @@ body.god-stealth .god-assist-to::after {
         const testMove = chess.history({ verbose: true }).slice(-1)[0];
         if (!testMove) { if (onDone) onDone(); return; }
 
+        checkGameStateEvents(true);
         animateMoveGhost(testMove);
         triggerMoveTrail(testMove.from, testMove.to);
         if (testMove.captured) { showCaptureInChat(testMove); playSFX('capture'); } else { playSFX('move'); }
@@ -7129,7 +7170,7 @@ body.god-stealth .god-assist-to::after {
         detectOpening();
         if (voiceMovesEnabled && testMove.san) speak('IA joga ' + testMove.san);
         checkGameStateEvents(true);
-        if ((gameMode === 'pve' || gameMode === 'sandbox') && chess.turn() === playerColor) {
+        if (!gameOverHandled && (gameMode === 'pve' || gameMode === 'sandbox') && chess.turn() === playerColor) {
             setTimeout(requestGodAssistance, godMode ? 35 : 60);
         }
         if (conn && conn.open && gameMode === 'network') { 
@@ -7265,6 +7306,10 @@ body.god-stealth .god-assist-to::after {
 
     /** Envia para oponente + espectadores */
     function networkBroadcast(payload) {
+        if(['reset-board','rematch-accept'].includes(payload.type))xpWireEpoch=crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+        payload={...payload,epoch:xpWireEpoch};
+        if (payload.type==='move') payload=xpPrepareMove(payload);
+        if (payload.type==='ping') Object.assign(payload,{hash:xpPositionHash(chess.fen())});
         if (conn && conn.open) {
             try { conn.send(payload); } catch (e) {}
         }
@@ -7272,6 +7317,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function joinCityRoom(cityName, xpJoinOptions) {
+        xpWireEpoch=null;
         appGeneration++;
         xpJoinOptions = xpJoinOptions || {};
         closeTrainingForModeSwitch('sala online: ' + cityName);
@@ -7440,6 +7486,7 @@ body.god-stealth .god-assist-to::after {
     }
 
     function setupHostServer(cityName) {
+        xpWireEpoch=crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
         isRoomHost = true;
         spectatorConns = [];
         let guestConn = null;
@@ -7496,6 +7543,8 @@ body.god-stealth .god-assist-to::after {
                         try {
                             const payload = {
                                 type: 'slot-response',
+                                epoch:xpWireEpoch,
+                                moves:chess.history({verbose:true}).map(m=>({from:m.from,to:m.to,promotion:m.promotion})),
                                 status: 'accepted',
                                 fen: chess.fen(),
                                 city: cityName,
@@ -7528,6 +7577,8 @@ body.god-stealth .god-assist-to::after {
                         try {
                             const payload = {
                                 type: 'slot-response',
+                                epoch:xpWireEpoch,
+                                moves:chess.history({verbose:true}).map(m=>({from:m.from,to:m.to,promotion:m.promotion})),
                                 status: 'full',
                                 fen: chess.fen(),
                                 city: cityName,
@@ -7580,6 +7631,7 @@ body.god-stealth .god-assist-to::after {
 
     function handleIncomingConnData(data) {
         if (!data || typeof data !== 'object') return;
+        if (xpHandleProtocol(data)) return;
 
         if (data.type === 'visual-pack' && data.visualPack) {
             applyPrivateVisualPack(data.visualPack);
@@ -7591,55 +7643,10 @@ body.god-stealth .god-assist-to::after {
             addChatMessage('Sistema', 'Visual da sala: ' + (data.visualPack.label || 'atualizado'), true);
             return;
         }
-        if (data.type === 'ping') {
-            if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
-            if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-            if (typeof data.spectators === 'number') updateSpectatorCountUI(data.spectators);
-            if (data.plyCount !== undefined) {
-                const localPly = Math.max(chess.history().length, syncedRemotePly || 0);
-                if (data.plyCount > localPly && data.fen && data.fen !== chess.fen()) {
-                    try {
-                        let rebuilt = null, rebuiltFens = null;
-                        if (Array.isArray(data.moves) && data.moves.length === Number(data.plyCount)) {
-                            const candidate = new Chess();
-                            const fens = [candidate.fen()];
-                            for (let i = 0; i < data.moves.length; i++) {
-                                const m = data.moves[i] || {};
-                                const applied = candidate.move({from:m.from,to:m.to,promotion:m.promotion||undefined});
-                                if (!applied) throw new Error('PING_MOVE_' + i);
-                                fens.push(candidate.fen());
-                            }
-                            const short = f => String(f||'').split(' ').slice(0,4).join(' ');
-                            if (short(candidate.fen()) !== short(data.fen)) throw new Error('PING_FEN_MISMATCH');
-                            rebuilt = candidate; rebuiltFens = fens;
-                        }
-                        if (rebuilt) {
-                            chess = rebuilt;
-                            moveHistoryFens = rebuiltFens;
-                        } else {
-                            const test = new Chess(data.fen);
-                            chess.load(test.fen());
-                            moveHistoryFens = new Array(Number(data.plyCount) + 1).fill(null);
-                            moveHistoryFens[Number(data.plyCount)] = chess.fen();
-                        }
-                        syncedRemotePly = Number(data.plyCount) || 0;
-                        historyViewPly = null;
-                        lastSyncedFen = chess.fen();
-                        selectedSquare = null; possibleMoves = [];
-                        renderBoard(); updateTurnIndicators(); updateCapturedDisplay();
-                        updateClockDisplay(); updateMoveListPanel();
-                        addLog('Ping ressincronizou posição remota (ply ' + localPly + ' → ' + syncedRemotePly + ')', 'P2P_INFO');
-                    } catch (e) {
-                        addLog('Estado inválido no ping (ignorado): ' + (e.message || e), 'WARN');
-                    }
-                }
-            }
-            return;
-        }
-
         if (data.type === 'reset-board') { 
             aiRequestId++; pendingAICallback = null;
             if (isSpectator) {
+                gameOverHandled=false; xpEloApplied=false; xpRemoteMoves.clear(); closeVictoryScreen();
                 chess.reset();
                 moveHistoryFens = [chess.fen()]; historyViewPly = null;
             selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
@@ -7652,97 +7659,34 @@ body.god-stealth .god-assist-to::after {
             resetGame(true); 
             return; 
         }
-        if (data.type === 'undo') {
-            if (data.fen) {
-                try { chess.load(data.fen); lastSyncedFen = data.fen; } catch(e) { addLog('Undo FEN inválido', 'WARN'); return; }
-            } else {
-                const count = Math.min(data.count || 1, 4);
-                for (let i = 0; i < count; i++) chess.undo();
-                lastSyncedFen = chess.fen();
-            }
-            selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
-            updateTurnIndicators(); updateCapturedDisplay(); renderBoard();
-            addChatMessage("Sistema", "O oponente desfez o último lance.", true);
-            return;
-        }
-        if (data.type === 'move') {
-            // === VALIDAÇÃO ESTRITA DE MOVIMENTO (anti-cheat) ===
-            try {
-                if (!data.move || !data.move.from || !data.move.to) {
-                    addLog('Movimento remoto malformado (ignorado)', 'WARN');
-                    return;
-                }
-                const moveObj = {
-                    from: data.move.from,
-                    to: data.move.to
-                };
-                if (data.move.promotion) moveObj.promotion = data.move.promotion;
-                const result = chess.move(moveObj);
-                if (!result) {
-                    if (data.fen) {
-                        try {
-                            const remote = new Chess(data.fen);
-                            const remotePly = remote.history().length;
-                            if (remotePly === chess.history().length + 1) {
-                                chess.load(data.fen);
-                                lastSyncedFen = data.fen;
-                            } else {
-                                addLog('Movimento ilegal e FEN inconsistente (rejeitado)', 'WARN');
-                                return;
-                            }
-                        } catch (e) {
-                            addLog('FEN de movimento inválido (rejeitado)', 'WARN');
-                            return;
-                        }
-                    } else {
-                        addLog('Movimento ilegal recebido (rejeitado)', 'WARN');
-                        return;
-                    }
-                } else {
-                    lastSyncedFen = chess.fen();
-                }
-
-                recordMoveHistoryPosition();
-                const history = chess.history({ verbose: true });
-                const lastMove = history[history.length - 1];
-                if (lastMove) {
-                    animateMoveGhost(lastMove); 
-                    triggerMoveTrail(lastMove.from, lastMove.to);
-                    if (lastMove.captured) { showCaptureInChat(lastMove); playSFX('capture'); } else playSFX('move');
-                }
-                if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
-                if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-                updateTurnIndicators(); updateCapturedDisplay(); renderBoard(); updateClockDisplay();
-                detectOpening();
-                const over = checkGameStateEvents(false);
-                // v11.3 GOD ONLINE — recalcula ao voltar sua vez após lance do oponente
-                if (!over && gameMode === 'network' && godMode && !isSpectator && chess.turn() === playerColor) {
-                    setTimeout(requestGodAssistance, 80);
-                }
-            } catch (err) {
-                addLog(`Erro ao processar movimento remoto: ${err.message}`, 'ERROR');
-            }
-            return;
-        }
         if (data.type === 'resign') {
             if (data.color !== 'w' && data.color !== 'b') return;
             handleNetworkOpponentResign(data);
             return;
         }
         if (data.type === 'draw-offer') {
+            if(gameOverHandled)return;
             if (isSpectator) {
                 addChatMessage("Sistema", "Proposta de empate entre os jogadores.", true);
                 return;
             }
+            const offeredFen=chess.fen(), offeredGeneration=appGeneration;
+            if(data.fen && data.fen!==offeredFen)return;
             customConfirm("O oponente ofereceu empate. Aceitar?", "Proposta de Empate").then(accept => {
-                if (conn && conn.open) { try { conn.send({ type: accept ? 'draw-accept' : 'draw-decline' }); } catch(e) {} }
+                if(gameOverHandled || chess.fen()!==offeredFen || appGeneration!==offeredGeneration)return;
+                if (conn && conn.open) { try { networkBroadcast({ type: accept ? 'draw-accept' : 'draw-decline',fen:offeredFen }); } catch(e) {} }
                 if (accept) handleGameOverEvents("Empate acordado.", null);
             });
             return;
         }
-        if (data.type === 'draw-accept') { handleGameOverEvents("Empate acordado.", null); return; }
+        if (data.type === 'draw-accept') {
+            if((isSpectator || window.xpDrawOfferFen===chess.fen()) && (!data.fen || data.fen===chess.fen()))handleGameOverEvents('Empate acordado.',null);
+            window.xpDrawOfferFen=null;return;
+        }
         if (data.type === 'draw-decline') { addChatMessage("Sistema", "O oponente recusou o empate.", true); return; }
         if (data.type === 'reaction') {
+            if(performance.now()-xpLastRemoteReaction<1200)return;
+            xpLastRemoteReaction=performance.now();
             showFloatingReaction(data.emoji || '👍', false);
             return;
         }
@@ -7754,7 +7698,7 @@ body.god-stealth .god-assist-to::after {
             if (data.name) opponentName = data.name;
             customConfirm((opponentName || 'Oponente') + ' solicitou revanche. Aceitar? (cores serão invertidas)', 'Revanche').then(accept => {
                 if (conn && conn.open) {
-                    try { conn.send({ type: accept ? 'rematch-accept' : 'rematch-decline', name: playerName || 'Jogador' }); } catch(e) {}
+                    try { networkBroadcast({ type: accept ? 'rematch-accept' : 'rematch-decline', name: playerName || 'Jogador' }); } catch(e) {}
                 }
                 if (accept) startRematch(false);
                 else addChatMessage('Sistema', 'Você recusou a revanche.', true);
@@ -7763,7 +7707,8 @@ body.god-stealth .god-assist-to::after {
         }
         if (data.type === 'rematch-accept') {
             if (isSpectator) {
-                chess.reset();
+                gameOverHandled=false; xpEloApplied=false; xpRemoteMoves.clear(); xpPendingMoves.clear(); closeVictoryScreen();
+                chess.reset(); resetMoveHistory();
                 selectedSquare = null; possibleMoves = []; lastPathCoords = []; wasInCheckLastMove = false;
                 lastSyncedFen = chess.fen();
                 resetClocks();
@@ -7857,12 +7802,16 @@ body.god-stealth .god-assist-to::after {
     }
 
     function setupHostListeners(cityName) {
+        if (!conn || conn.__xpHostBound) return;
+        conn.__xpHostBound=true;
         // Host: processa dados do oponente e retransmite para espectadores
         conn.on('data', (data) => {
             if (!data || typeof data !== 'object') return;
             if (data.type === 'probe-room' || data.type === 'check-slot') return;
             handleIncomingConnData(data);
-            if (data.type && data.type !== 'ping') {
+            const control=['ping','move-ack','state-request','state-response'].includes(data.type);
+            const invalidPosition=['move','undo'].includes(data.type) && data.fen!==chess.fen();
+            if (data.type && !control && !invalidPosition) {
                 relayToSpectators(data);
             }
         });
@@ -7870,8 +7819,12 @@ body.god-stealth .god-assist-to::after {
     }
 
     function setupClientListeners(cityName) {
+        if (!conn || conn.__xpClientBound) return;
+        conn.__xpClientBound=true;
         conn.on('data', (data) => {
+            if (!data || typeof data !== 'object')return;
             if (data.type === 'slot-response') {
+                xpWireEpoch=data.epoch||null;
                 clearNetworkDisconnectTimer();
                 // Visual sincronizado da sala privada (host → guest/espectador)
                 if (data.roomName) currentRoomFriendlyName = data.roomName;
@@ -7890,7 +7843,11 @@ body.god-stealth .god-assist-to::after {
 
                 // Espectador e oponente: ambos precisam do FEN atual da partida
                 if (data.fen) {
-                    try { chess.load(data.fen); lastSyncedFen = data.fen; } catch (e) {}
+                    try {
+                        if(Array.isArray(data.moves)){const replay=xpReplayState(data);chess=replay.candidate;moveHistoryFens=replay.fens;}
+                        else if(!chess.load(data.fen))throw Error('FEN inválido');
+                        lastSyncedFen=chess.fen();
+                    } catch (e) {addLog('Snapshot inicial rejeitado: '+e.message,'P2P_REJECT');return;}
                 }
 
                 timeControlSeconds = typeof data.timeControl === 'number' ? data.timeControl : 0;
@@ -7918,9 +7875,7 @@ body.god-stealth .god-assist-to::after {
                     // Restaura relógios após startGameSetup (que não reseta no modo espectador)
                     if (typeof data.clockWhite === 'number') clockWhite = data.clockWhite;
                     if (typeof data.clockBlack === 'number') clockBlack = data.clockBlack;
-                    if (data.fen) {
-                        try { chess.load(data.fen); lastSyncedFen = data.fen; } catch (e) {}
-                    }
+                    // The validated initial history is retained for repetition and review.
                     updateClockDisplay();
                     updateTurnIndicators();
                     updateCapturedDisplay();
@@ -7958,6 +7913,9 @@ body.god-stealth .god-assist-to::after {
         forceFullBoardRebuild();
         aiRequestId++; pendingAICallback = null;
         gameOverHandled = false;
+        xpEloApplied = false; xpRemoteMoves.clear(); xpPendingMoves.clear();
+        xpMatchId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+        closeVictoryScreen();
         gameMode = 'network';
         boardFlipped = (playerColor === 'b'); // espectador (playerColor null) vê do lado das brancas
         applyPlayerSeating();
@@ -7974,6 +7932,7 @@ body.god-stealth .god-assist-to::after {
         }
         playSFX('move');
         updateSpectatorChrome();
+        checkGameStateEvents(false);
         // v11.3 GOD ONLINE — dispara assistência ao entrar em partida online
         if (gameMode === 'network' && !isSpectator && godMode && chess.turn() === playerColor) {
             setTimeout(requestGodAssistance, 120);
@@ -8134,7 +8093,7 @@ body.god-stealth .god-assist-to::after {
     // === PWA v15.0.0: manifest estático + Service Worker versionado ===
     // O manifest fica em /manifest.json para evitar start_url/scope inválidos de Blob URLs.
     // O SW usa BUILD_ID próprio e navegação network-first para impedir HTML antigo persistente.
-    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-18.0.0-20260928' };
+    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-19.0.0-20261005' };
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(reg) {
@@ -8190,7 +8149,7 @@ body.god-stealth .god-assist-to::after {
             deferredInstallPrompt = null;
             const btn = document.getElementById('btnInstallPwa');
             if (btn) btn.style.display = 'none';
-            addLog('Xadrez Pro instalado como app', 'PWA');
+            addLog('Xadrez instalado como app', 'PWA');
             addChatMessage('Sistema', 'App instalado com sucesso!', true);
         });
     }
@@ -8334,7 +8293,7 @@ body.god-stealth .god-assist-to::after {
             practice: true
         },
         {
-            title: '10. Recursos do Xadrez Pro',
+            title: '10. Recursos do Xadrez',
             pieces: ['Q', 'K'],
             html: '<p><b>IA</b> (5 níveis), <b>P2P</b> nas salas-cidade, <b>rádio sincronizado</b> com o oponente, temas, reações, frases e stand-up.</p><p>No celular, use os botões 🔥 e 💬 para reações e frases sem ocupar a tela.</p><div class="tutorial-tip">📻 Nas salas online, a rádio que você ligar toca também no aparelho do oponente (ele pode trocar ou pausar).</div>',
             practice: true
@@ -8398,7 +8357,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez Pro v18.0.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
+    addLog('Xadrez v19.0.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
@@ -8512,7 +8471,7 @@ body.god-stealth .god-assist-to::after {
  };
  window.addEventListener('keydown',function(e){if(e.key==='Escape'||e.keyCode===27)xpCloseReview();});
  loadSaved();setTimeout(xpRefreshReviewAvailability,0);
- setTimeout(function(){try{var original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpReviewSnapshotWrapped){window.__xpReviewSnapshotWrapped=true;window.handleGameOverEvents=function(reason,winner){try{captureCurrent(reason,winner);}catch(e){}return original.apply(this,arguments);};}}catch(e){}},50);
+ setTimeout(function(){try{var original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpReviewSnapshotWrapped){window.__xpReviewSnapshotWrapped=true;window.handleGameOverEvents=function(reason,winner){if(gameOverHandled)return false;try{captureCurrent(reason,winner);}catch(e){}return original.apply(this,arguments);};}}catch(e){}},50);
 })();
 /* v11.8 — estatísticas locais e compartilhamento FEN/PGN. */
 (function(){
@@ -8521,9 +8480,9 @@ body.god-stealth .god-assist-to::after {
  function save(x){try{localStorage.setItem(key,JSON.stringify(x))}catch(e){} render(x)}
  function render(x){const b=document.getElementById('xp-stats-badge');if(b)b.textContent='📊 '+x.games+' partidas · '+x.wins+' vitórias';}
  window.xpGetStats=get; render(get());
- window.xpShareFEN=function(){let f='';try{f=chess.fen()}catch(e){} const t='Xadrez Pro — FEN\n'+f;navigator.clipboard?.writeText(t).then(()=>alert('FEN copiado.'))};
+ window.xpShareFEN=function(){let f='';try{f=chess.fen()}catch(e){} const t='Xadrez — FEN\n'+f;navigator.clipboard?.writeText(t).then(()=>alert('FEN copiado.'))};
  window.xpSharePGN=function(){let p='';try{p=chess.pgn()}catch(e){}navigator.clipboard?.writeText(p).then(()=>alert('PGN copiado.'))};
- setTimeout(function(){try{const original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpStatsWrapped){window.__xpStatsWrapped=true;window.handleGameOverEvents=function(reason,winner){const r=original.apply(this,arguments);try{const x=get();x.games++;x.moves+=chess.history().length;if(winner==='w' || winner==='b'){if((winner==='w'&&typeof playerColor!=='undefined'&&playerColor==='w')||(winner==='b'&&typeof playerColor!=='undefined'&&playerColor==='b'))x.wins++;else x.losses++;}else x.draws++;save(x)}catch(e){}return r;};}}catch(e){}},120);
+ setTimeout(function(){try{const original=window.handleGameOverEvents;if(typeof original==='function'&&!window.__xpStatsWrapped){window.__xpStatsWrapped=true;window.handleGameOverEvents=function(reason,winner){const r=original.apply(this,arguments);if(r!==true || isSpectator)return r;try{const x=get();x.games++;x.moves+=chess.history().length;if(winner==='w' || winner==='b'){if((winner==='w'&&typeof playerColor!=='undefined'&&playerColor==='w')||(winner==='b'&&typeof playerColor!=='undefined'&&playerColor==='b'))x.wins++;else x.losses++;}else x.draws++;save(x)}catch(e){}return r;};}}catch(e){}},120);
 })();
 
 
@@ -8877,7 +8836,7 @@ body.god-stealth .god-assist-to::after {
 <script id="xp-review-old-button-cleanup">document.addEventListener('DOMContentLoaded',function(){try{var b=document.getElementById('xp-review-open-btn');if(b)b.remove();}catch(e){}});</script>
 
 <script>
-/* Xadrez Pro v15.0.0 — DEV/TESTER persistente ("gravador de voo"). */
+/* Xadrez v15.0.0 — DEV/TESTER persistente ("gravador de voo"). */
 (function(){
   var KEY='xp_tester_runs_v1400', current=null, watchdog=null, oldOnError=window.onerror;
   function now(){return Date.now();}
@@ -9058,7 +9017,7 @@ body.god-stealth .god-assist-to::after {
     var data=current||load()[0];if(!data){alert('Nenhum relatório disponível.');return;}
     var text=ext==='txt'?data.events.map(function(e){return new Date(e.ts).toISOString()+' ['+e.status+'] '+e.type+' '+e.name+' '+JSON.stringify(e.detail||'');}).join('\n'):JSON.stringify(data,null,2);
     var blob=new Blob([text],{type:ext==='txt'?'text/plain':'application/json'}),a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);a.download='XadrezPro_'+data.id+'.'+ext;a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+    a.href=URL.createObjectURL(blob);a.download='Xadrez_'+data.id+'.'+ext;a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
   }
   function render(){
     document.querySelectorAll('#xpTesterModal button[onclick^="xpTesterRun"]').forEach(function(b){b.disabled=!!(current&&current.status==='RUNNING');});
@@ -9070,7 +9029,7 @@ body.god-stealth .god-assist-to::after {
   function ensure(){
     if(document.getElementById('xpTesterModal'))return;
     var m=document.createElement('div');m.id='xpTesterModal';m.style.cssText='display:none;position:fixed;inset:0;z-index:12000;background:rgba(0,0,0,.72);padding:10px;align-items:center;justify-content:center';
-    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v18.0.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
+    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v19.0.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
     document.body.appendChild(m);
   }
   window.xpTesterRefreshEntry=function(){var on=(typeof testerMode!=='undefined'&&testerMode),b=document.getElementById('xp-tester-gear-open');if(b)b.style.display=on?'block':'none';var f=document.getElementById('xpTesterFooterBtn');if(on&&!f){f=document.createElement('button');f.id='xpTesterFooterBtn';f.className='action-btn';f.innerHTML='🧪 DEV / TESTER';f.style.cssText='position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:9500;padding:7px 12px;font-size:9px;font-weight:900;box-shadow:0 5px 18px rgba(0,0,0,.28)';f.onclick=xpOpenTester;document.body.appendChild(f);}else if(!on&&f)f.remove();};
@@ -9087,5 +9046,6 @@ body.god-stealth .god-assist-to::after {
 
 <link rel="stylesheet" href="./interface-v18.css">
 <script src="./interface-v18.js"></script>
+<script src="./diamante-v19.js"></script>
 </body>
 </html>

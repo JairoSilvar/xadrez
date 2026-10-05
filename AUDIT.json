@@ -1,37 +1,201 @@
 {
-  "version": "18.0.0",
-  "date": "2026-09-28",
-  "baseline": "Xadrez Pro v17.0.0",
-  "inlineScriptsSyntaxChecked": 3,
-  "workerScriptSyntax": "OK",
-  "addedScriptsSyntax": "OK",
-  "duplicateIds": [],
-  "implemented": [
-    "Ping P2P transporta movimentos compactos e reconstrói chess + moveHistoryFens; fallback mantém ply remoto conhecido",
-    "IA remove geração de lances na avaliação, reduz quiescência e limita capturas",
-    "Rádio preserva canal anterior ao trocar estação",
-    "Reações P2P são coalescidas em janela de 200 ms",
-    "GOD só calcula na vez humana, recebe orçamento superior, indicador, timeout e fallback local",
-    "Undo recalcula GOD; sugestões são vinculadas ao FEN",
-    "Logs incluem from→to, ply remoto e rádio coerente",
-    "Avaliação de final reduz peso posicional",
-    "Fim de partida limpa o estado transitório Processando dos cards Bot vs Bot",
-    "Barras de captura mostram o material capturado pelo lado correto e preservam as cores dos SVGs",
-    "Cabeçalho do PC separa contexto da sala e controles em duas linhas",
-    "Metadados de espectador ficam agrupados sem sobreposição",
-    "Indicador do espectador acompanha a cor que realmente joga",
-    "Compartilhar mostra texto no PC e permanece compacto no celular",
-    "Versão, build, service worker e manifesto atualizados"
+  "version": "19.0.0",
+  "name": "Xadrez v19 — Diamante",
+  "date": "2026-10-05",
+  "baseline": {
+    "file": "XadrezPro-v18.0.0.zip",
+    "sha256": "cc5600b90bfd6b7c4624d2f0b005df29e809503abc26639270569a68b09c0004",
+    "origin": "Cópia local da entrega anterior; /mnt/data não existe neste ambiente Windows."
+  },
+  "static": {
+    "inlineScripts": 3,
+    "externalScripts": 6,
+    "uniqueIds": 145,
+    "cssBlocks": 5,
+    "cssBraces": "balanced",
+    "localResources": [
+      "manifest.json",
+      "vendor/chess-0.10.3.min.js",
+      "vendor/peerjs-1.5.2.min.js",
+      "interface-v18.css",
+      "interface-v18.js",
+      "diamante-v19.js"
+    ],
+    "ok": true
+  },
+  "tests": [
+    {
+      "test": "Inicialização e versão",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Mate local imediato e finalização idempotente",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Mate IA e Elo único",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Afogamento",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Material insuficiente",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "50 lances e prioridade de mate",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Repetição oficial preservada; posição equilibrada continua",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Undo PvE durante turno IA",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Undo PvE depois da resposta e bloqueio pós-final",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Rede lance, ACK, duplicata e hash inválido",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Mate remoto imediato e duplicata sem Elo extra",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Replay validado, histórico preservado e conflito rejeitado",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Undo remoto preserva histórico legal",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Cooldown local e remoto",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Neon independente, geometria e restauração",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "net=a4g normalizado",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Sintaxe do worker IA",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Worker IA real responde após lance humano",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Resposta IA pendente descartada após Undo",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Empate remoto sem oferta não finaliza",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Oferta aceita preserva empate acordado",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Espectador tardio recupera histórico e mate sem Elo",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Revanche do espectador limpa final e histórico",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Lance legado legal aceito; fora de ordem rejeitado",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Epoch rejeita lance atrasado de outra partida",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "Neon com todos os estilos e sem mudança de SVG",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "test": "WebRTC DataChannel real entre dois contextos: mate, duplicata e ACK",
+      "ok": true,
+      "detail": true
+    }
   ],
-  "inheritedVisualChecks": [
-    "Composição móvel responsiva da v17 preservada",
-    "Tabuleiro máximo no PC preservado"
-  ],
+  "visual": {
+    "desktop": {
+      "viewport": [
+        1440,
+        900
+      ],
+      "board": [
+        884,
+        884
+      ],
+      "horizontalOverflow": false,
+      "controls": 6
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "board": [
+        378,
+        378
+      ],
+      "horizontalOverflow": false
+    }
+  },
+  "neonPersistence": true,
+  "offline": {
+    "reload": true,
+    "startLocalGame": true,
+    "moveAfterReload": "não concluído"
+  },
   "limitations": [
-    "P2P real requer dois aparelhos; espectador real requer um terceiro",
-    "Desempenho AI_PERF e GOD deve ser medido em hardware real; profundidade depende do dispositivo",
-    "Microfone, compartilhamento nativo, rádios e instalação PWA precisam de reteste físico",
-    ":has() permanece na interface e exige navegador moderno",
-    "Stress DEV/TESTER de 500 ciclos não foi executado nesta rodada"
+    "WebRTC testado entre dois contextos no mesmo navegador; não em aparelhos/redes distintos.",
+    "Broker PeerJS externo, NAT/TURN e registro de salas em produção não exercitados.",
+    "Instalação PWA física, microfone, rádio externo, compartilhamento nativo e Firefox/Safari não retestados.",
+    "Teste de lance após recarga offline inconclusivo: limite de uso inicial e timeout do navegador na retomada.",
+    "A adjudicação automática por três repetições e 50 lances da base foi mantida; não se implementou fluxo de reivindicação de torneio FIDE."
   ]
 }

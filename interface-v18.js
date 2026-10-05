@@ -1,4 +1,4 @@
-/* Xadrez Pro 18 — interface responsiva. Motor, partidas e rede permanecem no núcleo. */
+/* Xadrez 18 — interface responsiva. Motor, partidas e rede permanecem no núcleo. */
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -9,7 +9,7 @@
   // Entrada: jogar primeiro; preferências e perfil continuam disponíveis.
   const hero=document.querySelector('.hero-box');
   hero.querySelector('p').textContent='Seu próximo lance começa aqui.';
-  hero.append(el('span','v18-version','v18.0.0 · Jogue, aprenda e encontre amigos'));
+  hero.append(el('span','v18-version','v19.0.0 · Diamante'));
   document.querySelector('.menu-section-label').textContent='Vamos jogar?';
   const names=[['.mode-ia','♟ Jogar contra a IA','Escolha seu nível e comece'],['.mode-pvp','♟♟ Duas pessoas','Joguem no mesmo aparelho'],['.mode-online','◎ Jogar online','Encontre ou crie uma sala'],['.mode-bots','▷ Assistir aos bots','Observe e aprenda'],['.mode-tutorial','◇ Aprender xadrez','Regras, treino e análise']];
   names.forEach(([sel,title,sub])=>{document.querySelector(sel+' .mode-title').textContent=title;document.querySelector(sel+' .mode-sub').textContent=sub;});
@@ -50,7 +50,7 @@
   const roomTitle=$('room-status-title');
   const roomContext=el('div','v18-room-context');
   const roomState=el('span','v18-room-state','●');
-  const roomName=el('span','v18-room-name','Xadrez Pro');
+  const roomName=el('span','v18-room-name','Xadrez');
   const roomMeta=el('span','v18-room-meta');
   const shareRoom=button('',()=>shareCurrentRoom(),'v18-room-share');
   shareRoom.append(el('span','v18-share-icon','↗'),el('span','v18-share-label','Compartilhar'));
@@ -68,7 +68,7 @@
   function syncRoomContext(){
     const online=typeof gameMode!=='undefined'&&gameMode==='network'&&typeof currentCityKey!=='undefined'&&!!currentCityKey;
     document.body.classList.toggle('v18-room-online',online);
-    roomName.textContent=online?(roomTitle.textContent||'Sala'):'Xadrez Pro';
+    roomName.textContent=online?(roomTitle.textContent||'Sala'):'Xadrez';
     roomState.classList.toggle('offline',!online);
     collectRoomMeta();
   }
@@ -90,7 +90,7 @@
   async function shareCurrentRoom(){
     if(!(typeof gameMode!=='undefined'&&gameMode==='network'&&currentCityKey)){roomToast('Entre em uma sala para compartilhar.');return;}
     const name=roomTitle.textContent||'Sala';const url=roomInviteUrl();
-    const payload={title:'Xadrez Pro · '+name,text:'Venha jogar comigo no Xadrez Pro! Sala: '+name,url};
+    const payload={title:'Xadrez · '+name,text:'Venha jogar comigo no Xadrez! Sala: '+name,url};
     try{
       if(navigator.share){await navigator.share(payload);return;}
       await navigator.clipboard.writeText(payload.text+'\n'+url);roomToast('Link da sala copiado!');
@@ -269,7 +269,7 @@
   $('logTextarea').setAttribute('aria-label','Registro de diagnóstico da sessão');
   const logActions=logs.lastElementChild;logActions.classList.add('v18-log-actions');
   const feedback=el('p','v18-share-feedback');feedback.setAttribute('role','status');
-  function logFile(){return new File([$ ('logTextarea').value],'XadrezPro_log_'+new Date().toISOString().replace(/[:.]/g,'-')+'.txt',{type:'text/plain;charset=utf-8'});}
+  function logFile(){return new File([$ ('logTextarea').value],'Xadrez_log_'+new Date().toISOString().replace(/[:.]/g,'-')+'.txt',{type:'text/plain;charset=utf-8'});}
   function downloadLog(){const file=logFile(),url=URL.createObjectURL(file),a=el('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);feedback.textContent='Arquivo TXT preparado para download.';}
   const download=button('↓ Baixar TXT',downloadLog);
   const share=button('↗ Compartilhar…',async()=>{
@@ -278,7 +278,7 @@
     try{
       if(!navigator.share)throw new Error('Web Share indisponível');
       const file=logFile();
-      const payload={title:'Diagnóstico Xadrez Pro',text:text.slice(0,12000)};
+      const payload={title:'Diagnóstico Xadrez',text:text.slice(0,12000)};
       if(navigator.canShare&&navigator.canShare({files:[file]}))payload.files=[file];
       await navigator.share(payload);
       feedback.textContent='Compartilhamento aberto.';

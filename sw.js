@@ -1,34 +1,23 @@
-/* Xadrez Pro Service Worker v18.0.0 */
-const XP_SW_BUILD = 'xp-sw-18.0.0-20260928';
-const XP_CACHE = 'xadrez-pro-' + XP_SW_BUILD;
-const CORE = ['./', './index.html', './manifest.json', './interface-v18.css', './interface-v18.js'];
-
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(XP_CACHE).then(cache => cache.addAll(CORE).catch(() => {})).then(() => self.skipWaiting()));
+/* Xadrez v19 — Diamante. Atomic offline core and scoped cache. */
+const XP_SW_BUILD='xp-sw-19.0.0-20261005';
+const XP_PREFIX='xadrez-'+encodeURIComponent(self.registration.scope)+'-';
+const XP_CACHE=XP_PREFIX+XP_SW_BUILD;
+const CORE=['./','./index.html','./manifest.json','./interface-v18.css','./interface-v18.js','./diamante-v19.js','./icons/icon-192.png','./icons/icon-512.png','./vendor/chess-0.10.3.min.js','./vendor/peerjs-1.5.2.min.js'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(XP_CACHE).then(c=>c.addAll(CORE))));
+self.addEventListener('message',e=>{
+ if(e.data?.type==='XP_GET_SW_BUILD' && e.source)e.source.postMessage({type:'XP_SW_BUILD',buildId:XP_SW_BUILD});
+ if(e.data?.type==='XP_ACTIVATE_UPDATE')self.skipWaiting();
 });
-
-self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('xadrez-pro-') && k !== XP_CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
-});
-
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'XP_GET_SW_BUILD' && event.source) {
-    event.source.postMessage({type:'XP_SW_BUILD', buildId:XP_SW_BUILD});
-  }
-});
-
-self.addEventListener('fetch', event => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (url.pathname.startsWith('/api/')) return; // API nunca é cacheada pelo SW.
-  if (req.mode === 'navigate') {
-    event.respondWith(fetch(req, {cache:'no-store'}).then(res => {
-      const copy = res.clone(); caches.open(XP_CACHE).then(c => c.put('./index.html', copy)).catch(()=>{}); return res;
-    }).catch(() => caches.match('./index.html').then(r => r || caches.match('./'))));
-    return;
-  }
-  if (url.origin === self.location.origin) {
-    event.respondWith(fetch(req).then(res => { const copy=res.clone(); caches.open(XP_CACHE).then(c=>c.put(req,copy)).catch(()=>{}); return res; }).catch(()=>caches.match(req)));
-  }
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>(k.startsWith(XP_PREFIX)||k.startsWith('xadrez-pro-xp-sw-'))&&k!==XP_CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{
+ const req=e.request,url=new URL(req.url);
+ if(req.method!=='GET'||url.origin!==self.location.origin||url.pathname.includes('/api/'))return;
+ if(!CORE.some(p=>new URL(p,self.registration.scope).pathname===url.pathname) && req.mode!=='navigate')return;
+ e.respondWith(fetch(req,{cache:'no-store'}).then(async res=>{
+   if(res.ok){const cache=await caches.open(XP_CACHE);await cache.put(req.mode==='navigate'?new URL('./index.html',self.registration.scope).href:req,res.clone());}
+   return res;
+ }).catch(async()=>{
+   const cache=await caches.open(XP_CACHE);
+   return await cache.match(req.mode==='navigate'?new URL('./index.html',self.registration.scope).href:req) || new Response('Conteúdo indisponível offline',{status:503});
+ }));
 });
