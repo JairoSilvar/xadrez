@@ -1,8 +1,8 @@
 /* Xadrez v19 — Diamante. Atomic offline core and scoped cache. */
-const XP_SW_BUILD='xp-sw-19.0.0-20261005';
+const XP_SW_BUILD='xp-sw-19.3.0-20261021';
 const XP_PREFIX='xadrez-'+encodeURIComponent(self.registration.scope)+'-';
 const XP_CACHE=XP_PREFIX+XP_SW_BUILD;
-const CORE=['./','./index.html','./manifest.json','./interface-v18.css','./interface-v18.js','./diamante-v19.js','./icons/icon-192.png','./icons/icon-512.png','./vendor/chess-0.10.3.min.js','./vendor/peerjs-1.5.2.min.js'];
+const CORE=['./','./index.html','./manifest.json','./interface-v18.css','./interface-v18.js','./diamante-v19.js','./telemetry-config.js','./telemetry.js','./log-panel.js','./log-panel.css','./icons/icon-192.png','./icons/icon-512.png','./vendor/chess-0.10.3.min.js','./vendor/peerjs-1.5.2.min.js'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(XP_CACHE).then(c=>c.addAll(CORE))));
 self.addEventListener('message',e=>{
  if(e.data?.type==='XP_GET_SW_BUILD' && e.source)e.source.postMessage({type:'XP_SW_BUILD',buildId:XP_SW_BUILD});

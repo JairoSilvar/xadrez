@@ -1,0 +1,3 @@
+const {createHash,timingSafeEqual}=require('node:crypto');
+const store=require('../lib/log-store.cjs');
+module.exports=async(req,res)=>{res.setHeader('Cache-Control','no-store');if(req.method!=='GET')return res.status(405).json({error:'METHOD_NOT_ALLOWED'});const secret=process.env.CRON_SECRET;const hash=s=>createHash('sha256').update(s).digest();if(!secret||secret.length<32||!timingSafeEqual(hash(req.headers.authorization||''),hash('Bearer '+secret)))return res.status(401).json({error:'UNAUTHORIZED'});try{await store.cleanup();return res.status(200).json({ok:true});}catch(_){return res.status(503).json({error:'CLEANUP_UNAVAILABLE'});}};

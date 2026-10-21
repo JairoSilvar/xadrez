@@ -2,6 +2,12 @@
   "functions": {
     "api/rooms.js": {
       "maxDuration": 10
+    },
+    "api/telemetry.js": {
+      "maxDuration": 15
+    },
+    "api/logs-cleanup.js": {
+      "maxDuration": 15
     }
   },
   "headers": [
@@ -13,6 +19,21 @@
           "value": "no-store"
         }
       ]
+    },
+    {
+      "source": "/api/telemetry",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/logs-cleanup",
+      "schedule": "0 3 * * *"
     }
   ]
 }

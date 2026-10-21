@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Xadrez v19.0.0 — correções de capturas, telemetria, desempenho e assistência GOD.
+<!-- Xadrez v19.3.0 — correções de capturas, telemetria, desempenho e assistência GOD.
      Preserva: IA/Worker, PvE/PvP, P2P/salas/espectadores/chat/voz/reacoes, Sandbox,
      Centro de Treino, Tutorial, FEN, Bot-vs-Bot, GOD, temas, skins, historico/PGN,
      relogios, radio e compatibilidade responsiva. -->
@@ -7,13 +7,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Xadrez v19 — Diamante - v19.0.0 · Tutorial Unificado</title>
+    <title>Xadrez v19 — Diamante - v19.3.0 · Tutorial Unificado</title>
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Xadrez">
-    <meta name="description" content="Xadrez v19.0.0 — xadrez P2P, IA offline e rádio em tempo real">
+    <meta name="description" content="Xadrez v19.3.0 — xadrez P2P, IA offline e rádio em tempo real">
     <link rel="icon" type="image/svg+xml" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg">
     <link rel="manifest" href="./manifest.json" id="pwa-manifest-link">
@@ -1739,7 +1739,8 @@
     <div id="menu-screen">
         <div class="hero-box">
             <h1>♟️ Xadrez</h1>
-            <p>Estratégia P2P · IA offline · v19.0.0</p>
+            <p>Estratégia P2P · IA offline · v19.3.0</p>
+            <p style="font-size:10px;opacity:.75">Diagnósticos automáticos registram apelido, jogadas e falhas para melhorar o jogo. Retenção padrão: 30 dias.</p>
         </div>
         <div class="menu-dashboard">
             <!-- ===== COLUNA ESQUERDA (perfil + secundários) ===== -->
@@ -1747,7 +1748,7 @@
                 <div class="menu-profile-card">
                     <div class="profile-name-row">
                         <span id="avatarPreview" style="font-size:22px; line-height:1;">♟️</span>
-                        <input type="text" id="playerNameInput" maxlength="18" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()" title="Códigos locais: 81=Nome alterna GOD · 82=Nome alterna DEV/TESTER">
+                        <input type="text" id="playerNameInput" maxlength="21" placeholder="Seu nome / apelido" onchange="savePlayerName()" onblur="savePlayerName()" title="Códigos locais: 81=Nome alterna GOD · 82=Nome abre painel DEV de logs">
                     </div>
                     <div class="profile-elo">⭐ Elo <span id="eloDisplay">1200</span></div>
                     <div class="profile-gm" id="eloUnlockHint">👑 GM em 1500</div>
@@ -2252,8 +2253,8 @@ body.god-stealth .god-assist-to::after {
 
     let selectedSquare = null;
     let possibleMoves = [];
-    const APP_VERSION = '19.0.0';
-    const BUILD_ID = 'xp-19.0.0-20261005';
+    const APP_VERSION = '19.3.0';
+    const BUILD_ID = 'xp-19.3.0-20261021';
         let gameMode = 'menu';
     let aiDifficulty = 5;
     let soundEnabled = true;
@@ -4049,11 +4050,11 @@ body.god-stealth .god-assist-to::after {
             alert('Use 82= seguido do nome do usuário.');
             return '';
         }
-        testerMode = !testerMode;
+        testerMode = true;
         try { localStorage.setItem('xadrezpro_tester_mode', testerMode ? '1' : '0'); } catch(e) {}
         addLog('Modo DEV/TESTER ' + (testerMode ? 'ativado' : 'desativado') + '.', 'TESTER');
         try { xpShowTesterToast(testerMode); } catch(e) {}
-        setTimeout(function(){ try { xpTesterRefreshEntry(); } catch(e){} }, 0);
+        setTimeout(function(){ try { xpTesterRefreshEntry(); if (window.xpOpenServerLogs) window.xpOpenServerLogs(); } catch(e){} }, 0);
         return cleanName;
     }
 
@@ -6748,7 +6749,7 @@ body.god-stealth .god-assist-to::after {
         let wCaps = [], bCaps = [];
         history.forEach(m => { if (m.captured) m.color === 'w' ? wCaps.push(m.captured) : bCaps.push(m.captured.toUpperCase()); });
 
-        // v19.0.0 — a barra local mostra o que o jogador local capturou.
+        // v19.3.0 — a barra local mostra o que o jogador local capturou.
         // wCaps = peças pretas capturadas pelas Brancas; bCaps = peças brancas capturadas pelas Pretas.
         let localCaps = playerColor === 'b' ? bCaps : wCaps;
         let oppCaps = playerColor === 'b' ? wCaps : bCaps;
@@ -8093,7 +8094,7 @@ body.god-stealth .god-assist-to::after {
     // === PWA v15.0.0: manifest estático + Service Worker versionado ===
     // O manifest fica em /manifest.json para evitar start_url/scope inválidos de Blob URLs.
     // O SW usa BUILD_ID próprio e navegação network-first para impedir HTML antigo persistente.
-    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-19.0.0-20261005' };
+    window.xpBuildInfo = { appVersion: APP_VERSION, buildId: BUILD_ID, swExpected: 'xp-sw-19.3.0-20261021' };
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function(reg) {
@@ -8357,7 +8358,7 @@ body.god-stealth .god-assist-to::after {
         });
     }
 
-    addLog('Xadrez v19.0.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
+    addLog('Xadrez v19.3.0 — build ' + BUILD_ID + ' — Git/Vercel, Registry/P2P, Tester e cache versionado.', 'INIT');
     try { refreshUnlocksUI(); renderMissionsUI(); refreshSettingsPreview(); } catch (e) {}
     logSessionSnapshot('boot');
     if (typeof shuffleStandUpDeck === 'function') shuffleStandUpDeck();
@@ -9029,7 +9030,7 @@ body.god-stealth .god-assist-to::after {
   function ensure(){
     if(document.getElementById('xpTesterModal'))return;
     var m=document.createElement('div');m.id='xpTesterModal';m.style.cssText='display:none;position:fixed;inset:0;z-index:12000;background:rgba(0,0,0,.72);padding:10px;align-items:center;justify-content:center';
-    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v19.0.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
+    m.innerHTML='<div style="width:min(760px,96vw);max-height:92vh;overflow:auto;background:var(--modal-bg);color:var(--modal-text);border:2px solid var(--board-border);border-radius:14px;padding:12px"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>🧪 DEV / TESTER v19.3.0</b><button class="action-btn" onclick="xpCloseTester()">✕</button></div><p style="font-size:10px">Teste persistente orientado a estado. Inventariado ≠ validado; recursos que exigem hardware/permissão permanecem NÃO TESTADO/REQUER INTERAÇÃO. Execução sem TEST_END é recuperada como interrompida.</p><div style="display:flex;flex-wrap:wrap;gap:6px"><button class="action-btn" onclick="xpTesterRunComplete()">▶ Teste completo</button><button class="action-btn" onclick="xpTesterRunStress(50)">♻ 50 ciclos</button><button class="action-btn" onclick="xpTesterRunStress(100)">♻ 100</button><button class="action-btn" onclick="xpTesterRunStress(500)">♻ 500</button><button class="action-btn" onclick="xpRefreshDiscoveredRooms()">🌐 Atualizar salas</button><button class="action-btn" onclick="xpTesterExport(&quot;json&quot;)">JSON</button><button class="action-btn" onclick="xpTesterExport(&quot;txt&quot;)">TXT</button><button class="action-btn" onclick="xpOpenServerLogs()">Central de logs</button></div><div id="xpTesterStatus" style="margin-top:10px;padding:8px;border:1px solid var(--panel-border);border-radius:8px;font-size:10px"></div><div style="font-size:9px;margin-top:8px;color:var(--text-muted)">P2P real requer 2 aparelhos (3 para espectador real). Pareie uma vez; etapas não executadas em hardware real permanecem NÃO TESTADO/REQUER INTERAÇÃO.</div></div>';
     document.body.appendChild(m);
   }
   window.xpTesterRefreshEntry=function(){var on=(typeof testerMode!=='undefined'&&testerMode),b=document.getElementById('xp-tester-gear-open');if(b)b.style.display=on?'block':'none';var f=document.getElementById('xpTesterFooterBtn');if(on&&!f){f=document.createElement('button');f.id='xpTesterFooterBtn';f.className='action-btn';f.innerHTML='🧪 DEV / TESTER';f.style.cssText='position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:9500;padding:7px 12px;font-size:9px;font-weight:900;box-shadow:0 5px 18px rgba(0,0,0,.28)';f.onclick=xpOpenTester;document.body.appendChild(f);}else if(!on&&f)f.remove();};
@@ -9047,5 +9048,9 @@ body.god-stealth .god-assist-to::after {
 <link rel="stylesheet" href="./interface-v18.css">
 <script src="./interface-v18.js"></script>
 <script src="./diamante-v19.js"></script>
+<script src="./telemetry-config.js"></script>
+<script src="./telemetry.js"></script>
+<link rel="stylesheet" href="./log-panel.css">
+<script src="./log-panel.js"></script>
 </body>
 </html>

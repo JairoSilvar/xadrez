@@ -1,0 +1,17 @@
+#xpLogPanel{position:fixed;inset:0;z-index:18000;background:rgba(3,8,19,.85);display:none;padding:clamp(6px,2vw,24px);box-sizing:border-box;align-items:center;justify-content:center;color:#e8eef9;font:14px/1.5 system-ui,sans-serif}
+#xpLogPanel *{box-sizing:border-box}#xpLogPanel [hidden]{display:none!important}
+#xpLogPanel .xl-shell{background:#101b2d;border:1px solid #42516c;border-radius:18px;width:min(1100px,100%);max-height:94dvh;overflow:auto;box-shadow:0 24px 90px #0008;padding:20px}
+#xpLogPanel header{display:flex;align-items:center;justify-content:space-between;gap:12px;position:static;background:none;padding:0;margin:0}
+#xpLogPanel h2{font-size:22px;margin:0;color:#fff}#xpLogPanel h3{font-size:15px;margin:12px 0}#xpLogPanel p{margin:8px 0;color:#bac8df}
+#xpLogPanel .xl-bar{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;align-items:center}
+#xpLogPanel button,#xpLogPanel input,#xpLogPanel select{font:inherit;border:1px solid #4a5d7c;border-radius:8px;padding:9px 12px;min-height:42px;max-width:100%;color:#edf4ff;background:#1c2c45;box-shadow:none;text-transform:none;letter-spacing:normal;width:auto}
+#xpLogPanel button{cursor:pointer}#xpLogPanel button:hover{background:#2e4567}#xpLogPanel button:disabled{opacity:.5;cursor:wait}#xpLogPanel :focus-visible{outline:3px solid #60d5b7;outline-offset:2px}
+#xpLogPanel .xl-primary{background:#117968;border-color:#37bfa0}#xpLogPanel label{display:grid;gap:4px;color:#c7d6ec;font-size:12px;min-width:0}#xpLogPanel input{width:100%;min-width:0}
+#xpLogPanel .xl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}#xpLogPanel .xl-card{border:1px solid #344661;background:#142139;border-radius:10px;padding:12px;overflow-wrap:anywhere}
+#xpLogPanel .xl-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}#xpLogPanel .xl-number{font-size:21px;font-weight:700;color:#70e3bd}
+#xpLogPanel .xl-status{padding:10px;border-left:3px solid #51c6b0;background:#152a3c;white-space:pre-wrap;overflow-wrap:anywhere}
+#xpLogPanel details{margin:8px 0;border:1px solid #384b69;border-radius:8px;padding:10px}#xpLogPanel summary{cursor:pointer;overflow-wrap:anywhere;color:#d6e6fa}
+#xpLogPanel pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,monospace;background:#0a1321;padding:12px;border-radius:8px;max-height:400px;overflow:auto;color:#d2dfef}
+#xpLogPanel .xl-hint{font-size:12px;color:#aebfd6}#xpLogPanel .xl-danger{color:#ffb8b8}
+@media(max-width:650px){#xpLogPanel .xl-shell{padding:12px;border-radius:12px}#xpLogPanel .xl-grid{grid-template-columns:1fr 1fr}#xpLogPanel h2{font-size:18px}#xpLogPanel .xl-metrics{grid-template-columns:1fr}#xpLogPanel .xl-bar button{flex:1 1 130px}}
+@media(max-width:360px){#xpLogPanel .xl-grid{grid-template-columns:1fr}}

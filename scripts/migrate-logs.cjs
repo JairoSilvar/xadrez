@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path');
+const {neon}=require('@neondatabase/serverless');
+(async()=>{if(!process.env.DATABASE_URL)throw Error('Configure DATABASE_URL no ambiente antes da migração.');const sql=neon(process.env.DATABASE_URL);const statements=fs.readFileSync(path.join(__dirname,'../migrations/001-logs.sql'),'utf8').split(';').map(s=>s.trim()).filter(Boolean);await sql.transaction(statements.map(s=>sql.query(s)));console.log('Schema de logs instalado. Nenhuma credencial foi exibida.');})().catch(()=>{console.error('Migração não concluída. Confira DATABASE_URL e o acesso ao banco.');process.exitCode=1;});
